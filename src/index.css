@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  font-family: 'Andika', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*background: #dee4e8;*/
+
+#root {
+  background: #1c252c;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+p {
+  margin: 0;
+}
+
+h1 {
+  font-family: 'Tektur', 'Andika';
+  font-weight: bold;
+  font-size: 3rem;
+  margin: 0;
+}
+
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2.4rem;
+  }
+}
+
+@media (max-width: 500px) {
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+}

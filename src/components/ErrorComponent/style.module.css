@@ -1,0 +1,11 @@
+.errorView {
+    align-self: center;
+    background-color: antiquewhite;
+    width: 100%;
+    font-family: 'Andika', sans-serif;
+    padding: 2rem;
+}
+
+h1 {
+    font-family: 'Andika', sans-serif;
+}

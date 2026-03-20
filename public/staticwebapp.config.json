@@ -1,0 +1,8 @@
+{
+    "routes": [
+        { "route": "/about", "rewrite": "index.html" },
+        { "route": "/game*", "rewrite": "index.html" },
+        { "route": "/student*", "rewrite": "index.html" },
+        { "route": "/teacher*", "rewrite": "index.html" }
+    ]
+}

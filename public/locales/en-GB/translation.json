@@ -1,0 +1,13 @@
+{
+    "languages": {
+        "en-GB": "English",
+        "fi-FI": "Suomi"
+    },
+    "common": {
+        "cancel": "Cancel",
+        "close": "Close",
+        "or": "or",
+        "paused": "Game Paused",
+        "title": "Reward Machine"
+    }
+}
