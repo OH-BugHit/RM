@@ -45,21 +45,21 @@ export default function RewardControl({
                     onChange={(e) => onSpookedBurglarRewardChange(Number(e.target.value) || 0)}
                 />
                 <TextField
-                    label="Burglar spooked by noise"
+                    label="RoboDog broke furniture"
                     type="number"
                     fullWidth
                     value={brokePotReward}
                     onChange={(e) => onBrokePotRewardChange(Number(e.target.value) || 0)}
                 />
                 <TextField
-                    label="RoboDog broke furniture"
+                    label="Burglar spooked by noise"
                     type="number"
                     fullWidth
                     value={barkSuccessReward}
                     onChange={(e) => onBarkSuccessRewardChange(Number(e.target.value) || 0)}
                 />
                 <TextField
-                    label="Robodog Barks"
+                    label="RoboDog Barks"
                     type="number"
                     fullWidth
                     value={barkFailReward}

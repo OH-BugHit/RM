@@ -79,7 +79,10 @@ function RLGridGame() {
         neighbors: [0, 0, 0, 0],
         bandit: 4,
     });
+    const qvalueRef = useRef<number[]>([]);
     const infoRef = useRef({ timeLeft: committedMaxTurns, result: 'ongoing', message: '' });
+    const [potsBroken, setPotsBroken] = useState(0);
+    const potsBrokenRef = useRef(0);
     const episodicRewardRef = useRef(0);
     const lastEpisodeRewardRef = useRef(0);
 
@@ -128,6 +131,8 @@ function RLGridGame() {
         setCommittedBarkSuccessReward(barkSuccessReward);
         setCommittedBarkFailReward(barkFailReward);
         setCommittedBurglarWonReward(burglarWonReward);
+        setPotsBroken(0);
+        potsBrokenRef.current = 0;
 
         envRef.current = new RLGridEnv({
             gridSize,
@@ -145,6 +150,7 @@ function RLGridGame() {
         });
         agentRef.current = new QLearningAgent({ alpha, gamma, epsilon });
         actionRef.current = null;
+        qvalueRef.current = [];
         winsRef.current = 0;
         lossesRef.current = 0;
         episodicRewardRef.current = 0;
@@ -160,12 +166,63 @@ function RLGridGame() {
         setLastEpisodeReward(0);
     };
 
+    const getQColor = (value: number, minQ: number, maxQ: number) => {
+        if (maxQ === minQ) return 'lightgray';
+        const gamma = 8;
+
+        if (value < 0) {
+            const norm = Math.abs(value / minQ);
+            return `rgba(255, 0, 0, ${Math.pow(norm, gamma)})`;
+        }
+
+        const norm = value / maxQ;
+        return `rgba(0, 255, 0, ${Math.pow(norm, gamma)})`;
+    };
+
+    const qValues = () => {
+        const qValues = qvalueRef.current;
+        const maxQ = Math.max(...qValues);
+        const minQ = Math.min(...qValues);
+        return (
+            <div className={style.qValuesContainer}>
+                <div style={{ textAlign: 'center', background: getQColor(qvalueRef.current[4], minQ, maxQ) }}>
+                    bark: {qvalueRef.current[4]?.toFixed(1)}
+                </div>
+                <div />
+                <div />
+                <div />
+                <div style={{ textAlign: 'center', background: getQColor(qvalueRef.current[0], minQ, maxQ) }}>
+                    ↑ {qvalueRef.current[0]?.toFixed(1)}
+                </div>
+                <div />
+
+                <div style={{ textAlign: 'center', background: getQColor(qvalueRef.current[2], minQ, maxQ) }}>
+                    ← {qvalueRef.current[2]?.toFixed(1)}
+                </div>
+                <div style={{ textAlign: 'center', background: getQColor(qvalueRef.current[5], minQ, maxQ) }}>
+                    • {qvalueRef.current[5]?.toFixed(1)}
+                </div>
+                <div style={{ textAlign: 'center', background: getQColor(qvalueRef.current[3], minQ, maxQ) }}>
+                    → {qvalueRef.current[3]?.toFixed(1)}
+                </div>
+
+                <div />
+                <div style={{ textAlign: 'center', background: getQColor(qvalueRef.current[1], minQ, maxQ) }}>
+                    ↓ {qvalueRef.current[1]?.toFixed(1)}
+                </div>
+                <div />
+            </div>
+        );
+    };
+
     const syncUI = React.useCallback(() => {
         setObs(obsRef.current);
         setEpisodicReward(episodicRewardRef.current);
         setWins(winsRef.current);
         setLosses(lossesRef.current);
         setLastEpisodeReward(lastEpisodeRewardRef.current);
+        qvalueRef.current = agentRef.current.getQValues(obsRef.current);
+        setPotsBroken(potsBrokenRef.current);
     }, []);
 
     const stepUI = React.useCallback(() => {
@@ -176,6 +233,7 @@ function RLGridGame() {
         const { info, obs: nextObs, reward, terminated } = envRef.current.step(action);
         infoRef.current = info;
         agentRef.current.update(currentObs, action, reward, nextObs);
+        potsBrokenRef.current += info.brokePot ? 1 : 0;
 
         episodicRewardRef.current += reward;
 
@@ -201,6 +259,7 @@ function RLGridGame() {
             const { info, obs: nextObs, reward, terminated } = envRef.current.step(action);
             infoRef.current = info;
             agentRef.current.update(currentObs, action, reward, nextObs);
+            potsBrokenRef.current += info.brokePot ? 1 : 0;
 
             episodicRewardRef.current += reward;
 
@@ -259,6 +318,7 @@ function RLGridGame() {
                 <div>This episode reward: {episodicReward.toFixed(1)}</div>
                 <div>Time until break in: {committedMaxTurns - infoRef.current.timeLeft}</div>
                 <div>Last action: {stringifyAction(actionRef.current)}</div>
+                <div>Flower pots destroyed: {potsBroken}</div>
 
                 {/* Burglar visualization */}
                 <div
@@ -301,6 +361,12 @@ function RLGridGame() {
                         {Array.from({ length: committedGridSize }).map((_, y) =>
                             Array.from({ length: committedGridSize }).map((_, x) => {
                                 let bg = 'lightgray';
+                                let onSight = false;
+
+                                if (env.dog.x === x + 1 && env.dog.y === y) onSight = true;
+                                else if (env.dog.x === x - 1 && env.dog.y === y) onSight = true;
+                                else if (env.dog.x === x && env.dog.y === y + 1) onSight = true;
+                                else if (env.dog.x === x && env.dog.y === y - 1) onSight = true;
 
                                 if (env.dog.x === x && env.dog.y === y) bg = 'blue';
                                 else if (env.flower_pots.find((r) => r.intact && r.x === x && r.y === y)) bg = 'green';
@@ -316,7 +382,7 @@ function RLGridGame() {
                                                 width: 40,
                                                 height: 40,
                                                 border: '1px solid black',
-                                                background: 'lightgrey',
+                                                background: onSight ? 'white' : 'lightgrey',
                                             }}
                                         />
                                     );
@@ -330,7 +396,7 @@ function RLGridGame() {
                                                 width: 40,
                                                 height: 40,
                                                 border: '1px solid black',
-                                                background: 'lightgrey',
+                                                background: onSight ? 'white' : 'lightgrey',
                                             }}
                                         />
                                     );
@@ -356,7 +422,7 @@ function RLGridGame() {
                                             width: 40,
                                             height: 40,
                                             border: '1px solid black',
-                                            background: bg,
+                                            background: onSight ? 'white' : 'lightgrey',
                                         }}
                                     />
                                 );
@@ -383,8 +449,9 @@ function RLGridGame() {
                     </div>
                     <div />
                 </div>
-                <div style={{ marginTop: 10 }}>
+                <div style={{ marginTop: 10, display: 'flex', gap: '1rem' }}>
                     <Button
+                        variant="outlined"
                         onClick={() => {
                             setIsRunning(true);
                             setFast(false);
@@ -392,10 +459,14 @@ function RLGridGame() {
                     >
                         <PlayCircleOutlineIcon />
                     </Button>
-                    <Button onClick={() => setIsRunning(false)}>
+                    <Button
+                        variant="outlined"
+                        onClick={() => setIsRunning(false)}
+                    >
                         <PauseCircleOutlineIcon />
                     </Button>
                     <Button
+                        variant="outlined"
                         onClick={() => {
                             setIsRunning(true);
                             setFast(true);
@@ -403,11 +474,16 @@ function RLGridGame() {
                     >
                         <FastForwardIcon />
                     </Button>
-                    <Button onClick={stepUI}>Step</Button>
-                    <Button onClick={resetUI}>Reset</Button>
+                    <Button
+                        variant="outlined"
+                        onClick={stepUI}
+                    >
+                        Step
+                    </Button>
                 </div>
             </div>
             <div className={style.parameterContainer}>
+                {qValues()}
                 <Tabs
                     value={tabNumber}
                     onChange={(_, value) => setTabNumber(value)}

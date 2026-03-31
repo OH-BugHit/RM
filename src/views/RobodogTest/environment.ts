@@ -38,7 +38,7 @@ const BARK_FAIL_REWARD = 0;
 const BURGLAR_WON_REWARD = -1;
 const POT_RELOAD_DELAY = 25;
 
-type Info = { timeLeft: number; result: 'win' | 'lose' | 'ongoing'; message: string };
+type Info = { timeLeft: number; brokePot: boolean; result: 'win' | 'lose' | 'ongoing'; message: string };
 const SIDES: BanditPosition[] = [BanditPosition.North, BanditPosition.South, BanditPosition.East, BanditPosition.West];
 
 export class RLGridEnv {
@@ -113,7 +113,7 @@ export class RLGridEnv {
         this.burglar = { side: BanditPosition.Away, turns: 0 };
         return {
             obs: this.getObservation(),
-            info: { timeLeft: this.maxTurns, result: 'ongoing', message: 'Game reset' },
+            info: { timeLeft: this.maxTurns, brokePot: false, result: 'ongoing', message: 'Game reset' },
         };
     }
 
@@ -207,7 +207,12 @@ export class RLGridEnv {
                     reward,
                     terminated,
                     truncated: false,
-                    info: { timeLeft: this.burglar.turns, result: 'win', message: 'Game step completed' },
+                    info: {
+                        timeLeft: this.burglar.turns,
+                        brokePot: broke,
+                        result: 'win',
+                        message: 'Game step completed',
+                    },
                 };
             }
         }
@@ -221,7 +226,12 @@ export class RLGridEnv {
                     reward,
                     terminated,
                     truncated: false,
-                    info: { timeLeft: this.burglar.turns, result: 'win', message: 'Game step completed' },
+                    info: {
+                        timeLeft: this.burglar.turns,
+                        brokePot: broke,
+                        result: 'win',
+                        message: 'Game step completed',
+                    },
                 };
             } else {
                 reward += this.barkFailReward;
@@ -237,7 +247,7 @@ export class RLGridEnv {
                 reward,
                 terminated,
                 truncated: false,
-                info: { timeLeft: this.burglar.turns, result: 'lose', message: 'Game step completed' },
+                info: { timeLeft: this.burglar.turns, brokePot: broke, result: 'lose', message: 'Game step completed' },
             };
         }
         return {
@@ -245,7 +255,7 @@ export class RLGridEnv {
             reward,
             terminated,
             truncated: false,
-            info: { timeLeft: this.burglar.turns, result: 'ongoing', message: 'Game step completed' },
+            info: { timeLeft: this.burglar.turns, brokePot: broke, result: 'ongoing', message: 'Game step completed' },
         };
     }
 }

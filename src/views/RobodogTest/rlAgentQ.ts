@@ -26,6 +26,16 @@ export class QLearningAgent {
         if (options.epsilon !== undefined) this.epsilon = options.epsilon;
     }
 
+    getQValues(obs: Observation): number[] {
+        const state = this.getStateKey(obs);
+
+        if (!this.Q[state]) {
+            this.Q[state] = Array(ACTIONS.length).fill(0);
+        }
+
+        return this.Q[state];
+    }
+
     // unique key for each state
     getStateKey(obs: Observation): string {
         return `${obs.neighbors.join('')}-${obs.bandit}`;
