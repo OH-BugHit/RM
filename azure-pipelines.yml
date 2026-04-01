@@ -1,0 +1,131 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+    branches:
+        include:
+            - master
+    tags:
+        include:
+            - 'v*'
+
+pool:
+    vmImage: ubuntu-latest
+
+stages:
+    - stage: Static
+      jobs:
+          - job: ESLint
+            displayName: ESLint
+            steps:
+                - task: Cache@2
+                  inputs:
+                      key: '"npm" | "$(Agent.OS)" | package-lock.json'
+                      restoreKeys: |
+                          npm | "$(Agent.OS)"
+                          npm
+                      path: $(System.DefaultWorkingDirectory)/node_modules
+                  displayName: Cache NPM packages
+                - script: |
+                      npm set cache $(NPM_CACHE_FOLDER)
+                      npm ci --cache $(NPM_CACHE_FOLDER)
+                      npm run lint
+    - stage: Build
+      dependsOn: Static
+      jobs:
+          - job: Ubuntu_x64
+            displayName: Build Ubuntu X64
+            steps:
+                - task: NodeTool@0
+                  inputs:
+                      versionSpec: '22.x'
+                  displayName: 'Install Node.js'
+
+                - task: Cache@2
+                  inputs:
+                      key: '"npm" | "$(Agent.OS)" | package-lock.json'
+                      restoreKeys: |
+                          npm | "$(Agent.OS)"
+                          npm
+                      path: $(System.DefaultWorkingDirectory)/node_modules
+                  displayName: Cache NPM packages
+
+                - script: |
+                      npm ci
+                      npm run build
+                  displayName: 'Build'
+
+                - publish: $(System.DefaultWorkingDirectory)/dist
+                  artifact: DistFolder
+
+    - stage: Test
+      dependsOn: Build
+      jobs:
+          - job: Ubuntu_x64
+            displayName: Test Ubuntu X64
+            steps:
+                - task: NodeTool@0
+                  inputs:
+                      versionSpec: '22.x'
+                  displayName: 'Install Node.js'
+                - task: Cache@2
+                  inputs:
+                      key: '"npm" | "$(Agent.OS)" | package-lock.json'
+                      restoreKeys: |
+                          npm | "$(Agent.OS)"
+                          npm
+                      path: $(System.DefaultWorkingDirectory)/node_modules
+                  displayName: Cache NPM packages
+                - download: current
+                  artifact: DistFolder
+                - script: |
+                      npm ci
+                      CI=true npm run ci:test
+                  displayName: 'Test'
+                - task: PublishTestResults@2
+                  displayName: Publish Test Results
+                  condition: succeededOrFailed()
+                  inputs:
+                      testRunner: JUnit
+                      testResultsFiles: '**/junit.xml'
+
+    - stage: DeployProduction
+      displayName: Deploy Production
+      dependsOn: Test
+      condition: and(succeeded(), contains(variables['build.sourceBranch'], 'refs/tags/v'))
+      jobs:
+          - job: AzureSWA
+            displayName: Deploy to static app
+            steps:
+                - download: current
+                  artifact: DistFolder
+                - task: AzureStaticWebApp@0
+                  inputs:
+                      app_location: 'DistFolder'
+                      output_location: 'DistFolder'
+                      cwd: $(Pipeline.Workspace)
+                      skip_api_build: true
+                      skip_app_build: true
+                      azure_static_web_apps_api_token: $(deployment_token)
+
+    - stage: DeployStaging
+      displayName: Deploy Staging
+      dependsOn: Test
+      condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+      jobs:
+          - job: AzureSWA
+            displayName: Deploy to static app
+            steps:
+                - download: current
+                  artifact: DistFolder
+                - task: AzureStaticWebApp@0
+                  inputs:
+                      app_location: 'DistFolder'
+                      output_location: 'DistFolder'
+                      cwd: $(Pipeline.Workspace)
+                      skip_api_build: true
+                      skip_app_build: true
+                      azure_static_web_apps_api_token: $(deployment_token)
+                      deployment_environment: staging
