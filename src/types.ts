@@ -1,8 +1,13 @@
-export enum Entity {
+export enum RoboDogEntity {
     Empty = 0,
     Wall = 1,
     Trap = 2,
 }
+
+export type Observation = {
+    neighbors: RoboDogEntity[];
+    bandit: BanditPosition;
+};
 
 export enum BanditPosition {
     North = 0,
@@ -20,3 +25,56 @@ export enum Actions {
     bark = 4,
     stay = 5,
 }
+
+export type AgentProps = {
+    epsilon: number;
+    gamma: number;
+    alpha: number;
+};
+
+export type RoboDogEnv = {
+    gridSize: number;
+    maxTurns: number;
+    numberOfPots: number;
+    potReloadDelay: number;
+    breakPotSpooksBurglar: boolean;
+};
+
+export type TempSettings = Record<
+    Games,
+    {
+        env: EnvSettings;
+        agent: AgentProps;
+        reward: RewardSettings;
+    }
+>;
+
+export type RoboDogRewards = {
+    spookedBurglarReward: number;
+    brokePotReward: number;
+    barkSuccessReward: number;
+    barkFailReward: number;
+    burglarWonReward: number;
+};
+
+export type EnvSettings = {
+    settings: RoboDogEnv | undefined;
+};
+
+export type RewardSettings = {
+    settings: RoboDogRewards | undefined;
+};
+
+export type DogInfo = {
+    timeLeft: number;
+    result: string;
+    message: string;
+};
+
+export type Control = {
+    isRunning: boolean;
+    isFast: boolean;
+    takeStep: boolean;
+};
+
+export type Games = 'robodog' | 'none';

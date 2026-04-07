@@ -1,7 +1,7 @@
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import Footer from '../Footer/Footer';
-import RLGridGame from '../RobodogTest/Robodog';
+import GameView from '../GameView/GameView';
 
 export default function Frontpage() {
     const { t } = useTranslation();
@@ -20,9 +20,7 @@ export default function Frontpage() {
                     />
                 </div>
                 <h1 className={style.frontpageFont}>{t('common.title')}</h1>
-                <div className={style.startBox}>
-                    <RLGridGame />
-                </div>
+                <GameView />
             </div>
             <Footer hideLang={false} />
         </div>

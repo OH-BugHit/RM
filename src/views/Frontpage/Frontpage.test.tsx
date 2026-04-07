@@ -17,7 +17,7 @@ vi.mock('@genai-fi/base', () => ({
     Button: (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => <button {...props}>{props.children}</button>,
 }));
 
-vi.mock('../RobodogTest/Robodog', () => ({
+vi.mock('../GameView/GameView', () => ({
     default: () => <div data-testid="robodog" />,
 }));
 

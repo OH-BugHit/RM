@@ -1,11 +1,6 @@
-import { Actions, BanditPosition, Entity } from '../../types';
+import { Actions, Observation } from '../../types';
 
 const ACTIONS: number[] = [Actions.up, Actions.down, Actions.left, Actions.right, Actions.bark, Actions.stay];
-
-export interface Observation {
-    neighbors: Entity[];
-    bandit: BanditPosition;
-}
 
 export interface QLearningAgentOptions {
     alpha?: number;
@@ -14,11 +9,13 @@ export interface QLearningAgentOptions {
 }
 
 export class QLearningAgent {
-    Q: Record<string, number[]> = {};
+    Q: Record<string, number[]> = {}; // Q-"table"
+    visitTimes: Record<string, number> = {}; // For rendering memoizing. Memo checks if this is updated for record and renders based on that.
 
     alpha = 0.1;
     gamma = 0.9;
     epsilon = 0.1;
+    tableSize = 0;
 
     constructor(options: QLearningAgentOptions = {}) {
         if (options.alpha !== undefined) this.alpha = options.alpha;
@@ -26,11 +23,21 @@ export class QLearningAgent {
         if (options.epsilon !== undefined) this.epsilon = options.epsilon;
     }
 
+    getTableSize() {
+        return this.tableSize;
+    }
+
+    getQTable() {
+        return this.Q;
+    }
+
     getQValues(obs: Observation): number[] {
         const state = this.getStateKey(obs);
 
         if (!this.Q[state]) {
             this.Q[state] = Array(ACTIONS.length).fill(0);
+            this.tableSize++;
+            this.visitTimes[state] = 0;
         }
 
         return this.Q[state];
@@ -42,18 +49,12 @@ export class QLearningAgent {
     }
 
     chooseAction(obs: Observation): number {
-        const state = this.getStateKey(obs);
-
-        if (!this.Q[state]) {
-            this.Q[state] = Array(ACTIONS.length).fill(0);
-        }
-
         // Epsilon-greedy
         if (Math.random() < this.epsilon) {
             return ACTIONS[Math.floor(Math.random() * ACTIONS.length)];
         }
 
-        const values = this.Q[state];
+        const values = this.getQValues(obs);
         const max = Math.max(...values);
 
         // Tie-breaking among best actions
@@ -65,17 +66,15 @@ export class QLearningAgent {
 
     update(obs: Observation, action: number, reward: number, nextObs: Observation, isTerminal: boolean = false) {
         const state = this.getStateKey(obs);
-        const nextState = this.getStateKey(nextObs);
-
-        if (!this.Q[state]) this.Q[state] = Array(ACTIONS.length).fill(0);
-        if (!this.Q[nextState]) this.Q[nextState] = Array(ACTIONS.length).fill(0);
+        const values = this.getQValues(obs);
+        const nextValues = this.getQValues(nextObs);
 
         const aIdx = ACTIONS.indexOf(action);
 
-        // Jos peli päättyi (ansa/rosvo), tulevaisuuden arvo on 0
-        const maxNext = isTerminal ? 0 : Math.max(...this.Q[nextState]);
+        const maxNext = isTerminal ? 0 : Math.max(...nextValues);
 
-        // Q-learning päivityssääntö
-        this.Q[state][aIdx] += this.alpha * (reward + this.gamma * maxNext - this.Q[state][aIdx]);
+        values[aIdx] += this.alpha * (reward + this.gamma * maxNext - values[aIdx]);
+
+        this.visitTimes[state] = (this.visitTimes[state] || 0) + 1; // Update visited count (version count)
     }
 }

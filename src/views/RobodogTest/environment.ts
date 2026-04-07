@@ -1,5 +1,4 @@
-import { Actions, BanditPosition } from '../../types';
-import { Observation } from './rlAgentQ';
+import { Actions, BanditPosition, Observation } from '../../types';
 
 type Position = { x: number; y: number };
 
@@ -117,6 +116,7 @@ export class RLGridEnv {
         };
     }
 
+    // 2 = wall, 1 = pot, 0 = empty
     getCell(x: number, y: number): number {
         if (x < 0 || x >= this.gridSize || y < 0 || y >= this.gridSize) return 2;
         const r = this.flower_pots.find((r) => r.intact && r.x === x && r.y === y);
