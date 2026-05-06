@@ -1,26 +1,25 @@
 import { Button } from '@genai-fi/base';
-import EnvironmentControl from '../RobodogTest/Controls/GameSettingsControl';
-import RewardControl from '../RobodogTest/Controls/RewardControl';
-import AgentControl from '../RobodogTest/Controls/AgentControl';
 import { Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAtomValue, useSetAtom, useStore } from 'jotai';
 import {
     ActiveGameAtom,
-    AgentSettingsAtom,
     EnvSettingsAtom,
     ResetUiPulseAtom,
     RewardSettingsAtom,
     TempSettingsAtom,
 } from '../../atoms/state';
+import AgentControl from '../Controls/AgentControl';
+import RewardControl from '../Controls/RewardControl';
+import EnvironmentControl from '../Controls/GameSettingsControl';
+import ObservationControl from '../Controls/ObservationControl';
 
 function GameTuner() {
     const store = useStore();
     const { t } = useTranslation();
     const [tabNumber, setTabNumber] = useState(0);
     const tempSettings = useAtomValue(TempSettingsAtom);
-    const setAgentSettings = useSetAtom(AgentSettingsAtom);
     const setEnvSettings = useSetAtom(EnvSettingsAtom);
     const setRewards = useSetAtom(RewardSettingsAtom);
     const setResetUIpulse = useSetAtom(ResetUiPulseAtom);
@@ -30,11 +29,6 @@ function GameTuner() {
 
         switch (game) {
             case 'robodog': {
-                setAgentSettings({
-                    epsilon: tempSettings[game].agent.epsilon,
-                    gamma: tempSettings[game].agent.gamma,
-                    alpha: tempSettings[game].agent.alpha,
-                });
                 setEnvSettings({
                     settings: {
                         gridSize: tempSettings[game].env.settings?.gridSize ?? 10,
@@ -71,22 +65,24 @@ function GameTuner() {
                 variant="scrollable"
                 scrollButtons="auto"
                 orientation="horizontal"
-                sx={{ borderRight: '1px solid #008297' }}
+                sx={{ borderRight: '1px solid #008297', borderLeft: '1px solid #008297' }}
             >
                 <Tab label={t('Agent')} />
                 <Tab label={t('Reward')} />
                 <Tab label={t('Environment')} />
+                <Tab label={t('Observation')} />
             </Tabs>
             {tabNumber === 0 && <AgentControl />}
             {tabNumber === 1 && <RewardControl />}
             {tabNumber === 2 && <EnvironmentControl />}
+            {tabNumber === 3 && <ObservationControl />}
             <Button
                 variant="contained"
                 onClick={resetUI}
+                sx={{ marginTop: '1rem' }}
             >
                 Restart learning
             </Button>
-            ;
         </div>
     );
 }

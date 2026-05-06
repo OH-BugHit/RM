@@ -11,6 +11,18 @@ const routes = createRoutesFromElements(
             index
             element={<Frontpage />}
         />
+        <Route
+            path="/story"
+            lazy={() => import('./views/Story/Story').then((mod) => ({ element: <mod.default /> }))}
+        />
+        <Route
+            path="/about"
+            lazy={() => import('./views/About/About').then((mod) => ({ element: <mod.default /> }))}
+        />
+        <Route
+            path="/play"
+            lazy={() => import('./views/GameView/GameView').then((mod) => ({ element: <mod.default /> }))}
+        />
     </Route>
 );
 

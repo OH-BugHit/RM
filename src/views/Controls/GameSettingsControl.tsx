@@ -1,7 +1,7 @@
 import { useAtom, useAtomValue } from 'jotai';
 import style from './style.module.css';
 import { Checkbox, FormControlLabel, TextField } from '@mui/material';
-import { TempSettingsAtom, ActiveGameAtom } from '../../../atoms/state';
+import { TempSettingsAtom, ActiveGameAtom } from '../../atoms/state';
 /*
 const SPOOKED_BURGLAR_REWARD = 10;
 const BROKE_POT_REWARD = -20;

@@ -1,17 +1,31 @@
+import { useMemo } from 'react';
+import { AgentType, GridConfig } from '../../types';
 import { getQColor } from '../../utils/common';
+import { gridRoboDogConfig, gridAdventurerConfig } from './gridConfigs';
 
 interface QTableProps {
     state: string;
     disabled: boolean;
     actionValues: number[];
+    type: AgentType;
 }
 
-export default function DrawObservation({ state, disabled, actionValues }: QTableProps) {
+export default function DrawObservation({ state, disabled, actionValues, type }: QTableProps) {
     const [neighbours, burglar] = state.split('-');
-    const gridSize = neighbours.length - 1;
     const qValues = actionValues;
     const maxQ = Math.max(...qValues);
     const minQ = Math.min(...qValues);
+
+    const config = useMemo(() => {
+        switch (type) {
+            case 'adventurer':
+                return gridAdventurerConfig;
+            case 'hoover':
+                return gridRoboDogConfig;
+            default:
+                return gridRoboDogConfig;
+        }
+    }, [type]);
 
     const itemizer = (key: string, i: number) => {
         switch (key) {
@@ -35,6 +49,7 @@ export default function DrawObservation({ state, disabled, actionValues }: QTabl
                         height={40}
                         style={{
                             overflow: 'visible',
+                            display: 'block',
                             width: 40,
                             height: 40,
                             border: '1px solid black',
@@ -51,6 +66,7 @@ export default function DrawObservation({ state, disabled, actionValues }: QTabl
                         height={40}
                         style={{
                             overflow: 'visible',
+                            display: 'block',
                             width: 40,
                             height: 40,
                             border: '1px solid black',
@@ -59,35 +75,33 @@ export default function DrawObservation({ state, disabled, actionValues }: QTabl
                     />
                 );
             }
+            default:
+                return null;
         }
     };
 
-    const drawGrid = () => {
-        if (neighbours.length !== 4) return null; // TODO: Other observation spaces
-
+    const drawGrid = (config: GridConfig) => {
+        const total = config.size * config.size;
         const cells = [];
 
-        for (let i = 0; i < 9; i++) {
-            // corners off
-            const isCorner = [0, 6, 8].includes(i);
-
-            if (isCorner) {
+        for (let i = 0; i < total; i++) {
+            if (config.hidden?.includes(i)) {
                 cells.push(
                     <div
                         key={i}
-                        style={{
-                            width: 40,
-                            height: 40,
-                            background: 'none',
-                        }}
+                        style={{ width: 40, height: 40 }}
                     />
                 );
                 continue;
             }
 
-            if (i === 2) {
+            // special (esim. agent image)
+            if (config.special?.[i] === 'bark') {
                 cells.push(
-                    <div style={{ position: 'relative', width: 40, height: 40 }}>
+                    <div
+                        key={i}
+                        style={{ position: 'relative', width: 40, height: 40 }}
+                    >
                         <img
                             src="hau.png"
                             width={40}
@@ -96,9 +110,8 @@ export default function DrawObservation({ state, disabled, actionValues }: QTabl
                                 position: 'absolute',
                                 right: '-10px',
                                 top: '-10px',
-                                overflow: 'visible',
                                 border: '1px solid black',
-                                background: getQColor(actionValues[4], minQ, maxQ),
+                                background: getQColor(actionValues[config.qMap[i]], minQ, maxQ),
                             }}
                         />
                     </div>
@@ -107,7 +120,7 @@ export default function DrawObservation({ state, disabled, actionValues }: QTabl
             }
 
             // center
-            if (i === 4) {
+            if (i === config.center) {
                 cells.push(
                     <div
                         key={i}
@@ -115,40 +128,19 @@ export default function DrawObservation({ state, disabled, actionValues }: QTabl
                             width: 40,
                             height: 40,
                             border: '1px solid black',
-                            background: getQColor(actionValues[5], minQ, maxQ),
+                            background: getQColor(actionValues[config.qMap[i]], minQ, maxQ),
                         }}
                     />
                 );
                 continue;
             }
 
-            // reunat mapataan neighboursiin
-            const mapping = {
-                1: neighbours[0], // top
-                5: neighbours[3], // right
-                7: neighbours[1], // bottom
-                3: neighbours[2], // left
-            };
+            // neighbours
+            const nIndex = config.neighborMap[i];
+            const qIndex = config.qMap[i];
+            const value = neighbours[nIndex];
 
-            const qMapping = {
-                1: 0, // top
-                3: 2, // right
-                5: 3, // bottom
-                7: 1, // left
-            };
-
-            const qMap = qMapping[i as keyof typeof qMapping];
-
-            const value = mapping[i as keyof typeof mapping];
-
-            cells.push(
-                <div
-                    style={{ maxHeight: '20px' }}
-                    key={i}
-                >
-                    {value ? itemizer(value, actionValues[qMap]) : null}
-                </div>
-            );
+            cells.push(<div key={i}>{value ? itemizer(value, actionValues[qIndex]) : null}</div>);
         }
 
         return cells;
@@ -192,10 +184,10 @@ export default function DrawObservation({ state, disabled, actionValues }: QTabl
                 <div
                     style={{
                         display: 'grid',
-                        gridTemplateColumns: `repeat(${gridSize}, 40px)`,
+                        gridTemplateColumns: `repeat(${config.size}, 40px)`,
                     }}
                 >
-                    {drawGrid()}
+                    {drawGrid(config)}
                 </div>
 
                 <div>

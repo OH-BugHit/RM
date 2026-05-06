@@ -1,13 +1,13 @@
 import { useEffect, useRef } from 'react';
-import RoboDogGame from '../RobodogTest/RoboDogGame';
+import PotsAndBurglarGame from '../Environments/PotsAndBurglar/PotsAndBurglarGame';
 import style from './style.module.css';
-import { RLGridEnv } from '../RobodogTest/environment';
-import { QLearningAgent } from '../RobodogTest/rlAgentQ';
-import { Actions, DogInfo, Observation } from '../../types';
-import Controls from '../RobodogTest/Controls/Controls';
-import { useSetAtom, useStore } from 'jotai';
-import { ActiveGameAtom, EnvSettingsAtom, RewardSettingsAtom, TempSettingsAtom } from '../../atoms/state';
+import { RLGridEnv } from '../Environments/PotsAndBurglar/environment';
+import { QLearningAgent } from '../../components/agents/rlAgentQ';
+import { Actions, DogInfo, BurglarGameObservation } from '../../types';
+import { useAtomValue, useSetAtom, useStore } from 'jotai';
+import { ActiveGameAtom, agentAtom, EnvSettingsAtom, RewardSettingsAtom, TempSettingsAtom } from '../../atoms/state';
 import GameTuner from './GameTuner';
+import Controls from '../Controls/Controls';
 
 // React component
 function GameView() {
@@ -16,9 +16,11 @@ function GameView() {
     const setEnvSettings = useSetAtom(EnvSettingsAtom);
     const setRewardSettings = useSetAtom(RewardSettingsAtom);
 
+    const agent = useAtomValue(agentAtom);
+
     const envRef = useRef<RLGridEnv>(undefined);
     const agentRef = useRef<QLearningAgent>(undefined);
-    const obsRef = useRef<Observation>(undefined);
+    const obsRef = useRef<BurglarGameObservation>(undefined);
     const actionRef = useRef<Actions>(undefined);
     const qvalueRef = useRef<number[]>([]);
     const infoRef = useRef<DogInfo>(undefined);
@@ -41,13 +43,14 @@ function GameView() {
                 <div className={style.container}>
                     <div className={style.containerBox}>
                         <div className={style.game}>
-                            <RoboDogGame
+                            <PotsAndBurglarGame
                                 envRef={envRef}
                                 agentRef={agentRef}
                                 obsRef={obsRef}
                                 actionRef={actionRef}
                                 qvalueRef={qvalueRef}
                                 infoRef={infoRef}
+                                agent={agent}
                             />
                             <Controls />
                         </div>

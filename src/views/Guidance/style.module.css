@@ -1,0 +1,78 @@
+@value primary, secondary, bgColourful1, textDark from "@genai-fi/base/css/colours.module.css";
+
+.container {
+    background: bgColourful1;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    font-size: 0.6rem;
+    z-index: 11;
+    overflow-y: auto;
+}
+
+.forceText {
+    color: white;
+}
+
+.guidanceTitle {
+    font-size: 0.8rem;
+}
+
+
+.stepsContainer {
+    overflow: auto;
+    width: 100%;
+    scrollbar-color: rgb(22, 27, 35) rgb(106, 123, 128);
+    margin-left: 4rem;
+    margin-right: 4rem;
+}
+
+ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+@media (min-height: 700px) {
+    .container {
+        font-size: 0.7rem;
+    }
+
+    .guidanceTitle {
+        font-size: 1.0rem;
+    }
+}
+
+@media (min-height: 950px) {
+    .container {
+        font-size: 0.8rem;
+    }
+
+    .guidanceTitle {
+        font-size: 1.2rem;
+    }
+}
+
+@media (min-height: 1200px) {
+    .container {
+        font-size: 1.2rem;
+    }
+}
+
+
+.container :global .MuiMenuItem-root {
+    font-size: 1.2em;
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    padding-left: 1.5em;
+    padding-right: 1.5rem;
+}
+
+.advanced {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    color: textDark;
+    z-index: 12;
+}

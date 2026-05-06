@@ -1,0 +1,129 @@
+@value primary, secondary textDark from "@genai-fi/base/css/colours.module.css";
+
+.storyPage {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.guideContainer {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.storyContent {
+    flex: 1;
+    overflow-y: auto;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+
+    gap: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+ul {
+    padding-inline-start: 0;
+    width: 100%;
+}
+
+.selectorItemContainer {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2rem;
+}
+
+.selectorContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    padding: 2rem 4em 2em 4rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.textSection {
+    max-width: 600px;
+}
+
+.itemContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    padding: 0rem 1em 0rem 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.selectorItemItems {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    border-radius: 6px;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 2px 4px #bbb;
+    flex-shrink: 0;
+    animation: fadein 0.5s 1;
+    box-sizing: border-box;
+    /*border: 1px solid white;*/
+    position: relative;
+    overflow: hidden;
+}
+
+.content>div {
+    scroll-margin-top: 80px;
+    /* Guidance height */
+}
+
+.storyLeftContainer {
+    width: fit-content;
+    position: relative;
+    left: 10%;
+    margin-top: 5rem;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.storyRight {
+    width: fit-content;
+    position: relative;
+    right: 10%;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.separator {
+    width: 80%;
+    height: 1px;
+    background: #ccc;
+    margin: 2rem 0;
+}
+
+.selectedButton {
+    border-color: secondary;
+    border-radius: 0.8rem;
+    background-color: #19b1a770;
+    gap: 2rem
+}
+
+.notSelectedButton {
+    gap: 2rem;
+    border-radius: 1rem;
+}

@@ -3,7 +3,7 @@ import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
 import FastForwardIcon from '@mui/icons-material/FastForward';
 import { Button } from '@genai-fi/base';
 import { useSetAtom } from 'jotai';
-import { GameControlAtom } from '../../../atoms/state';
+import { GameControlAtom } from '../../atoms/state';
 
 function Controls() {
     const setControls = useSetAtom(GameControlAtom);

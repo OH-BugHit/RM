@@ -1,4 +1,4 @@
-import { Actions, Observation } from '../../types';
+import { Actions, BurglarGameObservation } from '../../types';
 
 const ACTIONS: number[] = [Actions.up, Actions.down, Actions.left, Actions.right, Actions.bark, Actions.stay];
 
@@ -16,6 +16,7 @@ export class QLearningAgent {
     gamma = 0.9;
     epsilon = 0.1;
     tableSize = 0;
+    learning = true;
 
     constructor(options: QLearningAgentOptions = {}) {
         if (options.alpha !== undefined) this.alpha = options.alpha;
@@ -31,7 +32,7 @@ export class QLearningAgent {
         return this.Q;
     }
 
-    getQValues(obs: Observation): number[] {
+    getQValues(obs: BurglarGameObservation): number[] {
         const state = this.getStateKey(obs);
 
         if (!this.Q[state]) {
@@ -44,11 +45,11 @@ export class QLearningAgent {
     }
 
     // unique key for each state
-    getStateKey(obs: Observation): string {
-        return `${obs.neighbors.join('')}-${obs.bandit}`;
+    getStateKey(obs: BurglarGameObservation): string {
+        return `${obs.neighbors.join('')}-${obs.burglar}`;
     }
 
-    chooseAction(obs: Observation): number {
+    chooseAction(obs: BurglarGameObservation): number {
         // Epsilon-greedy
         if (Math.random() < this.epsilon) {
             return ACTIONS[Math.floor(Math.random() * ACTIONS.length)];
@@ -64,7 +65,14 @@ export class QLearningAgent {
         return ACTIONS[randomIdx];
     }
 
-    update(obs: Observation, action: number, reward: number, nextObs: Observation, isTerminal: boolean = false) {
+    update(
+        obs: BurglarGameObservation,
+        action: number,
+        reward: number,
+        nextObs: BurglarGameObservation,
+        isTerminal: boolean = false
+    ) {
+        if (!this.learning) return; // Does not update visited count also!
         const state = this.getStateKey(obs);
         const values = this.getQValues(obs);
         const nextValues = this.getQValues(nextObs);

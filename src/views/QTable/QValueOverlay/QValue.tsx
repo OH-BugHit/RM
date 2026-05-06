@@ -1,5 +1,5 @@
 import style from './style.module.css';
-import { getQColor } from '../../utils/common';
+import { getQColor } from '../../../utils/common';
 
 interface Props {
     qvalueRef?: React.RefObject<number[]>;

@@ -1,15 +1,17 @@
 import { useEffect, useRef } from 'react';
-import { QLearningAgent } from '../rlAgentQ';
+import { QLearningAgent } from '../../components/agents/rlAgentQ';
 import QItem from './QItem';
 import style from './style.module.css';
+import { AgentType } from '../../types';
 
 interface QTableProps {
     disabled: boolean;
     agent: React.RefObject<QLearningAgent | undefined>;
     scrollToState?: string | undefined;
+    type: AgentType;
 }
 
-export default function QTable({ agent, disabled, scrollToState }: QTableProps) {
+export default function QTable({ agent, disabled, scrollToState, type }: QTableProps) {
     const activeRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -41,6 +43,7 @@ export default function QTable({ agent, disabled, scrollToState }: QTableProps) 
                                     state={state}
                                     actions={actions}
                                     version={agent.current!.visitTimes[state] || 0}
+                                    type={type}
                                 />
                             </div>
                         );

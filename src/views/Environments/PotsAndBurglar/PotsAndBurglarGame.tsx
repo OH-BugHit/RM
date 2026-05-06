@@ -1,41 +1,65 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { QLearningAgent } from './rlAgentQ';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { QLearningAgent } from '../../../components/agents/rlAgentQ';
 import { RLGridEnv } from './environment';
-import { Actions, BanditPosition, DogInfo, Observation } from '../../types';
+import { Actions, BurglarPosition, DogInfo, BurglarGameObservation, Agent } from '../../../types';
 import style from './style.module.css';
-import { useSound } from '../../hooks/useSound';
-import { useAtomValue } from 'jotai';
+import { useSound } from '../../../hooks/useSound';
+import { useStore, useAtomValue } from 'jotai';
 import {
     AgentSettingsAtom,
     EnvSettingsAtom,
     GameControlAtom,
     ResetUiPulseAtom,
     RewardSettingsAtom,
-} from '../../atoms/state';
-import QTable from './QTable/QTable';
-import { stringifyAction } from '../../utils/common';
-import DrawObservation from '../Observation/DrawObservation';
+} from '../../../atoms/state';
+import { stringifyAction } from '../../../utils/common';
+import DrawObservation from '../../Observation/DrawObservation';
+import {
+    getAdventurerOffset,
+    getAgentImage,
+    getAgentObservationShape,
+    getAgentSounds,
+    robodogOffset,
+} from '../../../components/GameComponents/agentProps';
+import { getOnSight } from '../../../components/GameComponents/drawComponent';
+//import QCanvas from '../../QTable/QCanvas';
 
 const STEP_INTERVAL = 400; // ms
 const FAST_STEPS = 5000;
 
 // React component
-interface RoboDogGameProps {
+interface PotsAndBurglarGameProps {
     envRef: React.RefObject<RLGridEnv | undefined>;
     agentRef: React.RefObject<QLearningAgent | undefined>;
-    obsRef: React.RefObject<Observation | undefined>;
+    obsRef: React.RefObject<BurglarGameObservation | undefined>;
     actionRef: React.RefObject<Actions | undefined>;
     qvalueRef: React.RefObject<number[]>;
     infoRef: React.RefObject<DogInfo | undefined>;
+    agent: Agent;
 }
 
-function RoboDogGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, infoRef }: RoboDogGameProps) {
-    const playBark = useSound('/bark.mp3');
+function PotsAndBurglarGame({
+    envRef,
+    agentRef,
+    obsRef,
+    actionRef,
+    qvalueRef,
+    infoRef,
+    agent,
+}: PotsAndBurglarGameProps) {
+    const sounds = useMemo(() => {
+        return getAgentSounds(agent.type);
+    }, [agent.type]);
+
+    const agentImage = getAgentImage(agent.type);
+    const playBark = useSound(sounds);
     const envSettings = useAtomValue(EnvSettingsAtom);
     const rewardSettings = useAtomValue(RewardSettingsAtom);
-    const agentSettings = useAtomValue(AgentSettingsAtom);
     const controls = useAtomValue(GameControlAtom);
     const resetUIpulse = useAtomValue(ResetUiPulseAtom);
+    const agentSettings = useAtomValue(AgentSettingsAtom);
+
+    const store = useStore();
 
     const gridSize = envSettings?.settings?.gridSize;
     const maxTurns = envSettings?.settings?.maxTurns;
@@ -53,8 +77,11 @@ function RoboDogGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, infoRef }
     const potsBrokenRef = useRef(0);
     const episodicRewardRef = useRef(0);
     const lastEpisodeRewardRef = useRef(0);
+    const defaultObs = useMemo(() => {
+        return getAgentObservationShape(agent.type);
+    }, [agent.type]);
 
-    const [obs, setObs] = useState<Observation>({ neighbors: [0, 0, 0, 0], bandit: 4 });
+    const [obs, setObs] = useState<BurglarGameObservation>(defaultObs);
 
     const [wins, setWins] = useState(0);
     const [losses, setLosses] = useState(0);
@@ -81,13 +108,15 @@ function RoboDogGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, infoRef }
                 barkFail: barkFailReward,
                 burglarWon: burglarWonReward,
             },
+            agentObsOffset: agent.type === 'robodog' ? robodogOffset : getAdventurerOffset(),
         });
 
-        obsRef.current = { neighbors: [0, 0, 0, 0], bandit: 4 };
+        obsRef.current = defaultObs;
+        const agentSettingsData = store.get(AgentSettingsAtom);
         agentRef.current = new QLearningAgent({
-            alpha: agentSettings.alpha,
-            gamma: agentSettings.gamma,
-            epsilon: agentSettings.epsilon,
+            alpha: agentSettingsData.alpha,
+            gamma: agentSettingsData.gamma,
+            epsilon: agentSettingsData.epsilon,
         });
 
         actionRef.current = undefined;
@@ -116,17 +145,29 @@ function RoboDogGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, infoRef }
         barkSuccessReward,
         barkFailReward,
         burglarWonReward,
-        agentSettings,
+        store,
         actionRef,
         envRef,
         infoRef,
         agentRef,
         obsRef,
         qvalueRef,
+        defaultObs,
+        agent.type,
     ]);
 
     useEffect(() => {
+        if (agentRef.current) {
+            agentRef.current.alpha = agentSettings.alpha;
+            agentRef.current.gamma = agentSettings.gamma;
+            agentRef.current.epsilon = agentSettings.epsilon;
+            agentRef.current.learning = agentSettings.learning;
+        }
+    }, [agentSettings, agentRef]);
+
+    useEffect(() => {
         resetUI();
+        console.log('UI reset pulse');
     }, [resetUIpulse, resetUI]);
 
     const syncUI = React.useCallback(() => {
@@ -244,20 +285,20 @@ function RoboDogGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, infoRef }
             <div>
                 <div className={style.column}>
                     <h3>Q-table</h3>
-                    States explored:{' '}
-                    {!controls.isRunning && agentRef.current
-                        ? ((agentRef.current.getTableSize() / ((3 ** 4 - 17) * 5)) * 100).toFixed(0) // TODO: Figure out good way to count this.. Maybe use enumerator for like "robodog" returns some multipliers and we have observation complexity here already?
+                    Different states explored:{' '}
+                    {agentRef.current
+                        ? agentRef.current.getTableSize() // TODO: Figure out good way to count this.. Maybe use enumerator for like "robodog" returns some multipliers and we have observation complexity here already?
                         : '-'}
-                    %
                     <br />
-                    Total number of different states: {(3 ** 4 - 17) * 5}{' '}
-                    {/* 17 impossible states as minimum grid is 2x2 */}
                 </div>
-                <QTable
-                    agent={agentRef}
-                    disabled={controls.isFast}
-                    scrollToState={agentRef.current?.getStateKey(obs)}
-                />
+                <div style={{ width: '800px' }}>
+                    {/*<QCanvas
+                        agent={agentRef}
+                        disabled={controls.isFast}
+                        scrollToState={agentRef.current?.getStateKey(obs)}
+                        type={agent.type}
+                    />/*/}
+                </div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
@@ -267,6 +308,7 @@ function RoboDogGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, infoRef }
                             state={agentRef.current?.getStateKey(obs)}
                             disabled={controls.isFast}
                             actionValues={qvalueRef.current}
+                            type={agent.type}
                         />
                         {/*<QValues qvalueRef={qvalueRef} />*/}
                     </>
@@ -289,7 +331,7 @@ function RoboDogGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, infoRef }
                         <img
                             src="/burglar2.png"
                             width={60}
-                            style={{ opacity: obs.bandit === BanditPosition.North ? 1 : 0 }}
+                            style={{ opacity: obs.burglar === BurglarPosition.North ? 1 : 0 }}
                         />
                     </div>
                     <div />
@@ -299,7 +341,7 @@ function RoboDogGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, infoRef }
                         <img
                             src="/burglar2.png"
                             width={60}
-                            style={{ opacity: obs.bandit === BanditPosition.West ? 1 : 0 }}
+                            style={{ opacity: obs.burglar === BurglarPosition.West ? 1 : 0 }}
                         />
                     </div>
 
@@ -313,14 +355,14 @@ function RoboDogGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, infoRef }
                         {Array.from({ length: gridSize }).map((_, y) =>
                             Array.from({ length: gridSize }).map((_, x) => {
                                 let bg = 'lightgray';
-                                let onSight = false;
+                                const onSight = getOnSight({
+                                    agentPos: env.position,
+                                    x: x,
+                                    y: y,
+                                    agentType: agent.type,
+                                });
 
-                                if (env.dog.x === x + 1 && env.dog.y === y) onSight = true;
-                                else if (env.dog.x === x - 1 && env.dog.y === y) onSight = true;
-                                else if (env.dog.x === x && env.dog.y === y + 1) onSight = true;
-                                else if (env.dog.x === x && env.dog.y === y - 1) onSight = true;
-
-                                if (env.dog.x === x && env.dog.y === y) bg = 'blue';
+                                if (env.position.x === x && env.position.y === y) bg = 'blue';
                                 else if (env.flower_pots.find((r) => r.intact && r.x === x && r.y === y)) bg = 'green';
                                 else if (env.flower_pots.find((r) => !r.intact && r.x === x && r.y === y)) bg = 'brown';
 
@@ -359,7 +401,7 @@ function RoboDogGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, infoRef }
                                     return (
                                         <img
                                             key={`${x}-${y}`}
-                                            src="robo_dog.png"
+                                            src={agentImage}
                                             width={40}
                                             style={{
                                                 overflow: 'visible',
@@ -389,7 +431,7 @@ function RoboDogGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, infoRef }
                         <img
                             src="/burglar.png"
                             width={60}
-                            style={{ opacity: obs.bandit === BanditPosition.East ? 1 : 0 }}
+                            style={{ opacity: obs.burglar === BurglarPosition.East ? 1 : 0 }}
                         />
                     </div>
 
@@ -399,7 +441,7 @@ function RoboDogGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, infoRef }
                         <img
                             src="/burglar.png"
                             width={60}
-                            style={{ opacity: obs.bandit === BanditPosition.South ? 1 : 0 }}
+                            style={{ opacity: obs.burglar === BurglarPosition.South ? 1 : 0 }}
                         />
                     </div>
                     <div />
@@ -418,4 +460,4 @@ function RoboDogGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, infoRef }
     );
 }
 
-export default RoboDogGame;
+export default PotsAndBurglarGame;

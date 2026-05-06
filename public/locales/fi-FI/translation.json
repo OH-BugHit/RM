@@ -1,9 +1,13 @@
 {
+    "about": {
+        "title": "Generation AI",
+        "privacyTitle": "Tietoturvaselvitys"
+    },
     "common": {
         "cancel": "Peruuta",
         "close": "Sulje",
         "or": "tai",
         "paused": "Peli pysäytetty",
-        "title": "Palkkion metsästäjä"
+        "title": "Palkkionmetsästäjä"
     }
 }

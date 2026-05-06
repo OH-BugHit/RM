@@ -9,7 +9,7 @@ type FooterProps = {
 
 function Footer({ hideLang }: FooterProps) {
     return (
-        <footer>
+        <footer data-testid="footer">
             <div className={style.privacy}>
                 <Privacy />
             </div>

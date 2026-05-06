@@ -14,7 +14,7 @@ export default function LangSelect({ position }: Props) {
         i18n.changeLanguage(e.target.value || 'en-GB');
     };
 
-    const supportedLanguages = Array.isArray(i18n.options.supportedLngs)
+    const supportedLanguages = Array.isArray(i18n.options?.supportedLngs)
         ? i18n.options.supportedLngs.filter(
               (lng: string) => lng !== 'cimode' // dont show test languages
           )

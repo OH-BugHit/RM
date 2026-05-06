@@ -1,9 +1,7 @@
-import { Actions, BanditPosition, Observation } from '../../types';
-
-type Position = { x: number; y: number };
+import { Actions, BurglarPosition, BurglarGameObservation, Position, Offset } from '../../../types';
 
 type StepResult = {
-    obs: Observation;
+    obs: BurglarGameObservation;
     reward: number;
     terminated: boolean;
     truncated: boolean;
@@ -23,6 +21,7 @@ export interface EnvironmentOptions {
         barkFail?: number;
         burglarWon?: number;
     };
+    agentObsOffset?: Offset[];
 }
 
 function getRandomInt(max: number): number {
@@ -38,12 +37,17 @@ const BURGLAR_WON_REWARD = -1;
 const POT_RELOAD_DELAY = 25;
 
 type Info = { timeLeft: number; brokePot: boolean; result: 'win' | 'lose' | 'ongoing'; message: string };
-const SIDES: BanditPosition[] = [BanditPosition.North, BanditPosition.South, BanditPosition.East, BanditPosition.West];
+const SIDES: BurglarPosition[] = [
+    BurglarPosition.North,
+    BurglarPosition.South,
+    BurglarPosition.East,
+    BurglarPosition.West,
+];
 
 export class RLGridEnv {
-    dog: Position = { x: 0, y: 0 };
+    position: Position = { x: 0, y: 0 };
     flower_pots: { x: number; y: number; intact: boolean; reload: number }[] = []; // x and y coords, intact or not, and steps to replace when broken
-    burglar = { side: BanditPosition.Away, turns: 0 };
+    burglar = { side: BurglarPosition.Away, turns: 0 };
     gridSize: number;
     maxTurns: number;
     potReloadDelay: number;
@@ -53,6 +57,7 @@ export class RLGridEnv {
     barkSuccessReward: number;
     barkFailReward: number;
     burglarWonReward: number;
+    agentObsOffset: Offset[];
 
     constructor({
         gridSize = 6,
@@ -61,6 +66,12 @@ export class RLGridEnv {
         potReloadDelay = POT_RELOAD_DELAY,
         breakPotSpooksBurglar = true,
         rewards = {},
+        agentObsOffset = [
+            { dx: 0, dy: -1 }, // top
+            { dx: 0, dy: 1 }, // bottom
+            { dx: -1, dy: 0 }, // left
+            { dx: 1, dy: 0 }, // right
+        ],
     }: EnvironmentOptions = {}) {
         this.gridSize = gridSize;
         this.maxTurns = maxTurns;
@@ -71,13 +82,14 @@ export class RLGridEnv {
         this.barkSuccessReward = rewards.barkSuccess ?? BARK_SUCCESS_REWARD;
         this.barkFailReward = rewards.barkFail ?? BARK_FAIL_REWARD;
         this.burglarWonReward = rewards.burglarWon ?? BURGLAR_WON_REWARD;
+        this.agentObsOffset = agentObsOffset;
 
         const occupied = new Set<string>();
         const key = (x: number, y: number) => `${x},${y}`;
         const x = getRandomInt(gridSize);
         const y = getRandomInt(gridSize);
 
-        this.dog = { x, y };
+        this.position = { x, y };
         occupied.add(key(x, y));
 
         this.flower_pots = [];
@@ -100,16 +112,16 @@ export class RLGridEnv {
         this.reset();
     }
 
-    reset(): { obs: Observation; info: Info } {
+    reset(): { obs: BurglarGameObservation; info: Info } {
         while (true) {
             const x = getRandomInt(this.gridSize);
             const y = getRandomInt(this.gridSize);
             if (!this.flower_pots.some((r) => r.x === x && r.y === y)) {
-                this.dog = { x, y };
+                this.position = { x, y };
                 break;
             }
         }
-        this.burglar = { side: BanditPosition.Away, turns: 0 };
+        this.burglar = { side: BurglarPosition.Away, turns: 0 };
         return {
             obs: this.getObservation(),
             info: { timeLeft: this.maxTurns, brokePot: false, result: 'ongoing', message: 'Game reset' },
@@ -123,29 +135,24 @@ export class RLGridEnv {
         return r ? 1 : 0;
     }
 
-    getObservation(): Observation {
+    getObservation(offsets: Offset[] = this.agentObsOffset): BurglarGameObservation {
         return {
-            neighbors: [
-                this.getCell(this.dog.x, this.dog.y - 1),
-                this.getCell(this.dog.x, this.dog.y + 1),
-                this.getCell(this.dog.x - 1, this.dog.y),
-                this.getCell(this.dog.x + 1, this.dog.y),
-            ],
-            bandit: SIDES.indexOf(this.burglar.side),
+            neighbors: offsets.map((o) => this.getCell(this.position.x + o.dx, this.position.y + o.dy)),
+            burglar: SIDES.indexOf(this.burglar.side),
         };
     }
 
     // Returns true if broke a pot. (Makes noice and terminates episode if burglar is there)
     private moveDog(action: number): boolean {
         let broke = false;
-        let { x, y } = this.dog;
+        let { x, y } = this.position;
 
         if (action === Actions.up && y > 0) y--;
         if (action === Actions.down && y < this.gridSize - 1) y++;
         if (action === Actions.left && x > 0) x--;
         if (action === Actions.right && x < this.gridSize - 1) x++;
 
-        this.dog = { x, y };
+        this.position = { x, y };
 
         this.flower_pots = this.flower_pots.map((r) => {
             if (r.intact && r.x === x && r.y === y) {
@@ -160,7 +167,7 @@ export class RLGridEnv {
     }
 
     private burglarStep(): { terminated: boolean } {
-        if (this.burglar.side === BanditPosition.Away) {
+        if (this.burglar.side === BurglarPosition.Away) {
             this.burglar.side = SIDES[Math.floor(Math.random() * SIDES.length)];
         }
         this.burglar.turns++;
@@ -182,11 +189,11 @@ export class RLGridEnv {
 
     private checkBarkSuccess(): boolean {
         const side = this.burglar.side;
-        if (side === BanditPosition.Away) return false;
-        if (side === BanditPosition.West && this.dog.x === 0) return true;
-        if (side === BanditPosition.East && this.dog.x === this.gridSize - 1) return true;
-        if (side === BanditPosition.North && this.dog.y === 0) return true;
-        if (side === BanditPosition.South && this.dog.y === this.gridSize - 1) return true;
+        if (side === BurglarPosition.Away) return false;
+        if (side === BurglarPosition.West && this.position.x === 0) return true;
+        if (side === BurglarPosition.East && this.position.x === this.gridSize - 1) return true;
+        if (side === BurglarPosition.North && this.position.y === 0) return true;
+        if (side === BurglarPosition.South && this.position.y === this.gridSize - 1) return true;
         return false;
     }
 
@@ -199,7 +206,7 @@ export class RLGridEnv {
         const broke = this.moveDog(action);
         if (broke) {
             reward += this.brokePotReward;
-            if (this.burglar.side !== BanditPosition.Away && this.breakPotSpooksBurglar) {
+            if (this.burglar.side !== BurglarPosition.Away && this.breakPotSpooksBurglar) {
                 reward += this.spookedBurglarReward;
                 terminated = true;
                 return {

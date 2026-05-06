@@ -1,48 +1,51 @@
 import { useEffect, useRef, useCallback } from 'react';
 
-export function useSound(url: string): () => void {
+export function useSound(urls: string[]): () => void {
     const audioContextRef = useRef<AudioContext | null>(null);
-    const bufferRef = useRef<AudioBuffer | null>(null);
+    const buffersRef = useRef<AudioBuffer[]>([]);
 
     useEffect(() => {
+        if (audioContextRef.current) return; // luo vain kerran
+
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
 
         const context: AudioContext = new AudioContextClass();
         audioContextRef.current = context;
 
-        let isMounted = true;
+        Promise.allSettled(
+            urls.map((url) =>
+                fetch(url)
+                    .then((res) => res.arrayBuffer())
+                    .then((data) => context.decodeAudioData(data))
+            )
+        ).then((results) => {
+            const validBuffers = results
+                .filter((r): r is PromiseFulfilledResult<AudioBuffer> => r.status === 'fulfilled')
+                .map((r) => r.value);
 
-        fetch(url)
-            .then((res) => res.arrayBuffer())
-            .then((data) => context.decodeAudioData(data))
-            .then((buffer) => {
-                if (isMounted) {
-                    bufferRef.current = buffer;
-                }
-            })
-            .catch((err) => {
-                console.error('Audio load error:', err);
-            });
-
-        return () => {
-            isMounted = false;
-            context.close();
-        };
-    }, [url]);
+            buffersRef.current = validBuffers;
+        });
+        // EI close() tässä
+    }, [urls]);
 
     const play = useCallback((): void => {
         const context = audioContextRef.current;
-        const buffer = bufferRef.current;
+        const buffers = buffersRef.current;
 
-        if (!context || !buffer) return;
+        if (!context || buffers.length === 0) {
+            console.warn('Audio not ready yet');
+            return;
+        }
 
         if (context.state === 'suspended') {
             context.resume();
         }
 
-        const source: AudioBufferSourceNode = context.createBufferSource();
-        source.buffer = buffer;
+        const randomBuffer = buffers[Math.floor(Math.random() * buffers.length)];
+
+        const source = context.createBufferSource();
+        source.buffer = randomBuffer;
         source.connect(context.destination);
         source.start(0);
     }, []);
