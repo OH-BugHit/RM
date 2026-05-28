@@ -24,6 +24,10 @@ function ViewHandler() {
                 document.title = `${t('common.title')} - ${t('common.story')}`;
                 break;
             }
+            case 'start': {
+                document.title = `${t('common.title')}`;
+                break;
+            }
             case 'game': {
                 document.title = `${t('common.title')} - ${t('common.game')}`;
                 break;
@@ -49,6 +53,8 @@ function ViewHandler() {
         setView('environment');
     } else if (subView === 'rewards') {
         setView('rewards');
+    } else if (subView === 'interaction') {
+        setView('interaction');
     } else setView('agent');
 
     return null;

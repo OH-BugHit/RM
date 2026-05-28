@@ -1,17 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { QLearningAgent } from '../../../components/agents/rlAgentQ';
 import { RLGridEnv } from './environment';
-import { Actions, BurglarPosition, DogInfo, BurglarGameObservation, Agent } from '../../../types';
+import { Actions, SixthSenseDirection, GameEnvironmentInfo, GenericObservation, Agent } from '../../../types';
 import style from './style.module.css';
 import { useSound } from '../../../hooks/useSound';
 import { useStore, useAtomValue } from 'jotai';
-import {
-    AgentSettingsAtom,
-    EnvSettingsAtom,
-    GameControlAtom,
-    ResetUiPulseAtom,
-    RewardSettingsAtom,
-} from '../../../atoms/state';
+import { AgentSettingsAtom, EnvSettingsAtom, GameControlAtom, ResetUiPulseAtom } from '../../../atoms/state';
 import { stringifyAction } from '../../../utils/common';
 import DrawObservation from '../../Observation/DrawObservation';
 import {
@@ -22,6 +16,7 @@ import {
     robodogOffset,
 } from '../../../components/GameComponents/agentProps';
 import { getOnSight } from '../../../components/GameComponents/drawComponent';
+import QTable from '../../QTable/QTable';
 //import QCanvas from '../../QTable/QCanvas';
 
 const STEP_INTERVAL = 400; // ms
@@ -31,10 +26,10 @@ const FAST_STEPS = 5000;
 interface PotsAndBurglarGameProps {
     envRef: React.RefObject<RLGridEnv | undefined>;
     agentRef: React.RefObject<QLearningAgent | undefined>;
-    obsRef: React.RefObject<BurglarGameObservation | undefined>;
+    obsRef: React.RefObject<GenericObservation | undefined>;
     actionRef: React.RefObject<Actions | undefined>;
     qvalueRef: React.RefObject<number[]>;
-    infoRef: React.RefObject<DogInfo | undefined>;
+    infoRef: React.RefObject<GameEnvironmentInfo | undefined>;
     agent: Agent;
 }
 
@@ -54,24 +49,23 @@ function PotsAndBurglarGame({
     const agentImage = getAgentImage(agent.type);
     const playBark = useSound(sounds);
     const envSettings = useAtomValue(EnvSettingsAtom);
-    const rewardSettings = useAtomValue(RewardSettingsAtom);
     const controls = useAtomValue(GameControlAtom);
     const resetUIpulse = useAtomValue(ResetUiPulseAtom);
     const agentSettings = useAtomValue(AgentSettingsAtom);
 
     const store = useStore();
 
-    const gridSize = envSettings?.settings?.gridSize;
-    const maxTurns = envSettings?.settings?.maxTurns;
-    const numberOfPots = envSettings?.settings?.numberOfPots;
-    const potReloadDelay = envSettings?.settings?.potReloadDelay;
-    const breakPotSpooksBurglar = envSettings?.settings?.breakPotSpooksBurglar;
+    const gridSize = envSettings?.potsAndBurglar?.env.gridSize;
+    const maxTurns = envSettings?.potsAndBurglar?.env.maxTurns;
+    const numberOfPots = envSettings?.potsAndBurglar?.env.numberOfPots;
+    const potReloadDelay = envSettings?.potsAndBurglar?.env.potReloadDelay;
+    const breakPotSpooksBurglar = envSettings?.potsAndBurglar?.env.breakPotSpooksBurglar;
 
-    const spookedBurglarReward = rewardSettings?.settings?.spookedBurglarReward; //10
-    const brokePotReward = rewardSettings?.settings?.brokePotReward; // -1
-    const barkSuccessReward = rewardSettings?.settings?.barkSuccessReward; //10
-    const barkFailReward = rewardSettings?.settings?.barkFailReward; //-1
-    const burglarWonReward = rewardSettings?.settings?.burglarWonReward; //-10
+    const spookedBurglarReward = envSettings?.potsAndBurglar?.reward.spookedBurglarReward;
+    const brokePotReward = envSettings?.potsAndBurglar?.reward.brokePotReward;
+    const barkSuccessReward = envSettings?.potsAndBurglar?.reward.barkSuccessReward;
+    const barkFailReward = envSettings?.potsAndBurglar?.reward.barkFailReward;
+    const burglarWonReward = envSettings?.potsAndBurglar?.reward.burglarWonReward;
 
     const [potsBroken, setPotsBroken] = useState(0);
     const potsBrokenRef = useRef(0);
@@ -81,7 +75,7 @@ function PotsAndBurglarGame({
         return getAgentObservationShape(agent.type);
     }, [agent.type]);
 
-    const [obs, setObs] = useState<BurglarGameObservation>(defaultObs);
+    const [obs, setObs] = useState<GenericObservation>(defaultObs);
 
     const [wins, setWins] = useState(0);
     const [losses, setLosses] = useState(0);
@@ -188,7 +182,7 @@ function PotsAndBurglarGame({
             const currentObs = obsRef.current;
             const action = agentRef.current.chooseAction(currentObs);
             actionRef.current = action;
-            if (action === Actions.bark) playBark();
+            if (action === Actions.specialAction) playBark();
             const { info, obs: nextObs, reward, terminated } = envRef.current.step(action);
             infoRef.current = info;
             agentRef.current.update(currentObs, action, reward, nextObs);
@@ -292,12 +286,12 @@ function PotsAndBurglarGame({
                     <br />
                 </div>
                 <div style={{ width: '800px' }}>
-                    {/*<QCanvas
+                    <QTable
                         agent={agentRef}
                         disabled={controls.isFast}
                         scrollToState={agentRef.current?.getStateKey(obs)}
                         type={agent.type}
-                    />/*/}
+                    />
                 </div>
             </div>
 
@@ -329,9 +323,9 @@ function PotsAndBurglarGame({
                     <div />
                     <div>
                         <img
-                            src="/burglar2.png"
+                            src="/images/assets/burglar2.png"
                             width={60}
-                            style={{ opacity: obs.burglar === BurglarPosition.North ? 1 : 0 }}
+                            style={{ opacity: obs.POIdirection === SixthSenseDirection.North ? 1 : 0 }}
                         />
                     </div>
                     <div />
@@ -339,9 +333,9 @@ function PotsAndBurglarGame({
                     {/* MIDDLE */}
                     <div>
                         <img
-                            src="/burglar2.png"
+                            src="/images/assets/burglar2.png"
                             width={60}
-                            style={{ opacity: obs.burglar === BurglarPosition.West ? 1 : 0 }}
+                            style={{ opacity: obs.POIdirection === SixthSenseDirection.West ? 1 : 0 }}
                         />
                     </div>
 
@@ -370,7 +364,7 @@ function PotsAndBurglarGame({
                                     return (
                                         <img
                                             key={`${x}-${y}`}
-                                            src="pot_broken.png"
+                                            src="/images/assets/pot_broken.png"
                                             width={40}
                                             style={{
                                                 overflow: 'visible',
@@ -385,7 +379,7 @@ function PotsAndBurglarGame({
                                     return (
                                         <img
                                             key={`${x}-${y}`}
-                                            src="pot_intact.png"
+                                            src="/images/assets/pot_intact.png"
                                             width={40}
                                             style={{
                                                 overflow: 'visible',
@@ -429,9 +423,9 @@ function PotsAndBurglarGame({
 
                     <div>
                         <img
-                            src="/burglar.png"
+                            src="/images/assets/burglar.png"
                             width={60}
-                            style={{ opacity: obs.burglar === BurglarPosition.East ? 1 : 0 }}
+                            style={{ opacity: obs.POIdirection === SixthSenseDirection.East ? 1 : 0 }}
                         />
                     </div>
 
@@ -439,9 +433,9 @@ function PotsAndBurglarGame({
                     <div />
                     <div>
                         <img
-                            src="/burglar.png"
+                            src="/images/assets/burglar.png"
                             width={60}
-                            style={{ opacity: obs.burglar === BurglarPosition.South ? 1 : 0 }}
+                            style={{ opacity: obs.POIdirection === SixthSenseDirection.South ? 1 : 0 }}
                         />
                     </div>
                     <div />

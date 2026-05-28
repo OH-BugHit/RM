@@ -10,7 +10,7 @@ export const stringifyAction = (action: Actions | null) => {
             return 'Left';
         case Actions.right:
             return 'Right';
-        case Actions.bark:
+        case Actions.specialAction:
             return 'Bark';
         case Actions.stay:
             return 'Stay';

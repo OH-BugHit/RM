@@ -1,3 +1,4 @@
+import { parseObservationState } from '../../components/agents/rlAgentQ';
 import { Camera, CellRender, GridConfig, RenderSpec } from '../../types';
 import { getQColor } from '../../utils/common';
 
@@ -52,7 +53,7 @@ export function getSpiralPosition(index: number): { x: number; y: number } {
 
 export function buildRenderSpec(state: string, actionValues: number[], config: GridConfig): RenderSpec {
     if (!state) return { cells: [] };
-    const [neighbours] = state.split('-');
+    const { neighbors: neighbours } = parseObservationState(state);
 
     const maxQ = Math.max(...actionValues);
     const minQ = Math.min(...actionValues);

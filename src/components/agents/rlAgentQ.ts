@@ -1,13 +1,34 @@
-import { Actions, BurglarGameObservation } from '../../types';
+import { Actions, GenericObservation } from '../../types';
 
-const ACTIONS: number[] = [Actions.up, Actions.down, Actions.left, Actions.right, Actions.bark, Actions.stay];
+const ACTIONS: number[] = [Actions.up, Actions.down, Actions.left, Actions.right, Actions.specialAction, Actions.stay];
 
 export interface QLearningAgentOptions {
     alpha?: number;
     gamma?: number;
     epsilon?: number;
 }
+export function serializeObservation(obs: GenericObservation): string {
+    return `${obs.neighbors.map((n) => String(n)).join(',')}-${obs.POIdirection}`;
+}
 
+export function parseObservationState(state: string): { neighbors: string[]; POIdirection: string } {
+    const separator = state.lastIndexOf('-');
+
+    if (separator === -1) {
+        return {
+            neighbors: state.split(''),
+            POIdirection: '4',
+        };
+    }
+
+    const neighborsPart = state.slice(0, separator);
+    const POIdirection = state.slice(separator + 1);
+
+    return {
+        neighbors: neighborsPart.includes(',') ? neighborsPart.split(',') : neighborsPart.split(''),
+        POIdirection,
+    };
+}
 export class QLearningAgent {
     Q: Record<string, number[]> = {}; // Q-"table"
     visitTimes: Record<string, number> = {}; // For rendering memoizing. Memo checks if this is updated for record and renders based on that.
@@ -32,7 +53,7 @@ export class QLearningAgent {
         return this.Q;
     }
 
-    getQValues(obs: BurglarGameObservation): number[] {
+    getQValues(obs: GenericObservation): number[] {
         const state = this.getStateKey(obs);
 
         if (!this.Q[state]) {
@@ -45,11 +66,11 @@ export class QLearningAgent {
     }
 
     // unique key for each state
-    getStateKey(obs: BurglarGameObservation): string {
-        return `${obs.neighbors.join('')}-${obs.burglar}`;
+    getStateKey(obs: GenericObservation): string {
+        return serializeObservation(obs);
     }
 
-    chooseAction(obs: BurglarGameObservation): number {
+    chooseAction(obs: GenericObservation): number {
         // Epsilon-greedy
         if (Math.random() < this.epsilon) {
             return ACTIONS[Math.floor(Math.random() * ACTIONS.length)];
@@ -66,10 +87,10 @@ export class QLearningAgent {
     }
 
     update(
-        obs: BurglarGameObservation,
+        obs: GenericObservation,
         action: number,
         reward: number,
-        nextObs: BurglarGameObservation,
+        nextObs: GenericObservation,
         isTerminal: boolean = false
     ) {
         if (!this.learning) return; // Does not update visited count also!

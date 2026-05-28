@@ -47,7 +47,7 @@ export default function Frontpage() {
                     variant="contained"
                     color="primary"
                     onClick={() => {
-                        navigate('/story?view=story');
+                        navigate('/start?view=concepts&subView=agent');
                     }}
                 >
                     Start

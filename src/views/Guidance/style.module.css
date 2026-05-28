@@ -14,17 +14,13 @@
     color: white;
 }
 
-.guidanceTitle {
-    font-size: 0.8rem;
-}
-
-
 .stepsContainer {
     overflow: auto;
     width: 100%;
     scrollbar-color: rgb(22, 27, 35) rgb(106, 123, 128);
     margin-left: 4rem;
     margin-right: 4rem;
+    flex-direction: row;
 }
 
 ul {
@@ -60,11 +56,16 @@ ul {
     }
 }
 
+.container :global .MuiList-root {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
 
 .container :global .MuiMenuItem-root {
     font-size: 1.2em;
-    padding-top: 0.8em;
-    padding-bottom: 0.8em;
+    padding-top: 1.4em;
+    padding-bottom: 1.4em;
     padding-left: 1.5em;
     padding-right: 1.5rem;
 }

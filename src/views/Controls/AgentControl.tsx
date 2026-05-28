@@ -10,7 +10,7 @@ export default function AgentControl() {
     return (
         <main className={style.content}>
             <h2>Agent parameters:</h2>
-            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            <div className={style.sliderItem}>
                 <FormLabel>Epsilon (exploration rate): {agentSettings.epsilon}</FormLabel>
                 <Slider
                     value={agentSettings.epsilon}

@@ -1,7 +1,7 @@
-import { Actions, BurglarPosition, BurglarGameObservation, Position, Offset } from '../../../types';
+import { Actions, SixthSenseDirection, GenericObservation, Position, Offset } from '../../../types';
 
 type StepResult = {
-    obs: BurglarGameObservation;
+    obs: GenericObservation;
     reward: number;
     terminated: boolean;
     truncated: boolean;
@@ -22,6 +22,7 @@ export interface EnvironmentOptions {
         burglarWon?: number;
     };
     agentObsOffset?: Offset[];
+    flowerPotPositions?: Array<{ x: number; y: number }>;
 }
 
 function getRandomInt(max: number): number {
@@ -37,17 +38,17 @@ const BURGLAR_WON_REWARD = -1;
 const POT_RELOAD_DELAY = 25;
 
 type Info = { timeLeft: number; brokePot: boolean; result: 'win' | 'lose' | 'ongoing'; message: string };
-const SIDES: BurglarPosition[] = [
-    BurglarPosition.North,
-    BurglarPosition.South,
-    BurglarPosition.East,
-    BurglarPosition.West,
+const SIDES: SixthSenseDirection[] = [
+    SixthSenseDirection.North,
+    SixthSenseDirection.South,
+    SixthSenseDirection.East,
+    SixthSenseDirection.West,
 ];
 
 export class RLGridEnv {
     position: Position = { x: 0, y: 0 };
     flower_pots: { x: number; y: number; intact: boolean; reload: number }[] = []; // x and y coords, intact or not, and steps to replace when broken
-    burglar = { side: BurglarPosition.Away, turns: 0 };
+    POI = { side: SixthSenseDirection.Away, turns: 0 };
     gridSize: number;
     maxTurns: number;
     potReloadDelay: number;
@@ -72,6 +73,7 @@ export class RLGridEnv {
             { dx: -1, dy: 0 }, // left
             { dx: 1, dy: 0 }, // right
         ],
+        flowerPotPositions,
     }: EnvironmentOptions = {}) {
         this.gridSize = gridSize;
         this.maxTurns = maxTurns;
@@ -94,25 +96,33 @@ export class RLGridEnv {
 
         this.flower_pots = [];
 
-        while (this.flower_pots.length < numberOfPots) {
-            const x = getRandomInt(gridSize);
-            const y = getRandomInt(gridSize);
+        if (flowerPotPositions) {
+            flowerPotPositions.forEach((position) => {
+                this.flower_pots.push({ x: position.x, y: position.y, intact: true, reload: 0 });
+            });
+            this.resetTutorial({ x: 2, y: 2 });
+        } else {
+            while (this.flower_pots.length < numberOfPots) {
+                const x = getRandomInt(gridSize);
+                const y = getRandomInt(gridSize);
 
-            if (!occupied.has(key(x, y))) {
-                occupied.add(key(x, y));
+                if (!occupied.has(key(x, y))) {
+                    occupied.add(key(x, y));
 
-                this.flower_pots.push({
-                    x,
-                    y,
-                    intact: true,
-                    reload: 0,
-                });
+                    this.flower_pots.push({
+                        x,
+                        y,
+                        intact: true,
+                        reload: 0,
+                    });
+                }
             }
+
+            this.reset();
         }
-        this.reset();
     }
 
-    reset(): { obs: BurglarGameObservation; info: Info } {
+    reset(): { obs: GenericObservation; info: Info } {
         while (true) {
             const x = getRandomInt(this.gridSize);
             const y = getRandomInt(this.gridSize);
@@ -121,7 +131,21 @@ export class RLGridEnv {
                 break;
             }
         }
-        this.burglar = { side: BurglarPosition.Away, turns: 0 };
+        this.POI = { side: SixthSenseDirection.Away, turns: 0 };
+        return {
+            obs: this.getObservation(),
+            info: { timeLeft: this.maxTurns, brokePot: false, result: 'ongoing', message: 'Game reset' },
+        };
+    }
+
+    /**
+     *
+     * @param position Desired starting position
+     * @returns
+     */
+    resetTutorial(position: Position): { obs: GenericObservation; info: Info } {
+        this.position = position;
+        this.POI = { side: SixthSenseDirection.East, turns: 0 };
         return {
             obs: this.getObservation(),
             info: { timeLeft: this.maxTurns, brokePot: false, result: 'ongoing', message: 'Game reset' },
@@ -135,10 +159,10 @@ export class RLGridEnv {
         return r ? 1 : 0;
     }
 
-    getObservation(offsets: Offset[] = this.agentObsOffset): BurglarGameObservation {
+    getObservation(offsets: Offset[] = this.agentObsOffset): GenericObservation {
         return {
             neighbors: offsets.map((o) => this.getCell(this.position.x + o.dx, this.position.y + o.dy)),
-            burglar: SIDES.indexOf(this.burglar.side),
+            POIdirection: SIDES.indexOf(this.POI.side),
         };
     }
 
@@ -157,7 +181,7 @@ export class RLGridEnv {
         this.flower_pots = this.flower_pots.map((r) => {
             if (r.intact && r.x === x && r.y === y) {
                 broke = true;
-                this.burglar.turns = 0;
+                this.POI.turns = 0;
                 return { ...r, intact: false, reload: this.potReloadDelay };
             }
             return r;
@@ -167,11 +191,11 @@ export class RLGridEnv {
     }
 
     private burglarStep(): { terminated: boolean } {
-        if (this.burglar.side === BurglarPosition.Away) {
-            this.burglar.side = SIDES[Math.floor(Math.random() * SIDES.length)];
+        if (this.POI.side === SixthSenseDirection.Away) {
+            this.POI.side = SIDES[Math.floor(Math.random() * SIDES.length)];
         }
-        this.burglar.turns++;
-        return { terminated: this.burglar.turns >= this.maxTurns };
+        this.POI.turns++;
+        return { terminated: this.POI.turns >= this.maxTurns };
     }
 
     private tickPots() {
@@ -188,12 +212,12 @@ export class RLGridEnv {
     }
 
     private checkBarkSuccess(): boolean {
-        const side = this.burglar.side;
-        if (side === BurglarPosition.Away) return false;
-        if (side === BurglarPosition.West && this.position.x === 0) return true;
-        if (side === BurglarPosition.East && this.position.x === this.gridSize - 1) return true;
-        if (side === BurglarPosition.North && this.position.y === 0) return true;
-        if (side === BurglarPosition.South && this.position.y === this.gridSize - 1) return true;
+        const side = this.POI.side;
+        if (side === SixthSenseDirection.Away) return false;
+        if (side === SixthSenseDirection.West && this.position.x === 0) return true;
+        if (side === SixthSenseDirection.East && this.position.x === this.gridSize - 1) return true;
+        if (side === SixthSenseDirection.North && this.position.y === 0) return true;
+        if (side === SixthSenseDirection.South && this.position.y === this.gridSize - 1) return true;
         return false;
     }
 
@@ -206,7 +230,7 @@ export class RLGridEnv {
         const broke = this.moveDog(action);
         if (broke) {
             reward += this.brokePotReward;
-            if (this.burglar.side !== BurglarPosition.Away && this.breakPotSpooksBurglar) {
+            if (this.POI.side !== SixthSenseDirection.Away && this.breakPotSpooksBurglar) {
                 reward += this.spookedBurglarReward;
                 terminated = true;
                 return {
@@ -215,7 +239,7 @@ export class RLGridEnv {
                     terminated,
                     truncated: false,
                     info: {
-                        timeLeft: this.burglar.turns,
+                        timeLeft: this.POI.turns,
                         brokePot: broke,
                         result: 'win',
                         message: 'Game step completed',
@@ -224,7 +248,7 @@ export class RLGridEnv {
             }
         }
 
-        if (action === Actions.bark) {
+        if (action === Actions.specialAction) {
             if (this.checkBarkSuccess()) {
                 reward += this.barkSuccessReward;
                 terminated = true;
@@ -234,7 +258,7 @@ export class RLGridEnv {
                     terminated,
                     truncated: false,
                     info: {
-                        timeLeft: this.burglar.turns,
+                        timeLeft: this.POI.turns,
                         brokePot: broke,
                         result: 'win',
                         message: 'Game step completed',
@@ -254,7 +278,7 @@ export class RLGridEnv {
                 reward,
                 terminated,
                 truncated: false,
-                info: { timeLeft: this.burglar.turns, brokePot: broke, result: 'lose', message: 'Game step completed' },
+                info: { timeLeft: this.POI.turns, brokePot: broke, result: 'lose', message: 'Game step completed' },
             };
         }
         return {
@@ -262,7 +286,7 @@ export class RLGridEnv {
             reward,
             terminated,
             truncated: false,
-            info: { timeLeft: this.burglar.turns, brokePot: broke, result: 'ongoing', message: 'Game step completed' },
+            info: { timeLeft: this.POI.turns, brokePot: broke, result: 'ongoing', message: 'Game step completed' },
         };
     }
 }

@@ -1,10 +1,10 @@
 import style from './style.module.css';
 import { useEffect, useRef, useMemo, useState } from 'react';
 import ViewHandler from '../../components/ViewHandler';
-import Guidance from '../Guidance/Guidance';
+import StoryGuidance from '../Guidance/StoryGuidance';
 import { useTranslation } from 'react-i18next';
-import { useAtomValue, useSetAtom } from 'jotai';
-import { agentAtom, StoryStepAtom } from '../../atoms/state';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { ActiveEnvironmentAtom, ActiveAgentAtom, StoryStepAtom } from '../../atoms/state';
 import AgentSelector from './Selectors/AgentSelector';
 import ActionsSelector from './Selectors/ActionsSelector';
 import EnvironmentSelector from './Selectors/EnvironmentSelector';
@@ -31,10 +31,10 @@ export default function Story() {
     const isManualScrollUpdateRef = useRef(false);
     const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
-    const [selectedAgent, setSelectedAgent] = useState<Agent>({ name: '', type: undefined });
-    const [selectedEnvironment, setSelectedEnvironment] = useState<GameEnvironment>({ name: '', type: undefined });
+    const [selectedAgent, setSelectedAgent] = useState<Agent>({ name: '', type: 'none' });
+    const [selectedEnvironment, setSelectedEnvironment] = useAtom<GameEnvironment>(ActiveEnvironmentAtom);
 
-    const setAgent = useSetAtom(agentAtom);
+    const setAgent = useSetAtom(ActiveAgentAtom);
 
     useEffect(() => {
         const map: { [key: number]: React.RefObject<HTMLDivElement | null> } = {
@@ -140,7 +140,7 @@ export default function Story() {
         <div className={style.storyPage}>
             <ViewHandler />
             <div className={style.guideContainer}>
-                <Guidance />
+                <StoryGuidance />
             </div>
             <div
                 className={style.storyContent}

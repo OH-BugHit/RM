@@ -9,6 +9,45 @@ export interface TextErrors {
     type?: 'missing';
 }
 
+export interface WorldErrors {
+    density?: 'missing';
+    numberOfEdges?: 'missing';
+    roomshape?: 'missing';
+    roomSizeX?: 'missing';
+    roomSizeY?: 'missing';
+}
+
+export type RoomShape = 'rectangle' | 'circle';
+
+export type EdgeType = RoomType | 'lockedDoor' | 'newEdge';
+export type RoomType = 'spawnArea' | 'lockedRoom' | 'openRoom';
+export enum CellType {
+    Spawn = -1,
+    Empty = 0,
+    Wall = 1,
+    Trap = 2,
+    Key = 3,
+    Door = 4,
+    LockedDoor = 5,
+    Treasure = 6,
+    TreasureBig = 7,
+    Outside = 8,
+}
+
+export type EnvironmentSelection = {
+    name: string;
+    type: EnvironmentTypes;
+    world: WorldGeneratorProps;
+};
+
+export type WorldGeneratorProps = {
+    numberOfEdges: number;
+    density: number;
+    roomShape: RoomShape;
+    roomSizeX: number;
+    roomSizeY: number;
+};
+
 export type CellRender = {
     x: number;
     y: number;
@@ -44,8 +83,8 @@ export type GridConfig = {
 
 export type Offset = { dx: number; dy: number };
 
-export type View = 'frontpage' | 'story' | 'game' | undefined;
-export type SubView = 'agent' | 'actions' | 'environment' | 'rewards' | undefined;
+export type View = 'frontpage' | 'story' | 'game' | 'start' | undefined;
+export type SubView = 'agent' | 'actions' | 'environment' | 'rewards' | 'interaction' | undefined;
 
 export type ObservationShape = {
     width: number;
@@ -53,12 +92,12 @@ export type ObservationShape = {
     data: Uint8Array;
 };
 
-export type BurglarGameObservation = {
-    neighbors: NeighbourEntity[];
-    burglar: BurglarPosition;
+export type GenericObservation = {
+    neighbors: CellType[];
+    POIdirection?: SixthSenseDirection;
 };
 
-export enum BurglarPosition {
+export enum SixthSenseDirection {
     North = 0,
     South = 1,
     East = 2,
@@ -71,7 +110,7 @@ export enum Actions {
     down = 1,
     left = 2,
     right = 3,
-    bark = 4,
+    specialAction = 4,
     stay = 5,
 }
 
@@ -90,13 +129,44 @@ export type RoboDogEnv = {
     breakPotSpooksBurglar: boolean;
 };
 
-export type TempSettings = Record<
-    Games,
-    {
-        env: EnvSettings;
-        reward: RewardSettings;
-    }
->;
+export type GenericEnv = {
+    maxTurns: number; // Maximum number of steps in episode
+    numberOfItemsToGet: number; // How many spesific Cells needs to be found for episode to terminate
+    propReloadDelay1: number | undefined; // How many steps it takes to reload props (like traps or pots)
+    lethalProps: boolean;
+};
+
+export type GenericReward = {
+    rewardStep: number;
+    reward1: number;
+    reward2: number;
+    reward3: number;
+    reward4: number;
+    reward5: number;
+    reward6: number;
+    abilitySuccessReward: number;
+    abilityFailureReward: number;
+    trap1: number; // punsihment reward (like traps)
+    trapLethal: boolean; // if trap is leath
+    win: number;
+    lose: number;
+    killed: number; // Reward for losing by trapLethal
+};
+
+export type EnvSettings = {
+    potsAndBurglar: {
+        env: RoboDogEnv;
+        reward: RoboDogRewards;
+    };
+    treasureHunter: {
+        env: GenericEnv;
+        reward: GenericReward;
+    };
+    generic: {
+        env: GenericEnv;
+        reward: GenericReward;
+    };
+};
 
 export type RoboDogRewards = {
     spookedBurglarReward: number;
@@ -106,15 +176,7 @@ export type RoboDogRewards = {
     burglarWonReward: number;
 };
 
-export type EnvSettings = {
-    settings: RoboDogEnv | undefined;
-};
-
-export type RewardSettings = {
-    settings: RoboDogRewards | undefined;
-};
-
-export type DogInfo = {
+export type GameEnvironmentInfo = {
     timeLeft: number;
     result: string;
     message: string;
@@ -131,13 +193,11 @@ export type Agent = {
     type: AgentType;
 };
 
-export type EnvironmentTypes = 'potsAndBurglar' | 'treasureHunter' | undefined;
-
 export type GameEnvironment = {
     name: string;
     type: EnvironmentTypes;
+    world: WorldGeneratorProps;
 };
 
-export type AgentType = 'robodog' | 'hoover' | 'adventurer' | undefined;
-
-export type Games = 'robodog' | 'none';
+export type EnvironmentTypes = 'potsAndBurglar' | 'treasureHunter' | undefined;
+export type AgentType = 'robodog' | 'hoover' | 'adventurer' | 'none';

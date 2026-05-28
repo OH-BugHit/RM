@@ -1,20 +1,36 @@
 import { useMemo } from 'react';
-import { AgentType, GridConfig } from '../../types';
+import { parseObservationState } from '../../components/agents/rlAgentQ';
+import { AgentType, EnvironmentTypes, GridConfig } from '../../types';
 import { getQColor } from '../../utils/common';
 import { gridRoboDogConfig, gridAdventurerConfig } from './gridConfigs';
+import { defaultImages } from '../../utils/defaults';
 
 interface QTableProps {
     state: string;
     disabled: boolean;
     actionValues: number[];
     type: AgentType;
+    drawActions?: boolean;
+    envType?: EnvironmentTypes;
 }
 
-export default function DrawObservation({ state, disabled, actionValues, type }: QTableProps) {
-    const [neighbours, burglar] = state.split('-');
+export default function DrawObservation({
+    state,
+    disabled,
+    actionValues,
+    type,
+    drawActions = true,
+    envType = 'potsAndBurglar',
+}: QTableProps) {
+    const { neighbors: neighbours, POIdirection } = parseObservationState(state);
+    const burglar = String(POIdirection);
     const qValues = actionValues;
     const maxQ = Math.max(...qValues);
     const minQ = Math.min(...qValues);
+
+    const images = useMemo(() => {
+        return defaultImages[envType];
+    }, [envType]);
 
     const config = useMemo(() => {
         switch (type) {
@@ -29,22 +45,10 @@ export default function DrawObservation({ state, disabled, actionValues, type }:
 
     const itemizer = (key: string, i: number) => {
         switch (key) {
-            case '0': {
-                return (
-                    <div
-                        style={{
-                            width: 40,
-                            height: 40,
-                            border: '1px solid black',
-                            background: getQColor(i, minQ, maxQ),
-                        }}
-                    />
-                );
-            }
-            case '1': {
+            case '-1': {
                 return (
                     <img
-                        src="pot_intact.png"
+                        src={images.n1}
                         width={40}
                         height={40}
                         style={{
@@ -53,7 +57,54 @@ export default function DrawObservation({ state, disabled, actionValues, type }:
                             width: 40,
                             height: 40,
                             border: '1px solid black',
-                            background: getQColor(i, minQ, maxQ),
+                            background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
+                        }}
+                    />
+                );
+            }
+            case '0': {
+                if (images.p0 === 'none') {
+                    return (
+                        <div
+                            style={{
+                                width: 40,
+                                height: 40,
+                                border: '1px solid black',
+                                background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
+                            }}
+                        />
+                    );
+                } else {
+                    return (
+                        <img
+                            src={images.p0}
+                            width={40}
+                            height={40}
+                            style={{
+                                overflow: 'visible',
+                                display: 'block',
+                                width: 40,
+                                height: 40,
+                                border: '1px solid black',
+                                background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
+                            }}
+                        />
+                    );
+                }
+            }
+            case '1': {
+                return (
+                    <img
+                        src={images.p1}
+                        width={40}
+                        height={40}
+                        style={{
+                            overflow: 'visible',
+                            display: 'block',
+                            width: 40,
+                            height: 40,
+                            border: '1px solid black',
+                            background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
                         }}
                     />
                 );
@@ -61,7 +112,7 @@ export default function DrawObservation({ state, disabled, actionValues, type }:
             case '2': {
                 return (
                     <img
-                        src="wall_opacue.png"
+                        src={images.p2}
                         width={40}
                         height={40}
                         style={{
@@ -70,7 +121,109 @@ export default function DrawObservation({ state, disabled, actionValues, type }:
                             width: 40,
                             height: 40,
                             border: '1px solid black',
-                            background: getQColor(i, minQ, maxQ),
+                            background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
+                        }}
+                    />
+                );
+            }
+            case '3': {
+                return (
+                    <img
+                        src={images.p3}
+                        width={40}
+                        height={40}
+                        style={{
+                            overflow: 'visible',
+                            display: 'block',
+                            width: 40,
+                            height: 40,
+                            border: '1px solid black',
+                            background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
+                        }}
+                    />
+                );
+            }
+            case '4': {
+                return (
+                    <img
+                        src={images.p4}
+                        width={40}
+                        height={40}
+                        style={{
+                            overflow: 'visible',
+                            display: 'block',
+                            width: 40,
+                            height: 40,
+                            border: '1px solid black',
+                            background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
+                        }}
+                    />
+                );
+            }
+            case '5': {
+                return (
+                    <img
+                        src={images.p5}
+                        width={40}
+                        height={40}
+                        style={{
+                            overflow: 'visible',
+                            display: 'block',
+                            width: 40,
+                            height: 40,
+                            border: '1px solid black',
+                            background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
+                        }}
+                    />
+                );
+            }
+            case '6': {
+                return (
+                    <img
+                        src={images.p6}
+                        width={40}
+                        height={40}
+                        style={{
+                            overflow: 'visible',
+                            display: 'block',
+                            width: 40,
+                            height: 40,
+                            border: '1px solid black',
+                            background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
+                        }}
+                    />
+                );
+            }
+            case '7': {
+                return (
+                    <img
+                        src={images.p7}
+                        width={40}
+                        height={40}
+                        style={{
+                            overflow: 'visible',
+                            display: 'block',
+                            width: 40,
+                            height: 40,
+                            border: '1px solid black',
+                            background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
+                        }}
+                    />
+                );
+            }
+            case '8': {
+                return (
+                    <img
+                        src={images.p8}
+                        width={40}
+                        height={40}
+                        style={{
+                            overflow: 'visible',
+                            display: 'block',
+                            width: 40,
+                            height: 40,
+                            border: '1px solid black',
+                            background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
                         }}
                     />
                 );
@@ -97,25 +250,34 @@ export default function DrawObservation({ state, disabled, actionValues, type }:
 
             // special (esim. agent image)
             if (config.special?.[i] === 'bark') {
-                cells.push(
-                    <div
-                        key={i}
-                        style={{ position: 'relative', width: 40, height: 40 }}
-                    >
-                        <img
-                            src="hau.png"
-                            width={40}
-                            height={40}
-                            style={{
-                                position: 'absolute',
-                                right: '-10px',
-                                top: '-10px',
-                                border: '1px solid black',
-                                background: getQColor(actionValues[config.qMap[i]], minQ, maxQ),
-                            }}
+                if (drawActions) {
+                    cells.push(
+                        <div
+                            key={i}
+                            style={{ position: 'relative', width: 40, height: 40 }}
+                        >
+                            <img
+                                src={images.specialAction1}
+                                width={40}
+                                height={40}
+                                style={{
+                                    position: 'absolute',
+                                    right: '-10px',
+                                    top: '-10px',
+                                    border: '1px solid black',
+                                    background: getQColor(actionValues[config.qMap[i]], minQ, maxQ),
+                                }}
+                            />
+                        </div>
+                    );
+                } else {
+                    cells.push(
+                        <div
+                            key={i}
+                            style={{ width: 40, height: 40 }}
                         />
-                    </div>
-                );
+                    );
+                }
                 continue;
             }
 
@@ -128,7 +290,7 @@ export default function DrawObservation({ state, disabled, actionValues, type }:
                             width: 40,
                             height: 40,
                             border: '1px solid black',
-                            background: getQColor(actionValues[config.qMap[i]], minQ, maxQ),
+                            background: drawActions ? getQColor(actionValues[config.qMap[i]], minQ, maxQ) : 'none',
                         }}
                     />
                 );
@@ -160,25 +322,29 @@ export default function DrawObservation({ state, disabled, actionValues, type }:
                     overflow: 'visible',
                 }}
             >
-                {/* TOP */}
-                <div />
-                <div>
-                    <img
-                        src="/burglar2.png"
-                        width={20}
-                        style={{ opacity: burglar === '0' ? 1 : 0 }}
-                    />
-                </div>
-                <div />
+                {envType === 'potsAndBurglar' && (
+                    <>
+                        {/* TOP */}
+                        <div />
+                        <div>
+                            <img
+                                src={images.burglar2}
+                                width={20}
+                                style={{ opacity: burglar === '0' ? 1 : 0 }}
+                            />
+                        </div>
+                        <div />
 
-                {/* MIDDLE */}
-                <div>
-                    <img
-                        src="/burglar2.png"
-                        width={20}
-                        style={{ opacity: burglar === '3' ? 1 : 0 }}
-                    />
-                </div>
+                        {/* MIDDLE */}
+                        <div>
+                            <img
+                                src={images.burglar2}
+                                width={20}
+                                style={{ opacity: burglar === '3' ? 1 : 0 }}
+                            />
+                        </div>
+                    </>
+                )}
 
                 {/* GRID */}
                 <div
@@ -189,25 +355,28 @@ export default function DrawObservation({ state, disabled, actionValues, type }:
                 >
                     {drawGrid(config)}
                 </div>
+                {envType === 'potsAndBurglar' && (
+                    <>
+                        <div>
+                            <img
+                                src={images.burglar1}
+                                width={20}
+                                style={{ opacity: burglar === '2' ? 1 : 0 }}
+                            />
+                        </div>
 
-                <div>
-                    <img
-                        src="/burglar.png"
-                        width={20}
-                        style={{ opacity: burglar === '2' ? 1 : 0 }}
-                    />
-                </div>
-
-                {/* BOTTOM */}
-                <div />
-                <div>
-                    <img
-                        src="/burglar.png"
-                        width={20}
-                        style={{ opacity: burglar === '1' ? 1 : 0 }}
-                    />
-                </div>
-                <div />
+                        {/* BOTTOM */}
+                        <div />
+                        <div>
+                            <img
+                                src={images.burglar1}
+                                width={20}
+                                style={{ opacity: burglar === '1' ? 1 : 0 }}
+                            />
+                        </div>
+                        <div />
+                    </>
+                )}
             </div>
         </div>
     );

@@ -5,6 +5,8 @@ import { Dispatch, useState } from 'react';
 import { GameEnvironment, TextErrors } from '../../../types';
 import { SetStateAction } from 'jotai';
 import { TextField } from '@mui/material';
+import EnvironmentControl from '../../Controls/GameSettingsControl';
+import WorldSetter from '../../Environments/WorldSetter/WorldSetter';
 
 interface EnvironmentProps {
     selectedEnvironment: GameEnvironment;
@@ -118,6 +120,15 @@ export default function EnvironmentSelector({
                     margin="normal"
                 />
             </div>
+            <div className={style.separator} />
+            <EnvironmentControl />
+            <div className={style.separator} />
+            {selectedEnvironment.type === 'treasureHunter' && (
+                <WorldSetter
+                    selectedEnvironment={selectedEnvironment}
+                    setSelectedEnvironment={setSelectedEnvironment}
+                />
+            )}
             <div className={style.separator} />
         </div>
     );

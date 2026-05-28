@@ -3,17 +3,11 @@ import { Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAtomValue, useSetAtom, useStore } from 'jotai';
-import {
-    ActiveGameAtom,
-    EnvSettingsAtom,
-    ResetUiPulseAtom,
-    RewardSettingsAtom,
-    TempSettingsAtom,
-} from '../../atoms/state';
+import { ActiveEnvironmentAtom, EnvSettingsAtom, ResetUiPulseAtom, TempSettingsAtom } from '../../atoms/state';
 import AgentControl from '../Controls/AgentControl';
-import RewardControl from '../Controls/RewardControl';
 import EnvironmentControl from '../Controls/GameSettingsControl';
 import ObservationControl from '../Controls/ObservationControl';
+import RewardControlContainer from '../Controls/RewardControlContainer';
 
 function GameTuner() {
     const store = useStore();
@@ -21,40 +15,41 @@ function GameTuner() {
     const [tabNumber, setTabNumber] = useState(0);
     const tempSettings = useAtomValue(TempSettingsAtom);
     const setEnvSettings = useSetAtom(EnvSettingsAtom);
-    const setRewards = useSetAtom(RewardSettingsAtom);
     const setResetUIpulse = useSetAtom(ResetUiPulseAtom);
 
-    const resetUI = () => {
-        const game = store.get(ActiveGameAtom);
+    const resetUI = (reset: boolean) => {
+        const game = store.get(ActiveEnvironmentAtom);
 
-        switch (game) {
-            case 'robodog': {
-                setEnvSettings({
-                    settings: {
-                        gridSize: tempSettings[game].env.settings?.gridSize ?? 10,
-                        maxTurns: tempSettings[game].env.settings?.maxTurns ?? 20,
-                        numberOfPots: tempSettings[game].env.settings?.numberOfPots ?? 10,
-                        potReloadDelay: tempSettings[game].env.settings?.potReloadDelay ?? 25,
-                        breakPotSpooksBurglar: tempSettings[game].env.settings?.breakPotSpooksBurglar ?? true,
+        switch (game.type) {
+            case 'potsAndBurglar': {
+                setEnvSettings((old) => ({
+                    ...old,
+                    potsAndBurglar: {
+                        env: {
+                            gridSize: tempSettings.potsAndBurglar.env.gridSize ?? 10,
+                            maxTurns: tempSettings.potsAndBurglar.env.maxTurns ?? 20,
+                            numberOfPots: tempSettings.potsAndBurglar.env.numberOfPots ?? 10,
+                            potReloadDelay: tempSettings.potsAndBurglar.env.potReloadDelay ?? 25,
+                            breakPotSpooksBurglar: tempSettings.potsAndBurglar.env.breakPotSpooksBurglar ?? true,
+                        },
+                        reward: {
+                            spookedBurglarReward: tempSettings.potsAndBurglar.reward.spookedBurglarReward ?? 10,
+                            brokePotReward: tempSettings.potsAndBurglar.reward.brokePotReward ?? -2,
+                            barkSuccessReward: tempSettings.potsAndBurglar.reward.barkSuccessReward ?? 10,
+                            barkFailReward: tempSettings.potsAndBurglar.reward.barkFailReward ?? -1,
+                            burglarWonReward: tempSettings.potsAndBurglar.reward.burglarWonReward ?? -10,
+                        },
                     },
-                });
-                setRewards({
-                    settings: {
-                        spookedBurglarReward: tempSettings[game].reward.settings?.spookedBurglarReward ?? 10,
-                        brokePotReward: tempSettings[game].reward.settings?.brokePotReward ?? -2,
-                        barkSuccessReward: tempSettings[game].reward.settings?.barkSuccessReward ?? 10,
-                        barkFailReward: tempSettings[game].reward.settings?.barkFailReward ?? -1,
-                        burglarWonReward: tempSettings[game].reward.settings?.burglarWonReward ?? -10,
-                    },
-                });
+                }));
                 break;
             }
             default:
                 break;
         }
-        setResetUIpulse((old) => {
-            return !old;
-        });
+        if (reset)
+            setResetUIpulse((old) => {
+                return !old;
+            });
     };
 
     return (
@@ -73,12 +68,19 @@ function GameTuner() {
                 <Tab label={t('Observation')} />
             </Tabs>
             {tabNumber === 0 && <AgentControl />}
-            {tabNumber === 1 && <RewardControl />}
+            {tabNumber === 1 && <RewardControlContainer />}
             {tabNumber === 2 && <EnvironmentControl />}
             {tabNumber === 3 && <ObservationControl />}
             <Button
                 variant="contained"
-                onClick={resetUI}
+                onClick={() => resetUI(false)}
+                sx={{ marginTop: '1rem' }}
+            >
+                Update
+            </Button>
+            <Button
+                variant="contained"
+                onClick={() => resetUI(true)}
                 sx={{ marginTop: '1rem' }}
             >
                 Restart learning

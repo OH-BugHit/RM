@@ -76,6 +76,7 @@ export default function AgentSelector({ selectedAgent, setSelectedAgent }: Agent
                     title="Adventurer"
                     img="images/agents/adventurer.png"
                     onClick={() => {
+                        console.log('selected  adventurer (th)');
                         setSelectedAgent((old) => {
                             return {
                                 ...old,

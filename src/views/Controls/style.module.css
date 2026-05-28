@@ -14,6 +14,13 @@
 
 }
 
+.sliderItem {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem
+}
+
 .qValuesContainer {
     display: grid;
     grid-template-columns: repeat(3, 80px);

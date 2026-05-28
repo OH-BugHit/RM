@@ -1,4 +1,4 @@
-import { AgentType, BurglarGameObservation, Offset } from '../../types';
+import { AgentType, GenericObservation, Offset } from '../../types';
 
 export const getAgentImage = (type: AgentType): string => {
     switch (type) {
@@ -28,16 +28,16 @@ export const getAgentSounds = (type: AgentType): string[] => {
     }
 };
 
-export const getAgentObservationShape = (type: AgentType): BurglarGameObservation => {
+export const getAgentObservationShape = (type: AgentType): GenericObservation => {
     switch (type) {
         case 'robodog': {
-            return { neighbors: [0, 0, 0, 0], burglar: 4 };
+            return { neighbors: [0, 0, 0, 0], POIdirection: 4 };
         }
         case 'adventurer': {
-            return { neighbors: Array(20).fill(0), burglar: 4 };
+            return { neighbors: Array(20).fill(0), POIdirection: 4 };
         }
         default: {
-            return { neighbors: [0, 0, 0, 0], burglar: 4 };
+            return { neighbors: [0, 0, 0, 0], POIdirection: 4 };
         }
     }
 };

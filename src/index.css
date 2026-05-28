@@ -1,6 +1,5 @@
 body {
   margin: 0;
-  font-family: 'Andika', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -9,7 +8,7 @@ body {
 
 #root {
   background: #dfe5e8;
-  ;
+  font-family: 'Sour Gummy', 'Andika';
   position: absolute;
   top: 0;
   bottom: 0;
@@ -23,6 +22,7 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
 
 p {
   margin: 0;
