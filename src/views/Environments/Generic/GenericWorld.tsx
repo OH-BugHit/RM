@@ -110,7 +110,7 @@ function GenericWorld({
         lossesRef.current = 0;
         episodicRewardRef.current = 0;
         lastEpisodeRewardRef.current = 0;
-        infoRef.current = { timeLeft: maxTurns ?? 0, result: 'ongoing', message: 'Game reset' };
+        infoRef.current = { timeLeft: maxTurns ?? 0, result: 'ongoing', message: 'Game reset', trigger: false };
 
         const { obs } = envRef.current.reset();
         obsRef.current = obs;

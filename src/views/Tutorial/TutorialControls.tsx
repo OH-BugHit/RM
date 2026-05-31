@@ -1,15 +1,18 @@
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
+import FastForwardIcon from '@mui/icons-material/FastForward';
 import { Button } from '@genai-fi/base';
-import { useSetAtom } from 'jotai';
-import { ActiveSubViewAtom, GameControlAtom, TutorialStepAtom } from '../../atoms/state';
+import { useAtom, useSetAtom } from 'jotai';
+import { ActiveSubViewAtom, AgentSettingsAtom, GameControlAtom, TutorialStepAtom } from '../../atoms/state';
 
-const MAXSTEP = 25;
+const MAXSTEP = 26;
+const GOTOSTEP19 = new Set([20, 21, 22]);
 
 function TutorialControls() {
     const setControls = useSetAtom(GameControlAtom);
-    const setTutorialStep = useSetAtom(TutorialStepAtom);
+    const [tutorialStep, setTutorialStep] = useAtom(TutorialStepAtom);
     const setActiveStep = useSetAtom(ActiveSubViewAtom);
+    const setAgentSettings = useSetAtom(AgentSettingsAtom);
 
     return (
         <div style={{ marginTop: 10, display: 'flex', gap: '1rem' }}>
@@ -43,6 +46,20 @@ function TutorialControls() {
             <Button
                 variant="outlined"
                 onClick={() => {
+                    setControls((old) => {
+                        return {
+                            ...old,
+                            isRunning: true,
+                            isFast: true,
+                        };
+                    });
+                }}
+            >
+                <FastForwardIcon />
+            </Button>
+            <Button
+                variant="outlined"
+                onClick={() => {
                     setTutorialStep((old) => {
                         if (old > 0) return old - 1;
                         return 0;
@@ -54,12 +71,21 @@ function TutorialControls() {
             <Button
                 variant="outlined"
                 onClick={() => {
+                    if (GOTOSTEP19.has(tutorialStep)) {
+                        setTutorialStep(18);
+                    }
                     setTutorialStep((old) => {
                         if (old < MAXSTEP) {
                             return old + 1;
                         } else {
+                            setAgentSettings((old) => {
+                                return {
+                                    ...old,
+                                    epsilon: 0,
+                                };
+                            });
                             setActiveStep('interaction');
-                            return MAXSTEP;
+                            return MAXSTEP + 1;
                         }
                     });
                 }}
@@ -70,12 +96,7 @@ function TutorialControls() {
             <Button
                 variant="outlined"
                 onClick={() => {
-                    setControls((old) => {
-                        return {
-                            ...old,
-                            takeStep: !old.takeStep,
-                        };
-                    });
+                    setTutorialStep(0);
                 }}
             >
                 Step

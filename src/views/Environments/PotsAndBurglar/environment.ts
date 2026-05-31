@@ -1,6 +1,6 @@
 import { Actions, SixthSenseDirection, GenericObservation, Position, Offset } from '../../../types';
 
-type StepResult = {
+export type BurglarStepResult = {
     obs: GenericObservation;
     reward: number;
     terminated: boolean;
@@ -37,7 +37,7 @@ const BARK_FAIL_REWARD = 0;
 const BURGLAR_WON_REWARD = -1;
 const POT_RELOAD_DELAY = 25;
 
-type Info = { timeLeft: number; brokePot: boolean; result: 'win' | 'lose' | 'ongoing'; message: string };
+export type Info = { timeLeft: number; trigger: boolean; result: 'win' | 'lose' | 'ongoing'; message: string };
 const SIDES: SixthSenseDirection[] = [
     SixthSenseDirection.North,
     SixthSenseDirection.South,
@@ -134,7 +134,7 @@ export class RLGridEnv {
         this.POI = { side: SixthSenseDirection.Away, turns: 0 };
         return {
             obs: this.getObservation(),
-            info: { timeLeft: this.maxTurns, brokePot: false, result: 'ongoing', message: 'Game reset' },
+            info: { timeLeft: this.maxTurns, trigger: false, result: 'ongoing', message: 'Game reset' },
         };
     }
 
@@ -148,7 +148,7 @@ export class RLGridEnv {
         this.POI = { side: SixthSenseDirection.East, turns: 0 };
         return {
             obs: this.getObservation(),
-            info: { timeLeft: this.maxTurns, brokePot: false, result: 'ongoing', message: 'Game reset' },
+            info: { timeLeft: this.maxTurns, trigger: false, result: 'ongoing', message: 'Game reset' },
         };
     }
 
@@ -221,7 +221,7 @@ export class RLGridEnv {
         return false;
     }
 
-    step(action: number): StepResult {
+    step(action: number): BurglarStepResult {
         this.tickPots();
 
         let reward = 0;
@@ -240,7 +240,7 @@ export class RLGridEnv {
                     truncated: false,
                     info: {
                         timeLeft: this.POI.turns,
-                        brokePot: broke,
+                        trigger: broke,
                         result: 'win',
                         message: 'Game step completed',
                     },
@@ -259,7 +259,7 @@ export class RLGridEnv {
                     truncated: false,
                     info: {
                         timeLeft: this.POI.turns,
-                        brokePot: broke,
+                        trigger: broke,
                         result: 'win',
                         message: 'Game step completed',
                     },
@@ -278,7 +278,7 @@ export class RLGridEnv {
                 reward,
                 terminated,
                 truncated: false,
-                info: { timeLeft: this.POI.turns, brokePot: broke, result: 'lose', message: 'Game step completed' },
+                info: { timeLeft: this.POI.turns, trigger: broke, result: 'lose', message: 'Game step completed' },
             };
         }
         return {
@@ -286,7 +286,7 @@ export class RLGridEnv {
             reward,
             terminated,
             truncated: false,
-            info: { timeLeft: this.POI.turns, brokePot: broke, result: 'ongoing', message: 'Game step completed' },
+            info: { timeLeft: this.POI.turns, trigger: broke, result: 'ongoing', message: 'Game step completed' },
         };
     }
 }

@@ -7,6 +7,9 @@ export const manhattanDirecitons = [
     { x: 1, y: 0 },
 ];
 
+export const defaultAgentSettings = { epsilon: 0.1, gamma: 0.9, alpha: 0.1, learning: true };
+export const defaultControls = { isRunning: false, isFast: false, takeStep: false };
+
 export const defaultImages = {
     potsAndBurglar: {
         n1: 'none',

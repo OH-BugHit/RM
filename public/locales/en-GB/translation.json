@@ -61,11 +61,11 @@
             "title": "Agent"
         },
         "bubbles": {
-            "capable": "it was very capable and was able to do all sorts of...",
+            "capable": "it was very capable and was able to do all sorts of actions!",
             "end1": "And those rewards lead the agent to learn!",
             "goPlay": "Go see yourself!",
             "once": "Once upon a time...",
-            "rewarded": "The actions had consequences — greatly rewarded ones... ",
+            "rewarded": "Those actions had consequences — greatly rewarded ones... ",
             "seenAt": "The <AgentName/> was often seen at the...",
             "thereWas": "...there was an..."
         },
@@ -97,16 +97,15 @@
             "13": "It means I learn by interacting with the environment and getting feedback.",
             "14": "So how?",
             "15": "When I do something in this environment, I get a reward.",
-            "16": "If I spook the burglar I get rewarded 💰, but if I break a pot, I get a negative reward ☹️.",
-            "17": "Let's try a few rounds, or episodes as we call them 😎.",
-            "18": "At this point I don't really know what I'm doing. I just try random actions and remember which ones worked better in each situation.",
-            "19": "Ouch! Okay, so if there is a flower pot on the right side, don't go right...",
-            "20": "Ouch! ☹️ So when there was a flower pot on the left side, it might not be a good idea to go left!",
+            "16": "If I spook the burglar I get rewarded positively 💰, but if I break a pot, I get a negative reward ☹️.",
+            "17": "At the beginning I don't really know what I'm doing. I just try random actions and remember which ones worked better in each situation.",
+            "18": "Let's try a few rounds, or episodes as we call them 😎.",
+            "20": "Ouch! ☹️ So when there was a flower pot on the that side, it might not be a good idea to go there!",
             "21": "Okay, so no barking for no reason!",
             "22": "Hey! Yeah, I spooked the burglar away and got a nice reward!",
             "23": "But yeah, I'm an AI agent so let's speed things up...",
-            "24": "Whoa, I'm learning so fast!",
-            "25": "Now no burglar can evade me! And I only occasionally break some pots 😇"
+            "25": "Whoa, that was fast!",
+            "26": "Now no burglar can evade me! And I only occasionally break some pots 😇"
         }
     }
 }

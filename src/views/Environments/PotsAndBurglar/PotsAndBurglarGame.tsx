@@ -119,7 +119,7 @@ function PotsAndBurglarGame({
         lossesRef.current = 0;
         episodicRewardRef.current = 0;
         lastEpisodeRewardRef.current = 0;
-        infoRef.current = { timeLeft: maxTurns ?? 0, result: 'ongoing', message: 'Game reset' };
+        infoRef.current = { timeLeft: maxTurns ?? 0, trigger: false, result: 'ongoing', message: 'Game reset' };
 
         const { obs } = envRef.current.reset();
         obsRef.current = obs;
@@ -186,7 +186,7 @@ function PotsAndBurglarGame({
             const { info, obs: nextObs, reward, terminated } = envRef.current.step(action);
             infoRef.current = info;
             agentRef.current.update(currentObs, action, reward, nextObs);
-            potsBrokenRef.current += info.brokePot ? 1 : 0;
+            potsBrokenRef.current += info.trigger ? 1 : 0;
 
             episodicRewardRef.current += reward;
 
@@ -219,7 +219,7 @@ function PotsAndBurglarGame({
                 const { info, obs: nextObs, reward, terminated } = envRef.current.step(action);
                 infoRef.current = info;
                 agentRef.current.update(currentObs, action, reward, nextObs);
-                potsBrokenRef.current += info.brokePot ? 1 : 0;
+                potsBrokenRef.current += info.trigger ? 1 : 0;
 
                 episodicRewardRef.current += reward;
 

@@ -5,12 +5,13 @@ import { useTranslation } from 'react-i18next';
 import Footer from '../Footer/Footer';
 import ButtonBubble from '../../components/Bubbles/ButtonBubble';
 import { useNavigate } from 'react-router';
-import { useAtomValue } from 'jotai';
-import { ActiveSubViewAtom } from '../../atoms/state';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { ActiveSubViewAtom, AgentSettingsAtom, GameControlAtom } from '../../atoms/state';
 import TutorialEnvironment from './TutorialEnvironment/TutorialEnvironment';
 import { RLGridEnv } from '../Environments/PotsAndBurglar/environment';
 import { QLearningAgent } from '../../components/agents/rlAgentQ';
 import { Actions, Agent, GameEnvironmentInfo, GenericObservation } from '../../types';
+import { defaultAgentSettings, defaultControls } from '../../utils/defaults';
 
 export default function Tutorial() {
     const { t } = useTranslation();
@@ -24,8 +25,12 @@ export default function Tutorial() {
     const actionRef = useRef<Actions>(undefined);
     const qvalueRef = useRef<number[]>([]);
     const infoRef = useRef<GameEnvironmentInfo>(undefined);
+    const setControls = useSetAtom(GameControlAtom);
+    const setAgentSettings = useSetAtom(AgentSettingsAtom);
 
     const goPlay = () => {
+        setAgentSettings(defaultAgentSettings);
+        setControls(defaultControls);
         navigate('/story?view=story');
     };
 
@@ -34,30 +39,28 @@ export default function Tutorial() {
         <div className={style.tutorialPage}>
             <ViewHandler />
 
-            <div
-                className={style.content}
-                tabIndex={-1}
-            >
-                <h1>Tutorial</h1>
-                <div className={style.tutorialContainer}>
-                    <TutorialEnvironment
-                        envRef={envRef}
-                        agentRef={agentRef}
-                        obsRef={obsRef}
-                        actionRef={actionRef}
-                        qvalueRef={qvalueRef}
-                        infoRef={infoRef}
-                        agent={agent}
-                    />
-                </div>
-                {activeStep === 'interaction' && (
+            <h1>Tutorial</h1>
+            <div className={style.tutorialContainer}>
+                <TutorialEnvironment
+                    envRef={envRef}
+                    agentRef={agentRef}
+                    obsRef={obsRef}
+                    actionRef={actionRef}
+                    qvalueRef={qvalueRef}
+                    infoRef={infoRef}
+                    agent={agent}
+                />
+            </div>
+            {activeStep === 'interaction' && (
+                <>
+                    <p>You can now proceed to make your own ...</p>
                     <ButtonBubble
                         side="center"
                         text={t('start.actions.goStory')}
                         onClick={goPlay}
                     />
-                )}
-            </div>
+                </>
+            )}
 
             <Footer hideLang={false} />
         </div>

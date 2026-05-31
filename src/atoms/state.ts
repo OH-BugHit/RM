@@ -1,14 +1,14 @@
 import { atom } from 'jotai';
 import { Agent, AgentProps, Control, EnvironmentSelection, EnvSettings, SubView, View } from '../types';
-import { defaultEnvSettings, defaultWorld } from '../utils/defaults';
+import { defaultAgentSettings, defaultControls, defaultEnvSettings, defaultWorld } from '../utils/defaults';
 
 export const TempSettingsAtom = atom<EnvSettings>(defaultEnvSettings);
 export const EnvSettingsAtom = atom<EnvSettings>(defaultEnvSettings);
 
-export const AgentSettingsAtom = atom<AgentProps>({ epsilon: 0.1, gamma: 0.9, alpha: 0.1, learning: true });
+export const AgentSettingsAtom = atom<AgentProps>(defaultAgentSettings);
 
 export const ResetUiPulseAtom = atom<boolean>(false);
-export const GameControlAtom = atom<Control>({ isRunning: false, isFast: false, takeStep: false });
+export const GameControlAtom = atom<Control>(defaultControls);
 
 export const StoryStepAtom = atom<number>(1);
 

@@ -180,6 +180,7 @@ export type GameEnvironmentInfo = {
     timeLeft: number;
     result: string;
     message: string;
+    trigger: boolean;
 };
 
 export type Control = {

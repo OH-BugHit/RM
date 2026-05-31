@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { ActiveEnvironmentAtom, ActiveAgentAtom, StoryStepAtom } from '../../atoms/state';
 import AgentSelector from './Selectors/AgentSelector';
-import ActionsSelector from './Selectors/ActionsSelector';
 import EnvironmentSelector from './Selectors/EnvironmentSelector';
 import RewardsSelector from './Selectors/RewardsSelector';
 import Footer from '../Footer/Footer';
@@ -188,9 +187,6 @@ export default function Story() {
                     side="right"
                     text={t('story.bubbles.capable')}
                 />
-                <div className={style.content}>
-                    <ActionsSelector />
-                </div>
                 <ThoughtBubble
                     ref={rewardsRef}
                     side="left"

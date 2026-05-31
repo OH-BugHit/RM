@@ -5,23 +5,15 @@
     flex-direction: column;
     height: 100%;
     width: 100%;
-}
-
-.content {
-    flex: 1;
-    overflow-y: auto;
     padding-top: 3rem;
     padding-bottom: 3rem;
-
     gap: 5rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
 }
 
+
 .tutorialContainer {
     background-color: white;
-    height: 100%;
-    width: fit-content;
-    padding: 1rem;
+    padding: 3rem;
 }

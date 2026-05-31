@@ -47,7 +47,13 @@ function getStartingPosition(spawnCells: Position[]): Position {
     return spawnCells[index];
 }
 
-type Info = { timeLeft: number; stepToTrap: boolean; result: 'win' | 'lose' | 'ongoing'; message: string };
+type Info = {
+    timeLeft: number;
+    stepToTrap: boolean;
+    result: 'win' | 'lose' | 'ongoing';
+    message: string;
+    trigger: boolean;
+};
 const SIDES: SixthSenseDirection[] = [
     SixthSenseDirection.North,
     SixthSenseDirection.South,
@@ -128,7 +134,13 @@ export class GenericRLEnv {
 
         return {
             obs: this.getObservation(),
-            info: { timeLeft: this.maxTurns, stepToTrap: false, result: 'ongoing', message: 'Game reset' },
+            info: {
+                timeLeft: this.maxTurns,
+                stepToTrap: false,
+                result: 'ongoing',
+                message: 'Game reset',
+                trigger: false,
+            },
         };
     }
 
@@ -189,10 +201,12 @@ export class GenericRLEnv {
     step(action: number): StepResult {
         let reward = this.rewardStep;
         let terminated = false;
+        let trigger = false;
 
         const newLocationValue: CellType = this.moveAgent(action);
         if (newLocationValue === CellType.Trap) {
             reward += this.trap1;
+            trigger = true;
             if (this.trapLethal) {
                 reward += this.lose;
                 terminated = true;
@@ -206,6 +220,7 @@ export class GenericRLEnv {
                         stepToTrap: newLocationValue === CellType.Trap,
                         result: 'lose',
                         message: 'Game step completed',
+                        trigger: trigger,
                     },
                 };
             }
@@ -225,6 +240,7 @@ export class GenericRLEnv {
                         stepToTrap: newLocationValue === CellType.Trap,
                         result: 'ongoing',
                         message: 'Game step completed. Special ability used successfully',
+                        trigger: trigger,
                     },
                 };
             } else {
@@ -246,6 +262,7 @@ export class GenericRLEnv {
                     stepToTrap: newLocationValue === CellType.Trap,
                     result: 'lose',
                     message: 'Game step completed. POI-step limit reached',
+                    trigger: trigger,
                 },
             };
         }
@@ -259,6 +276,7 @@ export class GenericRLEnv {
                 stepToTrap: newLocationValue === CellType.Trap,
                 result: 'ongoing',
                 message: 'Game step completed. Episode continues',
+                trigger: trigger,
             },
         };
     }
