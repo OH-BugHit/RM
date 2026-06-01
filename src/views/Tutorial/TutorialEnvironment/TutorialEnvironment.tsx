@@ -1,13 +1,15 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import { QLearningAgent } from '../../../components/agents/rlAgentQ';
 import { Actions, GameEnvironmentInfo, GenericObservation, Agent, SixthSenseDirection } from '../../../types';
 import { useSound } from '../../../hooks/useSound';
-import { useStore, useAtomValue, useAtom } from 'jotai';
+import { useStore, useAtomValue, useAtom, useSetAtom } from 'jotai';
 import {
     AgentSettingsAtom,
     EnvSettingsAtom,
     GameControlAtom,
     ResetUiPulseAtom,
+    StepsTakenAtom,
+    TutorialPhaseAtom,
     TutorialStepAtom,
 } from '../../../atoms/state';
 import {
@@ -22,10 +24,17 @@ import TutorialControls from '../TutorialControls';
 import { motion } from 'framer-motion';
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
+import { useTutorialStepEffects } from '../../../hooks/useTutorialStepEffects';
+import RewardFloats from '../../../components/RewardFloats.tsx/RewardFloats';
+import { useRewardFloats } from '../../../hooks/useRewardFloats';
 //import QCanvas from '../../QTable/QCanvas';
 
 const STEP_INTERVAL = 400; // ms
 const FAST_STEPS = 5000;
+const OBSERVATIONSTEP = 8;
+const ENVIRONMENTSTEP = 10;
+
+const FLOAT_RING_SIZE = 32;
 
 const fadeStyle = {
     transition: 'opacity 0.4s ease, background-color 0.15s linear',
@@ -40,6 +49,8 @@ interface PotsAndBurglarGameProps {
     qvalueRef: React.RefObject<number[]>;
     infoRef: React.RefObject<GameEnvironmentInfo | undefined>;
     agent: Agent;
+    visitedRewards: { win: boolean; pot: boolean; barkFail: boolean };
+    setVisitedRewards: Dispatch<SetStateAction<{ win: boolean; pot: boolean; barkFail: boolean }>>;
 }
 
 function TutorialEnvironment({
@@ -50,6 +61,8 @@ function TutorialEnvironment({
     qvalueRef,
     infoRef,
     agent,
+    visitedRewards,
+    setVisitedRewards,
 }: PotsAndBurglarGameProps) {
     const { t } = useTranslation();
     const sounds = useMemo(() => {
@@ -59,9 +72,12 @@ function TutorialEnvironment({
     const agentImage = getAgentImage(agent.type);
     const playBark = useSound(sounds);
     const envSettings = useAtomValue(EnvSettingsAtom);
-    const [controls, setControls] = useAtom(GameControlAtom);
+    const controls = useAtomValue(GameControlAtom);
     const resetUIpulse = useAtomValue(ResetUiPulseAtom);
     const agentSettings = useAtomValue(AgentSettingsAtom);
+    const [tutorialStep, setTutorialStep] = useAtom(TutorialStepAtom);
+    const setStepsTaken = useSetAtom(StepsTakenAtom);
+    const tutorialPhase = useAtomValue(TutorialPhaseAtom);
 
     const store = useStore();
 
@@ -78,6 +94,7 @@ function TutorialEnvironment({
     const burglarWonReward = envSettings?.potsAndBurglar?.reward.burglarWonReward;
     const [facing, setFacing] = useState(1);
 
+    const stepsTakenRef = useRef(0);
     const episodicRewardRef = useRef(0);
     const lastEpisodeRewardRef = useRef(0);
     const lastRewardRef = useRef(0);
@@ -87,135 +104,13 @@ function TutorialEnvironment({
 
     const [obs, setObs] = useState<GenericObservation>(defaultObs);
 
-    const [tutorialStep, setTutorialStep] = useAtom(TutorialStepAtom);
-    const visitedRewards = useRef({ win: false, pot: false, barkFail: false });
-    const OBSERVATIONSTEP = 8;
-    const ENVIRONMENTSTEP = 10;
+    useTutorialStepEffects({
+        tutorialStep,
+        envRef,
+        setFacing,
+    });
 
-    useEffect(() => {
-        if (envRef.current) {
-            switch (tutorialStep) {
-                case 0: {
-                    envRef.current.position = { x: 2, y: 2 };
-                    setFacing(1);
-                    break;
-                }
-                case 1: {
-                    envRef.current.position = { x: 2, y: 2 };
-                    envRef.current.POI = { side: SixthSenseDirection.East, turns: 0 };
-                    break;
-                }
-                case 2: {
-                    envRef.current.position = { x: 3, y: 2 };
-                    break;
-                }
-                case 3: {
-                    envRef.current.position = { x: 3, y: 3 };
-                    break;
-                }
-                case 4: {
-                    envRef.current.position = { x: 2, y: 3 };
-                    setFacing(1);
-                    break;
-                }
-                case 5: {
-                    envRef.current.position = { x: 2, y: 3 };
-                    setFacing(-1);
-                    break;
-                }
-                case 7: {
-                    envRef.current.position = { x: 1, y: 3 };
-                    break;
-                }
-                case 12: {
-                    envRef.current.position = { x: 2, y: 3 };
-                    setFacing(1);
-                    break;
-                }
-                case 19: {
-                    setControls((old) => {
-                        return {
-                            ...old,
-                            isRunning: true,
-                        };
-                    });
-                    break;
-                }
-                case 20: {
-                    // Hit flowerpot
-                    setControls((old) => {
-                        return {
-                            ...old,
-                            isRunning: false,
-                        };
-                    });
-                    break;
-                }
-                case 21: {
-                    // Bark fail
-                    setControls((old) => {
-                        return {
-                            ...old,
-                            isRunning: false,
-                        };
-                    });
-                    break;
-                }
-                case 22: {
-                    // Burglar spooked
-                    setControls((old) => {
-                        return {
-                            ...old,
-                            isRunning: false,
-                        };
-                    });
-                    break;
-                }
-                case 23: {
-                    setControls((old) => {
-                        return {
-                            ...old,
-                            isRunning: false,
-                        };
-                    });
-                    break;
-                }
-                case 24: {
-                    setControls((old) => {
-                        return {
-                            ...old,
-                            isRunning: true,
-                            isFast: true,
-                        };
-                    });
-                    break;
-                }
-                case 25: {
-                    setControls((old) => {
-                        return {
-                            ...old,
-                            isRunning: false,
-                            isFast: false,
-                        };
-                    });
-                    break;
-                }
-                case 27: {
-                    setControls((old) => {
-                        return {
-                            ...old,
-                            isRunning: true,
-                            isFast: false,
-                        };
-                    });
-                    break;
-                }
-            }
-            if (tutorialStep < 2) {
-                envRef.current.position = { x: 2, y: 2 };
-            }
-        }
-    }, [tutorialStep, envRef, setControls]);
+    const { items: floatItems, spawnFloat, deactivate } = useRewardFloats({ size: FLOAT_RING_SIZE });
 
     const resetUI = React.useCallback(() => {
         envRef.current = new RLGridEnv({
@@ -299,20 +194,35 @@ function TutorialEnvironment({
             const info = infoRef.current;
             const reward = lastRewardRef.current;
 
-            if (info.trigger && !visitedRewards.current.pot) {
-                visitedRewards.current.pot = true;
+            if (info.trigger && !visitedRewards.pot) {
+                setVisitedRewards((old) => {
+                    return {
+                        ...old,
+                        pot: true,
+                    };
+                });
                 setTutorialStep(20);
-            } else if (reward === envRef.current.barkFailReward && !visitedRewards.current.barkFail) {
-                visitedRewards.current.barkFail = true;
+            } else if (reward === envRef.current.barkFailReward && !visitedRewards.barkFail) {
+                setVisitedRewards((old) => {
+                    return {
+                        ...old,
+                        barkFail: true,
+                    };
+                });
                 setTutorialStep(21);
-            } else if (info.result === 'win' && !visitedRewards.current.win) {
-                visitedRewards.current.win = true;
+            } else if (info.result === 'win' && !visitedRewards.win) {
+                setVisitedRewards((old) => {
+                    return {
+                        ...old,
+                        win: true,
+                    };
+                });
                 setTutorialStep(22);
-            } else if (visitedRewards.current.barkFail && visitedRewards.current.pot && visitedRewards.current.win) {
+            } else if (visitedRewards.barkFail && visitedRewards.pot && visitedRewards.win) {
                 setTutorialStep(23);
             }
         }
-    }, [tutorialStep, obs, envRef, setTutorialStep, infoRef]);
+    }, [tutorialStep, obs, envRef, visitedRewards, setVisitedRewards, setTutorialStep, infoRef]);
 
     const syncUI = React.useCallback(() => {
         if (obsRef.current && agentRef.current && obsRef.current) {
@@ -333,6 +243,7 @@ function TutorialEnvironment({
             infoRef.current = info;
             agentRef.current.update(currentObs, action, reward, nextObs);
             episodicRewardRef.current += reward;
+            spawnFloat(envRef.current.position.x, envRef.current.position.y, reward);
             lastRewardRef.current = reward;
             const dx = prev.x - envRef.current.position.x;
             if (dx !== 0) setFacing(dx > 0 ? -1 : 1);
@@ -344,15 +255,11 @@ function TutorialEnvironment({
             } else {
                 obsRef.current = nextObs;
             }
-
+            stepsTakenRef.current++;
+            setStepsTaken(stepsTakenRef.current);
             syncUI();
         }
-    }, [syncUI, playBark, actionRef, obsRef, infoRef, agentRef, envRef]);
-
-    // take single step
-    useEffect(() => {
-        stepUI();
-    }, [controls.takeStep, stepUI]);
+    }, [syncUI, playBark, spawnFloat, setStepsTaken, actionRef, obsRef, infoRef, agentRef, envRef]);
 
     // Normal loop
     useEffect(() => {
@@ -381,11 +288,14 @@ function TutorialEnvironment({
                 } else {
                     obsRef.current = nextObs;
                 }
-            }
 
+                stepsTakenRef.current++;
+            }
+            if (stepsTakenRef.current >= 1000000) setTutorialStep(25);
+            setStepsTaken(stepsTakenRef.current);
             syncUI();
         }
-    }, [syncUI, obsRef, agentRef, envRef, infoRef, actionRef]);
+    }, [syncUI, setStepsTaken, setTutorialStep, obsRef, agentRef, envRef, infoRef, actionRef]);
 
     // Fast loop
     useEffect(() => {
@@ -475,8 +385,8 @@ function TutorialEnvironment({
                         >
                             <div style={{ position: 'relative' }}>
                                 {tutorialStep > 0 && tutorialStep !== 19 && tutorialStep < 27 && (
-                                    <motion.blockquote
-                                        className={style.example_obtuse}
+                                    <motion.div
+                                        className={style.speechBubble}
                                         transition={{
                                             type: 'spring',
                                             stiffness: 300,
@@ -487,8 +397,7 @@ function TutorialEnvironment({
                                         }}
                                     >
                                         <p>{t(`tutorial.agentBubble.${tutorialStep}`)}</p>
-                                        {tutorialStep}/25
-                                    </motion.blockquote>
+                                    </motion.div>
                                 )}
 
                                 <motion.img
@@ -497,14 +406,21 @@ function TutorialEnvironment({
                                         width: 40,
                                         height: 40,
                                     }}
+                                    initial={{ opacity: 0 }}
                                     animate={{
+                                        opacity: tutorialStep > 0 ? 1 : 0,
                                         scaleX: facing ?? 1,
                                     }}
                                 />
                             </div>
                         </motion.div>
                     )}
-                    {controls.isFast}
+                    <RewardFloats
+                        items={floatItems}
+                        cellSize={40}
+                        visible={tutorialStep > 2}
+                        onComplete={deactivate}
+                    />
                     {Array.from({ length: gridSize }).map((_, y) =>
                         Array.from({ length: gridSize }).map((_, x) => {
                             let bg = 'lightgray';
@@ -658,8 +574,7 @@ function TutorialEnvironment({
                 </div>
                 <div />
             </div>
-            {tutorialStep}
-            <TutorialControls />
+            {tutorialPhase === 'basics' && <TutorialControls />}
         </div>
     );
 }

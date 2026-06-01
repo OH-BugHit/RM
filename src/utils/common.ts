@@ -31,3 +31,14 @@ export const getQColor = (value: number, minQ: number, maxQ: number) => {
     const norm = value / maxQ;
     return `rgba(0, 255, 0, ${Math.pow(norm, gamma)})`;
 };
+
+interface DisplayRewardProps {
+    value: number;
+    show?: boolean;
+}
+export const displayReward = ({ value, show = true }: DisplayRewardProps) => {
+    if (!show) return '';
+    if (value > 0) return '💚';
+    if (value < 0) return '💔';
+    return '';
+};

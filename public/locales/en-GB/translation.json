@@ -46,11 +46,13 @@
             "We value your privacy and we are committed to protect your data and ensuring GDPR compliance. If you have questions or want to exercise your rights, contact us at nicolas.pope@uef.fi."
         ]
     },
+    "app": { "github": "Github", "teachingMaterials": "Teaching Materials" },
     "common": {
         "cancel": "Cancel",
         "close": "Close",
         "or": "or",
         "paused": "Game Paused",
+        "subtitle": "Game for learning about Reinforcement Learning.",
         "title": "Reward Machine"
     },
     "story": {
@@ -80,6 +82,11 @@
         }
     },
     "tutorial": {
+        "actions": {
+            "goStory": "Go to play!",
+            "recap": "Recap concepts",
+            "replayTutorial": "Replay tutorial"
+        },
         "agentBubble": {
             "0": "",
             "1": "Hi! I'm Agent Robodog! 😎",
@@ -88,15 +95,15 @@
             "4": "In this game, I'm one of the available agents and act like a computer-controlled character.",
             "5": "I'm actually a Q-learning agent, but let's not go there yet. You can just call me Robodog Agent! 😎",
             "6": "In this tutorial game, my task is to learn to defend my home from a burglar, while avoiding making a mess by bumping into flower pots.",
-            "7": "I have partial observation of my environment, meaning I can only see a small part of the house at each step.",
-            "8": "This is what I can see.",
-            "9": "I can see one step in each direction, and I can also see which direction the burglar is in. Looks like he's on the right side!",
-            "10": "In this game you can see the whole environment, but I only observe the white area around me and the direction of the burglar.",
+            "7": "I have partial observation of my environment, meaning I can only see a small part of the house at each turn, or timestep as we call them 😎.",
+            "8": "This is what I can see, my observation!",
+            "9": "I can see one step in each direction, and I can also sense which direction the burglar is in. Looks like he's on the right side!",
+            "10": "In this game you can see the whole environment, and the state it is in, but I only observe the white area around me and the direction of the burglar.",
             "11": "The thing is, I don't actually know much at the beginning. In reinforcement learning, the agent usually starts without knowing what to do.",
             "12": "Reinforcement learning?",
             "13": "It means I learn by interacting with the environment and getting feedback.",
             "14": "So how?",
-            "15": "When I do something in this environment, I get a reward.",
+            "15": "When I do some action in this environment, I get a reward.",
             "16": "If I spook the burglar I get rewarded positively 💰, but if I break a pot, I get a negative reward ☹️.",
             "17": "At the beginning I don't really know what I'm doing. I just try random actions and remember which ones worked better in each situation.",
             "18": "Let's try a few rounds, or episodes as we call them 😎.",
@@ -106,6 +113,31 @@
             "23": "But yeah, I'm an AI agent so let's speed things up...",
             "25": "Whoa, that was fast!",
             "26": "Now no burglar can evade me! And I only occasionally break some pots 😇"
+        },
+        "concepts": {
+            "title": "Concepts",
+            "agent": "Agent",
+            "environment": "Environment",
+            "task": "Task",
+            "reinforcementLearning": "Reinforcement Learning",
+            "timeStep": "Timestep",
+            "state": "State",
+            "action": "Action",
+            "reward": "Reward",
+            "observation": "Observation",
+            "episode": "Episode"
+        },
+        "recap": {
+            "1": "An agent is an AI that makes decisions and acts.",
+            "2": "The environment is the world the agent operates in and responds to the agent's actions.",
+            "3": "The task defines what the agent is trying to learn. In reinforcement learning, the agent learns by interacting with the environment and receiving feedback.",
+            "4": "At each timestep, the agent receives an observation from the environment. The state describes the full situation of the environment, but the agent often only sees part of it (the observation).",
+            "5": "The agent chooses an action that affects the environment. The environment returns a reward, which indicates how good or bad the action was for the task.",
+            "6": "An episode is one complete run from start to finish. During episodes, the agent learns which actions lead to better rewards in different situations.",
+            "title": "Recap"
+        },
+        "tasks": {
+            "title": "Tasks"
         }
     }
 }

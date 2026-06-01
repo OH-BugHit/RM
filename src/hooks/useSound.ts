@@ -1,8 +1,18 @@
+import { useAtomValue } from 'jotai';
 import { useEffect, useRef, useCallback } from 'react';
+import { AudioSettingsAtom } from '../atoms/state';
 
 export function useSound(urls: string[]): () => void {
+    const audioSettings = useAtomValue(AudioSettingsAtom);
     const audioContextRef = useRef<AudioContext | null>(null);
     const buffersRef = useRef<AudioBuffer[]>([]);
+    const gainRef = useRef<GainNode | null>(null);
+
+    useEffect(() => {
+        if (!gainRef.current) return;
+
+        gainRef.current.gain.value = audioSettings.volume ?? 1;
+    }, [audioSettings.volume]);
 
     useEffect(() => {
         if (audioContextRef.current) return; // luo vain kerran
@@ -12,6 +22,10 @@ export function useSound(urls: string[]): () => void {
 
         const context: AudioContext = new AudioContextClass();
         audioContextRef.current = context;
+
+        const gain = context.createGain();
+        gain.connect(context.destination);
+        gainRef.current = gain;
 
         Promise.allSettled(
             urls.map((url) =>
@@ -32,8 +46,9 @@ export function useSound(urls: string[]): () => void {
     const play = useCallback((): void => {
         const context = audioContextRef.current;
         const buffers = buffersRef.current;
+        const gain = gainRef.current;
 
-        if (!context || buffers.length === 0) {
+        if (!context || !gain || buffers.length === 0) {
             console.warn('Audio not ready yet');
             return;
         }
@@ -42,11 +57,12 @@ export function useSound(urls: string[]): () => void {
             context.resume();
         }
 
-        const randomBuffer = buffers[Math.floor(Math.random() * buffers.length)];
+        const buffer = buffers[Math.floor(Math.random() * buffers.length)];
 
         const source = context.createBufferSource();
-        source.buffer = randomBuffer;
-        source.connect(context.destination);
+        source.buffer = buffer;
+
+        source.connect(gain);
         source.start(0);
     }, []);
 

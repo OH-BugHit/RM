@@ -1,0 +1,11 @@
+@value primary, secondary textDark from "@genai-fi/base/css/colours.module.css";
+
+.content {
+    min-width: 300px;
+    text-align: start;
+}
+
+.content ul {
+    display: flex;
+    flex-direction: column;
+}

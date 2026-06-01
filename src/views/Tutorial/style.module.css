@@ -3,17 +3,47 @@
 .tutorialPage {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    min-height: 100vh;
     width: 100%;
     padding-top: 3rem;
     padding-bottom: 3rem;
-    gap: 5rem;
-    display: flex;
     align-items: center;
+    overflow: auto;
 }
 
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.buttonContainer {
+    margin-bottom: 3rem;
+}
 
 .tutorialContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
     background-color: white;
-    padding: 3rem;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 3rem 0;
+    gap: 3rem;
+}
+
+.tutorialContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    gap: 3rem;
+    padding: 0 3rem;
+    height: 460px;
+    max-height: 460px;
 }

@@ -153,6 +153,10 @@ export type GenericReward = {
     killed: number; // Reward for losing by trapLethal
 };
 
+export type SoundSettings = {
+    volume: number; // 0..1
+};
+
 export type EnvSettings = {
     potsAndBurglar: {
         env: RoboDogEnv;

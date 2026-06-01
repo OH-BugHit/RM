@@ -5,10 +5,10 @@
     gap: 10;
 }
 
-.example_obtuse {
+.speechBubble {
     position: absolute;
     display: block;
-    top: -30px;
+    top: -45px;
     left: 0;
     transform: translateX(30px) translateY(-100%);
     padding: 15px 30px;
@@ -19,7 +19,7 @@
     /* css3 */
     background: -moz-linear-gradient(#35f9ef, #1cecf3);
     background: -o-linear-gradient(#35f9ef, #1cecf3);
-    background: linear-gradient(#35f9ef, #a3e8eb);
+    background: linear-gradient(#35f9eff8, #a3e8ebe7);
     /* Using longhand to avoid inconsistencies between Safari 4 and Chrome 4 */
     -webkit-border-top-left-radius: 25px 50px;
     -webkit-border-top-right-radius: 25px 50px;
@@ -40,23 +40,23 @@
 }
 
 /* display of quote author (alternatively use a class on the element following the blockquote) */
-.example_obtuse+p {
+.speechBubble+p {
     margin: 10px 150px 2em 0;
     text-align: right;
     font-style: italic;
 }
 
 /* creates the larger triangle */
-.example_obtuse:before {
+.speechBubble:before {
     content: "";
     position: absolute;
-    bottom: -24px;
+    bottom: -40px;
     left: 30px;
 
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 50px;
 
-    background: #a3e8eb;
+    background: linear-gradient(#a3e8eb, #adeef1c9);
     clip-path: polygon(0 0, 100% 20%, 20% 100%);
 }
 

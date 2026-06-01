@@ -3,11 +3,13 @@
         "title": "Generation AI",
         "privacyTitle": "Tietoturvaselvitys"
     },
+    "app": { "teachingMaterials": "Oppimateriaalit" },
     "common": {
         "cancel": "Peruuta",
         "close": "Sulje",
         "or": "tai",
         "paused": "Peli pysäytetty",
+        "subtitle": "Opi pelin avulla miten vahvistusoppiminen toimii",
         "title": "Palkkionmetsästäjä"
     }
 }

@@ -1,6 +1,14 @@
 import { atom } from 'jotai';
-import { Agent, AgentProps, Control, EnvironmentSelection, EnvSettings, SubView, View } from '../types';
-import { defaultAgentSettings, defaultControls, defaultEnvSettings, defaultWorld } from '../utils/defaults';
+import { Agent, AgentProps, Control, EnvironmentSelection, EnvSettings, SoundSettings, SubView, View } from '../types';
+import {
+    defaultAgentSettings,
+    defaultControls,
+    defaultEnvSettings,
+    defaultSoundSettings,
+    defaultWorld,
+} from '../utils/defaults';
+
+export const AudioSettingsAtom = atom<SoundSettings>(defaultSoundSettings);
 
 export const TempSettingsAtom = atom<EnvSettings>(defaultEnvSettings);
 export const EnvSettingsAtom = atom<EnvSettings>(defaultEnvSettings);
@@ -19,3 +27,5 @@ export const ActiveEnvironmentAtom = atom<EnvironmentSelection>({ name: '', type
 export const ActiveAgentAtom = atom<Agent>({ name: '', type: 'robodog' });
 
 export const TutorialStepAtom = atom<number>(0);
+export const StepsTakenAtom = atom<number>(0);
+export const TutorialPhaseAtom = atom<'basics' | 'recap' | 'startRecap' | 'ready'>('basics');
