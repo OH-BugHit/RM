@@ -8,6 +8,7 @@ import {
     EnvSettingsAtom,
     GameControlAtom,
     ResetUiPulseAtom,
+    StepsProcentageAtom,
     StepsTakenAtom,
     TutorialPhaseAtom,
     TutorialStepAtom,
@@ -77,6 +78,7 @@ function TutorialEnvironment({
     const agentSettings = useAtomValue(AgentSettingsAtom);
     const [tutorialStep, setTutorialStep] = useAtom(TutorialStepAtom);
     const setStepsTaken = useSetAtom(StepsTakenAtom);
+    const setStepsProcentage = useSetAtom(StepsProcentageAtom);
     const tutorialPhase = useAtomValue(TutorialPhaseAtom);
 
     const store = useStore();
@@ -94,6 +96,7 @@ function TutorialEnvironment({
     const burglarWonReward = envSettings?.potsAndBurglar?.reward.burglarWonReward;
     const [facing, setFacing] = useState(1);
 
+    const prevProgressRef = useRef(0);
     const stepsTakenRef = useRef(0);
     const episodicRewardRef = useRef(0);
     const lastEpisodeRewardRef = useRef(0);
@@ -293,9 +296,15 @@ function TutorialEnvironment({
             }
             if (stepsTakenRef.current >= 1000000) setTutorialStep(25);
             setStepsTaken(stepsTakenRef.current);
+            const progress = Math.floor(stepsTakenRef.current / 20000);
+
+            if (progress !== prevProgressRef.current) {
+                prevProgressRef.current = progress;
+                setStepsProcentage(progress * 2);
+            }
             syncUI();
         }
-    }, [syncUI, setStepsTaken, setTutorialStep, obsRef, agentRef, envRef, infoRef, actionRef]);
+    }, [syncUI, setStepsTaken, setTutorialStep, setStepsProcentage, obsRef, agentRef, envRef, infoRef, actionRef]);
 
     // Fast loop
     useEffect(() => {

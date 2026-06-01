@@ -4,6 +4,7 @@ import { useAtomValue } from 'jotai';
 import { TutorialStepAtom } from '../../../atoms/state';
 import { AnimatePresence, motion } from 'framer-motion';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
+import { Help } from '@genai-fi/base';
 
 const conceptItems = [
     { step: 2, key: 'agent', label: 'tutorial.concepts.agent' },
@@ -30,7 +31,15 @@ export default function TutorialConcepts() {
 
     return (
         <main className={style.content}>
-            <h2>{t('tutorial.concepts.title')}</h2>
+            <h2 style={{ display: 'inline-flex', justifyContent: 'center', marginLeft: '8px' }}>
+                {t('tutorial.concepts.title')}
+                <span>
+                    <Help
+                        inplace
+                        message={t('tutorial.hints.concepts')}
+                    />
+                </span>
+            </h2>
 
             <ul>
                 <AnimatePresence>

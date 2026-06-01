@@ -4,11 +4,11 @@ import {
     defaultAgentSettings,
     defaultControls,
     defaultEnvSettings,
-    defaultSoundSettings,
+    defaultAudioSettings,
     defaultWorld,
 } from '../utils/defaults';
 
-export const AudioSettingsAtom = atom<SoundSettings>(defaultSoundSettings);
+export const AudioSettingsAtom = atom<SoundSettings>(defaultAudioSettings);
 
 export const TempSettingsAtom = atom<EnvSettings>(defaultEnvSettings);
 export const EnvSettingsAtom = atom<EnvSettings>(defaultEnvSettings);
@@ -28,4 +28,5 @@ export const ActiveAgentAtom = atom<Agent>({ name: '', type: 'robodog' });
 
 export const TutorialStepAtom = atom<number>(0);
 export const StepsTakenAtom = atom<number>(0);
-export const TutorialPhaseAtom = atom<'basics' | 'recap' | 'startRecap' | 'ready'>('basics');
+export const StepsProcentageAtom = atom<number>(0);
+export const TutorialPhaseAtom = atom<'basics' | 'startRecap' | 'recap' | 'startQuiz' | 'quiz' | 'ready'>('basics');

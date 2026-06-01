@@ -50,7 +50,7 @@ export default function Recap() {
 
     const onNext = () => {
         // Recap completed
-        if (recapPhase > 4) setTutorialPhase('ready');
+        if (recapPhase > 4) setTutorialPhase('startQuiz');
         setRecapPhase(Math.min(recapPhase + 1, 6));
     };
 
@@ -81,8 +81,8 @@ export default function Recap() {
             <div style={{ flexGrow: 1 }} />
             <PhaseControls
                 onPrevious={() => onPrevious()}
-                hidePrevious={true}
-                disableNext={recapPhase === 6}
+                removePrevious={true}
+                hideNext={recapPhase === 6}
                 onNext={() => onNext()}
             />
         </main>

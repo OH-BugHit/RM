@@ -1,4 +1,5 @@
 import { Button } from '@genai-fi/base';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     onPrevious: () => void;
@@ -7,6 +8,8 @@ type Props = {
     disablePrevious?: boolean;
     hidePrevious?: boolean;
     hideNext?: boolean;
+    removePrevious?: boolean;
+    removeNext?: boolean;
 };
 
 function PhaseControls({
@@ -16,26 +19,30 @@ function PhaseControls({
     disablePrevious = false,
     hideNext = false,
     hidePrevious = false,
+    removePrevious = false,
+    removeNext = false,
 }: Props) {
+    const { t } = useTranslation();
     return (
         <div style={{ marginTop: 10, display: 'flex', gap: '1rem' }}>
-            {!hidePrevious && (
+            {!removePrevious && (
                 <Button
                     variant="outlined"
                     disabled={disablePrevious}
                     onClick={onPrevious}
+                    style={{ visibility: hidePrevious ? 'hidden' : 'visible' }}
                 >
-                    Previous
+                    {t('common.previous')}
                 </Button>
             )}
-
-            {!hideNext && (
+            {!removeNext && (
                 <Button
                     variant="outlined"
                     disabled={disableNext}
                     onClick={onNext}
+                    style={{ visibility: hideNext ? 'hidden' : 'visible' }}
                 >
-                    Next
+                    {t('common.next')}
                 </Button>
             )}
         </div>

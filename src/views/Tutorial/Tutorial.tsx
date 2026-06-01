@@ -11,12 +11,13 @@ import TutorialEnvironment from './TutorialEnvironment/TutorialEnvironment';
 import { RLGridEnv } from '../Environments/PotsAndBurglar/environment';
 import { QLearningAgent } from '../../components/agents/rlAgentQ';
 import { Actions, Agent, GameEnvironmentInfo, GenericObservation } from '../../types';
-import { defaultAgentSettings, defaultControls } from '../../utils/defaults';
+import { defaultAgentSettings, defaultControls, defaultAudioSettings } from '../../utils/defaults';
 import { AnimatePresence, motion } from 'framer-motion';
 import TutorialConcepts from './TutorialConcepts/TutorialConcepts';
 import TaskCompletion from './TaskCompletion/TaskCompletion';
 import Recap from './Recap/Recap';
 import ReplayTutorial from './ReplayTutorial';
+import Quiz from './Quiz/Quiz';
 
 export default function Tutorial() {
     const { t } = useTranslation();
@@ -33,6 +34,7 @@ export default function Tutorial() {
     const setAgentSettings = useSetAtom(AgentSettingsAtom);
     const [visitedRewards, setVisitedRewards] = useState({ win: false, pot: false, barkFail: false });
     const [showRecap, setShowRecap] = useState(false);
+    const [showQuiz, setShowQuiz] = useState(false);
     const setSoundSettings = useSetAtom(AudioSettingsAtom);
 
     const handleClick = () => {
@@ -42,12 +44,18 @@ export default function Tutorial() {
                 setShowRecap(true);
                 break;
             }
+            case 'startQuiz': {
+                setShowQuiz(true);
+                setControls(defaultControls);
+                break;
+            }
             case 'ready': {
                 setAgentSettings(defaultAgentSettings);
-                setControls(defaultControls);
+                setSoundSettings(defaultAudioSettings);
                 navigate('/story?view=story');
                 break;
             }
+
             default:
                 return null;
         }
@@ -63,13 +71,30 @@ export default function Tutorial() {
                     <div className={style.tutorialContent}>
                         <ReplayTutorial />
                         <TutorialConcepts />
-                        <AnimatePresence>
+                        <AnimatePresence mode="popLayout">
                             {showRecap && (
                                 <motion.div
                                     key="recap"
                                     layout
                                     initial={{
-                                        x: 300,
+                                        x: -300,
+                                        opacity: 0,
+                                    }}
+                                    animate={{
+                                        x: 0,
+                                        opacity: 1,
+                                    }}
+                                    transition={{ duration: 0.4 }}
+                                >
+                                    <Recap />
+                                </motion.div>
+                            )}
+                            {showQuiz && (
+                                <motion.div
+                                    key="quiz"
+                                    layout
+                                    initial={{
+                                        x: -300,
                                         opacity: 0,
                                     }}
                                     animate={{
@@ -82,27 +107,32 @@ export default function Tutorial() {
                                     }}
                                     transition={{ duration: 0.4 }}
                                 >
-                                    <Recap />
+                                    <Quiz />
                                 </motion.div>
                             )}
-                        </AnimatePresence>
-                        <motion.div
-                            layout
-                            transition={{ duration: 0.4 }}
-                        >
-                            <TutorialEnvironment
-                                envRef={envRef}
-                                agentRef={agentRef}
-                                obsRef={obsRef}
-                                actionRef={actionRef}
-                                qvalueRef={qvalueRef}
-                                infoRef={infoRef}
-                                agent={agent}
-                                visitedRewards={visitedRewards}
-                                setVisitedRewards={setVisitedRewards}
-                            />
-                        </motion.div>
-                        <AnimatePresence mode="popLayout">
+                            {!showQuiz && (
+                                <motion.div
+                                    key="environment"
+                                    layout
+                                    exit={{
+                                        x: 300,
+                                        opacity: 0,
+                                    }}
+                                    transition={{ duration: 0.4 }}
+                                >
+                                    <TutorialEnvironment
+                                        envRef={envRef}
+                                        agentRef={agentRef}
+                                        obsRef={obsRef}
+                                        actionRef={actionRef}
+                                        qvalueRef={qvalueRef}
+                                        infoRef={infoRef}
+                                        agent={agent}
+                                        visitedRewards={visitedRewards}
+                                        setVisitedRewards={setVisitedRewards}
+                                    />
+                                </motion.div>
+                            )}
                             {!showRecap && (
                                 <motion.div
                                     key="tasks"
@@ -123,7 +153,14 @@ export default function Tutorial() {
                     className={style.buttonContainer}
                     initial={{ opacity: 0 }}
                     animate={{
-                        opacity: activeStep !== 'ready' ? (activeStep !== 'startRecap' ? 0 : 1) : 1,
+                        opacity:
+                            activeStep !== 'ready'
+                                ? activeStep !== 'startRecap'
+                                    ? activeStep !== 'startQuiz'
+                                        ? 0
+                                        : 1
+                                    : 1
+                                : 1,
                     }}
                     transition={{
                         opacity: { duration: 0.3 },
@@ -131,7 +168,13 @@ export default function Tutorial() {
                 >
                     <ButtonBubble
                         side="center"
-                        text={activeStep === 'ready' ? t('tutorial.actions.goStory') : t('tutorial.actions.recap')}
+                        text={
+                            activeStep === 'ready'
+                                ? t('tutorial.actions.goStory')
+                                : activeStep === 'startRecap'
+                                  ? t('tutorial.actions.recap')
+                                  : t('tutorial.actions.quiz')
+                        }
                         onClick={handleClick}
                     />
                 </motion.div>
