@@ -106,7 +106,7 @@ export class RLGridEnv {
                 const x = getRandomInt(gridSize);
                 const y = getRandomInt(gridSize);
 
-                if (!occupied.has(key(x, y))) {
+                if (!occupied.has(key(x, y)) && !this.isWall(x, y)) {
                     occupied.add(key(x, y));
 
                     this.flower_pots.push({
@@ -126,7 +126,7 @@ export class RLGridEnv {
         while (true) {
             const x = getRandomInt(this.gridSize);
             const y = getRandomInt(this.gridSize);
-            if (!this.flower_pots.some((r) => r.x === x && r.y === y)) {
+            if (!this.flower_pots.some((r) => r.x === x && r.y === y) && !this.isWall(x, y)) {
                 this.position = { x, y };
                 break;
             }
@@ -145,6 +145,9 @@ export class RLGridEnv {
      */
     resetTutorial(position: Position): { obs: GenericObservation; info: Info } {
         this.position = position;
+        if (this.isWall(position.x, position.y)) {
+            throw new Error('Cannot spawn on wall');
+        }
         this.POI = { side: SixthSenseDirection.East, turns: 0 };
         return {
             obs: this.getObservation(),
@@ -154,7 +157,8 @@ export class RLGridEnv {
 
     // 2 = wall, 1 = pot, 0 = empty
     getCell(x: number, y: number): number {
-        if (x < 0 || x >= this.gridSize || y < 0 || y >= this.gridSize) return 2;
+        if (this.isWall(x, y)) return 2;
+
         const r = this.flower_pots.find((r) => r.intact && r.x === x && r.y === y);
         return r ? 1 : 0;
     }
@@ -166,15 +170,24 @@ export class RLGridEnv {
         };
     }
 
+    private isWall(x: number, y: number): boolean {
+        return x < 1 || x >= this.gridSize - 1 || y < 1 || y >= this.gridSize - 1;
+    }
+
     // Returns true if broke a pot. (Makes noice and terminates episode if burglar is there)
     private moveDog(action: number): boolean {
         let broke = false;
         let { x, y } = this.position;
 
-        if (action === Actions.up && y > 0) y--;
-        if (action === Actions.down && y < this.gridSize - 1) y++;
-        if (action === Actions.left && x > 0) x--;
-        if (action === Actions.right && x < this.gridSize - 1) x++;
+        if (action === Actions.up) y--;
+        if (action === Actions.down) y++;
+        if (action === Actions.left) x--;
+        if (action === Actions.right) x++;
+
+        // WALL BLOCK
+        if (this.isWall(x, y)) {
+            return false; // ei liiku
+        }
 
         this.position = { x, y };
 
@@ -214,10 +227,12 @@ export class RLGridEnv {
     private checkBarkSuccess(): boolean {
         const side = this.POI.side;
         if (side === SixthSenseDirection.Away) return false;
-        if (side === SixthSenseDirection.West && this.position.x === 0) return true;
-        if (side === SixthSenseDirection.East && this.position.x === this.gridSize - 1) return true;
-        if (side === SixthSenseDirection.North && this.position.y === 0) return true;
-        if (side === SixthSenseDirection.South && this.position.y === this.gridSize - 1) return true;
+
+        if (side === SixthSenseDirection.West && this.position.x === 1) return true;
+        if (side === SixthSenseDirection.East && this.position.x === this.gridSize - 2) return true;
+        if (side === SixthSenseDirection.North && this.position.y === 1) return true;
+        if (side === SixthSenseDirection.South && this.position.y === this.gridSize - 2) return true;
+
         return false;
     }
 

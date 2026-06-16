@@ -1,16 +1,56 @@
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import Footer from '../Footer/Footer';
-import { Button, theme } from '@genai-fi/base';
-import { useNavigate } from 'react-router-dom';
+import { theme } from '@genai-fi/base';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import SchoolIcon from '@mui/icons-material/School';
 import { ThemeProvider } from '@mui/material';
-import LinkButton from '../../components/LinkButton/LinkButton';
+import LinkButton from '../../components/Buttons/LinkButton/LinkButton';
+import Phase from './Phase';
+import { ActiveAgentAtom, ActiveEnvironmentAtom } from '../../atoms/state';
+import { useSetAtom } from 'jotai';
+import { EnvironmentTypes } from '../../types';
+import { defaultImages, defaultWorld } from '../../utils/defaults';
+import { getAgentImage } from '../../components/GameComponents/agentProps';
 
 export default function Frontpage() {
     const { t } = useTranslation();
-    const navigate = useNavigate();
+    const setEnvironment = useSetAtom(ActiveEnvironmentAtom);
+    const setAgent = useSetAtom(ActiveAgentAtom);
+    const setPremade = (type: EnvironmentTypes) => {
+        switch (type) {
+            case 'potsAndBurglar': {
+                setEnvironment({
+                    name: 'Home',
+                    type: 'potsAndBurglar',
+                    world: defaultWorld,
+                    envProps: defaultImages.potsAndBurglar,
+                });
+                setAgent({
+                    img: getAgentImage({ type: 'robodog' }),
+                    name: 'Robo-Dog',
+                    type: 'robodog',
+                    observationShape: 'small',
+                });
+                break;
+            }
+            case 'treasureHunter': {
+                setEnvironment({
+                    name: 'Treasure dungeon',
+                    type: 'treasureHunter',
+                    world: defaultWorld,
+                    envProps: defaultImages.treasureHunter,
+                });
+                setAgent({
+                    img: getAgentImage({ type: 'adventurer' }),
+                    name: 'RoboAdventurer',
+                    type: 'adventurer',
+                    observationShape: 'large',
+                });
+                break;
+            }
+        }
+    };
 
     const logoSize = Math.min(192, window.innerWidth * 0.3);
 
@@ -43,15 +83,34 @@ export default function Frontpage() {
                         </div>
                     </div>
                 </div>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                        navigate('/start?view=concepts&subView=agent');
-                    }}
-                >
-                    Start
-                </Button>
+                <div className={style.selectGroup}>
+                    <div className={style.intro}>{t('app.goPhase')}</div>
+                    <div className={style.cards}>
+                        <Phase
+                            id="tutorial"
+                            image="images/environments/potsAndBurglar.png"
+                            url="/start?view=tutorial"
+                        />
+                        <Phase
+                            id="story"
+                            image="images/environments/potsAndBurglar.png"
+                            url="/story?view=story&sub=agent"
+                        />
+                        <Phase
+                            id="potsAndBurglar"
+                            image="images/environments/potsAndBurglar.png"
+                            url="/play"
+                            onClick={() => setPremade('potsAndBurglar')}
+                        />
+                        <Phase
+                            id="treasureHunter"
+                            image="images/environments/potsAndBurglar.png"
+                            url="/play"
+                            onClick={() => setPremade('treasureHunter')}
+                        />
+                    </div>
+                </div>
+
                 <Footer hideLang={false} />
             </main>
         </ThemeProvider>

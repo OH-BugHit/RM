@@ -4,8 +4,8 @@ import { useAtom } from 'jotai';
 import { useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { SubView } from '../../types';
-import { StoryStepAtom } from '../../atoms/state';
+import { SubView, ViewEnum } from '../../types';
+import { StoryStepAtom } from '../../atoms/uiState';
 
 export default function StoryGuidance() {
     const { t } = useTranslation();
@@ -30,19 +30,17 @@ export default function StoryGuidance() {
     const data: { index: number; title: string; view: SubView }[] = [
         { index: 1, title: t('story.agents.title'), view: 'agent' },
         { index: 2, title: t('story.environment.title'), view: 'environment' },
-        { index: 3, title: t('story.actions.title'), view: 'actions' },
-        { index: 4, title: t('story.rewards.title'), view: 'rewards' },
+        { index: 3, title: t('story.rewards.title'), view: 'rewards' },
     ];
 
     // Sync URL view parameter to currentSelected step
     useEffect(() => {
-        const viewParam = params.get('subView');
+        const viewParam = params.get(ViewEnum.Subview);
         if (viewParam) {
             const matchingStep = {
                 agent: 1,
                 environment: 2,
-                actions: 3,
-                rewards: 4,
+                rewards: 3,
             }[viewParam as string];
 
             if (matchingStep && matchingStep !== currentSelected) {
@@ -54,19 +52,15 @@ export default function StoryGuidance() {
     const handleStepChage = (selectedStep: { index: number; title: string; view: SubView }) => {
         switch (selectedStep.index) {
             case 1: {
-                params.set('subView', 'agent');
+                params.set(ViewEnum.Subview, 'agent');
                 break;
             }
             case 2: {
-                params.set('subView', 'environment');
+                params.set(ViewEnum.Subview, 'environment');
                 break;
             }
             case 3: {
-                params.set('subView', 'actions');
-                break;
-            }
-            case 4: {
-                params.set('subView', 'rewards');
+                params.set(ViewEnum.Subview, 'rewards');
                 break;
             }
 

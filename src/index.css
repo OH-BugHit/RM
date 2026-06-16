@@ -4,8 +4,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/*background: #dee4e8;*/
-
 #root {
   background: #dfe5e8;
   font-family: 'Sour Gummy', 'Andika';
@@ -34,6 +32,7 @@ h1 {
   font-size: 3rem;
   margin: 0;
 }
+
 
 @media (max-width: 600px) {
   h1 {

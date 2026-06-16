@@ -4,6 +4,12 @@ export enum NeighbourEntity {
     Trap = 2,
 }
 
+export enum ViewEnum {
+    MainView = 'view',
+    Subview = 'sub',
+    Overlay = 'overlay',
+}
+
 export interface TextErrors {
     username?: 'missing' | 'long' | 'short';
     type?: 'missing';
@@ -12,12 +18,9 @@ export interface TextErrors {
 export interface WorldErrors {
     density?: 'missing';
     numberOfEdges?: 'missing';
-    roomshape?: 'missing';
     roomSizeX?: 'missing';
     roomSizeY?: 'missing';
 }
-
-export type RoomShape = 'rectangle' | 'circle';
 
 export type EdgeType = RoomType | 'lockedDoor' | 'newEdge';
 export type RoomType = 'spawnArea' | 'lockedRoom' | 'openRoom';
@@ -34,16 +37,49 @@ export enum CellType {
     Outside = 8,
 }
 
+export type StateData = {
+    previous: string;
+    current: string;
+};
+
+export type EpisodicData = {
+    triggered: number;
+    wins: number;
+    losses: number;
+    fullEpisodeReward: number;
+};
+
+export type TimeStepData = {
+    lastReward: number;
+    lastAction: Actions;
+};
+
 export type EnvironmentSelection = {
     name: string;
     type: EnvironmentTypes;
     world: WorldGeneratorProps;
+    envProps: PropImages | undefined;
+};
+
+export type PropImages = {
+    n1: string; // spawn area, Generic world will allow spawning only here
+    p0: string; // open floor, Free to move. Use as open floor
+    p1: string; // Wall, blocks movement
+    p2: string; // Trap (possibly episode ending), stats have counter for this. Like pots.
+    p3: string; // Key, (pickable object)
+    p4: string; // Open door, already opened door
+    p5: string; // Locked door, requires key, key is automatically used.
+    p6: string; // Reward 1, triggers reward 1
+    p7: string; // Reward 2, -""- 2
+    p8: string; // Out of bounds (Out of the playable area)
+    specialAction1: string; // Special action image for agent vision
+    burglar1: string; // enemy 1
+    burglar2: string; // enemy 2
 };
 
 export type WorldGeneratorProps = {
     numberOfEdges: number;
     density: number;
-    roomShape: RoomShape;
     roomSizeX: number;
     roomSizeY: number;
 };
@@ -83,14 +119,18 @@ export type GridConfig = {
 
 export type Offset = { dx: number; dy: number };
 
-export type View = 'frontpage' | 'story' | 'game' | 'start' | undefined;
-export type SubView = 'agent' | 'actions' | 'environment' | 'rewards' | 'interaction' | undefined;
+// Views
 
-export type ObservationShape = {
-    width: number;
-    height: number;
-    data: Uint8Array;
+export type View = {
+    main?: MainView;
+    sub?: SubView;
+    overlay?: Overlay;
 };
+export type MainView = 'frontpage' | 'story' | 'game' | 'start' | 'tutorial' | null;
+export type SubView = 'agent' | 'environment' | 'rewards' | 'interaction' | null;
+export type Overlay = 'agentImgImport' | null;
+
+export type ObservationShape = 'small' | 'large' | 'none';
 
 export type GenericObservation = {
     neighbors: CellType[];
@@ -133,7 +173,7 @@ export type GenericEnv = {
     maxTurns: number; // Maximum number of steps in episode
     numberOfItemsToGet: number; // How many spesific Cells needs to be found for episode to terminate
     propReloadDelay1: number | undefined; // How many steps it takes to reload props (like traps or pots)
-    lethalProps: boolean;
+    lethalProps: boolean; // Does finding lethal-type tile end episode
 };
 
 export type GenericReward = {
@@ -196,6 +236,8 @@ export type Control = {
 export type Agent = {
     name: string;
     type: AgentType;
+    observationShape: ObservationShape;
+    img: string;
 };
 
 export type GameEnvironment = {
@@ -204,5 +246,5 @@ export type GameEnvironment = {
     world: WorldGeneratorProps;
 };
 
-export type EnvironmentTypes = 'potsAndBurglar' | 'treasureHunter' | undefined;
-export type AgentType = 'robodog' | 'hoover' | 'adventurer' | 'none';
+export type EnvironmentTypes = 'potsAndBurglar' | 'treasureHunter' | 'created' | undefined;
+export type AgentType = 'robodog' | 'hoover' | 'adventurer' | 'created' | 'none';

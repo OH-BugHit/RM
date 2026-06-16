@@ -1,4 +1,4 @@
-import { EdgeType, Position, RoomShape, RoomType } from '../../../types';
+import { EdgeType, Position, RoomType } from '../../../types';
 import { manhattanDirecitons } from '../../../utils/defaults';
 import createRoom from './createRoom';
 
@@ -15,7 +15,6 @@ interface TreasureWorldProps {
     density: number;
     roomSizeX: number;
     roomSizeY: number;
-    roomShape: RoomShape;
 }
 
 export class RoomEdge {
@@ -169,7 +168,7 @@ export class World {
         return null;
     };
 
-    generateWorld = ({ roomSizeX, roomSizeY, roomShape, numberOfEdges, density }: TreasureWorldProps) => {
+    generateWorld = ({ roomSizeX, roomSizeY, numberOfEdges, density }: TreasureWorldProps) => {
         let id = 1;
         let attempts = 0;
         const maxAttempts = numberOfEdges * 10; // Prevent infinite loops
@@ -221,7 +220,6 @@ export class World {
                 roomNode: node,
                 roomSizeX: roomSizeX,
                 roomSizeY: roomSizeY,
-                roomShape: roomShape,
             });
         }
     };

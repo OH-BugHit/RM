@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import style from './style.module.css';
 import { useAtomValue } from 'jotai';
-import { TutorialStepAtom } from '../../../atoms/state';
+import { TutorialStepAtom } from '../../../atoms/tutorialState';
 import { AnimatePresence, motion } from 'framer-motion';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { Help } from '@genai-fi/base';
@@ -20,9 +20,21 @@ const conceptItems = [
 ];
 
 const itemVariants = {
-    hidden: { opacity: 0, x: 20 },
-    visible: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: 20 },
+    locked: {
+        opacity: 0.35,
+        x: 0,
+        transition: { duration: 0 },
+    },
+    visible: {
+        opacity: 1,
+        x: 0,
+        transition: { duration: 0.4 },
+    },
+    exit: {
+        opacity: 0,
+        x: 20,
+        transition: { duration: 0.4 },
+    },
 };
 
 export default function TutorialConcepts() {
@@ -43,16 +55,16 @@ export default function TutorialConcepts() {
 
             <ul>
                 <AnimatePresence>
-                    {conceptItems
-                        .filter((item) => tutorialStep >= item.step)
-                        .map((item) => (
+                    {conceptItems.map((item) => {
+                        const isActive = tutorialStep >= item.step;
+
+                        return (
                             <motion.li
                                 key={item.key}
-                                initial="hidden"
-                                animate="visible"
+                                initial={false}
+                                animate={isActive ? 'visible' : 'locked'}
                                 exit="exit"
                                 variants={itemVariants}
-                                transition={{ duration: 0.25 }}
                             >
                                 <TaskAltIcon
                                     fontSize="small"
@@ -60,11 +72,14 @@ export default function TutorialConcepts() {
                                     style={{
                                         verticalAlign: 'middle',
                                         marginRight: 4,
+                                        opacity: tutorialStep >= item.step ? 1 : 0,
+                                        transition: 'opacity 0.4s ease',
                                     }}
-                                />{' '}
-                                {t(item.label)}
+                                />
+                                <span style={{ opacity: isActive ? 1 : 0.5 }}>{t(item.label)}</span>
                             </motion.li>
-                        ))}
+                        );
+                    })}
                 </AnimatePresence>
             </ul>
         </main>

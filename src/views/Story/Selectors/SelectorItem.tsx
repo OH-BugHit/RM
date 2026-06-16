@@ -1,9 +1,9 @@
 import { Button } from '@genai-fi/base';
-import style from '../style.module.css';
+import style from './style.module.css';
 
 interface SelectorItemProps {
     title: string;
-    img: string;
+    img?: string;
     onClick: () => void;
     selected?: boolean;
     children?: React.ReactNode;
@@ -22,7 +22,7 @@ export default function SelectorItem({ title, img, onClick, selected, children, 
                 >
                     <img
                         src={img}
-                        width={180}
+                        height={180}
                     />
                     {children}
                 </Button>

@@ -4,20 +4,24 @@ import style from './style.module.css';
 import { RLGridEnv } from '../Environments/PotsAndBurglar/environment';
 import { QLearningAgent } from '../../components/agents/rlAgentQ';
 import { Actions, CellType, GameEnvironmentInfo, GenericObservation } from '../../types';
-import { useStore } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { ActiveAgentAtom, ActiveEnvironmentAtom } from '../../atoms/state';
 import GameTuner from './GameTuner';
-import Controls from '../Controls/Controls';
 import GenericWorld from '../Environments/Generic/GenericWorld';
 import { World } from '../../components/GameComponents/EnvironmentComponents/worldGenerator';
-import { GenericRLEnv } from '../Environments/TreasureHunter/environment';
+import { GenericRLEnv } from '../Environments/Generic/environment';
 import { worldToGrid } from '../World/WorldToGrid';
+import { AnimatePresence } from 'framer-motion';
+import { SidePanel } from '@genai-fi/base';
+import { SidePanelOpener } from '../../components/Buttons/SidePanelOpener';
+import { UiShowSidePanelAtom } from '../../atoms/uiState';
+import { Frame } from '../Frames/Frame';
+import { Bridge } from '../../components/Charts/ChartBridge';
 
 // React component
 function GameView() {
-    const store = useStore();
-    const environment = store.get(ActiveEnvironmentAtom);
-    const agent = store.get(ActiveAgentAtom);
+    const environment = useAtomValue(ActiveEnvironmentAtom);
+    const agent = useAtomValue(ActiveAgentAtom);
 
     const envRef = useRef<RLGridEnv>(undefined);
     const genericEnvRef = useRef<GenericRLEnv>(undefined);
@@ -29,15 +33,17 @@ function GameView() {
 
     const [world, setWorld] = useState<World | undefined>(undefined);
     const [worldGrid, setWorldGrid] = useState<CellType[][]>([]);
+    const [sidePanelOpen, setSidePanelOpen] = useAtom(UiShowSidePanelAtom);
+
+    const config = { image: '/images/background/pcbBlur.jpg' }; //TODO: Change to get background image from somewher
 
     useEffect(() => {
         if (!environment.type || environment.type === 'potsAndBurglar') return;
 
         const newWorld = new World();
         newWorld.generateWorld({
-            numberOfEdges: environment.world?.numberOfEdges ?? 5,
-            density: environment.world?.density ?? 0.2,
-            roomShape: environment.world?.roomShape ?? 'rectangle',
+            numberOfEdges: environment.world?.numberOfEdges ?? 3,
+            density: environment.world?.density ?? 0.7,
             roomSizeX: environment.world?.roomSizeX ?? 10,
             roomSizeY: environment.world?.roomSizeY ?? 10,
         });
@@ -49,15 +55,15 @@ function GameView() {
         });
         setWorldGrid(grid);
         setWorld(newWorld);
-    }, [environment, store]);
+    }, [environment]);
 
     //TODO: Set settings when game is selected now they are here:
 
-    switch (environment.type) {
-        case 'potsAndBurglar': {
-            return (
-                <div className={style.container}>
-                    <div className={style.containerBox}>
+    const gameContent = () => {
+        switch (environment.type) {
+            case 'potsAndBurglar': {
+                return (
+                    <AnimatePresence mode="wait">
                         <div className={style.game}>
                             <PotsAndBurglarGame
                                 envRef={envRef}
@@ -66,21 +72,14 @@ function GameView() {
                                 actionRef={actionRef}
                                 qvalueRef={qvalueRef}
                                 infoRef={infoRef}
-                                agent={agent}
                             />
-                            <Controls />
                         </div>
-                    </div>
-                    <div className={style.containerBox}>
-                        <GameTuner />
-                    </div>
-                </div>
-            );
-        }
-        default: {
-            return (
-                <div className={style.container}>
-                    <div className={style.containerBox}>
+                    </AnimatePresence>
+                );
+            }
+            default: {
+                return (
+                    <AnimatePresence mode="wait">
                         <div className={style.game}>
                             {world && (
                                 <GenericWorld
@@ -94,16 +93,42 @@ function GameView() {
                                     worldGrid={worldGrid}
                                 />
                             )}
-                            <Controls />
                         </div>
-                    </div>
-                    <div className={style.containerBox}>
-                        <GameTuner />
-                    </div>
-                </div>
-            );
+                    </AnimatePresence>
+                );
+            }
         }
-    }
+    };
+
+    return (
+        <div
+            className={style.gameView}
+            style={{ ['--background-image']: `url(${config.image})` } as React.CSSProperties}
+        >
+            <Bridge />
+            <div className={style.containerBox}>{gameContent()}</div>
+
+            <div style={{ zIndex: 1000 }}>
+                <SidePanelOpener />
+                <SidePanel
+                    open={sidePanelOpen}
+                    onOpen={() => setSidePanelOpen(true)}
+                    position={'right'}
+                    onClose={() => {
+                        setSidePanelOpen(false);
+                    }}
+                >
+                    <Frame
+                        variant="tall"
+                        minWidth={'100%'}
+                        minHeight={'100%'}
+                    >
+                        <GameTuner />
+                    </Frame>
+                </SidePanel>
+            </div>
+        </div>
+    );
 }
 
 export default GameView;

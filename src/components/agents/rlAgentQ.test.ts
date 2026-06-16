@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { buildRenderSpec } from '../../views/Observation/renderTools';
-import { gridRoboDogConfig } from '../../views/Observation/gridConfigs';
+import { gridSmallConfig } from '../../views/Observation/gridConfigs';
 import { parseObservationState, serializeObservation } from './rlAgentQ';
 
 describe('observation state serialization', () => {
@@ -20,7 +20,7 @@ describe('observation state serialization', () => {
     });
 
     it('buildRenderSpec can parse comma-separated states containing spawn cells', () => {
-        const spec = buildRenderSpec('-1,0,0,0-4', [0, 0, 0, 0, 0, 0], gridRoboDogConfig);
+        const spec = buildRenderSpec('-1,0,0,0-4', [0, 0, 0, 0, 0, 0], gridSmallConfig);
 
         expect(spec.cells.length).toBeGreaterThan(0);
     });

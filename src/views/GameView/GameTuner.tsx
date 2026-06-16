@@ -1,3 +1,4 @@
+import style from './style.module.css';
 import { Button } from '@genai-fi/base';
 import { Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
@@ -53,38 +54,41 @@ function GameTuner() {
     };
 
     return (
-        <div>
-            <Tabs
-                value={tabNumber}
-                onChange={(_, value) => setTabNumber(value)}
-                variant="scrollable"
-                scrollButtons="auto"
-                orientation="horizontal"
-                sx={{ borderRight: '1px solid #008297', borderLeft: '1px solid #008297' }}
-            >
-                <Tab label={t('Agent')} />
-                <Tab label={t('Reward')} />
-                <Tab label={t('Environment')} />
-                <Tab label={t('Observation')} />
-            </Tabs>
-            {tabNumber === 0 && <AgentControl />}
-            {tabNumber === 1 && <RewardControlContainer />}
-            {tabNumber === 2 && <EnvironmentControl />}
-            {tabNumber === 3 && <ObservationControl />}
-            <Button
-                variant="contained"
-                onClick={() => resetUI(false)}
-                sx={{ marginTop: '1rem' }}
-            >
-                Update
-            </Button>
-            <Button
-                variant="contained"
-                onClick={() => resetUI(true)}
-                sx={{ marginTop: '1rem' }}
-            >
-                Restart learning
-            </Button>
+        <div className={style.tuneContainer}>
+            <div className={style.tuneContent}>
+                <h1>Manipulate menu</h1>
+                <Tabs
+                    value={tabNumber}
+                    onChange={(_, value) => setTabNumber(value)}
+                    variant="scrollable"
+                    scrollButtons="auto"
+                    orientation="horizontal"
+                    sx={{ borderRight: '1px solid #008297', borderLeft: '1px solid #008297' }}
+                >
+                    <Tab label={t('Agent')} />
+                    <Tab label={t('Reward')} />
+                    <Tab label={t('Environment')} />
+                    <Tab label={t('Observation')} />
+                </Tabs>
+                {tabNumber === 0 && <AgentControl />}
+                {tabNumber === 1 && <RewardControlContainer />}
+                {tabNumber === 2 && <EnvironmentControl />}
+                {tabNumber === 3 && <ObservationControl />}
+                <Button
+                    variant="contained"
+                    onClick={() => resetUI(false)}
+                    sx={{ marginTop: '1rem' }}
+                >
+                    Update
+                </Button>
+                <Button
+                    variant="contained"
+                    onClick={() => resetUI(true)}
+                    sx={{ marginTop: '1rem' }}
+                >
+                    Restart learning
+                </Button>
+            </div>
         </div>
     );
 }

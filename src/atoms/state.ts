@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import { Agent, AgentProps, Control, EnvironmentSelection, EnvSettings, SoundSettings, SubView, View } from '../types';
+import { Agent, AgentProps, Control, EnvironmentSelection, EnvSettings, SoundSettings } from '../types';
 import {
     defaultAgentSettings,
     defaultControls,
@@ -18,15 +18,11 @@ export const AgentSettingsAtom = atom<AgentProps>(defaultAgentSettings);
 export const ResetUiPulseAtom = atom<boolean>(false);
 export const GameControlAtom = atom<Control>(defaultControls);
 
-export const StoryStepAtom = atom<number>(1);
-
-export const ActiveViewAtom = atom<View>(undefined);
-export const ActiveSubViewAtom = atom<SubView>(undefined); // not used yet
-
-export const ActiveEnvironmentAtom = atom<EnvironmentSelection>({ name: '', type: undefined, world: defaultWorld });
-export const ActiveAgentAtom = atom<Agent>({ name: '', type: 'robodog' });
-
-export const TutorialStepAtom = atom<number>(0);
-export const StepsTakenAtom = atom<number>(0);
-export const StepsProcentageAtom = atom<number>(0);
-export const TutorialPhaseAtom = atom<'basics' | 'startRecap' | 'recap' | 'startQuiz' | 'quiz' | 'ready'>('basics');
+export const ActiveEnvironmentAtom = atom<EnvironmentSelection>({
+    name: '',
+    type: undefined,
+    envProps: undefined,
+    world: defaultWorld,
+});
+export const ActiveAgentAtom = atom<Agent>({ name: '', observationShape: 'none', type: 'none', img: '' });
+export const ImportedAgentImgAtom = atom<string | undefined>(undefined);

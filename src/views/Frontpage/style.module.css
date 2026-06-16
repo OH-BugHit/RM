@@ -13,6 +13,20 @@
     position: relative;
 }
 
+.cards {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1200px;
+}
+
+.intro {
+    margin-top: 2rem;
+    font-style: italic;
+    font-size: 1.2rem;
+}
+
 
 .homeContainer {
     display: flex;

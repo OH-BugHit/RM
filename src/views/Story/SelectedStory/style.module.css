@@ -1,0 +1,25 @@
+@value primary, secondary textDark from "@genai-fi/base/css/colours.module.css";
+
+.selectedStory {
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.selectedStory p,
+h3 {
+    text-align: start;
+    margin-left: 2rem;
+}
+
+.selectedStory p {
+    margin-left: 3rem;
+}
+
+.separator {
+    width: 100%;
+    height: 1px;
+    background: #ccc;
+    margin: 2rem 0;
+    scale: 0.8;
+}

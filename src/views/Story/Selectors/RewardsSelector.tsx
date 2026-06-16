@@ -1,5 +1,5 @@
 import RewardControlContainer from '../../Controls/RewardControlContainer';
-import style from '../style.module.css';
+import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 
 export default function RewardsSelector() {

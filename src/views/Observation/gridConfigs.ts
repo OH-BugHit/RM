@@ -1,6 +1,6 @@
 import { GridConfig } from '../../types';
 
-export const gridRoboDogConfig: GridConfig = {
+export const gridSmallConfig: GridConfig = {
     size: 3,
     hidden: [0, 6, 8], // corners
     center: 4,
@@ -23,7 +23,7 @@ export const gridRoboDogConfig: GridConfig = {
     },
 };
 
-export const gridAdventurerConfig: GridConfig = {
+export const gridLargeCongig: GridConfig = {
     size: 5,
     hidden: [0, 20, 24], // corners
     center: 12,

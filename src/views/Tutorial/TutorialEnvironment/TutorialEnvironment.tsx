@@ -1,18 +1,16 @@
-import React, { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { QLearningAgent } from '../../../components/agents/rlAgentQ';
 import { Actions, GameEnvironmentInfo, GenericObservation, Agent, SixthSenseDirection } from '../../../types';
 import { useSound } from '../../../hooks/useSound';
 import { useStore, useAtomValue, useAtom, useSetAtom } from 'jotai';
+import { AgentSettingsAtom, EnvSettingsAtom, GameControlAtom } from '../../../atoms/state';
 import {
-    AgentSettingsAtom,
-    EnvSettingsAtom,
-    GameControlAtom,
-    ResetUiPulseAtom,
     StepsProcentageAtom,
     StepsTakenAtom,
     TutorialPhaseAtom,
     TutorialStepAtom,
-} from '../../../atoms/state';
+    VisitedRewardsAtom,
+} from '../../../atoms/tutorialState';
 import {
     getAgentImage,
     getAgentObservationShape,
@@ -28,7 +26,6 @@ import { useTranslation } from 'react-i18next';
 import { useTutorialStepEffects } from '../../../hooks/useTutorialStepEffects';
 import RewardFloats from '../../../components/RewardFloats.tsx/RewardFloats';
 import { useRewardFloats } from '../../../hooks/useRewardFloats';
-//import QCanvas from '../../QTable/QCanvas';
 
 const STEP_INTERVAL = 400; // ms
 const FAST_STEPS = 5000;
@@ -41,40 +38,28 @@ const fadeStyle = {
     transition: 'opacity 0.4s ease, background-color 0.15s linear',
 };
 
-// React component
-interface PotsAndBurglarGameProps {
-    envRef: React.RefObject<RLGridEnv | undefined>;
-    agentRef: React.RefObject<QLearningAgent | undefined>;
-    obsRef: React.RefObject<GenericObservation | undefined>;
-    actionRef: React.RefObject<Actions | undefined>;
-    qvalueRef: React.RefObject<number[]>;
-    infoRef: React.RefObject<GameEnvironmentInfo | undefined>;
-    agent: Agent;
-    visitedRewards: { win: boolean; pot: boolean; barkFail: boolean };
-    setVisitedRewards: Dispatch<SetStateAction<{ win: boolean; pot: boolean; barkFail: boolean }>>;
-}
-
-function TutorialEnvironment({
-    envRef,
-    agentRef,
-    obsRef,
-    actionRef,
-    qvalueRef,
-    infoRef,
-    agent,
-    visitedRewards,
-    setVisitedRewards,
-}: PotsAndBurglarGameProps) {
+function TutorialEnvironment() {
     const { t } = useTranslation();
+    const [visitedRewards, setVisitedRewards] = useAtom(VisitedRewardsAtom);
+    const envRef = useRef<RLGridEnv>(undefined);
+    const agentRef = useRef<QLearningAgent>(undefined);
+    const obsRef = useRef<GenericObservation>(undefined);
+    const actionRef = useRef<Actions>(undefined);
+    const qvalueRef = useRef<number[]>([]);
+    const infoRef = useRef<GameEnvironmentInfo>(undefined);
+    const agent: Agent = {
+        name: 'Tutorial Agent',
+        type: 'robodog',
+        img: getAgentImage({ type: 'robodog' }),
+        observationShape: 'small',
+    };
     const sounds = useMemo(() => {
         return getAgentSounds(agent.type);
     }, [agent.type]);
 
-    const agentImage = getAgentImage(agent.type);
     const playBark = useSound(sounds);
     const envSettings = useAtomValue(EnvSettingsAtom);
     const controls = useAtomValue(GameControlAtom);
-    const resetUIpulse = useAtomValue(ResetUiPulseAtom);
     const agentSettings = useAtomValue(AgentSettingsAtom);
     const [tutorialStep, setTutorialStep] = useAtom(TutorialStepAtom);
     const setStepsTaken = useSetAtom(StepsTakenAtom);
@@ -83,7 +68,7 @@ function TutorialEnvironment({
 
     const store = useStore();
 
-    const gridSize = 5;
+    const gridSize = 7;
     const maxTurns = 999;
     const numberOfPots = 10;
     const potReloadDelay = 10;
@@ -102,8 +87,8 @@ function TutorialEnvironment({
     const lastEpisodeRewardRef = useRef(0);
     const lastRewardRef = useRef(0);
     const defaultObs = useMemo(() => {
-        return getAgentObservationShape(agent.type);
-    }, [agent.type]);
+        return getAgentObservationShape(agent.observationShape);
+    }, [agent.observationShape]);
 
     const [obs, setObs] = useState<GenericObservation>(defaultObs);
 
@@ -131,12 +116,12 @@ function TutorialEnvironment({
             },
             agentObsOffset: robodogOffset,
             flowerPotPositions: [
-                { x: 0, y: 0 },
                 { x: 1, y: 1 },
-                { x: 4, y: 3 },
-                { x: 3, y: 4 },
-                { x: 2, y: 1 },
-                { x: 0, y: 3 },
+                { x: 2, y: 2 },
+                { x: 5, y: 4 },
+                { x: 4, y: 5 },
+                { x: 3, y: 2 },
+                { x: 1, y: 4 },
             ],
         });
 
@@ -189,7 +174,7 @@ function TutorialEnvironment({
 
     useEffect(() => {
         resetUI();
-    }, [resetUIpulse, resetUI]);
+    }, [resetUI]);
 
     // Tutorial progression logic
     useEffect(() => {
@@ -410,7 +395,7 @@ function TutorialEnvironment({
                                 )}
 
                                 <motion.img
-                                    src={agentImage}
+                                    src={agent.img}
                                     style={{
                                         width: 40,
                                         height: 40,
@@ -433,6 +418,7 @@ function TutorialEnvironment({
                     {Array.from({ length: gridSize }).map((_, y) =>
                         Array.from({ length: gridSize }).map((_, x) => {
                             let bg = 'lightgray';
+                            const isEdge = x === 0 || y === 0 || x === gridSize - 1 || y === gridSize - 1;
                             const onSight = getOnSightOrOnSpot({
                                 agentPos: env.position,
                                 x: x,
@@ -445,7 +431,7 @@ function TutorialEnvironment({
                                     return (
                                         <img
                                             key={`${x}-${y}`}
-                                            src={agentImage}
+                                            src={agent.img}
                                             width={40}
                                             style={{
                                                 overflow: 'visible',
@@ -456,6 +442,20 @@ function TutorialEnvironment({
                                             }}
                                         />
                                     );
+                            }
+                            if (isEdge) {
+                                return (
+                                    <img
+                                        key={`${x}-${y}`}
+                                        src="/images/assets/wall.png"
+                                        width={40}
+                                        height={40}
+                                        style={{
+                                            border: '1px solid black',
+                                            opacity: tutorialStep > ENVIRONMENTSTEP - 1 ? 1 : 0,
+                                        }}
+                                    />
+                                );
                             }
 
                             if (env.flower_pots.find((r) => r.intact && r.x === x && r.y === y)) bg = 'green';

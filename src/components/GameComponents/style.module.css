@@ -1,0 +1,8 @@
+.imgWrap {
+    display: inline-flex;
+    padding: 16px 16px 16px 16px;
+    border-radius: 6rem;
+    background: radial-gradient(circle at center,
+            rgb(255, 255, 255) 20%,
+            rgba(70, 255, 95, 0.05));
+}

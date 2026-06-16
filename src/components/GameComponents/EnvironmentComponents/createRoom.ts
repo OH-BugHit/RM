@@ -1,11 +1,10 @@
-import { CellType, RoomShape } from '../../../types';
+import { CellType } from '../../../types';
 import { RoomNode } from './worldGenerator';
 
 interface RoomProps {
     roomNode: RoomNode;
     roomSizeX: number;
     roomSizeY: number;
-    roomShape?: RoomShape;
 }
 
 const putKeys = (roomSizeX: number, roomSizeY: number, room: CellType[][], numberOfKeys: number) => {
@@ -56,14 +55,11 @@ const putItems = (
     }
 };
 
-export default function createRoom({ roomNode, roomSizeX, roomSizeY, roomShape = 'rectangle' }: RoomProps) {
+export default function createRoom({ roomNode, roomSizeX, roomSizeY }: RoomProps) {
     // Initialize the 2D array with proper dimensions
     const cell = roomNode.type === 'spawnArea' ? CellType.Spawn : CellType.Empty; // Spawn area is marked with -1
     const room: CellType[][] = Array.from({ length: roomSizeY }, () => Array(roomSizeX).fill(cell));
 
-    if (roomShape === 'circle') {
-        return room; // TODO: Implement if needed
-    }
     putKeys(roomSizeX, roomSizeY, room, roomNode.numberOfKeys);
     putItems(roomSizeX, roomSizeY, room, CellType.Treasure, 2);
     putItems(roomSizeX, roomSizeY, room, CellType.TreasureBig, 2);

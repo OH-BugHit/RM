@@ -2,22 +2,27 @@ import { useSetAtom } from 'jotai';
 import { useNavigate, useSearchParams } from 'react-router';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ActiveSubViewAtom } from '../atoms/state';
-import { SubView, View } from '../types';
+import { ActiveViewAtom } from '../atoms/uiState';
+import { Overlay, SubView, MainView, ViewEnum } from '../types';
 
 function ViewHandler() {
     const { t } = useTranslation();
     const [searchParams] = useSearchParams();
-    const setView = useSetAtom(ActiveSubViewAtom);
+    const setView = useSetAtom(ActiveViewAtom);
     const navigate = useNavigate();
 
-    const view = searchParams.get('view') as View | null;
-    const subView = searchParams.get('subView') as SubView | null;
+    const view = searchParams.get(ViewEnum.MainView) as MainView | null;
+    const subView = searchParams.get(ViewEnum.Subview) as SubView | null;
+    const overlay = (searchParams.get(ViewEnum.Overlay) ?? 'none') as Overlay | null;
 
     useEffect(() => {
         switch (view) {
             case 'frontpage': {
                 document.title = `${t('common.title')}`;
+                break;
+            }
+            case 'tutorial': {
+                document.title = `${t('common.tutorial')}`;
                 break;
             }
             case 'story': {
@@ -44,19 +49,7 @@ function ViewHandler() {
         return null;
     }
 
-    if (subView === 'agent') {
-        setView('agent');
-        return null;
-    } else if (subView === 'actions') {
-        setView('actions');
-    } else if (subView === 'environment') {
-        setView('environment');
-    } else if (subView === 'rewards') {
-        setView('rewards');
-    } else if (subView === 'interaction') {
-        setView('interaction');
-    } else setView('agent');
-
+    setView({ main: view, sub: subView, overlay: overlay });
     return null;
 }
 

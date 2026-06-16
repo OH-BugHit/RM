@@ -1,16 +1,10 @@
-import { Dispatch } from 'react';
-import { GameEnvironment } from '../../../types';
-//import { useTranslation } from 'react-i18next';
-import { SetStateAction } from 'jotai';
 import { FormLabel, Slider } from '@mui/material';
+import { useAtom } from 'jotai';
+import { ActiveEnvironmentAtom } from '../../../atoms/state';
 
-interface WorldSetterProps {
-    selectedEnvironment: GameEnvironment;
-    setSelectedEnvironment: Dispatch<SetStateAction<GameEnvironment>>;
-}
-
-export default function WorldSetter({ selectedEnvironment, setSelectedEnvironment }: WorldSetterProps) {
+export default function WorldSetter() {
     //const { t } = useTranslation();
+    const [selectedEnvironment, setSelectedEnvironment] = useAtom(ActiveEnvironmentAtom);
 
     return (
         <div>

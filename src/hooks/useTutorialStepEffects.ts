@@ -18,39 +18,39 @@ export function useTutorialStepEffects({ tutorialStep, envRef, setFacing }: Para
 
         switch (tutorialStep) {
             case 0:
-                env.position = { x: 2, y: 2 };
+                env.position = { x: 3, y: 3 };
                 setFacing(1);
                 break;
 
             case 1:
-                env.position = { x: 2, y: 2 };
+                env.position = { x: 3, y: 3 };
                 env.POI = { side: 1, turns: 0 };
                 break;
 
             case 2:
-                env.position = { x: 3, y: 2 };
+                env.position = { x: 4, y: 3 };
                 break;
 
             case 3:
-                env.position = { x: 3, y: 3 };
+                env.position = { x: 4, y: 4 };
                 break;
 
             case 4:
-                env.position = { x: 2, y: 3 };
+                env.position = { x: 3, y: 4 };
                 setFacing(1);
                 break;
 
             case 5:
-                env.position = { x: 2, y: 3 };
+                env.position = { x: 3, y: 4 };
                 setFacing(-1);
                 break;
 
             case 7:
-                env.position = { x: 1, y: 3 };
+                env.position = { x: 2, y: 4 };
                 break;
 
             case 12:
-                env.position = { x: 2, y: 3 };
+                env.position = { x: 3, y: 4 };
                 setFacing(1);
                 break;
 
@@ -91,7 +91,7 @@ export function useTutorialStepEffects({ tutorialStep, envRef, setFacing }: Para
         }
 
         if (tutorialStep < 2) {
-            env.position = { x: 2, y: 2 };
+            env.position = { x: 3, y: 3 };
         }
     }, [tutorialStep, envRef, setFacing, setControls]);
 }

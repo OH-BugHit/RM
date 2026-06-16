@@ -1,17 +1,18 @@
 import { useMemo } from 'react';
 import { parseObservationState } from '../../components/agents/rlAgentQ';
-import { AgentType, EnvironmentTypes, GridConfig } from '../../types';
+import { EnvironmentTypes, GridConfig, ObservationShape } from '../../types';
 import { getQColor } from '../../utils/common';
-import { gridRoboDogConfig, gridAdventurerConfig } from './gridConfigs';
+import { gridSmallConfig, gridLargeCongig } from './gridConfigs';
 import { defaultImages } from '../../utils/defaults';
 
 interface QTableProps {
     state: string;
     disabled: boolean;
     actionValues: number[];
-    type: AgentType;
+    type: ObservationShape;
     drawActions?: boolean;
     envType?: EnvironmentTypes;
+    tileSize?: number;
 }
 
 export default function DrawObservation({
@@ -21,6 +22,7 @@ export default function DrawObservation({
     type,
     drawActions = true,
     envType = 'potsAndBurglar',
+    tileSize = 40,
 }: QTableProps) {
     const { neighbors: neighbours, POIdirection } = parseObservationState(state);
     const burglar = String(POIdirection);
@@ -34,12 +36,12 @@ export default function DrawObservation({
 
     const config = useMemo(() => {
         switch (type) {
-            case 'adventurer':
-                return gridAdventurerConfig;
-            case 'hoover':
-                return gridRoboDogConfig;
+            case 'large':
+                return gridLargeCongig;
+            case 'small':
+                return gridSmallConfig;
             default:
-                return gridRoboDogConfig;
+                return gridSmallConfig;
         }
     }, [type]);
 
@@ -49,13 +51,13 @@ export default function DrawObservation({
                 return (
                     <img
                         src={images.n1}
-                        width={40}
-                        height={40}
+                        width={tileSize}
+                        height={tileSize}
                         style={{
                             overflow: 'visible',
                             display: 'block',
-                            width: 40,
-                            height: 40,
+                            width: tileSize,
+                            height: tileSize,
                             border: '1px solid black',
                             background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
                         }}
@@ -67,8 +69,8 @@ export default function DrawObservation({
                     return (
                         <div
                             style={{
-                                width: 40,
-                                height: 40,
+                                width: tileSize,
+                                height: tileSize,
                                 border: '1px solid black',
                                 background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
                             }}
@@ -78,13 +80,13 @@ export default function DrawObservation({
                     return (
                         <img
                             src={images.p0}
-                            width={40}
-                            height={40}
+                            width={tileSize}
+                            height={tileSize}
                             style={{
                                 overflow: 'visible',
                                 display: 'block',
-                                width: 40,
-                                height: 40,
+                                width: tileSize,
+                                height: tileSize,
                                 border: '1px solid black',
                                 background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
                             }}
@@ -96,13 +98,13 @@ export default function DrawObservation({
                 return (
                     <img
                         src={images.p1}
-                        width={40}
-                        height={40}
+                        width={tileSize}
+                        height={tileSize}
                         style={{
                             overflow: 'visible',
                             display: 'block',
-                            width: 40,
-                            height: 40,
+                            width: tileSize,
+                            height: tileSize,
                             border: '1px solid black',
                             background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
                         }}
@@ -113,13 +115,13 @@ export default function DrawObservation({
                 return (
                     <img
                         src={images.p2}
-                        width={40}
-                        height={40}
+                        width={tileSize}
+                        height={tileSize}
                         style={{
                             overflow: 'visible',
                             display: 'block',
-                            width: 40,
-                            height: 40,
+                            width: tileSize,
+                            height: tileSize,
                             border: '1px solid black',
                             background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
                         }}
@@ -130,13 +132,13 @@ export default function DrawObservation({
                 return (
                     <img
                         src={images.p3}
-                        width={40}
-                        height={40}
+                        width={tileSize}
+                        height={tileSize}
                         style={{
                             overflow: 'visible',
                             display: 'block',
-                            width: 40,
-                            height: 40,
+                            width: tileSize,
+                            height: tileSize,
                             border: '1px solid black',
                             background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
                         }}
@@ -147,13 +149,13 @@ export default function DrawObservation({
                 return (
                     <img
                         src={images.p4}
-                        width={40}
-                        height={40}
+                        width={tileSize}
+                        height={tileSize}
                         style={{
                             overflow: 'visible',
                             display: 'block',
-                            width: 40,
-                            height: 40,
+                            width: tileSize,
+                            height: tileSize,
                             border: '1px solid black',
                             background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
                         }}
@@ -164,13 +166,13 @@ export default function DrawObservation({
                 return (
                     <img
                         src={images.p5}
-                        width={40}
-                        height={40}
+                        width={tileSize}
+                        height={tileSize}
                         style={{
                             overflow: 'visible',
                             display: 'block',
-                            width: 40,
-                            height: 40,
+                            width: tileSize,
+                            height: tileSize,
                             border: '1px solid black',
                             background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
                         }}
@@ -181,13 +183,13 @@ export default function DrawObservation({
                 return (
                     <img
                         src={images.p6}
-                        width={40}
-                        height={40}
+                        width={tileSize}
+                        height={tileSize}
                         style={{
                             overflow: 'visible',
                             display: 'block',
-                            width: 40,
-                            height: 40,
+                            width: tileSize,
+                            height: tileSize,
                             border: '1px solid black',
                             background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
                         }}
@@ -198,13 +200,13 @@ export default function DrawObservation({
                 return (
                     <img
                         src={images.p7}
-                        width={40}
-                        height={40}
+                        width={tileSize}
+                        height={tileSize}
                         style={{
                             overflow: 'visible',
                             display: 'block',
-                            width: 40,
-                            height: 40,
+                            width: tileSize,
+                            height: tileSize,
                             border: '1px solid black',
                             background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
                         }}
@@ -215,13 +217,13 @@ export default function DrawObservation({
                 return (
                     <img
                         src={images.p8}
-                        width={40}
-                        height={40}
+                        width={tileSize}
+                        height={tileSize}
                         style={{
                             overflow: 'visible',
                             display: 'block',
-                            width: 40,
-                            height: 40,
+                            width: tileSize,
+                            height: tileSize,
                             border: '1px solid black',
                             background: drawActions ? getQColor(i, minQ, maxQ) : 'none',
                         }}
@@ -242,7 +244,7 @@ export default function DrawObservation({
                 cells.push(
                     <div
                         key={i}
-                        style={{ width: 40, height: 40 }}
+                        style={{ width: tileSize, height: tileSize }}
                     />
                 );
                 continue;
@@ -254,12 +256,12 @@ export default function DrawObservation({
                     cells.push(
                         <div
                             key={i}
-                            style={{ position: 'relative', width: 40, height: 40 }}
+                            style={{ position: 'relative', width: tileSize, height: tileSize }}
                         >
                             <img
                                 src={images.specialAction1}
-                                width={40}
-                                height={40}
+                                width={tileSize}
+                                height={tileSize}
                                 style={{
                                     position: 'absolute',
                                     right: '-10px',
@@ -274,7 +276,7 @@ export default function DrawObservation({
                     cells.push(
                         <div
                             key={i}
-                            style={{ width: 40, height: 40 }}
+                            style={{ width: tileSize, height: tileSize }}
                         />
                     );
                 }
@@ -287,8 +289,8 @@ export default function DrawObservation({
                     <div
                         key={i}
                         style={{
-                            width: 40,
-                            height: 40,
+                            width: tileSize,
+                            height: tileSize,
                             border: '1px solid black',
                             background: drawActions ? getQColor(actionValues[config.qMap[i]], minQ, maxQ) : 'none',
                         }}
@@ -311,73 +313,79 @@ export default function DrawObservation({
     if (disabled) return null;
 
     return (
-        <div>
+        <div
+            style={
+                envType === 'potsAndBurglar'
+                    ? {
+                          display: 'grid',
+                          gridTemplateColumns: '20px auto 20px',
+                          gridTemplateRows: '20px auto 20px',
+                          alignItems: 'center',
+                          justifyItems: 'center',
+                          overflow: 'visible',
+                      }
+                    : {
+                          alignItems: 'center',
+                          justifyItems: 'center',
+                          overflow: 'visible',
+                      }
+            }
+        >
+            {envType === 'potsAndBurglar' && (
+                <>
+                    {/* TOP */}
+                    <div />
+                    <div>
+                        <img
+                            src={images.burglar2}
+                            width={Math.ceil(tileSize / 2)}
+                            style={{ opacity: burglar === '0' ? 1 : 0 }}
+                        />
+                    </div>
+                    <div />
+
+                    {/* MIDDLE */}
+                    <div>
+                        <img
+                            src={images.burglar2}
+                            width={Math.ceil(tileSize / 2)}
+                            style={{ opacity: burglar === '3' ? 1 : 0 }}
+                        />
+                    </div>
+                </>
+            )}
+
+            {/* GRID */}
             <div
                 style={{
                     display: 'grid',
-                    gridTemplateColumns: '20px auto 20px',
-                    gridTemplateRows: '20px auto 20px',
-                    alignItems: 'center',
-                    justifyItems: 'center',
-                    overflow: 'visible',
+                    gridTemplateColumns: `repeat(${config.size}, 40px)`,
                 }}
             >
-                {envType === 'potsAndBurglar' && (
-                    <>
-                        {/* TOP */}
-                        <div />
-                        <div>
-                            <img
-                                src={images.burglar2}
-                                width={20}
-                                style={{ opacity: burglar === '0' ? 1 : 0 }}
-                            />
-                        </div>
-                        <div />
-
-                        {/* MIDDLE */}
-                        <div>
-                            <img
-                                src={images.burglar2}
-                                width={20}
-                                style={{ opacity: burglar === '3' ? 1 : 0 }}
-                            />
-                        </div>
-                    </>
-                )}
-
-                {/* GRID */}
-                <div
-                    style={{
-                        display: 'grid',
-                        gridTemplateColumns: `repeat(${config.size}, 40px)`,
-                    }}
-                >
-                    {drawGrid(config)}
-                </div>
-                {envType === 'potsAndBurglar' && (
-                    <>
-                        <div>
-                            <img
-                                src={images.burglar1}
-                                width={20}
-                                style={{ opacity: burglar === '2' ? 1 : 0 }}
-                            />
-                        </div>
-
-                        {/* BOTTOM */}
-                        <div />
-                        <div>
-                            <img
-                                src={images.burglar1}
-                                width={20}
-                                style={{ opacity: burglar === '1' ? 1 : 0 }}
-                            />
-                        </div>
-                        <div />
-                    </>
-                )}
+                {drawGrid(config)}
             </div>
+            {envType === 'potsAndBurglar' && (
+                <>
+                    <div>
+                        <img
+                            src={images.burglar1}
+                            width={Math.ceil(tileSize / 2)}
+                            style={{ opacity: burglar === '2' ? 1 : 0 }}
+                        />
+                    </div>
+
+                    {/* BOTTOM */}
+                    <div />
+                    <div>
+                        <img
+                            src={images.burglar1}
+                            width={Math.ceil(tileSize / 2)}
+                            style={{ opacity: burglar === '1' ? 1 : 0 }}
+                        />
+                    </div>
+                    <div />
+                </>
+            )}
         </div>
     );
 }

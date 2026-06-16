@@ -1,26 +1,42 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { QLearningAgent } from '../../../components/agents/rlAgentQ';
 import { RLGridEnv } from './environment';
-import { Actions, SixthSenseDirection, GameEnvironmentInfo, GenericObservation, Agent } from '../../../types';
+import { Actions, GameEnvironmentInfo, GenericObservation } from '../../../types';
 import style from './style.module.css';
 import { useSound } from '../../../hooks/useSound';
-import { useStore, useAtomValue } from 'jotai';
-import { AgentSettingsAtom, EnvSettingsAtom, GameControlAtom, ResetUiPulseAtom } from '../../../atoms/state';
-import { stringifyAction } from '../../../utils/common';
-import DrawObservation from '../../Observation/DrawObservation';
+import { useStore, useAtomValue, useSetAtom } from 'jotai';
+import {
+    ActiveAgentAtom,
+    AgentSettingsAtom,
+    EnvSettingsAtom,
+    GameControlAtom,
+    ResetUiPulseAtom,
+} from '../../../atoms/state';
 import {
     getAdventurerOffset,
-    getAgentImage,
     getAgentObservationShape,
     getAgentSounds,
     robodogOffset,
 } from '../../../components/GameComponents/agentProps';
-import { getOnSight } from '../../../components/GameComponents/drawComponent';
-import QTable from '../../QTable/QTable';
-//import QCanvas from '../../QTable/QCanvas';
+import { motion } from 'framer-motion';
+import { useRewardFloats } from '../../../hooks/useRewardFloats';
+import PotsAndBurglarRender from './PotsAndBurglarRender';
+import {
+    ChartAtom,
+    EpisodicDataAtom,
+    FacingAtom,
+    LargeObsAtom,
+    SmallObsAtom,
+    StateDataAtom,
+    TimeStepDataAtom,
+} from '../../../atoms/gameState';
+import { defaultEpisodicData, defaultTimeStepData } from '../../../utils/defaults';
+import HUD from '../../Xai/HUD';
+import { ingest, onEpisodeEnd, resetAll } from '../../../components/Charts/rewardStreamEngine';
 
 const STEP_INTERVAL = 400; // ms
 const FAST_STEPS = 5000;
+const FLOAT_RING_SIZE = 32;
 
 // React component
 interface PotsAndBurglarGameProps {
@@ -30,23 +46,16 @@ interface PotsAndBurglarGameProps {
     actionRef: React.RefObject<Actions | undefined>;
     qvalueRef: React.RefObject<number[]>;
     infoRef: React.RefObject<GameEnvironmentInfo | undefined>;
-    agent: Agent;
 }
 
-function PotsAndBurglarGame({
-    envRef,
-    agentRef,
-    obsRef,
-    actionRef,
-    qvalueRef,
-    infoRef,
-    agent,
-}: PotsAndBurglarGameProps) {
+function PotsAndBurglarGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, infoRef }: PotsAndBurglarGameProps) {
+    const setChart = useSetAtom(ChartAtom);
+    const setLastState = useSetAtom(StateDataAtom);
+    const agent = useAtomValue(ActiveAgentAtom);
     const sounds = useMemo(() => {
         return getAgentSounds(agent.type);
     }, [agent.type]);
 
-    const agentImage = getAgentImage(agent.type);
     const playBark = useSound(sounds);
     const envSettings = useAtomValue(EnvSettingsAtom);
     const controls = useAtomValue(GameControlAtom);
@@ -61,32 +70,27 @@ function PotsAndBurglarGame({
     const potReloadDelay = envSettings?.potsAndBurglar?.env.potReloadDelay;
     const breakPotSpooksBurglar = envSettings?.potsAndBurglar?.env.breakPotSpooksBurglar;
 
-    const spookedBurglarReward = envSettings?.potsAndBurglar?.reward.spookedBurglarReward;
-    const brokePotReward = envSettings?.potsAndBurglar?.reward.brokePotReward;
-    const barkSuccessReward = envSettings?.potsAndBurglar?.reward.barkSuccessReward;
-    const barkFailReward = envSettings?.potsAndBurglar?.reward.barkFailReward;
-    const burglarWonReward = envSettings?.potsAndBurglar?.reward.burglarWonReward;
+    const setFacing = useSetAtom(FacingAtom);
+    const setEpisodicData = useSetAtom(EpisodicDataAtom);
+    const setTimeStepData = useSetAtom(TimeStepDataAtom);
 
-    const [potsBroken, setPotsBroken] = useState(0);
     const potsBrokenRef = useRef(0);
     const episodicRewardRef = useRef(0);
+    const lastActionRef = useRef(Actions.stay);
     const lastEpisodeRewardRef = useRef(0);
     const defaultObs = useMemo(() => {
-        return getAgentObservationShape(agent.type);
-    }, [agent.type]);
+        return getAgentObservationShape(agent.observationShape);
+    }, [agent.observationShape]);
 
-    const [obs, setObs] = useState<GenericObservation>(defaultObs);
+    const obsAtom = agent.observationShape === 'large' ? LargeObsAtom : SmallObsAtom;
+    const setObs = useSetAtom(obsAtom);
 
-    const [wins, setWins] = useState(0);
-    const [losses, setLosses] = useState(0);
+    const { items: floatItems, spawnFloat, deactivate } = useRewardFloats({ size: FLOAT_RING_SIZE });
+
     const winsRef = useRef(0);
     const lossesRef = useRef(0);
 
-    const [episodicReward, setEpisodicReward] = useState(0);
-    const [lastEpisodeReward, setLastEpisodeReward] = useState(0);
-
     const resetUI = React.useCallback(() => {
-        setPotsBroken(0);
         potsBrokenRef.current = 0;
 
         envRef.current = new RLGridEnv({
@@ -96,11 +100,11 @@ function PotsAndBurglarGame({
             potReloadDelay: potReloadDelay,
             breakPotSpooksBurglar: breakPotSpooksBurglar,
             rewards: {
-                spooked: spookedBurglarReward,
-                brokePot: brokePotReward,
-                barkSuccess: barkSuccessReward,
-                barkFail: barkFailReward,
-                burglarWon: burglarWonReward,
+                spooked: envSettings.potsAndBurglar.reward.spookedBurglarReward,
+                brokePot: envSettings?.potsAndBurglar?.reward.brokePotReward,
+                barkSuccess: envSettings?.potsAndBurglar?.reward.barkSuccessReward,
+                barkFail: envSettings?.potsAndBurglar?.reward.barkFailReward,
+                burglarWon: envSettings?.potsAndBurglar?.reward.burglarWonReward,
             },
             agentObsOffset: agent.type === 'robodog' ? robodogOffset : getAdventurerOffset(),
         });
@@ -118,27 +122,22 @@ function PotsAndBurglarGame({
         winsRef.current = 0;
         lossesRef.current = 0;
         episodicRewardRef.current = 0;
+        lastActionRef.current = Actions.stay;
         lastEpisodeRewardRef.current = 0;
         infoRef.current = { timeLeft: maxTurns ?? 0, trigger: false, result: 'ongoing', message: 'Game reset' };
 
         const { obs } = envRef.current.reset();
         obsRef.current = obs;
         setObs(obs);
-        setEpisodicReward(0);
-        setWins(0);
-        setLosses(0);
-        setLastEpisodeReward(0);
+        setTimeStepData(defaultTimeStepData);
+        setEpisodicData(defaultEpisodicData);
+        resetAll(setChart);
     }, [
         gridSize,
         maxTurns,
         numberOfPots,
         potReloadDelay,
         breakPotSpooksBurglar,
-        spookedBurglarReward,
-        brokePotReward,
-        barkSuccessReward,
-        barkFailReward,
-        burglarWonReward,
         store,
         actionRef,
         envRef,
@@ -148,6 +147,11 @@ function PotsAndBurglarGame({
         qvalueRef,
         defaultObs,
         agent.type,
+        envSettings,
+        setObs,
+        setTimeStepData,
+        setEpisodicData,
+        setChart,
     ]);
 
     useEffect(() => {
@@ -167,18 +171,21 @@ function PotsAndBurglarGame({
     const syncUI = React.useCallback(() => {
         if (obsRef.current && agentRef.current && obsRef.current) {
             setObs(obsRef.current);
-            setEpisodicReward(episodicRewardRef.current);
-            setWins(winsRef.current);
-            setLosses(lossesRef.current);
-            setLastEpisodeReward(lastEpisodeRewardRef.current);
+            setTimeStepData({ lastReward: episodicRewardRef.current, lastAction: lastActionRef.current });
+            setEpisodicData({
+                triggered: potsBrokenRef.current,
+                wins: winsRef.current,
+                losses: lossesRef.current,
+                fullEpisodeReward: lastEpisodeRewardRef.current,
+            });
 
             qvalueRef.current = agentRef.current.getQValues(obsRef.current);
-            setPotsBroken(potsBrokenRef.current);
         }
-    }, [agentRef, obsRef, qvalueRef]);
+    }, [agentRef, obsRef, qvalueRef, setObs, setTimeStepData, setEpisodicData]);
 
     const stepUI = React.useCallback(() => {
         if (obsRef.current && agentRef.current && obsRef.current && envRef.current) {
+            const prev = envRef.current.position; // For facing
             const currentObs = obsRef.current;
             const action = agentRef.current.chooseAction(currentObs);
             actionRef.current = action;
@@ -187,13 +194,26 @@ function PotsAndBurglarGame({
             infoRef.current = info;
             agentRef.current.update(currentObs, action, reward, nextObs);
             potsBrokenRef.current += info.trigger ? 1 : 0;
-
             episodicRewardRef.current += reward;
+            lastActionRef.current = action;
+            const currentState = agentRef.current?.getStateKey(nextObs);
+            setLastState((old) => {
+                return {
+                    previous: old.current,
+                    current: currentState,
+                };
+            });
+            spawnFloat(envRef.current.position.x, envRef.current.position.y, reward);
+            const dx = prev.x - envRef.current.position.x;
+            if (dx !== 0) setFacing(dx > 0 ? -1 : 1);
 
             if (terminated) {
                 if (infoRef.current.result === 'win') winsRef.current++;
                 else if (infoRef.current.result === 'lose') lossesRef.current++;
                 lastEpisodeRewardRef.current = episodicRewardRef.current;
+                // Update charts
+                onEpisodeEnd();
+                ingest(episodicRewardRef.current, infoRef.current.result === 'win');
                 const { obs: resetObs } = envRef.current.reset();
                 obsRef.current = resetObs;
                 episodicRewardRef.current = 0;
@@ -203,7 +223,7 @@ function PotsAndBurglarGame({
 
             syncUI();
         }
-    }, [syncUI, playBark, actionRef, obsRef, infoRef, agentRef, envRef]);
+    }, [syncUI, playBark, spawnFloat, setFacing, setLastState, actionRef, obsRef, infoRef, agentRef, envRef]);
 
     // take single step
     useEffect(() => {
@@ -221,12 +241,16 @@ function PotsAndBurglarGame({
                 agentRef.current.update(currentObs, action, reward, nextObs);
                 potsBrokenRef.current += info.trigger ? 1 : 0;
 
+                lastActionRef.current = action;
                 episodicRewardRef.current += reward;
 
                 if (terminated) {
                     if (infoRef.current.result === 'win') winsRef.current++;
                     else if (infoRef.current.result === 'lose') lossesRef.current++;
                     lastEpisodeRewardRef.current = episodicRewardRef.current;
+                    // Update charts
+                    onEpisodeEnd();
+                    ingest(episodicRewardRef.current, infoRef.current.result === 'win');
                     const { obs: resetObs } = envRef.current.reset();
                     obsRef.current = resetObs;
                     episodicRewardRef.current = 0;
@@ -234,7 +258,6 @@ function PotsAndBurglarGame({
                     obsRef.current = nextObs;
                 }
             }
-
             syncUI();
         }
     }, [syncUI, obsRef, agentRef, envRef, infoRef, actionRef]);
@@ -269,188 +292,28 @@ function PotsAndBurglarGame({
 
     const env = envRef.current;
 
-    if (!env || !maxTurns || !infoRef.current || !gridSize) {
-        console.warn(env, maxTurns, infoRef.current, gridSize);
-        return <div>missing info</div>;
-    }
-
     return (
-        <div className={style.container}>
-            <div>
-                <div className={style.column}>
-                    <h3>Q-table</h3>
-                    Different states explored:{' '}
-                    {agentRef.current
-                        ? agentRef.current.getTableSize() // TODO: Figure out good way to count this.. Maybe use enumerator for like "robodog" returns some multipliers and we have observation complexity here already?
-                        : '-'}
-                    <br />
-                </div>
-                <div style={{ width: '800px' }}>
-                    <QTable
-                        agent={agentRef}
-                        disabled={controls.isFast}
-                        scrollToState={agentRef.current?.getStateKey(obs)}
-                        type={agent.type}
-                    />
-                </div>
+        <motion.div
+            key="potsAndBurglar"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className={style.container}
+        >
+            <HUD
+                agentRef={agentRef}
+                qvalueRef={qvalueRef}
+            />
+            <div className={style.gameContainer}>
+                <PotsAndBurglarRender
+                    gridSize={gridSize}
+                    env={env}
+                    floatItems={floatItems}
+                    deactivate={deactivate}
+                />
             </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-                {agentRef.current && (
-                    <>
-                        <DrawObservation
-                            state={agentRef.current?.getStateKey(obs)}
-                            disabled={controls.isFast}
-                            actionValues={qvalueRef.current}
-                            type={agent.type}
-                        />
-                        {/*<QValues qvalueRef={qvalueRef} />*/}
-                    </>
-                )}
-
-                {/* Burglar visualization */}
-                <div
-                    style={{
-                        display: 'grid',
-                        gridTemplateColumns: '60px auto 60px',
-                        gridTemplateRows: '60px auto 60px',
-                        gap: 5,
-                        alignItems: 'center',
-                        justifyItems: 'center',
-                    }}
-                >
-                    {/* TOP */}
-                    <div />
-                    <div>
-                        <img
-                            src="/images/assets/burglar2.png"
-                            width={60}
-                            style={{ opacity: obs.POIdirection === SixthSenseDirection.North ? 1 : 0 }}
-                        />
-                    </div>
-                    <div />
-
-                    {/* MIDDLE */}
-                    <div>
-                        <img
-                            src="/images/assets/burglar2.png"
-                            width={60}
-                            style={{ opacity: obs.POIdirection === SixthSenseDirection.West ? 1 : 0 }}
-                        />
-                    </div>
-
-                    {/* GRID */}
-                    <div
-                        style={{
-                            display: 'grid',
-                            gridTemplateColumns: `repeat(${gridSize}, 40px)`,
-                        }}
-                    >
-                        {Array.from({ length: gridSize }).map((_, y) =>
-                            Array.from({ length: gridSize }).map((_, x) => {
-                                let bg = 'lightgray';
-                                const onSight = getOnSight({
-                                    agentPos: env.position,
-                                    x: x,
-                                    y: y,
-                                    agentType: agent.type,
-                                });
-
-                                if (env.position.x === x && env.position.y === y) bg = 'blue';
-                                else if (env.flower_pots.find((r) => r.intact && r.x === x && r.y === y)) bg = 'green';
-                                else if (env.flower_pots.find((r) => !r.intact && r.x === x && r.y === y)) bg = 'brown';
-
-                                if (bg === 'brown')
-                                    return (
-                                        <img
-                                            key={`${x}-${y}`}
-                                            src="/images/assets/pot_broken.png"
-                                            width={40}
-                                            style={{
-                                                overflow: 'visible',
-                                                width: 40,
-                                                height: 40,
-                                                border: '1px solid black',
-                                                background: onSight ? 'white' : 'lightgrey',
-                                            }}
-                                        />
-                                    );
-                                if (bg === 'green')
-                                    return (
-                                        <img
-                                            key={`${x}-${y}`}
-                                            src="/images/assets/pot_intact.png"
-                                            width={40}
-                                            style={{
-                                                overflow: 'visible',
-                                                width: 40,
-                                                height: 40,
-                                                border: '1px solid black',
-                                                background: onSight ? 'white' : 'lightgrey',
-                                            }}
-                                        />
-                                    );
-
-                                if (bg === 'blue')
-                                    return (
-                                        <img
-                                            key={`${x}-${y}`}
-                                            src={agentImage}
-                                            width={40}
-                                            style={{
-                                                overflow: 'visible',
-                                                width: 40,
-                                                height: 40,
-                                                border: '1px solid black',
-                                                background: 'white',
-                                            }}
-                                        />
-                                    );
-                                return (
-                                    <div
-                                        key={`${x}-${y}`}
-                                        style={{
-                                            width: 40,
-                                            height: 40,
-                                            border: '1px solid black',
-                                            background: onSight ? 'white' : 'lightgrey',
-                                        }}
-                                    />
-                                );
-                            })
-                        )}
-                    </div>
-
-                    <div>
-                        <img
-                            src="/images/assets/burglar.png"
-                            width={60}
-                            style={{ opacity: obs.POIdirection === SixthSenseDirection.East ? 1 : 0 }}
-                        />
-                    </div>
-
-                    {/* BOTTOM */}
-                    <div />
-                    <div>
-                        <img
-                            src="/images/assets/burglar.png"
-                            width={60}
-                            style={{ opacity: obs.POIdirection === SixthSenseDirection.South ? 1 : 0 }}
-                        />
-                    </div>
-                    <div />
-                </div>
-            </div>
-            <div style={{ flexDirection: 'column', width: '200px' }}>
-                <p>Wins: {wins}</p>
-                <p>Losses: {losses}</p>
-                <p>Last episode reward: {lastEpisodeReward.toFixed(1)}</p>
-                <p>This episode reward: {episodicReward.toFixed(1)}</p>
-                <p>Time until break in: {maxTurns - infoRef.current.timeLeft}</p>
-                <p>Last action: {stringifyAction(actionRef.current ?? null)}</p>
-                <p>Flower pots destroyed: {potsBroken}</p>
-            </div>
-        </div>
+        </motion.div>
     );
 }
 

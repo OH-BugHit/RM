@@ -1,0 +1,69 @@
+@value bgSubdued1, borderBrightBlue, textDark from "@genai-fi/base/css/colours.module.css";
+
+.selectModelMessage {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 1.6rem;
+    color: textDark;
+    padding: 2rem;
+    display: flex;
+    gap: 3rem;
+    overflow: hidden;
+}
+
+.selectModelMessage em {
+    font-weight: bold;
+    font-style: normal;
+    font-size: 1.8rem;
+}
+
+.selectModelMessage a {
+    color: inherit;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+}
+
+.columnItem {
+    text-align: center;
+    width: 100%;
+}
+
+.title {
+    background: bgSubdued1;
+    border-bottom: 2px solid borderBrightBlue;
+}
+
+.textField {
+    padding: 4px;
+    margin: 1rem;
+    max-width: 100%;
+}
+
+.buttonGroup {
+    font-size: 1.2rem;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    color: textDark;
+    text-align: left;
+    align-items: center;
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+    justify-content: end;
+}
+
+@media (max-width: 700px) {
+    .selectModelMessage {
+        flex-wrap: wrap;
+    }
+}

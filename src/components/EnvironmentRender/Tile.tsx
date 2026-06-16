@@ -14,7 +14,7 @@ interface TileProps {
 }
 export default function Tile({ cellType, tileSize = 40, agentLocation, cellLocation, agentType }: TileProps) {
     const agentImage = useMemo(() => {
-        return getAgentImage(agentType);
+        return getAgentImage({ type: agentType });
     }, [agentType]);
 
     const isOnSight = (): boolean => {

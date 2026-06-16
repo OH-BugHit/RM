@@ -1,13 +1,8 @@
 import { Button } from '@genai-fi/base';
 import ReplayIcon from '@mui/icons-material/Replay';
 import { useSetAtom } from 'jotai';
-import {
-    AgentSettingsAtom,
-    GameControlAtom,
-    StepsTakenAtom,
-    TutorialPhaseAtom,
-    TutorialStepAtom,
-} from '../../atoms/state';
+import { AgentSettingsAtom, GameControlAtom } from '../../atoms/state';
+import { StepsTakenAtom, TutorialPhaseAtom, TutorialStepAtom } from '../../atoms/tutorialState';
 import { defaultAgentSettings, defaultControls } from '../../utils/defaults';
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';

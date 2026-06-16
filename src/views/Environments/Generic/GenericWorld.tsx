@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { QLearningAgent } from '../../../components/agents/rlAgentQ';
 import { Actions, Agent, CellType, GameEnvironmentInfo, GenericObservation } from '../../../types';
 import WorldComponent from '../../World/WorldComponent';
@@ -10,14 +10,33 @@ import {
     robodogOffset,
 } from '../../../components/GameComponents/agentProps';
 import { useSound } from '../../../hooks/useSound';
-import { useAtomValue, useStore } from 'jotai';
-import { AgentSettingsAtom, EnvSettingsAtom, GameControlAtom, ResetUiPulseAtom } from '../../../atoms/state';
-import { GenericRLEnv } from '../TreasureHunter/environment';
-import DrawObservation from '../../Observation/DrawObservation';
-import { stringifyAction } from '../../../utils/common';
+import { useAtomValue, useSetAtom, useStore } from 'jotai';
+import {
+    ActiveAgentAtom,
+    AgentSettingsAtom,
+    EnvSettingsAtom,
+    GameControlAtom,
+    ResetUiPulseAtom,
+} from '../../../atoms/state';
+import { GenericRLEnv } from './environment';
+import { motion } from 'framer-motion';
+import HUD from '../../Xai/HUD';
+import {
+    ChartAtom,
+    EpisodicDataAtom,
+    FacingAtom,
+    LargeObsAtom,
+    SmallObsAtom,
+    StateDataAtom,
+    TimeStepDataAtom,
+} from '../../../atoms/gameState';
+import { useRewardFloats } from '../../../hooks/useRewardFloats';
+import { ingest, onEpisodeEnd, resetAll } from '../../../components/Charts/rewardStreamEngine';
+import { defaultEpisodicData, defaultTimeStepData } from '../../../utils/defaults';
 
 const STEP_INTERVAL = 400; //ms
 const FAST_STEPS = 5000;
+const FLOAT_RING_SIZE = 32;
 
 interface GenericWorldProps {
     envRef: React.RefObject<GenericRLEnv | undefined>;
@@ -30,52 +49,45 @@ interface GenericWorldProps {
     worldGrid: CellType[][];
 }
 
-function GenericWorld({
-    worldGrid,
-    envRef,
-    agentRef,
-    obsRef,
-    actionRef,
-    qvalueRef,
-    infoRef,
-    agent,
-}: GenericWorldProps) {
+function GenericWorld({ worldGrid, envRef, agentRef, obsRef, actionRef, qvalueRef, infoRef }: GenericWorldProps) {
+    const setChart = useSetAtom(ChartAtom);
+    const setLastState = useSetAtom(StateDataAtom);
+    const agent = useAtomValue(ActiveAgentAtom);
     const sounds = useMemo(() => {
         return getAgentSounds(agent.type);
     }, [agent.type]);
 
-    const store = useStore();
-
-    const playSound = useSound(sounds); //TODO: CHANGE TO KEY SOUND!
+    const playSound = useSound(sounds); //TODO: CHANGE TO KEY SOUND (or other)!
     const envSettings = useAtomValue(EnvSettingsAtom);
     const controls = useAtomValue(GameControlAtom);
     const resetUIpulse = useAtomValue(ResetUiPulseAtom);
     const agentSettings = useAtomValue(AgentSettingsAtom);
 
-    // For rendering stats
-    const [trapsSet, setTrapsSet] = useState(0);
-    const trapsSetRef = useRef(0);
-    const [episodicReward, setEpisodicReward] = useState(0);
+    const store = useStore();
+
+    const maxTurns = envSettings?.potsAndBurglar?.env.maxTurns; //TODO: Change to use correct env settings
+    const setFacing = useSetAtom(FacingAtom);
+    const setEpisodicData = useSetAtom(EpisodicDataAtom);
+    const setTimeStepData = useSetAtom(TimeStepDataAtom);
+
+    const triggersSetRef = useRef(0);
     const episodicRewardRef = useRef(0);
-    const [lastEpisodeReward, setLastEpisodeReward] = useState(0);
+    const lastActionRef = useRef(Actions.stay);
     const lastEpisodeRewardRef = useRef(0);
-    const [wins, setWins] = useState(0);
+    const defaultObs = useMemo(() => {
+        return getAgentObservationShape(agent.observationShape);
+    }, [agent.observationShape]);
+
+    const obsAtom = agent.observationShape === 'large' ? LargeObsAtom : SmallObsAtom;
+    const setObs = useSetAtom(obsAtom);
+
+    const { items: floatItems, spawnFloat, deactivate } = useRewardFloats({ size: FLOAT_RING_SIZE });
+
     const winsRef = useRef(0);
-    const [losses, setLosses] = useState(0);
     const lossesRef = useRef(0);
 
-    const maxTurns = envSettings?.potsAndBurglar?.env.maxTurns;
-
-    // Default for observation shape
-    const defaultObs = useMemo(() => {
-        return getAgentObservationShape(agent.type);
-    }, [agent.type]);
-
-    const [obs, setObs] = useState<GenericObservation>(defaultObs);
-
     const resetUI = React.useCallback(() => {
-        setTrapsSet(0);
-        trapsSetRef.current = 0;
+        triggersSetRef.current = 0;
 
         envRef.current = new GenericRLEnv({
             world: worldGrid,
@@ -115,10 +127,9 @@ function GenericWorld({
         const { obs } = envRef.current.reset();
         obsRef.current = obs;
         setObs(obs);
-        setEpisodicReward(0);
-        setWins(0);
-        setLosses(0);
-        setLastEpisodeReward(0);
+        setTimeStepData(defaultTimeStepData);
+        setEpisodicData(defaultEpisodicData);
+        resetAll(setChart);
     }, [
         maxTurns,
         envSettings,
@@ -132,6 +143,10 @@ function GenericWorld({
         qvalueRef,
         defaultObs,
         agent.type,
+        setObs,
+        setTimeStepData,
+        setEpisodicData,
+        setChart,
     ]);
 
     useEffect(() => {
@@ -154,18 +169,21 @@ function GenericWorld({
     const syncUI = React.useCallback(() => {
         if (obsRef.current && agentRef.current && obsRef.current) {
             setObs(obsRef.current);
-            setEpisodicReward(episodicRewardRef.current);
-            setWins(winsRef.current);
-            setLosses(lossesRef.current);
-            setLastEpisodeReward(lastEpisodeRewardRef.current);
+            setTimeStepData({ lastReward: episodicRewardRef.current, lastAction: lastActionRef.current });
+            setEpisodicData({
+                triggered: triggersSetRef.current,
+                wins: winsRef.current,
+                losses: lossesRef.current,
+                fullEpisodeReward: lastEpisodeRewardRef.current,
+            });
 
             qvalueRef.current = agentRef.current.getQValues(obsRef.current);
-            setTrapsSet(trapsSetRef.current);
         }
-    }, [agentRef, obsRef, qvalueRef]);
+    }, [agentRef, obsRef, qvalueRef, setObs, setTimeStepData, setEpisodicData]);
 
     const stepUI = React.useCallback(() => {
         if (obsRef.current && agentRef.current && obsRef.current && envRef.current) {
+            const prev = envRef.current.position; // For facing
             const currentObs = obsRef.current;
             const action = agentRef.current.chooseAction(currentObs);
             actionRef.current = action;
@@ -173,14 +191,29 @@ function GenericWorld({
             const { info, obs: nextObs, reward, terminated } = envRef.current.step(action);
             infoRef.current = info;
             agentRef.current.update(currentObs, action, reward, nextObs);
-            trapsSetRef.current += info.stepToTrap ? 1 : 0;
+            triggersSetRef.current += info.stepToTrap ? 1 : 0;
 
             episodicRewardRef.current += reward;
+            lastActionRef.current = action;
+            const currentState = agentRef.current?.getStateKey(nextObs);
+            setLastState((old) => {
+                return {
+                    previous: old.current,
+                    current: currentState,
+                };
+            });
+
+            spawnFloat(envRef.current.position.x, envRef.current.position.y, reward);
+            const dx = prev.x - envRef.current.position.x;
+            if (dx !== 0) setFacing(dx > 0 ? -1 : 1);
 
             if (terminated) {
                 if (infoRef.current.result === 'win') winsRef.current++;
                 else if (infoRef.current.result === 'lose') lossesRef.current++;
                 lastEpisodeRewardRef.current = episodicRewardRef.current;
+                // Update charts
+                onEpisodeEnd();
+                ingest(episodicRewardRef.current, infoRef.current.result === 'win');
                 const { obs: resetObs } = envRef.current.reset();
                 obsRef.current = resetObs;
                 episodicRewardRef.current = 0;
@@ -190,7 +223,7 @@ function GenericWorld({
 
             syncUI();
         }
-    }, [syncUI, playSound, actionRef, obsRef, infoRef, agentRef, envRef]);
+    }, [syncUI, playSound, spawnFloat, setFacing, setLastState, actionRef, obsRef, infoRef, agentRef, envRef]);
 
     useEffect(() => {
         stepUI();
@@ -205,14 +238,18 @@ function GenericWorld({
                 const { info, obs: nextObs, reward, terminated } = envRef.current.step(action);
                 infoRef.current = info;
                 agentRef.current.update(currentObs, action, reward, nextObs);
-                trapsSetRef.current += info.stepToTrap ? 1 : 0;
+                triggersSetRef.current += info.stepToTrap ? 1 : 0;
 
+                lastActionRef.current = action;
                 episodicRewardRef.current += reward;
 
                 if (terminated) {
                     if (infoRef.current.result === 'win') winsRef.current++;
                     else if (infoRef.current.result === 'lose') lossesRef.current++;
                     lastEpisodeRewardRef.current = episodicRewardRef.current;
+                    // Update charts
+                    onEpisodeEnd();
+                    ingest(episodicRewardRef.current, infoRef.current.result === 'win');
                     const { obs: resetObs } = envRef.current.reset();
                     obsRef.current = resetObs;
                     episodicRewardRef.current = 0;
@@ -220,7 +257,6 @@ function GenericWorld({
                     obsRef.current = nextObs;
                 }
             }
-
             syncUI();
         }
     }, [syncUI, obsRef, agentRef, envRef, infoRef, actionRef]);
@@ -254,52 +290,35 @@ function GenericWorld({
     const env = envRef.current;
 
     if (!env || !maxTurns || !infoRef.current) {
-        console.warn(env, maxTurns, infoRef.current);
+        console.warn('Missing info - env - maxTurns - inforef', env, maxTurns, infoRef.current);
         return <div>missing info</div>;
     }
 
     return (
-        <div className={style.container}>
-            <div className={style.column}>
-                <h3>Q-table</h3>
-                Different states explored:{' '}
-                {agentRef.current
-                    ? agentRef.current.getTableSize() // TODO: Figure out good way to count this.. Maybe use enumerator for like "robodog" returns some multipliers and we have observation complexity here already?
-                    : '-'}
-                <br />
-            </div>
-            <div style={{ width: '800px' }}></div>
-            {agentRef.current && (
-                <>
-                    <DrawObservation
-                        state={agentRef.current?.getStateKey(obs)}
-                        disabled={controls.isFast}
-                        actionValues={qvalueRef.current}
-                        type={agent.type}
-                        envType="treasureHunter"
-                    />
-                    {/*<QValues qvalueRef={qvalueRef} />*/}
-                </>
-            )}
-            <div />
-            <div />
+        <motion.div
+            key="genericWorld"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className={style.container}
+        >
+            <HUD
+                agentRef={agentRef}
+                qvalueRef={qvalueRef}
+            />
             {envRef.current && (
-                <WorldComponent
-                    worldGrid={worldGrid}
-                    agentType={agent.type}
-                    agentLocation={envRef.current?.position}
-                />
+                <div className={style.worldContainer}>
+                    <WorldComponent
+                        worldGrid={worldGrid}
+                        agentType={agent.type}
+                        agentLocation={envRef.current?.position}
+                        floatItems={floatItems}
+                        deactivate={deactivate}
+                    />
+                </div>
             )}
-            <div style={{ flexDirection: 'column', width: '200px' }}>
-                <p>Wins: {wins}</p>
-                <p>Losses: {losses}</p>
-                <p>Last episode reward: {lastEpisodeReward.toFixed(1)}</p>
-                <p>This episode reward: {episodicReward.toFixed(1)}</p>
-                <p>Time until break in: {infoRef.current.timeLeft}</p>
-                <p>Last action: {stringifyAction(actionRef.current ?? null)}</p>
-                <p>Traps set: {trapsSet}</p>
-            </div>
-        </div>
+        </motion.div>
     );
 }
 

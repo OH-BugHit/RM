@@ -1,12 +1,19 @@
-import { AgentType, GenericObservation, Offset } from '../../types';
+import { AgentType, GenericObservation, ObservationShape, Offset } from '../../types';
 
-export const getAgentImage = (type: AgentType): string => {
+interface AgentImageProps {
+    type: AgentType;
+    atomState?: string;
+}
+export const getAgentImage = ({ type, atomState }: AgentImageProps): string => {
     switch (type) {
         case 'robodog': {
             return 'images/agents/robo_dog.png';
         }
         case 'adventurer': {
-            return 'images/agents/adventurer2.png';
+            return 'images/agents/adventurerRobo2.png';
+        }
+        case 'created': {
+            return atomState ?? '';
         }
         default: {
             return 'images/agents/adventurer.png';
@@ -28,12 +35,12 @@ export const getAgentSounds = (type: AgentType): string[] => {
     }
 };
 
-export const getAgentObservationShape = (type: AgentType): GenericObservation => {
+export const getAgentObservationShape = (type: ObservationShape): GenericObservation => {
     switch (type) {
-        case 'robodog': {
+        case 'small': {
             return { neighbors: [0, 0, 0, 0], POIdirection: 4 };
         }
-        case 'adventurer': {
+        case 'large': {
             return { neighbors: Array(20).fill(0), POIdirection: 4 };
         }
         default: {

@@ -1,29 +1,36 @@
-.container {
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    align-items: center;
-}
-
 .game {
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-width: 340px;
+    height: 100%;
 }
 
 .containerBox {
-    display: flex;
-    flex-direction: column;
+    flex-grow: 1;
+    overflow: auto;
+    height: 100%;
+}
+
+.gameView {
+    width: 100vw;
+    height: 100vh;
     align-items: center;
-    flex-wrap: wrap;
-    justify-content: center;
-    color: black;
-    background: linear-gradient(45deg, rgb(212, 255, 255), rgb(235, 255, 255));
-    border-radius: 10px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    gap: 1.5rem;
-    padding: 3rem;
+    display: flex;
+    flex-direction: row;
+    background-image: var(--background-image);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.tuneContainer {
+    padding: 24px;
+    height: 100vh;
+
+    position: relative;
+    flex-grow: 1;
+}
+
+.tuneContent {
+    padding: 4rem;
 }

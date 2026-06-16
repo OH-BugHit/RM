@@ -2,7 +2,7 @@
 import { useTranslation } from 'react-i18next';
 import style from './style.module.css';
 import { useSetAtom } from 'jotai';
-import { TutorialPhaseAtom } from '../../../atoms/state';
+import { TutorialPhaseAtom } from '../../../atoms/tutorialState';
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import PhaseControls from '../../../components/PhaseControls/PhaseControls';

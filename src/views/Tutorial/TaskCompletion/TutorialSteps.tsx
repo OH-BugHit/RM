@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useAtomValue } from 'jotai';
-import { StepsTakenAtom } from '../../../atoms/state';
+import { StepsTakenAtom } from '../../../atoms/tutorialState';
 
 export default function TutorialSteps() {
     const { t } = useTranslation();
@@ -8,7 +8,7 @@ export default function TutorialSteps() {
 
     return (
         <label>
-            {t('tutorial.tasks.steps')}: {steps}
+            {t('tutorial.tasks.stepsTaken')}: {steps}
         </label>
     );
 }

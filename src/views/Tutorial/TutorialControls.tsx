@@ -1,5 +1,6 @@
 import { useAtom, useSetAtom } from 'jotai';
-import { AgentSettingsAtom, TutorialPhaseAtom, TutorialStepAtom } from '../../atoms/state';
+import { AgentSettingsAtom } from '../../atoms/state';
+import { TutorialPhaseAtom, TutorialStepAtom } from '../../atoms/tutorialState';
 import PhaseControls from '../../components/PhaseControls/PhaseControls';
 
 const MAXSTEP = 26;

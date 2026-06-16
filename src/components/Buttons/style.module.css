@@ -1,0 +1,12 @@
+@value primary, secondary, bgColourful1, textDark from "@genai-fi/base/css/colours.module.css";
+
+.icon {
+    position: absolute;
+    right: 10px;
+    background: secondary
+}
+
+.icon:hover {
+    background: rgb(242, 31, 221);
+    scale: 1.1;
+}

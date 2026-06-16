@@ -1,4 +1,4 @@
-import { WorldGeneratorProps } from '../types';
+import { Actions, EpisodicData, PropImages, TimeStepData, WorldGeneratorProps } from '../types';
 
 export const manhattanDirecitons = [
     { x: 0, y: -1 },
@@ -12,7 +12,7 @@ export const defaultControls = { isRunning: false, isFast: false, takeStep: fals
 export const defaultAudioSettings = { volume: 1 };
 
 export const defaultImages = {
-    potsAndBurglar: {
+    potsAndBurglar: <PropImages>{
         n1: 'none',
         p0: 'none',
         p1: '/images/assets/pot_intact.png',
@@ -27,7 +27,7 @@ export const defaultImages = {
         burglar1: '/images/assets/burglar.png',
         burglar2: '/images/assets/burglar2.png',
     },
-    treasureHunter: {
+    treasureHunter: <PropImages>{
         n1: '/images/assets/cleanWhiteStone.png',
         p0: '/images/assets/cleanWhiteStone.png',
         p1: '/images/assets/wall1.png',
@@ -42,7 +42,7 @@ export const defaultImages = {
         burglar1: 'none',
         burglar2: 'none',
     },
-    generic: {
+    created: <PropImages>{
         n1: '/images/assets/cleanWhiteStone.png',
         p0: '/images/assets/cleanWhiteStone.png',
         p1: '/images/assets/wall1.png',
@@ -395,9 +395,38 @@ export const defaultEnvSettings = {
 };
 
 export const defaultWorld: WorldGeneratorProps = {
-    density: 0.5,
-    numberOfEdges: 6,
-    roomShape: 'rectangle',
+    density: 0.7,
+    numberOfEdges: 3,
     roomSizeX: 10,
     roomSizeY: 10,
 };
+
+export const defaultEpisodicData: EpisodicData = {
+    triggered: 0,
+    wins: 0,
+    losses: 0,
+    fullEpisodeReward: 0,
+};
+
+export const defaultTimeStepData: TimeStepData = {
+    lastReward: 0,
+    lastAction: Actions.stay,
+};
+
+export const defaultAgents = {
+    robodog: {
+        name: 'Robo Dog',
+        type: 'robodog',
+        img: 'images/agents/robo_dog.png',
+    },
+    adventurer: {
+        name: 'Adventurer',
+        type: 'adventurer',
+        img: 'images/agents/adventurerRobo2.png',
+    },
+    created: {
+        name: '',
+        type: 'created',
+        img: 'images/agents/ownAgent.png',
+    },
+} as const;

@@ -7,7 +7,6 @@ import { rewardConfigs } from '../../utils/defaults';
 import BooleanControl from './BooleanControl';
 
 export default function RewardControlContainer() {
-    console.log('ASDAsd');
     const [tempSettings, setTempSettings] = useAtom(TempSettingsAtom);
     const activeGame = useAtomValue(ActiveEnvironmentAtom);
 
