@@ -4,20 +4,20 @@ type FrameVariant = 'square' | 'wide' | 'tall' | 'title';
 
 const frameConfig = {
     square: {
-        image: 'images/frames/frame_square.png',
-        mask: 'images/frames/frame_square_mask.png',
+        image: '/images/frames/frame_square.png',
+        mask: '/images/frames/frame_square_mask.png',
     },
     wide: {
-        image: 'images/frames/frame_wide.png',
-        mask: 'images/frames/frame_wide_mask.png',
+        image: '/images/frames/frame_wide.png',
+        mask: '/images/frames/frame_wide_mask.png',
     },
     tall: {
-        image: 'images/frames/frame_tall.png',
-        mask: 'images/frames/frame_tall_mask.png',
+        image: '/images/frames/frame_tall.png',
+        mask: '/images/frames/frame_tall_mask.png',
     },
     title: {
-        image: 'images/frames/frame_title.png',
-        mask: 'images/frames/frame_title_mask.png',
+        image: '/images/frames/frame_title.png',
+        mask: '/images/frames/frame_title_mask.png',
     },
 };
 
