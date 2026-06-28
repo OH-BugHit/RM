@@ -75,7 +75,7 @@ export default function AgentSelector() {
                             };
                         });
                         setActiveView((old) => {
-                            return { ...old, overlay: 'agentImgImport' };
+                            return { ...old, overlay: 'import' };
                         });
                     }}
                     selected={selectedAgent.type === 'created'}

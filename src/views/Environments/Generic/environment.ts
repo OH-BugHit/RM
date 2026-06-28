@@ -1,4 +1,13 @@
-import { Actions, SixthSenseDirection, GenericObservation, Position, Offset, CellType } from '../../../types';
+import {
+    Actions,
+    SixthSenseDirection,
+    GenericObservation,
+    Position,
+    Offset,
+    CellType,
+    Cell,
+    GenericReward,
+} from '../../../types';
 import { manhattanDirecitons } from '../../../utils/defaults';
 
 type StepResult = {
@@ -10,31 +19,31 @@ type StepResult = {
 };
 
 export interface EnvironmentOptions {
-    world: CellType[][];
+    world: Cell[][];
     maxTurns?: number;
-    delay1?: number;
-    rewardStep?: number;
-    reward1?: number;
-    reward2?: number;
-    reward3?: number;
-    reward4?: number;
-    reward5?: number;
-    reward6?: number;
-    abilitySuccessReward?: number;
-    abilityFailureReward?: number;
-    win?: number;
-    lose?: number;
+    delay1?: number | 'unlimited';
+    rewardStep?: number; // Reward for timestep
+    reward1?: number; // Reward for moving over Celltype 6 (treasure)
+    reward2?: number; // Reward for moving over Celltype 7 (big treasure)
+    rPickObject?: number; // Reward for moving over Celltype 3 (key/ usable object)
+    rTrap?: number; // Reward for moving over Celltype 9 (trap)
+    rUseObject?: number; // Reward for moving over Celltype 5 (requires key/ usable object), TODO: Logic for locked-> door
+    abilitySuccessReward?: number; // Reward for using ability and succeed TODO: IS THIS NEEDED?
+    abilityFailureReward?: number; // Reward for using ability and fail (unneccessary)
+    endByTrigger?: number; // Reward for episode end on trigger
+    rLoseByTimeEnds?: number; // Reward received if counter reaches zero
+    winByCount?: number; // Reward for episode end on enough items collected
     killed?: number;
     trap1?: number;
-    trapLethal?: boolean;
+    triggerIsWin?: boolean;
     agentObsOffset: Offset[];
 }
 
-function getSpawnCells(world: CellType[][]): Position[] {
+function getSpawnCells(world: Cell[][]): Position[] {
     const spawnCells: Position[] = [];
     world.forEach((row, y) => {
         row.forEach((cell, x) => {
-            if (cell === CellType.Spawn) {
+            if (cell.type === CellType.Spawn) {
                 spawnCells.push({ x, y });
             }
         });
@@ -49,7 +58,7 @@ function getStartingPosition(spawnCells: Position[]): Position {
 
 type Info = {
     timeLeft: number;
-    stepToTrap: boolean;
+    reachedEndStateProp: boolean;
     result: 'win' | 'lose' | 'ongoing';
     message: string;
     trigger: boolean;
@@ -64,25 +73,23 @@ const SIDES: SixthSenseDirection[] = [
 export class GenericRLEnv {
     position: Position = { x: 0, y: 0 };
     spawnCells: Position[] = [];
-    world: CellType[][];
-    maxTurns: number;
-    delay1: number;
-    rewardStep: number;
-    reward1: number;
-    reward2: number;
-    reward3: number;
-    reward4: number;
-    reward5: number;
-    reward6: number;
-    abilitySuccessReward: number;
-    abilityFailureReward: number;
-    trap1: number;
+    world: Cell[][];
+    maxTurns: number; // -1 = unlimited
+    delay1: number | 'unlimited';
+    rewardStep: number; // Reward for timestep
+    reward1: number; // Reward for moving over Celltype 6 (treasure)
+    reward2: number; // Reward for moving over Celltype 7 (big treasure)
+    rPickObject: number; // Reward for moving over Celltype 3 (key/ usable object)
+    rTrap: number; // Reward for moving over Celltype 9 (trap)
+    rUseObject: number; // Reward for moving over Celltype 5 (requires key/ usable object), TODO: Logic for locked-> door
+    abilitySuccessReward: number; // Reward for using ability and succeed TODO: IS THIS NEEDED?
+    abilityFailureReward: number; // Reward for using ability and fail (unneccessary)
+    endByTrigger: number; // Reward for episode end on trigger
+    rLoseByTimeEnds: number; // Reward for losing episode
+    winByCount: number; // Reward for episode end on enough items collected
     POI = { side: SixthSenseDirection.Away };
     stepsTaken: number = 0;
-    win: number;
-    killed: number;
-    lose: number;
-    trapLethal: boolean;
+    triggerIsWin: boolean;
     agentObsOffset: Offset[];
     keys: number;
 
@@ -91,20 +98,18 @@ export class GenericRLEnv {
         maxTurns,
         agentObsOffset,
         delay1,
-        win,
-        lose,
         rewardStep,
         reward1,
         reward2,
-        reward3,
-        reward4,
-        reward5,
-        reward6,
+        rPickObject,
+        rTrap,
+        rUseObject,
         abilitySuccessReward,
         abilityFailureReward,
-        trap1,
-        killed,
-        trapLethal,
+        endByTrigger,
+        rLoseByTimeEnds,
+        winByCount,
+        triggerIsWin,
     }: EnvironmentOptions) {
         this.world = world;
         this.maxTurns = maxTurns ?? 0;
@@ -112,34 +117,52 @@ export class GenericRLEnv {
         this.rewardStep = rewardStep ?? 0;
         this.reward1 = reward1 ?? 0;
         this.reward2 = reward2 ?? 0;
-        this.reward3 = reward3 ?? 0;
-        this.reward4 = reward4 ?? 0;
-        this.reward5 = reward5 ?? 0;
-        this.reward6 = reward6 ?? 0;
+        this.rPickObject = rPickObject ?? 0;
+        this.rTrap = rTrap ?? 0;
+        this.rUseObject = rUseObject ?? 0;
         this.abilitySuccessReward = abilitySuccessReward ?? 0;
         this.abilityFailureReward = abilityFailureReward ?? 0;
-        this.win = win ?? 0;
-        this.lose = lose ?? 0;
+        this.endByTrigger = endByTrigger ?? 0;
+        this.rLoseByTimeEnds = rLoseByTimeEnds ?? 0;
+        this.winByCount = winByCount ?? 0;
         this.agentObsOffset = agentObsOffset;
         this.spawnCells = getSpawnCells(world);
-        this.trap1 = trap1 ?? 0;
-        this.killed = killed ?? 0;
-        this.trapLethal = trapLethal ?? false;
+        this.triggerIsWin = triggerIsWin ?? false;
         this.position = getStartingPosition(this.spawnCells);
-        this.keys = 1; //SET TO 0 WHEN PICKING IMPLEMENTED!
+        this.keys = 0;
         this.reset();
+    }
+
+    setRewards(rewards: GenericReward) {
+        this.rewardStep = rewards.rewardStep;
+        this.reward1 = rewards.reward1;
+        this.reward2 = rewards.reward2;
+        this.rPickObject = rewards.rPickObject;
+        this.rTrap = rewards.rTrap;
+        this.rUseObject = rewards.rUseObject;
+        this.abilityFailureReward = rewards.abilityFailureReward;
+        this.abilitySuccessReward = rewards.abilitySuccessReward;
+        this.endByTrigger = rewards.endByTrigger;
+        this.rLoseByTimeEnds = rewards.rLoseByTimeEnds;
+        this.winByCount = rewards.winByCount;
+    }
+
+    setWorld(world: Cell[][]) {
+        this.world = world;
+        this.spawnCells = getSpawnCells(this.world);
     }
 
     reset(): { obs: GenericObservation; info: Info } {
         this.position = getStartingPosition(this.spawnCells);
         this.stepsTaken = 0;
         this.keys = 1; //SET TO 0 WHEN PICKING IMPLEMENTED!
+        this.resetTimer();
 
         return {
             obs: this.getObservation(),
             info: {
                 timeLeft: this.maxTurns,
-                stepToTrap: false,
+                reachedEndStateProp: false,
                 result: 'ongoing',
                 message: 'Game reset',
                 trigger: false,
@@ -147,11 +170,23 @@ export class GenericRLEnv {
         };
     }
 
+    // Resets timer to reload time
+    private resetTimer() {
+        for (let column = 0; column < this.world.length; column++) {
+            for (let row = 0; row < this.world[0].length; row++) {
+                this.world[column][row].timer = Math.max(this.world[column][row].reloadTime, 0); // -1 reloadTime is used for One episode delay length
+            }
+        }
+    }
+
     getCell(x: number, y: number): number {
         if (x < 0 || y < 0 || y >= this.world.length || x >= this.world[y]?.length) {
-            return CellType.Wall;
+            return CellType.Solid;
         }
-        return this.world[y][x];
+        if (this.world[y][x].timer !== 0) {
+            return CellType.Empty; // If object is unpickable, return empty
+        }
+        return this.world[y][x].type;
     }
 
     getObservation(offsets: Offset[] = this.agentObsOffset): GenericObservation {
@@ -161,19 +196,18 @@ export class GenericRLEnv {
         };
     }
 
-    // Returns true if broke a trap. (Possibly killing the agent and terminating episode)
     private moveAgent(action: number): CellType {
         let { x, y } = this.position;
 
         // All rooms are bouded by walls, should work.
-        if (action === Actions.up && this.world[y - 1][x] !== CellType.Wall) y--;
-        if (action === Actions.down && this.world[y + 1][x] !== CellType.Wall) y++;
-        if (action === Actions.left && this.world[y][x - 1] !== CellType.Wall) x--;
-        if (action === Actions.right && this.world[y][x + 1] !== CellType.Wall) x++;
+        if (action === Actions.up && this.world[y - 1][x].type !== CellType.Solid) y--;
+        if (action === Actions.down && this.world[y + 1][x].type !== CellType.Solid) y++;
+        if (action === Actions.left && this.world[y][x - 1].type !== CellType.Solid) x--;
+        if (action === Actions.right && this.world[y][x + 1].type !== CellType.Solid) x++;
 
         this.position = { x, y };
 
-        return this.world[y][x];
+        return this.world[y][x].type;
     }
 
     private POIstep(): { terminated: boolean } {
@@ -181,6 +215,7 @@ export class GenericRLEnv {
             this.POI.side = SIDES[Math.floor(Math.random() * SIDES.length)];
         }
         this.stepsTaken++;
+        if (this.maxTurns === -1) return { terminated: false };
         return { terminated: this.stepsTaken >= this.maxTurns };
     }
 
@@ -193,9 +228,11 @@ export class GenericRLEnv {
             const nx = x + direction.x;
             const ny = y + direction.y;
 
-            if (this.world?.[ny]?.[nx] === CellType.LockedDoor) {
-                return true;
-                //TODO: Add iteraction requirement (like key)
+            if (this.world?.[ny]?.[nx].type === CellType.LockedDoor) {
+                if (this.keys > 0) {
+                    this.keys--;
+                    return true;
+                }
             }
         }
 
@@ -207,28 +244,28 @@ export class GenericRLEnv {
         let terminated = false;
         let trigger = false;
 
-        const newLocationValue: CellType = this.moveAgent(action);
-        if (newLocationValue === CellType.Trap) {
-            reward += this.trap1;
-            trigger = true;
-            if (this.trapLethal) {
-                reward += this.lose;
-                terminated = true;
-                return {
-                    obs: this.getObservation(),
-                    reward,
-                    terminated,
-                    truncated: false,
-                    info: {
-                        timeLeft: this.maxTurns - this.stepsTaken,
-                        stepToTrap: newLocationValue === CellType.Trap,
-                        result: 'lose',
-                        message: 'Game step completed',
-                        trigger: trigger,
-                    },
-                };
-            }
+        const POIstepResult = this.POIstep();
+        if (POIstepResult.terminated) {
+            // if time runs out
+            reward += this.rLoseByTimeEnds;
+            terminated = true;
+            return {
+                obs: this.getObservation(),
+                reward,
+                terminated,
+                truncated: false,
+                info: {
+                    timeLeft: this.maxTurns - this.stepsTaken,
+                    reachedEndStateProp: false,
+                    result: 'lose',
+                    message: 'Game step completed. Step limit reached',
+                    trigger: trigger,
+                },
+            };
         }
+
+        // If there is time still left:
+        const newLocationValue: CellType = this.moveAgent(action);
 
         if (action === Actions.specialAction) {
             if (this.checkUseSpecialActionSuccess()) {
@@ -241,7 +278,7 @@ export class GenericRLEnv {
                     truncated: false,
                     info: {
                         timeLeft: this.maxTurns - this.stepsTaken,
-                        stepToTrap: newLocationValue === CellType.Trap,
+                        reachedEndStateProp: false,
                         result: 'ongoing',
                         message: 'Game step completed. Special ability used successfully',
                         trigger: trigger,
@@ -250,26 +287,123 @@ export class GenericRLEnv {
             } else {
                 reward += this.abilityFailureReward;
             }
+        } else {
+            switch (newLocationValue) {
+                case CellType.Trigger: {
+                    reward += this.endByTrigger;
+                    trigger = true;
+                    terminated = true;
+                    return {
+                        obs: this.getObservation(),
+                        reward,
+                        terminated,
+                        truncated: false,
+                        info: {
+                            timeLeft: this.maxTurns - this.stepsTaken,
+                            reachedEndStateProp: newLocationValue === CellType.Trigger,
+                            result: this.triggerIsWin ? 'win' : 'lose',
+                            message: 'Game step completed',
+                            trigger: trigger,
+                        },
+                    };
+                }
+                case CellType.Treasure: {
+                    if (this.world[this.position.y][this.position.x].timer === 0) {
+                        // if treasure is not already picked, set also reload time
+                        this.world[this.position.y][this.position.x].timer =
+                            this.world[this.position.y][this.position.x].reloadTime;
+                        reward += this.reward1;
+
+                        this.world[this.position.y][this.position.x].timer--;
+                        return {
+                            obs: this.getObservation(),
+                            reward,
+                            terminated,
+                            truncated: false,
+                            info: {
+                                timeLeft: this.maxTurns - this.stepsTaken,
+                                reachedEndStateProp: false,
+                                result: 'ongoing',
+                                message: 'Game step completed, treasure reward received',
+                                trigger: trigger,
+                            },
+                        };
+                    }
+                    break;
+                }
+                case CellType.TreasureBig: {
+                    if (this.world[this.position.y][this.position.x].timer === 0) {
+                        // if treasure is not already picked
+                        this.world[this.position.y][this.position.x].timer =
+                            this.world[this.position.y][this.position.x].reloadTime;
+                        reward += this.reward2;
+                        this.world[this.position.y][this.position.x].timer--;
+                        return {
+                            obs: this.getObservation(),
+                            reward,
+                            terminated,
+                            truncated: false,
+                            info: {
+                                timeLeft: this.maxTurns - this.stepsTaken,
+                                reachedEndStateProp: false,
+                                result: 'ongoing',
+                                message: 'Game step completed, large treasure reward received',
+                                trigger: trigger,
+                            },
+                        };
+                    }
+                    break;
+                }
+                case CellType.Trap: {
+                    if (this.world[this.position.y][this.position.x].timer === 0) {
+                        // if trap is not already set
+                        this.world[this.position.y][this.position.x].timer =
+                            this.world[this.position.y][this.position.x].reloadTime;
+                        reward += this.rTrap;
+                        this.world[this.position.y][this.position.x].timer--;
+                        return {
+                            obs: this.getObservation(),
+                            reward,
+                            terminated,
+                            truncated: false,
+                            info: {
+                                timeLeft: this.maxTurns - this.stepsTaken,
+                                reachedEndStateProp: false,
+                                result: 'ongoing',
+                                message: 'Game step completed, trap reward received',
+                                trigger: trigger,
+                            },
+                        };
+                    }
+                    break;
+                }
+                case CellType.Key: {
+                    if (this.world[this.position.y][this.position.x].timer === 0) {
+                        // if object is not already picked
+                        this.world[this.position.y][this.position.x].timer =
+                            this.world[this.position.y][this.position.x].reloadTime;
+                        reward += this.rPickObject;
+                        this.world[this.position.y][this.position.x].timer--;
+                        this.keys++;
+                        return {
+                            obs: this.getObservation(),
+                            reward,
+                            terminated,
+                            truncated: false,
+                            info: {
+                                timeLeft: this.maxTurns - this.stepsTaken,
+                                reachedEndStateProp: false,
+                                result: 'ongoing',
+                                message: 'Game step completed, Pickable object picked',
+                                trigger: trigger,
+                            },
+                        };
+                    }
+                    break;
+                }
+            }
         }
 
-        const POIstepResult = this.POIstep();
-        if (POIstepResult.terminated) {
-            reward += this.lose;
-            terminated = true;
-            return {
-                obs: this.getObservation(),
-                reward,
-                terminated,
-                truncated: false,
-                info: {
-                    timeLeft: this.maxTurns - this.stepsTaken,
-                    stepToTrap: newLocationValue === CellType.Trap,
-                    result: 'lose',
-                    message: 'Game step completed. POI-step limit reached',
-                    trigger: trigger,
-                },
-            };
-        }
         return {
             obs: this.getObservation(),
             reward,
@@ -277,7 +411,7 @@ export class GenericRLEnv {
             truncated: false,
             info: {
                 timeLeft: this.maxTurns - this.stepsTaken,
-                stepToTrap: newLocationValue === CellType.Trap,
+                reachedEndStateProp: false,
                 result: 'ongoing',
                 message: 'Game step completed. Episode continues',
                 trigger: trigger,

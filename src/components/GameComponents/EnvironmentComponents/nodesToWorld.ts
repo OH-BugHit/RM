@@ -79,14 +79,14 @@ export function nodesToWorld({ nodes, bounds, roomSizeX, roomSizeY }: NodesToWor
 
                 const neighbour = world[ny][nx];
 
-                if (neighbour !== CellType.Outside && neighbour !== CellType.Wall) {
+                if (neighbour !== CellType.Outside && neighbour !== CellType.Solid) {
                     touchesRoom = true;
                     break;
                 }
             }
 
             if (touchesRoom) {
-                world[y][x] = CellType.Wall;
+                world[y][x] = CellType.Solid;
             }
         }
     }

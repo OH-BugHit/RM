@@ -1,13 +1,15 @@
+/*
+*** OLD TREASURE HUNTER!
 import React, { useEffect, useMemo, useRef } from 'react';
 import { QLearningAgent } from '../../../components/agents/rlAgentQ';
 import { Actions, Agent, CellType, GameEnvironmentInfo, GenericObservation } from '../../../types';
 import WorldComponent from '../../World/WorldComponent';
 import style from './style.module.css';
 import {
-    getAdventurerOffset,
-    getAgentObservationShape,
+    getLargeOffset,
+    getDefaultObservation,
     getAgentSounds,
-    robodogOffset,
+    smallOffset,
 } from '../../../components/GameComponents/agentProps';
 import { useSound } from '../../../hooks/useSound';
 import { useAtomValue, useSetAtom, useStore } from 'jotai';
@@ -75,7 +77,7 @@ function GenericWorld({ worldGrid, envRef, agentRef, obsRef, actionRef, qvalueRe
     const lastActionRef = useRef(Actions.stay);
     const lastEpisodeRewardRef = useRef(0);
     const defaultObs = useMemo(() => {
-        return getAgentObservationShape(agent.observationShape);
+        return getDefaultObservation(agent.observationShape);
     }, [agent.observationShape]);
 
     const obsAtom = agent.observationShape === 'large' ? LargeObsAtom : SmallObsAtom;
@@ -92,7 +94,7 @@ function GenericWorld({ worldGrid, envRef, agentRef, obsRef, actionRef, qvalueRe
         envRef.current = new GenericRLEnv({
             world: worldGrid,
             maxTurns: 40,
-            agentObsOffset: agent.type === 'robodog' ? robodogOffset : getAdventurerOffset(), // TODO:Create more observation shapes on-demand
+            agentObsOffset: agent.type === 'robodog' ? smallOffset : getLargeOffset(), // TODO:Create more observation shapes on-demand
             delay1: envSettings.treasureHunter.env.propReloadDelay1,
             win: envSettings.treasureHunter.reward.win,
             lose: envSettings.treasureHunter.reward.win,
@@ -163,9 +165,9 @@ function GenericWorld({ worldGrid, envRef, agentRef, obsRef, actionRef, qvalueRe
         console.log('UI reset pulse');
     }, [resetUIpulse, resetUI]);
 
-    /**
-     * Syncrhonises UI, when fast forwarding, this is called with frequence
-     */
+    
+     //Syncrhonises UI, when fast forwarding, this is called with frequence
+     
     const syncUI = React.useCallback(() => {
         if (obsRef.current && agentRef.current && obsRef.current) {
             setObs(obsRef.current);
@@ -323,3 +325,4 @@ function GenericWorld({ worldGrid, envRef, agentRef, obsRef, actionRef, qvalueRe
 }
 
 export default GenericWorld;
+*/

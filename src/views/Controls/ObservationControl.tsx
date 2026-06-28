@@ -1,7 +1,8 @@
 import { useAtom, useAtomValue } from 'jotai';
 import style from './style.module.css';
 import { Checkbox, FormControlLabel, TextField } from '@mui/material';
-import { TempSettingsAtom, ActiveEnvironmentAtom } from '../../atoms/state';
+import { ActiveEnvironmentAtom } from '../../atoms/state';
+import { TempSettingsAtom } from '../../atoms/gameState';
 
 export default function ObservationControl() {
     const [tempSettings, setTempSettings] = useAtom(TempSettingsAtom);

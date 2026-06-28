@@ -81,7 +81,7 @@ export default function PotsAndBurglarRender({ gridSize, env, floatItems, deacti
                             agentPos: env.position,
                             x: x,
                             y: y,
-                            agentType: agent.type,
+                            obsShape: agent.observationShape,
                         });
 
                         if (controls.isFast) {

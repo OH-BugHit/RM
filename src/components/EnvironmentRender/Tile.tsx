@@ -1,72 +1,96 @@
-import { useMemo } from 'react';
-import { AgentType, CellType, Position } from '../../types';
-import { getAgentImage } from '../GameComponents/agentProps';
+import { useMemo, useState } from 'react';
+import { Cell, CellType, Position } from '../../types';
 import style from './style.module.css';
 import { getOnSight } from '../GameComponents/drawComponent';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { ActiveAgentAtom } from '../../atoms/state';
+import { PropToolAtom, VisibleTilesAtom } from '../../atoms/uiState';
+import { InnerFillCellAtom, SetRewardsPulseAtom } from '../../atoms/gameState';
 
 interface TileProps {
-    cellType: CellType;
+    cell: Cell;
     tileSize?: number;
     agentLocation: Position;
     cellLocation: Position;
-    agentType: AgentType;
     onSight?: boolean;
 }
-export default function Tile({ cellType, tileSize = 40, agentLocation, cellLocation, agentType }: TileProps) {
-    const agentImage = useMemo(() => {
-        return getAgentImage({ type: agentType });
-    }, [agentType]);
+export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation }: TileProps) {
+    const agent = useAtomValue(ActiveAgentAtom);
+    const visibleTiles = useAtomValue(VisibleTilesAtom);
+    const propTool = useAtomValue(PropToolAtom);
+    const [trigger, setTrigger] = useState<boolean>(true);
+    const fillerTile = useAtomValue(InnerFillCellAtom);
+    const updateWorldPulse = useSetAtom(SetRewardsPulseAtom);
 
-    const isOnSight = (): boolean => {
-        return getOnSight({ agentPos: agentLocation, x: cellLocation.x, y: cellLocation.y, agentType: agentType });
-    };
+    const agentImage = useMemo(() => {
+        return agent.img;
+    }, [agent.img]);
+
+    const onSight = useMemo(
+        () =>
+            getOnSight({
+                agentPos: agentLocation,
+                x: cellLocation.x,
+                y: cellLocation.y,
+                obsShape: agent.observationShape,
+            }),
+        [agentLocation, cellLocation, agent.observationShape]
+    );
 
     const getCell = () => {
-        const base = getCellImage(cellType);
+        const base = getCellImage(cell);
 
         if (cellLocation.y !== agentLocation.y || cellLocation.x !== agentLocation.x) return base;
 
         return (
-            <div style={{ position: 'relative', width: tileSize, height: tileSize }}>
+            <div
+                className={style.tileOverlay}
+                style={{ width: tileSize, height: tileSize }}
+            >
                 <img
-                    src="images/assets/cleanWhiteStone.png"
-                    alt="Background"
+                    src={`${cell.image}`}
+                    alt="Agent location background"
+                    className={`${style.tileLayer} ${style.tileBackground}`}
                     style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        opacity: 0.4,
+                        opacity: visibleTiles.agent ? 0.4 : 0,
                     }}
                 />
                 <img
                     src={agentImage}
                     alt="Agent Image"
+                    className={`${style.tileLayer} ${style.tileForeground}`}
                     style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        pointerEvents: 'none',
+                        opacity: visibleTiles.agent ? 1 : 0,
                     }}
                 />
             </div>
         );
     };
 
-    const getCellImage = (cellType: CellType) => {
-        switch (cellType) {
+    const getCellImage = (cell: Cell) => {
+        switch (cell.type) {
             case CellType.Spawn: {
                 return (
                     <img
-                        src="images/assets/cleanWhiteStone.png"
+                        src={`${cell.image}`}
                         width={tileSize}
                         height={tileSize}
                         alt="Floor"
                         style={{
-                            opacity: 0.2,
+                            opacity: visibleTiles.spawn ? 0.8 : 0,
+                        }}
+                    />
+                );
+            }
+            case CellType.Trap: {
+                return (
+                    <img
+                        src={`${cell.image}`}
+                        width={tileSize}
+                        height={tileSize}
+                        alt="Trap"
+                        style={{
+                            opacity: visibleTiles.spawn ? (cell.timer === 0 ? 0.8 : 0.4) : 0,
                         }}
                     />
                 );
@@ -74,40 +98,50 @@ export default function Tile({ cellType, tileSize = 40, agentLocation, cellLocat
             case CellType.Empty: {
                 return (
                     <img
-                        src="images/assets/cleanWhiteStone.png"
+                        src={`${cell.image}`}
                         width={tileSize}
                         height={tileSize}
                         alt="Floor"
-                        style={{
-                            opacity: 0.4,
-                        }}
                     />
                 );
             }
-            case CellType.Wall: {
+            case CellType.Solid: {
                 return (
                     <img
-                        src="images/assets/wall1.png"
+                        src={`${cell.image}`}
                         width={tileSize}
                         height={tileSize}
                         alt="Wall"
+                        style={{ opacity: visibleTiles.wall ? 1 : 0 }}
                     />
                 );
             }
-            case CellType.Trap: {
+            case CellType.Trigger: {
                 return (
-                    <img
-                        src="images/assets/trap2_260.png"
-                        width={tileSize}
-                        height={tileSize}
-                        alt="Key"
-                    />
+                    <div
+                        className={style.tileOverlay}
+                        style={{ width: tileSize, height: tileSize }}
+                    >
+                        <img
+                            src={fillerTile.image}
+                            alt="Background"
+                            className={`${style.tileLayer} ${style.tileBackground}`}
+                            style={{
+                                opacity: 0.4,
+                            }}
+                        />
+                        <img
+                            src={`${cell.image}`}
+                            className={`${style.tileLayer} ${style.tileForeground}`}
+                            alt="Key"
+                        />
+                    </div>
                 );
             }
             case CellType.Door: {
                 return (
                     <img
-                        src="images/assets/door1.png"
+                        src={`${cell.image}`}
                         width={tileSize}
                         height={tileSize}
                         alt="Door"
@@ -117,7 +151,7 @@ export default function Tile({ cellType, tileSize = 40, agentLocation, cellLocat
             case CellType.LockedDoor: {
                 return (
                     <img
-                        src="images/assets/door1.png"
+                        src={`${cell.image}`}
                         width={tileSize}
                         height={tileSize}
                         alt="Locked Door"
@@ -126,29 +160,24 @@ export default function Tile({ cellType, tileSize = 40, agentLocation, cellLocat
             }
             case CellType.Key: {
                 return (
-                    <div style={{ position: 'relative', width: tileSize, height: tileSize }}>
+                    <div
+                        className={style.tileOverlay}
+                        style={{ width: tileSize, height: tileSize }}
+                    >
                         <img
-                            src="images/assets/cleanWhiteStone.png"
+                            src={fillerTile.image}
                             alt="Background"
+                            className={`${style.tileLayer} ${style.tileBackground}`}
                             style={{
-                                position: 'absolute',
-                                top: 0,
-                                left: 0,
-                                width: '100%',
-                                height: '100%',
                                 opacity: 0.4,
                             }}
                         />
                         <img
-                            src="images/assets/key1.png"
+                            src={cell.image}
                             alt="Key"
+                            className={`${style.tileLayer} ${style.tileForeground}`}
                             style={{
-                                position: 'absolute',
-                                top: 0,
-                                left: 0,
-                                width: '100%',
-                                height: '100%',
-                                pointerEvents: 'none',
+                                opacity: visibleTiles.key ? (cell.timer === 0 ? 1 : 0) : 0, // Pickable object is fully hidden
                             }}
                         />
                     </div>
@@ -156,22 +185,48 @@ export default function Tile({ cellType, tileSize = 40, agentLocation, cellLocat
             }
             case CellType.Treasure: {
                 return (
-                    <img
-                        src="images/assets/smallTreasure_260.png"
-                        width={tileSize}
-                        height={tileSize}
-                        alt="Treasure"
-                    />
+                    <div
+                        className={style.tileOverlay}
+                        style={{ width: tileSize, height: tileSize }}
+                    >
+                        <img
+                            src={fillerTile.image}
+                            alt="Background"
+                            className={`${style.tileLayer} ${style.tileBackground}`}
+                            style={{
+                                opacity: 0.4,
+                            }}
+                        />
+                        <img
+                            src={cell.image}
+                            alt="Large Treasure"
+                            className={`${style.tileLayer} ${style.tileForeground}`}
+                            style={{ opacity: cell.timer === 0 ? 1 : 0.2 }}
+                        />
+                    </div>
                 );
             }
             case CellType.TreasureBig: {
                 return (
-                    <img
-                        src="images/assets/bigTreasure_260.png"
-                        width={tileSize}
-                        height={tileSize}
-                        alt="Large Treasure"
-                    />
+                    <div
+                        className={style.tileOverlay}
+                        style={{ width: tileSize, height: tileSize }}
+                    >
+                        <img
+                            src={fillerTile.image}
+                            alt="Background"
+                            className={`${style.tileLayer} ${style.tileBackground}`}
+                            style={{
+                                opacity: 0.4,
+                            }}
+                        />
+                        <img
+                            src={cell.image}
+                            alt="Large Treasure"
+                            className={`${style.tileLayer} ${style.tileForeground}`}
+                            style={{ opacity: cell.timer === 0 ? 1 : 0.2 }}
+                        />
+                    </div>
                 );
             }
             case CellType.Outside: {
@@ -187,7 +242,7 @@ export default function Tile({ cellType, tileSize = 40, agentLocation, cellLocat
             default: {
                 return (
                     <img
-                        src="images/assets/cleanWhiteStone.png"
+                        src={fillerTile.image}
                         width={tileSize}
                         height={tileSize}
                         alt="Default floor"
@@ -196,8 +251,15 @@ export default function Tile({ cellType, tileSize = 40, agentLocation, cellLocat
             }
         }
     };
-    const handleTileClick = () => {
-        console.log(`Tile ${cellType} clicked`);
+    const handleTileClick = (e: React.PointerEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        if (propTool) {
+            //TODO: TRACK IF MODIFYING OUTER BOUNDARY (HAS TO BE SOLID!)
+            setTrigger(!trigger);
+            cell.image = propTool.image;
+            cell.type = propTool.type;
+            updateWorldPulse((prev) => !prev);
+        }
     };
 
     return (
@@ -205,11 +267,12 @@ export default function Tile({ cellType, tileSize = 40, agentLocation, cellLocat
             style={{
                 width: tileSize,
                 height: tileSize,
-                pointerEvents: cellType === CellType.Outside ? 'none' : 'auto',
-                background: isOnSight() ? '#ffeba344' : 'parent',
+                pointerEvents: cell.type === CellType.Outside ? 'none' : 'auto',
+                background: onSight ? '#ffffffc5' : 'transparent', //836a0e44
+                zIndex: 1000,
             }}
             className={style.tile}
-            onClick={() => handleTileClick()}
+            onPointerDown={(e) => handleTileClick(e)}
         >
             {getCell()}
         </button>

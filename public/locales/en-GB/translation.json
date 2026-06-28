@@ -51,14 +51,27 @@
         "goPhase": "Go play",
         "phases": {
             "potsAndBurglar": "Pots and Burglar",
-            "treasureHunter": "Treasure Hunter",
             "tutorial": "Tutorial",
-            "story": "Story"
+            "yourWorld": "Your World"
         },
         "teachingMaterials": "Teaching Materials"
     },
     "common": {
         "cancel": "Cancel",
+        "cell": {
+            "-1": "Spawn",
+            "0": "Floor",
+            "1": "Solid",
+            "2": "Trigger",
+            "3": "Key",
+            "4": "Door",
+            "5": "Locked Door",
+            "6": "Treasure",
+            "7": "Big Treasure",
+            "8": "Outside",
+            "9": "Trap",
+            "timeStep": "Reward for each step"
+        },
         "close": "Close",
         "next": "Next",
         "or": "or",
@@ -67,6 +80,20 @@
         "subtitle": "Game for learning about Reinforcement Learning.",
         "title": "Reward Machine",
         "tutorial": "Tutorial"
+    },
+    "import": {
+        "actions": {
+            "loadingImage": "loading image",
+            "openFileExplorer": "Select image from your files",
+            "setImage": "Set prop image"
+        },
+        "messages": {
+            "selectTile": "Choose a tile from the library, use an emoji, or upload your own image."
+        },
+        "titles": {
+            "agent": "Choose image for agent",
+            "tile": "Choose tile image"
+        }
     },
     "stats": {
         "actions": {
@@ -110,6 +137,17 @@
         },
         "rewards": {
             "title": "Rewards"
+        },
+        "text": {
+            "1": "Start your story by opening creative menu and selecting agent",
+            "2": "Next you need to select observation shape",
+            "3": "Last step for agent: Give your agent an epic name!",
+            "4": "Okay! Now move to environment tab from the top of the creative menu, and start designing your world. First select surrounding walls for your world.",
+            "5": "Good, now select what normal floor where the agent can spawn looks like.",
+            "6": "Nice! Now you need to choose what would your agents' goal look. Think about what is your story here. Maybe treasure hunting agent trying to find chest full of gold, or agent searching for butterflies, avoiding spiders and bugs?",
+            "7": "Here you build your world. You can rezise the world by clicking those buttons around your world. To add stuff to your world, select tile tool from the list and just click where you want to place it. Also give name, this will be in separate text",
+            "8": "Great! You can always come back to modify your world and choises. Next proceed to rewards tab to set the rewards.",
+            "9": "Here you set the rewards, all defaults are fine but feel free to tune them and come back here after your agent has learned something to alter its' behaviour."
         }
     },
     "tutorial": {

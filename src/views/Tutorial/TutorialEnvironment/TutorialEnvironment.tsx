@@ -3,7 +3,7 @@ import { QLearningAgent } from '../../../components/agents/rlAgentQ';
 import { Actions, GameEnvironmentInfo, GenericObservation, Agent, SixthSenseDirection } from '../../../types';
 import { useSound } from '../../../hooks/useSound';
 import { useStore, useAtomValue, useAtom, useSetAtom } from 'jotai';
-import { AgentSettingsAtom, EnvSettingsAtom, GameControlAtom } from '../../../atoms/state';
+import { AgentSettingsAtom, GameControlAtom } from '../../../atoms/state';
 import {
     StepsProcentageAtom,
     StepsTakenAtom,
@@ -13,9 +13,9 @@ import {
 } from '../../../atoms/tutorialState';
 import {
     getAgentImage,
-    getAgentObservationShape,
+    getDefaultObservation,
     getAgentSounds,
-    robodogOffset,
+    smallOffset,
 } from '../../../components/GameComponents/agentProps';
 import { getOnSightOrOnSpot } from '../../../components/GameComponents/drawComponent';
 import { RLGridEnv } from '../../Environments/PotsAndBurglar/environment';
@@ -58,7 +58,6 @@ function TutorialEnvironment() {
     }, [agent.type]);
 
     const playBark = useSound(sounds);
-    const envSettings = useAtomValue(EnvSettingsAtom);
     const controls = useAtomValue(GameControlAtom);
     const agentSettings = useAtomValue(AgentSettingsAtom);
     const [tutorialStep, setTutorialStep] = useAtom(TutorialStepAtom);
@@ -74,11 +73,11 @@ function TutorialEnvironment() {
     const potReloadDelay = 10;
     const breakPotSpooksBurglar = false;
 
-    const spookedBurglarReward = envSettings?.potsAndBurglar?.reward.spookedBurglarReward;
-    const brokePotReward = envSettings?.potsAndBurglar?.reward.brokePotReward;
-    const barkSuccessReward = envSettings?.potsAndBurglar?.reward.barkSuccessReward;
-    const barkFailReward = envSettings?.potsAndBurglar?.reward.barkFailReward;
-    const burglarWonReward = envSettings?.potsAndBurglar?.reward.burglarWonReward;
+    const spookedBurglarReward = 10;
+    const brokePotReward = -15;
+    const barkSuccessReward = 10;
+    const barkFailReward = -3;
+    const burglarWonReward = -10;
     const [facing, setFacing] = useState(1);
 
     const prevProgressRef = useRef(0);
@@ -87,7 +86,7 @@ function TutorialEnvironment() {
     const lastEpisodeRewardRef = useRef(0);
     const lastRewardRef = useRef(0);
     const defaultObs = useMemo(() => {
-        return getAgentObservationShape(agent.observationShape);
+        return getDefaultObservation(agent.observationShape);
     }, [agent.observationShape]);
 
     const [obs, setObs] = useState<GenericObservation>(defaultObs);
@@ -114,7 +113,7 @@ function TutorialEnvironment() {
                 barkFail: barkFailReward,
                 burglarWon: burglarWonReward,
             },
-            agentObsOffset: robodogOffset,
+            agentObsOffset: smallOffset,
             flowerPotPositions: [
                 { x: 1, y: 1 },
                 { x: 2, y: 2 },
@@ -423,7 +422,7 @@ function TutorialEnvironment() {
                                 agentPos: env.position,
                                 x: x,
                                 y: y,
-                                agentType: agent.type,
+                                obsShape: agent.observationShape,
                             });
 
                             if (controls.isFast) {

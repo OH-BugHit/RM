@@ -1,61 +1,32 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import PotsAndBurglarGame from '../Environments/PotsAndBurglar/PotsAndBurglarGame';
 import style from './style.module.css';
 import { RLGridEnv } from '../Environments/PotsAndBurglar/environment';
 import { QLearningAgent } from '../../components/agents/rlAgentQ';
-import { Actions, CellType, GameEnvironmentInfo, GenericObservation } from '../../types';
+import { Actions, GameEnvironmentInfo, GenericObservation } from '../../types';
 import { useAtom, useAtomValue } from 'jotai';
-import { ActiveAgentAtom, ActiveEnvironmentAtom } from '../../atoms/state';
-import GameTuner from './GameTuner';
-import GenericWorld from '../Environments/Generic/GenericWorld';
-import { World } from '../../components/GameComponents/EnvironmentComponents/worldGenerator';
-import { GenericRLEnv } from '../Environments/Generic/environment';
-import { worldToGrid } from '../World/WorldToGrid';
+import { ActiveEnvironmentAtom } from '../../atoms/state';
 import { AnimatePresence } from 'framer-motion';
 import { SidePanel } from '@genai-fi/base';
 import { SidePanelOpener } from '../../components/Buttons/SidePanelOpener';
 import { UiShowSidePanelAtom } from '../../atoms/uiState';
-import { Frame } from '../Frames/Frame';
 import { Bridge } from '../../components/Charts/ChartBridge';
+import StoryGame from '../Environments/StoryGame/StoryGame';
+import CreateMenu from './CreateMenu';
+import HUD from '../Xai/HUD';
 
 // React component
 function GameView() {
     const environment = useAtomValue(ActiveEnvironmentAtom);
-    const agent = useAtomValue(ActiveAgentAtom);
-
     const envRef = useRef<RLGridEnv>(undefined);
-    const genericEnvRef = useRef<GenericRLEnv>(undefined);
     const agentRef = useRef<QLearningAgent>(undefined);
     const obsRef = useRef<GenericObservation>(undefined);
     const actionRef = useRef<Actions>(undefined);
     const qvalueRef = useRef<number[]>([]);
     const infoRef = useRef<GameEnvironmentInfo>(undefined);
 
-    const [world, setWorld] = useState<World | undefined>(undefined);
-    const [worldGrid, setWorldGrid] = useState<CellType[][]>([]);
     const [sidePanelOpen, setSidePanelOpen] = useAtom(UiShowSidePanelAtom);
-
-    const config = { image: '/images/background/pcbBlur.jpg' }; //TODO: Change to get background image from somewher
-
-    useEffect(() => {
-        if (!environment.type || environment.type === 'potsAndBurglar') return;
-
-        const newWorld = new World();
-        newWorld.generateWorld({
-            numberOfEdges: environment.world?.numberOfEdges ?? 3,
-            density: environment.world?.density ?? 0.7,
-            roomSizeX: environment.world?.roomSizeX ?? 10,
-            roomSizeY: environment.world?.roomSizeY ?? 10,
-        });
-        console.log('Generated world nodes: ', newWorld.allNodes, 'edges: ', newWorld.allEdges);
-        const grid = worldToGrid({
-            world: newWorld,
-            roomSizeX: environment.world.roomSizeX,
-            roomSizeY: environment.world.roomSizeY,
-        });
-        setWorldGrid(grid);
-        setWorld(newWorld);
-    }, [environment]);
+    const config = { image: '/images/background/background.png' }; //TODO: Change to get background image from somewher
 
     //TODO: Set settings when game is selected now they are here:
 
@@ -77,57 +48,63 @@ function GameView() {
                     </AnimatePresence>
                 );
             }
-            default: {
+            case 'created': {
                 return (
                     <AnimatePresence mode="wait">
-                        <div className={style.game}>
-                            {world && (
-                                <GenericWorld
-                                    envRef={genericEnvRef}
+                        <div
+                            style={{
+                                position: 'relative',
+                                width: '100%',
+                                height: '100%',
+                            }}
+                        >
+                            <HUD
+                                agentRef={agentRef}
+                                qvalueRef={qvalueRef}
+                            />
+                            <div className={style.game}>
+                                <StoryGame
                                     agentRef={agentRef}
                                     obsRef={obsRef}
                                     actionRef={actionRef}
                                     qvalueRef={qvalueRef}
                                     infoRef={infoRef}
-                                    agent={agent}
-                                    worldGrid={worldGrid}
                                 />
-                            )}
+                            </div>
                         </div>
                     </AnimatePresence>
                 );
+            }
+            default: {
+                return null;
             }
         }
     };
 
     return (
-        <div
-            className={style.gameView}
-            style={{ ['--background-image']: `url(${config.image})` } as React.CSSProperties}
-        >
-            <Bridge />
-            <div className={style.containerBox}>{gameContent()}</div>
+        <>
+            <div
+                className={style.gameView}
+                style={{ ['--background-image']: `url(${config.image})` } as React.CSSProperties}
+            >
+                <Bridge />
+                <div className={style.containerBox}>{gameContent()}</div>
 
-            <div style={{ zIndex: 1000 }}>
-                <SidePanelOpener />
-                <SidePanel
-                    open={sidePanelOpen}
-                    onOpen={() => setSidePanelOpen(true)}
-                    position={'right'}
-                    onClose={() => {
-                        setSidePanelOpen(false);
-                    }}
-                >
-                    <Frame
-                        variant="tall"
-                        minWidth={'100%'}
-                        minHeight={'100%'}
+                <div style={{ zIndex: 1000 }}>
+                    <SidePanelOpener />
+                    <SidePanel
+                        open={sidePanelOpen}
+                        onOpen={() => setSidePanelOpen(true)}
+                        position={'right'}
+                        onClose={() => {
+                            setSidePanelOpen(false);
+                        }}
                     >
-                        <GameTuner />
-                    </Frame>
-                </SidePanel>
+                        <CreateMenu />
+                    </SidePanel>
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 

@@ -79,7 +79,7 @@ export default function LodFar({ agentRef, scrollToState }: QCanvasProps) {
         }
     }, [agent.observationShape]);
 
-    // Monitor Q-table changes (only trigger redraw when needed)
+    // Monitor Q-table changes (only trigger redraw when needed) Redraw whole thing every update currently
     useEffect(() => {
         if (!agentRef.current) {
             monitoringRef.current = false;

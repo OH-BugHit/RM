@@ -14,8 +14,7 @@ interface CompactHeatmapCanvasProps {
 const STATE_GAP = 4; // pixels between states
 
 /**
- * Ultra-compact heatmap canvas rendering all states at once.
- * Each state is a 6x6 pixel square with 1px gaps, arranged in spiral layout.
+ * Heatmap canvas rendering all states at once.
  */
 export default function CompactHeatmapCanvas({
     agent,
@@ -75,7 +74,6 @@ export default function CompactHeatmapCanvas({
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Draw each state as a 6x6 pixel heatmap square in spiral layout
         for (let idx = 0; idx < states.length; idx++) {
             const state = states[idx];
             const actions = qTable[state];
@@ -94,7 +92,7 @@ export default function CompactHeatmapCanvas({
                 ctx.fillRect(x, y, half, half);
             };
 
-            // Position in spiral grid
+            // Position in grid
             const row = Math.floor(idx / gridDims.cols);
             const col = idx % gridDims.cols;
             const x = col * cellSize;

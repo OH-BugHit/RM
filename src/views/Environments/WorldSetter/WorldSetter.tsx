@@ -1,9 +1,10 @@
+/*
+*** OLD WORLD SETTER. world is removed from selectedEnvironment.
 import { FormLabel, Slider } from '@mui/material';
 import { useAtom } from 'jotai';
 import { ActiveEnvironmentAtom } from '../../../atoms/state';
 
 export default function WorldSetter() {
-    //const { t } = useTranslation();
     const [selectedEnvironment, setSelectedEnvironment] = useAtom(ActiveEnvironmentAtom);
 
     return (
@@ -66,3 +67,4 @@ export default function WorldSetter() {
         </div>
     );
 }
+*/

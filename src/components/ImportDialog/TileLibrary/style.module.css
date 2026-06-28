@@ -1,0 +1,132 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+    min-height: 0;
+}
+
+.categoryBar {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 8px 0 12px;
+    background: white;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.categoryButton {
+    appearance: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: white;
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    transition:
+        background 120ms ease,
+        border-color 120ms ease,
+        transform 120ms ease;
+}
+
+.categoryButton:hover {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+.categoryButton:active {
+    transform: translateY(1px);
+}
+
+.libraryScrollArea {
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 6px;
+    scroll-behavior: smooth;
+}
+
+.libraryScrollArea::-webkit-scrollbar {
+    width: 10px;
+}
+
+.libraryScrollArea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.libraryScrollArea::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.16);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+.libraryScrollArea::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.24);
+    background-clip: padding-box;
+}
+
+.section {
+    padding: 8px 0 16px;
+}
+
+.section+.section {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.sectionTitle {
+    margin: 0 0 12px;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+    gap: 10px;
+}
+
+.tileButton {
+    appearance: none;
+    border: 1px solid transparent;
+    background: transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    padding: 8px;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        background 120ms ease,
+        border-color 120ms ease,
+        transform 120ms ease,
+        box-shadow 120ms ease;
+}
+
+.tileButton:hover {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+.tileButton:active {
+    transform: translateY(1px);
+}
+
+.selected {
+    border-color: rgb(174, 37, 174);
+    background: rgba(174, 37, 174, 0.08);
+    box-shadow: inset 0 0 0 1px rgba(174, 37, 174, 0.18);
+}
+
+.tileImage {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    user-select: none;
+    pointer-events: none;
+}

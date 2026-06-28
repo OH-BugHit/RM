@@ -1,7 +1,8 @@
 import { useAtom, useAtomValue } from 'jotai';
 import style from './style.module.css';
 import { Checkbox, FormControlLabel, TextField } from '@mui/material';
-import { TempSettingsAtom, ActiveEnvironmentAtom } from '../../atoms/state';
+import { ActiveEnvironmentAtom } from '../../atoms/state';
+import { TempSettingsAtom } from '../../atoms/gameState';
 /*
 const SPOOKED_BURGLAR_REWARD = 10;
 const BROKE_POT_REWARD = -20;
@@ -128,12 +129,6 @@ export default function EnvironmentControl() {
                 </main>
             );
         }
-
-        case 'treasureHunter': {
-            env = tempSettings.treasureHunter.env;
-            break;
-        }
-
         default: {
             env = tempSettings.generic.env;
             break;

@@ -10,7 +10,6 @@ import Phase from './Phase';
 import { ActiveAgentAtom, ActiveEnvironmentAtom } from '../../atoms/state';
 import { useSetAtom } from 'jotai';
 import { EnvironmentTypes } from '../../types';
-import { defaultImages, defaultWorld } from '../../utils/defaults';
 import { getAgentImage } from '../../components/GameComponents/agentProps';
 
 export default function Frontpage() {
@@ -23,8 +22,6 @@ export default function Frontpage() {
                 setEnvironment({
                     name: 'Home',
                     type: 'potsAndBurglar',
-                    world: defaultWorld,
-                    envProps: defaultImages.potsAndBurglar,
                 });
                 setAgent({
                     img: getAgentImage({ type: 'robodog' }),
@@ -34,18 +31,16 @@ export default function Frontpage() {
                 });
                 break;
             }
-            case 'treasureHunter': {
+            case 'created': {
                 setEnvironment({
-                    name: 'Treasure dungeon',
-                    type: 'treasureHunter',
-                    world: defaultWorld,
-                    envProps: defaultImages.treasureHunter,
+                    name: '',
+                    type: 'created',
                 });
                 setAgent({
-                    img: getAgentImage({ type: 'adventurer' }),
-                    name: 'RoboAdventurer',
-                    type: 'adventurer',
-                    observationShape: 'large',
+                    img: undefined,
+                    name: '',
+                    type: 'unset',
+                    observationShape: 'unset',
                 });
                 break;
             }
@@ -92,21 +87,16 @@ export default function Frontpage() {
                             url="/start?view=tutorial"
                         />
                         <Phase
-                            id="story"
+                            id="yourWorld"
                             image="images/environments/potsAndBurglar.png"
-                            url="/story?view=story&sub=agent"
+                            url="/play"
+                            onClick={() => setPremade('created')}
                         />
                         <Phase
                             id="potsAndBurglar"
                             image="images/environments/potsAndBurglar.png"
                             url="/play"
                             onClick={() => setPremade('potsAndBurglar')}
-                        />
-                        <Phase
-                            id="treasureHunter"
-                            image="images/environments/potsAndBurglar.png"
-                            url="/play"
-                            onClick={() => setPremade('treasureHunter')}
                         />
                     </div>
                 </div>

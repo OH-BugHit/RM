@@ -63,7 +63,7 @@ export default function createRoom({ roomNode, roomSizeX, roomSizeY }: RoomProps
     putKeys(roomSizeX, roomSizeY, room, roomNode.numberOfKeys);
     putItems(roomSizeX, roomSizeY, room, CellType.Treasure, 2);
     putItems(roomSizeX, roomSizeY, room, CellType.TreasureBig, 2);
-    putItems(roomSizeX, roomSizeY, room, CellType.Trap, 2);
+    putItems(roomSizeX, roomSizeY, room, CellType.Trigger, 2);
 
     return room; // Placeholder
 }

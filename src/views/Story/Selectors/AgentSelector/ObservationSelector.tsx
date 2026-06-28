@@ -1,17 +1,32 @@
 import style from '../style.module.css';
 import SelectorItem from '../SelectorItem';
-import { Dispatch, SetStateAction } from 'react';
-import { Agent } from '../../../../types';
 import DrawObservation from '../../../Observation/DrawObservation';
-import { useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { ActiveAgentAtom } from '../../../../atoms/state';
+import { StoryProgressAtom } from '../../../../atoms/uiState';
+import { ObservationShape } from '../../../../types';
 
-interface AgentProps {
-    selectedAgent: Agent;
-    setSelectedAgent: Dispatch<SetStateAction<Agent>>;
-}
-export default function ObservationSelector({ selectedAgent, setSelectedAgent }: AgentProps) {
-    const setActiveAgent = useSetAtom(ActiveAgentAtom);
+export default function ObservationSelector() {
+    const [activeAgent, setActiveAgent] = useAtom(ActiveAgentAtom);
+    const setProgress = useSetAtom(StoryProgressAtom);
+
+    const select = (shape: ObservationShape) => {
+        setActiveAgent((old) => {
+            return {
+                ...old,
+                observationShape: shape,
+            };
+        });
+        setProgress((old) => {
+            return {
+                ...old,
+                agent: {
+                    ...old.agent,
+                    obsShape: true,
+                },
+            };
+        });
+    };
 
     return (
         <div className={style.selectorContainer}>
@@ -26,17 +41,9 @@ export default function ObservationSelector({ selectedAgent, setSelectedAgent }:
                 <SelectorItem
                     title="Small"
                     onClick={() => {
-                        setSelectedAgent((old) => {
-                            return {
-                                ...old,
-                                observationShape: 'small',
-                            };
-                        });
-                        setActiveAgent((old) => {
-                            return { ...old, observationShape: 'small' };
-                        });
+                        select('small');
                     }}
-                    selected={selectedAgent.observationShape === 'small'}
+                    selected={activeAgent.observationShape === 'small'}
                     children={
                         <DrawObservation
                             state="0101-1"
@@ -49,17 +56,9 @@ export default function ObservationSelector({ selectedAgent, setSelectedAgent }:
                 <SelectorItem
                     title="Large"
                     onClick={() => {
-                        setSelectedAgent((old) => {
-                            return {
-                                ...old,
-                                observationShape: 'large',
-                            };
-                        });
-                        setActiveAgent((old) => {
-                            return { ...old, observationShape: 'large' };
-                        });
+                        select('large');
                     }}
-                    selected={selectedAgent.observationShape === 'large'}
+                    selected={activeAgent.observationShape === 'large'}
                     children={
                         <DrawObservation
                             state="10020000201021100222-1"

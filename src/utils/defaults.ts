@@ -1,4 +1,16 @@
-import { Actions, EpisodicData, PropImages, TimeStepData, WorldGeneratorProps } from '../types';
+import {
+    Actions,
+    Cell,
+    CellType,
+    EnvSettings,
+    EpisodicData,
+    HUDvisibility,
+    PropImages,
+    StoryProgress,
+    TileDefinition,
+    TimeStepData,
+    WorldGeneratorProps,
+} from '../types';
 
 export const manhattanDirecitons = [
     { x: 0, y: -1 },
@@ -26,21 +38,6 @@ export const defaultImages = {
         specialAction1: '/images/assets/hau.png',
         burglar1: '/images/assets/burglar.png',
         burglar2: '/images/assets/burglar2.png',
-    },
-    treasureHunter: <PropImages>{
-        n1: '/images/assets/cleanWhiteStone.png',
-        p0: '/images/assets/cleanWhiteStone.png',
-        p1: '/images/assets/wall1.png',
-        p2: '/images/assets/trap2_260.png',
-        p3: 'images/assets/key1.png',
-        p4: 'images/assets/door1.png',
-        p5: 'images/assets/doorLocked1_260.png',
-        p6: '/images/assets/smallTreasure_260.png',
-        p7: '/images/assets/bigTreasure_260.png',
-        p8: '/images/assets/wall1.png',
-        specialAction1: '/images/assets/hau.png',
-        burglar1: 'none',
-        burglar2: 'none',
     },
     created: <PropImages>{
         n1: '/images/assets/cleanWhiteStone.png',
@@ -104,98 +101,6 @@ export const rewardConfigs = {
             max: 20,
             step: 1,
             defaultValue: -10,
-            type: 'number',
-        },
-    ],
-    treasureHunter: [
-        {
-            key: 'stepReward',
-            label: 'Step reward',
-            min: -5,
-            max: 5,
-            step: 1,
-            defaultValue: 1,
-            type: 'number',
-        },
-        {
-            key: 'reward1',
-            label: 'Small treasure',
-            min: -20,
-            max: 20,
-            step: 1,
-            defaultValue: 5,
-            type: 'number',
-        },
-        {
-            key: 'reward2',
-            label: 'Large treasure',
-            min: -20,
-            max: 20,
-            step: 1,
-            defaultValue: 20,
-            type: 'number',
-        },
-        {
-            key: 'reward3',
-            label: 'Door unlocked',
-            min: -20,
-            max: 20,
-            step: 1,
-            defaultValue: 5,
-            type: 'number',
-        },
-        {
-            key: 'abilitySuccessReward',
-            label: 'Door unlocked',
-            min: -20,
-            max: 20,
-            step: 1,
-            defaultValue: 10,
-            type: 'number',
-        },
-        {
-            key: 'abilityFailureReward',
-            label: 'Key used',
-            min: -20,
-            max: 20,
-            step: 1,
-            defaultValue: -5,
-            type: 'number',
-        },
-        {
-            key: 'trap1',
-            label: 'Trap penalty',
-            min: -20,
-            max: 0,
-            step: 1,
-            defaultValue: -10,
-            type: 'number',
-        },
-        {
-            key: 'win',
-            label: 'Win reward',
-            min: 0,
-            max: 50,
-            step: 1,
-            defaultValue: 20,
-            type: 'number',
-        },
-        {
-            key: 'lose',
-            label: 'Lose penalty',
-            min: -50,
-            max: 0,
-            step: 1,
-            defaultValue: -20,
-            type: 'number',
-        },
-        {
-            key: 'killed',
-            label: 'Killed penalty',
-            min: -100,
-            max: 0,
-            step: 1,
-            defaultValue: -50,
             type: 'number',
         },
     ],
@@ -326,7 +231,7 @@ export const rewardConfigs = {
     ],
 };
 
-export const defaultEnvSettings = {
+export const defaultEnvSettings: EnvSettings = {
     potsAndBurglar: {
         env: {
             gridSize: 10,
@@ -344,59 +249,32 @@ export const defaultEnvSettings = {
             rewardStep: 0,
         },
     },
-    treasureHunter: {
-        env: {
-            maxTurns: 20,
-            numberOfItemsToGet: 1,
-            propReloadDelay1: 20,
-            lethalProps: false,
-        },
-        reward: {
-            reward1: 5,
-            reward2: 6,
-            reward3: 7,
-            reward4: 8,
-            reward5: -5,
-            reward6: -6,
-            abilitySuccessReward: 10,
-            abilityFailureReward: -2,
-            trap1: -5,
-            trapLethal: false,
-            win: 10,
-            lose: -20,
-            killed: -10,
-            rewardStep: 0,
-        },
-    },
     generic: {
         env: {
             maxTurns: 20,
             numberOfItemsToGet: 1,
-            propReloadDelay1: 20,
-            lethalProps: false,
+            propReloadDelay1: 'unlimited',
+            collectItems: undefined,
         },
         reward: {
-            reward1: 5,
-            reward2: 6,
-            reward3: 7,
-            reward4: 8,
-            reward5: -5,
-            reward6: -6,
+            rewardStep: 0,
+            reward1: 1,
+            reward2: 5,
+            rPickObject: 5,
+            rTrap: -5,
+            rUseObject: 5,
             abilitySuccessReward: 10,
             abilityFailureReward: -2,
-            trap1: -5,
-            trapLethal: false,
-            win: 10,
-            lose: -20,
-            killed: -10,
-            rewardStep: 0,
+            endByTrigger: 20,
+            rLoseByTimeEnds: -20,
+            winByCount: 20,
         },
     },
 };
 
 export const defaultWorld: WorldGeneratorProps = {
     density: 0.7,
-    numberOfEdges: 3,
+    numberOfEdges: 0,
     roomSizeX: 10,
     roomSizeY: 10,
 };
@@ -411,6 +289,50 @@ export const defaultEpisodicData: EpisodicData = {
 export const defaultTimeStepData: TimeStepData = {
     lastReward: 0,
     lastAction: Actions.stay,
+};
+
+export const defaultVisibleTiles = {
+    agent: false,
+    observation: false,
+    spawn: false,
+    empty: false,
+    wall: false,
+    trigger: false,
+    key: false,
+    door: false,
+    lockedDoor: false,
+    treasure: false,
+    treasureBig: false,
+    outside: false,
+};
+
+export const defaultStoryProgress: StoryProgress = {
+    agent: {
+        name: false,
+        img: false,
+        obsShape: false,
+    },
+    environment: {
+        goal: false,
+        name: false,
+        solid: false,
+        spawn: false,
+        modifyOpened: false,
+        props: false,
+    },
+    rewards: false,
+};
+
+export const defaultHUDvis: HUDvisibility = {
+    charts: false,
+    agentVision: false,
+    qTable: false,
+    stats: false,
+    cableLeft: false,
+    cableRight: false,
+    agent: false,
+    envTitle: false,
+    controls: false,
 };
 
 export const defaultAgents = {
@@ -430,3 +352,62 @@ export const defaultAgents = {
         img: 'images/agents/ownAgent.png',
     },
 } as const;
+
+const S: Cell = {
+    type: CellType.Spawn,
+    reloadTime: 0,
+    timer: 0,
+    image: 'images/assets/cleanWhiteStone.png',
+};
+
+const W: Cell = {
+    type: CellType.Solid,
+    reloadTime: 0,
+    timer: 0,
+    image: 'images/assets/wall1.png',
+};
+
+export const defaultWorldGrid: Cell[][] = [
+    [W, W, W, W, W, W, W, W, W, W, W, W],
+    [W, S, S, S, S, S, S, S, S, S, S, W],
+    [W, S, S, S, S, S, S, S, S, S, S, W],
+    [W, S, S, S, S, S, S, S, S, S, S, W],
+    [W, S, S, S, S, S, S, S, S, S, S, W],
+    [W, S, S, S, S, S, S, S, S, S, S, W],
+    [W, S, S, S, S, S, S, S, S, S, S, W],
+    [W, S, S, S, S, S, S, S, S, S, S, W],
+    [W, S, S, S, S, S, S, S, S, S, S, W],
+    [W, S, S, S, S, S, S, S, S, S, S, W],
+    [W, S, S, S, S, S, S, S, S, S, S, W],
+    [W, W, W, W, W, W, W, W, W, W, W, W],
+];
+
+export const initialTiles: TileDefinition[] = [
+    {
+        id: '0',
+        type: CellType.Solid,
+        name: 'Wall',
+        image: 'none',
+        isCoreTile: true,
+        reloadTime: -1,
+        timer: 0,
+    },
+    {
+        id: '1',
+        type: CellType.Spawn,
+        name: 'Spawn area',
+        image: 'none',
+        isCoreTile: true,
+        reloadTime: -1,
+        timer: 0,
+    },
+    {
+        id: '2',
+        type: CellType.Trigger,
+        name: 'Goal',
+        image: 'none',
+        isCoreTile: true,
+        reloadTime: -1,
+        timer: 0,
+    },
+];

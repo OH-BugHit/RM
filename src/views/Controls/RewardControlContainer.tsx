@@ -2,21 +2,22 @@ import { useAtom, useAtomValue } from 'jotai';
 import style from './style.module.css';
 import RewardControl from './RewardControl';
 
-import { TempSettingsAtom, ActiveEnvironmentAtom } from '../../atoms/state';
+import { ActiveEnvironmentAtom } from '../../atoms/state';
+import { TempSettingsAtom } from '../../atoms/gameState';
 import { rewardConfigs } from '../../utils/defaults';
 import BooleanControl from './BooleanControl';
 
 export default function RewardControlContainer() {
     const [tempSettings, setTempSettings] = useAtom(TempSettingsAtom);
-    const activeGame = useAtomValue(ActiveEnvironmentAtom);
+    const activeEnv = useAtomValue(ActiveEnvironmentAtom);
 
-    if (!tempSettings || !activeGame?.type) return null;
+    if (!tempSettings || !activeEnv?.type) return null;
 
     const isGameType = (type: string): type is keyof typeof rewardConfigs => type in rewardConfigs;
 
-    if (!isGameType(activeGame.type)) return null;
+    if (!isGameType(activeEnv.type)) return null;
 
-    const type = activeGame.type;
+    const type = activeEnv.type;
 
     const config = rewardConfigs[type];
     const rewardState = tempSettings[type];
@@ -58,7 +59,7 @@ export default function RewardControlContainer() {
                     return (
                         <RewardControl
                             key={String(field.key)}
-                            label={field.label}
+                            //label={field.label}
                             value={Number(value)}
                             min={field.min ?? -20}
                             max={field.max ?? 20}

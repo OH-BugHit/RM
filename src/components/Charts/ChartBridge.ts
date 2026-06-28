@@ -4,6 +4,7 @@ import { useSetAtom } from 'jotai';
 import { ChartAtom } from '../../atoms/gameState';
 import { subscribe } from './rewardStreamEngine';
 
+// Chart bridge component
 export function Bridge() {
     const setChart = useSetAtom(ChartAtom);
 

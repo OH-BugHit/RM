@@ -1,5 +1,52 @@
 @value primary, secondary textDark from "@genai-fi/base/css/colours.module.css";
 
+.rewardTuneRow {
+    width: 100%;
+    height: 100%;
+    justify-items: center;
+    align-items: center;
+    border-radius: 1rem;
+    padding: 0.5rem 0 0.5rem 0;
+    border: 2px solid rgb(3, 78, 152);
+    max-width: 600px;
+}
+
+.rowContainer {
+    width: 80%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem
+}
+
+.rewardRow {
+    display: flex;
+    width: 80%;
+    flex-direction: row;
+    padding: 1rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.reward {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem
+}
+
+.row {
+    display: flex;
+    width: 80%;
+    flex-direction: row;
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 2px solid rgb(3, 78, 152);
+    margin: 1.5rem 0 1.5rem 0;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .selectorItemContainer {
     display: flex;
@@ -9,11 +56,12 @@
 
 .selectorContainer {
     display: flex;
+    position: relative;
     flex-direction: column;
     align-items: center;
     background: rgb(255, 255, 255);
-    padding: 2rem 4em 2em 4rem;
-    width: 100%;
+    height: 100%;
+    overflow: auto;
     justify-content: center;
     align-items: center;
 }

@@ -1,14 +1,17 @@
 import style from './style.module.css';
 import Tile from '../../components/EnvironmentRender/Tile';
-import { AgentType, CellType, Position } from '../../types';
+import { Cell } from '../../types';
 import { FloatItem } from '../../hooks/useRewardFloats';
 import RewardFloats from '../../components/RewardFloats.tsx/RewardFloats';
+import { useAtomValue } from 'jotai';
+import { WorldGridRenderAtom } from '../../atoms/gameState';
+import { useEffect } from 'react';
+import { GenericRLEnv } from '../Environments/Generic/environment';
 
 interface worldComponentProps {
-    worldGrid: CellType[][];
+    worldGrid: React.RefObject<Cell[][]>;
     tileSize?: number;
-    agentType: AgentType;
-    agentLocation: Position;
+    envRef: React.RefObject<GenericRLEnv | undefined>;
     floatItems: FloatItem[];
     deactivate: (id: number) => void;
 }
@@ -16,13 +19,21 @@ interface worldComponentProps {
 export default function WorldComponent({
     worldGrid,
     tileSize = 40,
-    agentType,
     floatItems,
     deactivate,
-    agentLocation,
+    envRef,
 }: worldComponentProps) {
-    const height = worldGrid.length;
-    const width = worldGrid[0].length;
+    const worldGridA = useAtomValue(WorldGridRenderAtom);
+
+    // world grid fer updater
+    useEffect(() => {
+        if (worldGridA !== undefined) worldGrid.current = worldGridA;
+    }, [worldGridA, worldGrid, envRef]);
+    const env = envRef.current;
+
+    if (!worldGridA || !env) return null;
+    const height = worldGridA.length;
+    const width = worldGridA[0].length;
 
     return (
         <div
@@ -33,15 +44,14 @@ export default function WorldComponent({
                 gridTemplateRows: `repeat(${height}, ${tileSize}px)`,
             }}
         >
-            {worldGrid.map((row, y) =>
+            {worldGridA.map((row, y) =>
                 row.map((cell, x) => (
                     <div key={`${x}-${y}`}>
                         <Tile
-                            cellType={cell}
+                            cell={cell}
                             tileSize={tileSize}
-                            agentLocation={agentLocation}
+                            agentLocation={env.position}
                             cellLocation={{ x: x, y: y }}
-                            agentType={agentType}
                         />
                     </div>
                 ))

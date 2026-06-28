@@ -5,18 +5,13 @@ import { Actions, GameEnvironmentInfo, GenericObservation } from '../../../types
 import style from './style.module.css';
 import { useSound } from '../../../hooks/useSound';
 import { useStore, useAtomValue, useSetAtom } from 'jotai';
+import { ActiveAgentAtom, AgentSettingsAtom, GameControlAtom, ResetUiPulseAtom } from '../../../atoms/state';
+import { EnvSettingsAtom } from '../../../atoms/gameState';
 import {
-    ActiveAgentAtom,
-    AgentSettingsAtom,
-    EnvSettingsAtom,
-    GameControlAtom,
-    ResetUiPulseAtom,
-} from '../../../atoms/state';
-import {
-    getAdventurerOffset,
-    getAgentObservationShape,
+    getLargeOffset,
+    getDefaultObservation,
     getAgentSounds,
-    robodogOffset,
+    smallOffset,
 } from '../../../components/GameComponents/agentProps';
 import { motion } from 'framer-motion';
 import { useRewardFloats } from '../../../hooks/useRewardFloats';
@@ -79,7 +74,7 @@ function PotsAndBurglarGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, in
     const lastActionRef = useRef(Actions.stay);
     const lastEpisodeRewardRef = useRef(0);
     const defaultObs = useMemo(() => {
-        return getAgentObservationShape(agent.observationShape);
+        return getDefaultObservation(agent.observationShape);
     }, [agent.observationShape]);
 
     const obsAtom = agent.observationShape === 'large' ? LargeObsAtom : SmallObsAtom;
@@ -106,7 +101,7 @@ function PotsAndBurglarGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, in
                 barkFail: envSettings?.potsAndBurglar?.reward.barkFailReward,
                 burglarWon: envSettings?.potsAndBurglar?.reward.burglarWonReward,
             },
-            agentObsOffset: agent.type === 'robodog' ? robodogOffset : getAdventurerOffset(),
+            agentObsOffset: agent.type === 'robodog' ? smallOffset : getLargeOffset(),
         });
 
         obsRef.current = defaultObs;

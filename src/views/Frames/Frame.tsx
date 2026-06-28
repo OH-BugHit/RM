@@ -29,9 +29,19 @@ interface FrameProps {
     maxWidth?: number | string;
     maxHeight?: number | string;
     backgroundColour?: string;
+    visible?: boolean;
 }
 
-export function Frame({ variant, backgroundColour, minWidth, minHeight, maxHeight, maxWidth, children }: FrameProps) {
+export function Frame({
+    variant,
+    backgroundColour,
+    minWidth,
+    minHeight,
+    maxHeight,
+    maxWidth,
+    visible = true,
+    children,
+}: FrameProps) {
     const config = frameConfig[variant];
 
     return (
@@ -39,6 +49,7 @@ export function Frame({ variant, backgroundColour, minWidth, minHeight, maxHeigh
             className={style.frame}
             style={
                 {
+                    display: visible ? 'block' : 'none',
                     minWidth: minWidth,
                     minHeight: minHeight,
                     maxHeight: maxHeight,

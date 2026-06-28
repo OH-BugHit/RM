@@ -1,6 +1,7 @@
 .worldContainer {
     position: relative;
     overflow: auto;
+    padding: 1rem;
 }
 
 .roomWrapper {

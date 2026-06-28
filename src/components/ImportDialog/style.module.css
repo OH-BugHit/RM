@@ -1,69 +1,97 @@
-@value bgSubdued1, borderBrightBlue, textDark from "@genai-fi/base/css/colours.module.css";
+.title {
+    padding-bottom: 8px;
+}
 
 .selectModelMessage {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    font-size: 1.6rem;
-    color: textDark;
-    padding: 2rem;
-    display: flex;
-    gap: 3rem;
-    overflow: hidden;
-}
-
-.selectModelMessage em {
-    font-weight: bold;
-    font-style: normal;
-    font-size: 1.8rem;
-}
-
-.selectModelMessage a {
-    color: inherit;
-    text-decoration: none;
-    font-weight: bold;
-    text-align: center;
-}
-
-.column {
-    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: end;
+    gap: 16px;
+    margin-bottom: 16px;
 }
 
 .columnItem {
-    text-align: center;
-    width: 100%;
+    font-size: 14px;
+    line-height: 1.5;
 }
 
-.title {
-    background: bgSubdued1;
-    border-bottom: 2px solid borderBrightBlue;
+.previewSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.02);
+    padding: 12px;
 }
 
-.textField {
-    padding: 4px;
-    margin: 1rem;
-    max-width: 100%;
+.previewSection img {
+    width: 96px;
+    height: 96px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    border-radius: 8px;
+}
+
+.emptyPreview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 96px;
+    height: 96px;
+    border-radius: 8px;
+    color: rgba(0, 0, 0, 0.55);
+    font-size: 13px;
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.tabBar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.tab,
+.activeTab {
+    appearance: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: white;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    transition:
+        background 120ms ease,
+        border-color 120ms ease,
+        color 120ms ease;
+}
+
+.tab:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.activeTab {
+    border-color: rgb(174, 37, 174);
+    background: rgba(174, 37, 174, 0.08);
+    color: rgb(174, 37, 174);
+    font-weight: 600;
+}
+
+.uploadSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    border: 1px dashed rgba(0, 0, 0, 0.18);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    background: rgba(0, 0, 0, 0.015);
 }
 
 .buttonGroup {
-    font-size: 1.2rem;
     display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-    color: textDark;
-    text-align: left;
-    align-items: center;
-    display: flex;
-    width: 100%;
-    gap: 1rem;
-    justify-content: end;
-}
-
-@media (max-width: 700px) {
-    .selectModelMessage {
-        flex-wrap: wrap;
-    }
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
 }

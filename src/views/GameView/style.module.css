@@ -24,9 +24,7 @@
 }
 
 .tuneContainer {
-    padding: 24px;
     height: 100vh;
-
     position: relative;
     flex-grow: 1;
 }

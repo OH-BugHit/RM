@@ -1,7 +1,7 @@
 /**
  * Preprocesses input File to smaller png
  * @param file Input file
- * @param maxSize Maximum longer side
+ * @param maxSize Maximum longer side, default = 124
  * @returns png image scaled to max
  */
 export const preprocessImageWScale = (file: File, maxSize = 124): Promise<string> =>
@@ -70,3 +70,21 @@ export const preprocessImage = (file: File, maxSize = 64): Promise<string> =>
         reader.onerror = reject;
         reader.readAsDataURL(file);
     });
+
+export function emojiToDataUrl(emoji: string, size = 96): string {
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return '';
+
+    ctx.clearRect(0, 0, size, size);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = `${Math.floor(size * 0.72)}px sans-serif`;
+
+    ctx.fillText(emoji, size / 2, size / 2 + size * 0.03);
+
+    return canvas.toDataURL('image/png');
+}

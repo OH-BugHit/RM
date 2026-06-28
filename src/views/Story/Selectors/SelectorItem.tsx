@@ -8,8 +8,17 @@ interface SelectorItemProps {
     selected?: boolean;
     children?: React.ReactNode;
     columnChilds?: boolean;
+    disabled?: boolean;
 }
-export default function SelectorItem({ title, img, onClick, selected, children, columnChilds }: SelectorItemProps) {
+export default function SelectorItem({
+    title,
+    img,
+    onClick,
+    selected,
+    children,
+    columnChilds,
+    disabled = false,
+}: SelectorItemProps) {
     return (
         <li className={style.itemContent}>
             <h2>{title}</h2>
@@ -19,6 +28,7 @@ export default function SelectorItem({ title, img, onClick, selected, children, 
                     variant="outlined"
                     className={selected ? style.selectedButton : style.notSelectedButton}
                     style={{ flexDirection: `${columnChilds ? 'column' : 'row'}` }}
+                    disabled={disabled}
                 >
                     <img
                         src={img}

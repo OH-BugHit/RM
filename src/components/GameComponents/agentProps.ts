@@ -35,7 +35,7 @@ export const getAgentSounds = (type: AgentType): string[] => {
     }
 };
 
-export const getAgentObservationShape = (type: ObservationShape): GenericObservation => {
+export const getDefaultObservation = (type: ObservationShape): GenericObservation => {
     switch (type) {
         case 'small': {
             return { neighbors: [0, 0, 0, 0], POIdirection: 4 };
@@ -49,22 +49,22 @@ export const getAgentObservationShape = (type: ObservationShape): GenericObserva
     }
 };
 
-export const robodogOffset: Offset[] = [
+export const smallOffset: Offset[] = [
     { dx: 0, dy: -1 }, // top
     { dx: 0, dy: 1 }, // bottom
     { dx: -1, dy: 0 }, // left
     { dx: 1, dy: 0 }, // right
 ];
 
-export const getAdventurerOffset = (): Offset[] => {
-    const adventurerOffset: Offset[] = [];
+export const getLargeOffset = (): Offset[] => {
+    const largeOffset: Offset[] = [];
 
     for (let dy = -3; dy <= 3; dy++) {
         for (let dx = -3; dx <= 3; dx++) {
             if (Math.abs(dx) + Math.abs(dy) <= 3 && !(dx === 0 && dy === 0) && Math.abs(dx) < 3 && Math.abs(dy) < 3) {
-                adventurerOffset.push({ dx, dy });
+                largeOffset.push({ dx, dy });
             }
         }
     }
-    return adventurerOffset;
+    return largeOffset;
 };
