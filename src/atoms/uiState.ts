@@ -1,6 +1,12 @@
 import { atom } from 'jotai';
-import { HUDvisibility, StatsContent, StoryProgress, TileDefinition, View, VisibleTiles } from '../types';
-import { defaultHUDvis, defaultStoryProgress, defaultVisibleTiles, initialTiles } from '../utils/defaults';
+import { HUDvisibility, StatsContent, StoryProgress, TileDefinition, UiHelp, View, VisibleTiles } from '../types';
+import {
+    defaultHUDvis,
+    defaultStoryProgress,
+    defaultUIHelp,
+    defaultVisibleTiles,
+    initialTiles,
+} from '../utils/defaults';
 
 export const UiShowSidePanelAtom = atom<boolean>(false);
 export const LodStateAtom = atom<1 | 2>(1);
@@ -14,4 +20,5 @@ export const VisibleTilesAtom = atom<VisibleTiles>(defaultVisibleTiles);
 export const StatsContentAtom = atom<StatsContent>({ mode: 'stats', phase: 0 });
 export const TilePropsAtom = atom<TileDefinition[]>(initialTiles);
 
+export const UiHelpAtom = atom<UiHelp>(defaultUIHelp);
 export const PropToolAtom = atom<TileDefinition | undefined>(undefined); // Selected prop tool

@@ -1,4 +1,4 @@
-import style from '../style.module.css';
+import style from './style.module.css';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import HeartBrokenIcon from '@mui/icons-material/HeartBroken';
 import RewardControl from '../../../Controls/RewardControl';

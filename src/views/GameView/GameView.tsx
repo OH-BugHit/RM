@@ -4,16 +4,13 @@ import style from './style.module.css';
 import { RLGridEnv } from '../Environments/PotsAndBurglar/environment';
 import { QLearningAgent } from '../../components/agents/rlAgentQ';
 import { Actions, GameEnvironmentInfo, GenericObservation } from '../../types';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { ActiveEnvironmentAtom } from '../../atoms/state';
 import { AnimatePresence } from 'framer-motion';
-import { SidePanel } from '@genai-fi/base';
-import { SidePanelOpener } from '../../components/Buttons/SidePanelOpener';
-import { UiShowSidePanelAtom } from '../../atoms/uiState';
 import { Bridge } from '../../components/Charts/ChartBridge';
 import StoryGame from '../Environments/StoryGame/StoryGame';
-import CreateMenu from './CreateMenu';
 import HUD from '../Xai/HUD';
+import SidePanelWrapper from '../SidePanel/SidePanelWrapper';
 
 // React component
 function GameView() {
@@ -25,7 +22,6 @@ function GameView() {
     const qvalueRef = useRef<number[]>([]);
     const infoRef = useRef<GameEnvironmentInfo>(undefined);
 
-    const [sidePanelOpen, setSidePanelOpen] = useAtom(UiShowSidePanelAtom);
     const config = { image: '/images/background/background.png' }; //TODO: Change to get background image from somewher
 
     //TODO: Set settings when game is selected now they are here:
@@ -89,20 +85,7 @@ function GameView() {
             >
                 <Bridge />
                 <div className={style.containerBox}>{gameContent()}</div>
-
-                <div style={{ zIndex: 1000 }}>
-                    <SidePanelOpener />
-                    <SidePanel
-                        open={sidePanelOpen}
-                        onOpen={() => setSidePanelOpen(true)}
-                        position={'right'}
-                        onClose={() => {
-                            setSidePanelOpen(false);
-                        }}
-                    >
-                        <CreateMenu />
-                    </SidePanel>
-                </div>
+                <SidePanelWrapper />
             </div>
         </>
     );

@@ -4,18 +4,28 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AgentIndex from '../Story/Selectors/AgentSelector/AgentIndex';
 import { useAtomValue } from 'jotai';
-import { StoryProgressAtom } from '../../atoms/uiState';
+import { StoryProgressAtom, UiHelpAtom } from '../../atoms/uiState';
 import EnvironmentOptions from '../Story/Selectors/EnvironmentSelector/EnvironmentOptions';
 import RewardsSelector from '../Story/Selectors/RewardsSelector/RewardsSelector';
 import GameSettings from '../Story/Selectors/GameSettings/GameSettings';
+import Arrow from '../../components/HelperArrow/Arrow';
 
 function CreateMenu() {
     const { t } = useTranslation();
     const [tabNumber, setTabNumber] = useState(0);
     const storyProgress = useAtomValue(StoryProgressAtom);
+    const uiHelp = useAtomValue(UiHelpAtom);
 
     return (
         <div className={style.tuneContainer}>
+            {uiHelp.creativeClose && (
+                <Arrow
+                    right={28}
+                    top={25}
+                    radius={70}
+                    angle={170}
+                />
+            )}
             <div className={style.tuneContent}>
                 <h1>Creative menu</h1>
                 <Tabs
@@ -36,9 +46,12 @@ function CreateMenu() {
 
                     <Tab
                         label={t('Reward')}
-                        disabled={!storyProgress.environment.name}
+                        disabled={!storyProgress.environment.goalSet}
                     />
-                    <Tab label={t('gameSettings')} />
+                    <Tab
+                        label={t('gameSettings')}
+                        disabled={!storyProgress.rewards}
+                    />
                 </Tabs>
                 {tabNumber === 0 && <AgentIndex />}
                 {tabNumber === 1 && <EnvironmentOptions />}

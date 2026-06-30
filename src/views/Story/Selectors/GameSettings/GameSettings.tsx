@@ -1,13 +1,17 @@
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import style from '../style.module.css';
 import { useTranslation } from 'react-i18next';
-import { StoryProgressAtom, TilePropsAtom } from '../../../../atoms/uiState';
-import { CellType, TileDefinition } from '../../../../types';
-import { useEffect } from 'react';
-import SettingsItem from './SettingsItem';
+import { StoryProgressAtom } from '../../../../atoms/uiState';
+import { TextErrors } from '../../../../types';
+import { useEffect, useState } from 'react';
+import { TextField } from '@mui/material';
+import { ActiveEnvironmentAtom } from '../../../../atoms/state';
 
 export default function GameSettings() {
+    const { t } = useTranslation();
     const setStoryProgress = useSetAtom(StoryProgressAtom);
+    const [errors, setErrors] = useState<TextErrors>({});
+    const [environment, setEnvironment] = useAtom(ActiveEnvironmentAtom);
 
     useEffect(() => {
         setStoryProgress((old) => {
@@ -18,35 +22,68 @@ export default function GameSettings() {
         });
     }, [setStoryProgress]);
 
-    const { t } = useTranslation();
-    const tiles = useAtomValue(TilePropsAtom);
-    const groups = Object.values(
-        tiles.reduce(
-            (acc, tile) => {
-                if (tile.type === CellType.Solid || tile.type === CellType.Empty || tile.type === CellType.Spawn) {
-                    return acc;
-                }
+    useEffect(() => {
+        setStoryProgress((old) => {
+            return {
+                ...old,
+                environment: { ...old.environment, name: !errors.username && environment.name.length > 0 },
+            };
+        });
+    }, [errors, environment, setStoryProgress]);
 
-                (acc[tile.type] ??= []).push(tile);
-                return acc;
-            },
-            {} as Record<CellType, TileDefinition[]>
-        )
-    );
+    const handleSubmit = (e: string) => {
+        const trimmed = e.trim();
+        const errs: TextErrors = {};
+
+        if (!trimmed) {
+            errs.username = 'missing';
+        } else if (trimmed.length < 3) {
+            errs.username = 'short';
+        } else if (trimmed.length > 16) {
+            errs.username = 'long';
+        } else {
+            errs.username = undefined;
+        }
+
+        if (!e) {
+            errs.type = 'missing';
+        }
+
+        if (Object.keys(errs).length > 0) {
+            setErrors(errs);
+            return;
+        }
+    };
 
     return (
         <div className={style.selectorContainer}>
             <h1>{t('story.settings.title')}</h1>
-            <p>Lastly, you can tune some settings for your game.</p>
-            <p>You can select now how long the treasures that are picked are.. POIS? </p>
-            <h3>Your states OTETAAN POIS?:</h3>
-            <div className={style.rowContainer}>
-                {groups.map((tiles) => (
-                    <SettingsItem
-                        key={tiles[0].type}
-                        tiles={tiles}
-                    />
-                ))}
+            <p>TODO: Here just slider for episode length</p>
+            <p>Last thing to do:.</p>
+
+            <div className={style.selectorContainer}>
+                <h3>Give your environment an epic name: </h3>
+                <TextField
+                    label={t('story.agent.nameInputLabel')}
+                    value={environment.name}
+                    sx={{ color: 'white' }}
+                    onChange={(e) => {
+                        setEnvironment((old) => {
+                            return {
+                                ...old,
+                                name: e.target.value,
+                            };
+                        });
+
+                        handleSubmit(e.target.value);
+                    }}
+                    required
+                    error={!!errors.username}
+                    helperText={
+                        errors.username ? t(`enterUsername.messages.usernameError.${errors.username}`) : undefined
+                    }
+                    margin="normal"
+                />
             </div>
         </div>
     );

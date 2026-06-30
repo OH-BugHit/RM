@@ -62,7 +62,7 @@
             "-1": "Spawn",
             "0": "Floor",
             "1": "Solid",
-            "2": "Trigger",
+            "2": "Goal",
             "3": "Key",
             "4": "Door",
             "5": "Locked Door",
@@ -70,7 +70,8 @@
             "7": "Big Treasure",
             "8": "Outside",
             "9": "Trap",
-            "timeStep": "Reward for each step"
+            "timeStep": "Reward for each step",
+            "timeUp": "Reward if time ends"
         },
         "close": "Close",
         "next": "Next",
@@ -109,6 +110,7 @@
         "lastAction": "Last action",
         "title": "Stats",
         "totLosses": "Losses",
+        "totTriggers": "Goal reached",
         "totPots": "Pots destroyed",
         "totLastEpisode": "Last episode reward",
         "totWins": "Wins"
@@ -138,16 +140,22 @@
         "rewards": {
             "title": "Rewards"
         },
+        "settings": {
+            "title": "Game settings"
+        },
         "text": {
-            "1": "Start your story by opening creative menu and selecting agent",
+            "0": "Hi! And welcome to create your own Reinforcement Learning game!",
+            "1": "Start creating your game by opening creative menu and select your agent.",
             "2": "Next you need to select observation shape",
             "3": "Last step for agent: Give your agent an epic name!",
             "4": "Okay! Now move to environment tab from the top of the creative menu, and start designing your world. First select surrounding walls for your world.",
-            "5": "Good, now select what normal floor where the agent can spawn looks like.",
-            "6": "Nice! Now you need to choose what would your agents' goal look. Think about what is your story here. Maybe treasure hunting agent trying to find chest full of gold, or agent searching for butterflies, avoiding spiders and bugs?",
-            "7": "Here you build your world. You can rezise the world by clicking those buttons around your world. To add stuff to your world, select tile tool from the list and just click where you want to place it. Also give name, this will be in separate text",
-            "8": "Great! You can always come back to modify your world and choises. Next proceed to rewards tab to set the rewards.",
-            "9": "Here you set the rewards, all defaults are fine but feel free to tune them and come back here after your agent has learned something to alter its' behaviour."
+            "5": "Good, now select what normal floor looks like. Normal floor is also agent's spawn area.",
+            "6": "Nice! Now you need to choose what would your agent's goal look. Think about what is your story here. Maybe treasure hunting agent trying to find chest full of gold, or agent searching for butterflies, avoiding spiders and bugs? Your world, your choises!",
+            "7": "You can make your world more interesting by creating few more props to put to your world if you want. When you are ready, you may proceed to buid your world!",
+            "8": "Here you build your world. You can rezise the world by clicking those buttons around your world. To add stuff to your world, select tile tool from the list and just click where you want to place it. To proceed from here, you need to add at least one Goal-tile",
+            "9": "Great! You can always come back to modify your world and choises. When you are ready with your world, proceed to rewards tab to set the rewards.",
+            "10": "Here you set the rewards, all defaults are fine but feel free to tune them and come back here after your agent has learned something to alter its' behaviour. You can proceed to game settings now.",
+            "11": "Grea! You are all set! Feel free to come back to this creative menu at any point you like. Proceed by closing creative menu from close button."
         }
     },
     "tutorial": {

@@ -1,4 +1,4 @@
-import style from '../style.module.css';
+import style from '../../style.module.css';
 import { Button } from '@genai-fi/base';
 import { useTranslation } from 'react-i18next';
 import { useSetAtom } from 'jotai';
@@ -20,7 +20,6 @@ export default function PropToolRow({ tile, selected }: PropRowProps) {
             }}
         >
             <b>Type: {t(`common.cell.${tile.type}`)}</b>
-            <b>Name: {tile.name}</b>
             <img
                 src={tile.image}
                 width={64}

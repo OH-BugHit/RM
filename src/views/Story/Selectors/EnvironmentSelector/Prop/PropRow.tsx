@@ -1,5 +1,5 @@
-import style from './style.module.css';
-import { IconButton, MenuItem, Select, TextField } from '@mui/material';
+import style from '../style.module.css';
+import { IconButton, MenuItem, Select } from '@mui/material';
 import { CELL_TYPE_OPTIONS, CellType, TileDefinition } from '../../../../../types';
 import { SetStateAction } from 'jotai';
 import { useTranslation } from 'react-i18next';
@@ -39,24 +39,16 @@ export default function PropRow({ tile, openImport, setTiles }: PropRowProps) {
                     ))}
                 </Select>
             )}
-
-            <b>
-                <TextField
-                    value={tile.name}
-                    onChange={(e) =>
-                        setTiles((old) => old.map((t) => (t.id === tile.id ? { ...t, name: e.target.value } : t)))
-                    }
-                    placeholder="name this prop"
-                />
-            </b>
-
+            <div style={{ flexGrow: 1, padding: 0 }} />
             {tile.image && tile.image !== 'none' && (
                 <img
                     src={tile.image}
                     width={64}
                     height={64}
+                    style={{ padding: 0, margin: 0 }}
                 />
             )}
+            <div style={{ flexGrow: 1, padding: 0 }} />
 
             <IconButton
                 onClick={() => openImport(tile)}

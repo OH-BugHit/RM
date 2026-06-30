@@ -1,0 +1,57 @@
+.container {
+    position: relative;
+    display: inline-block;
+}
+
+.container img {
+    display: block;
+}
+
+.gloss {
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+    overflow: hidden;
+
+    /* Käytetään samaa kuvaa maskina */
+    mask-image: url("/images/misc/arrow.png");
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+
+    -webkit-mask-image: url("/images/misc/arrow.png");
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+}
+
+.gloss::before {
+    content: "";
+
+    position: absolute;
+    top: -40%;
+    left: -40%;
+
+    width: 30%;
+    height: 180%;
+
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, .95),
+            transparent);
+
+    transform: rotate(20deg);
+
+    animation: shine 1.4s ease-in-out infinite;
+}
+
+@keyframes shine {
+    from {
+        left: -40%;
+    }
+
+    to {
+        left: 140%;
+    }
+}

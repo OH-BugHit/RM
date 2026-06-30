@@ -1,4 +1,4 @@
-import style from '../style.module.css';
+import style from './style.module.css';
 import SelectorItem from '../SelectorItem';
 import DrawObservation from '../../../Observation/DrawObservation';
 import { useAtom, useSetAtom } from 'jotai';

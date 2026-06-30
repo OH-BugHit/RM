@@ -1,5 +1,12 @@
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { HUDvisAtom, StatsContentAtom, StoryProgressAtom, StoryStepAtom, VisibleTilesAtom } from '../../atoms/uiState';
+import {
+    HUDvisAtom,
+    StatsContentAtom,
+    StoryProgressAtom,
+    StoryStepAtom,
+    UiHelpAtom,
+    VisibleTilesAtom,
+} from '../../atoms/uiState';
 import { useEffect } from 'react';
 
 export default function StoryProgress() {
@@ -8,22 +15,35 @@ export default function StoryProgress() {
     const setStatsContent = useSetAtom(StatsContentAtom);
     const progress = useAtomValue(StoryProgressAtom);
     const setVisibleTiles = useSetAtom(VisibleTilesAtom);
+    const setUIHelper = useSetAtom(UiHelpAtom);
 
     useEffect(() => {
+        if (step > 11) return; // creative stuff is under 11
+        if (progress.environment.name) {
+            setStep(11);
+            return;
+        }
+
         if (progress.rewards) {
+            setStep(10);
+            return;
+        }
+
+        if (progress.environment.goalSet) {
             setStep(9);
             return;
         }
 
-        if (progress.environment.name) {
+        if (progress.environment.modifyOpened) {
             setStep(8);
             return;
         }
 
-        if (progress.environment.props) {
+        if (progress.environment.goal) {
             setStep(7);
             return;
         }
+
         if (progress.environment.spawn) {
             setStep(6);
             return;
@@ -51,11 +71,32 @@ export default function StoryProgress() {
     }, [progress, setStep]);
 
     useEffect(() => {
-        setStatsContent({ mode: 'text', phase: step });
+        setStatsContent((old) => {
+            return { mode: old.mode, phase: step };
+        });
         switch (step) {
-            case 1: {
+            case 0: {
+                setStatsContent({ mode: 'textNext', phase: step });
                 setHud((old) => {
                     return { ...old, stats: true };
+                });
+                setUIHelper((old) => {
+                    return {
+                        ...old,
+                        statsArrow: true,
+                    };
+                });
+                break;
+            }
+            case 1: {
+                setStatsContent({ mode: 'text', phase: step });
+                setUIHelper((old) => {
+                    return {
+                        ...old,
+                        statsArrow: false,
+                        sideOpener: true,
+                        hideSideOpener: false,
+                    };
                 });
                 break;
             }
@@ -90,16 +131,26 @@ export default function StoryProgress() {
                 });
                 break;
             }
-            case 8: {
+            case 11: {
                 setHud((old) => {
                     return {
                         ...old,
                         envTitle: true,
                     };
                 });
+                setUIHelper((old) => {
+                    return {
+                        ...old,
+                        creativeClose: true,
+                    };
+                });
                 break;
             }
-            case 9: {
+            case 12: {
+                setStatsContent({ mode: 'textNext', phase: step });
+                break;
+            }
+            case 15: {
                 setHud({
                     charts: true,
                     agentVision: true,
@@ -111,12 +162,18 @@ export default function StoryProgress() {
                     controls: true,
                     agent: true,
                 });
+                setStatsContent((old) => {
+                    return {
+                        ...old,
+                        mode: 'stats',
+                    };
+                });
                 break;
             }
             default:
                 return;
         }
-    }, [step, setHud, setStatsContent, setVisibleTiles]);
+    }, [step, setHud, setStatsContent, setVisibleTiles, setUIHelper]);
 
     return null;
 }

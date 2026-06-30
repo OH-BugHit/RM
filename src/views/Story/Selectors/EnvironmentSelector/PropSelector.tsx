@@ -1,4 +1,4 @@
-import style from '../style.module.css';
+import style from './style.module.css';
 import Separator from '../../../../components/Separator/Separator';
 import ImportDialog from '../../../../components/ImportDialog/ImportDialog';
 import { useEffect, useState } from 'react';
@@ -40,7 +40,6 @@ export default function PropSelector({ goHome }: EnvModeProps) {
             {
                 id: crypto.randomUUID(),
                 type: CellType.Empty,
-                name: '',
                 image: '',
                 isCoreTile: false,
                 reloadTime: -1,
@@ -63,15 +62,20 @@ export default function PropSelector({ goHome }: EnvModeProps) {
                     if (activeTile.isCoreTile) {
                         switch (activeTile.type) {
                             case CellType.Trigger: {
-                                setStoryProgress((old) => {
-                                    return {
-                                        ...old,
-                                        environment: {
-                                            ...old.environment,
-                                            goal: true,
-                                        },
-                                    };
-                                });
+                                if (image) {
+                                    console.log('trigger set');
+                                    setStoryProgress((old) => {
+                                        return {
+                                            ...old,
+                                            environment: {
+                                                ...old.environment,
+                                                goal: true,
+                                                props: true,
+                                            },
+                                        };
+                                    });
+                                    console.log(storyProgress);
+                                }
                                 break;
                             }
                             case CellType.Solid: {
@@ -123,89 +127,91 @@ export default function PropSelector({ goHome }: EnvModeProps) {
                                 }
                             }
                         }
-
                         //TODO: For-loopissa laita pohjaan jotta ei muokka muita spawneja tai solideja!
                     }
-
-                    if (tiles.length - lockedTiles.length > 0)
-                        setStoryProgress((old) => {
-                            return { ...old, environment: { ...old.environment, props: true } };
-                        });
                 }}
             />
             <IconButton onClick={goHome}>home</IconButton>
-            <div className={style.textSection}>
-                <p>
-                    Environment is the playground of the agent where it acts, receives rewards and learns. Here you
-                    design the world for your agent!
-                </p>
-                <h3>Design your environment!</h3>
-
-                <p>
-                    Here you select what your world looks like. You can select from premade props and emojis or import
-                    your own images.
-                </p>
-                <p>
-                    The agent must be always contained inside of wall-elements in this game. First, select one solid
-                    prop to form that boundary.
-                </p>
-            </div>
-            <PropRow
-                tile={lockedTiles[0]}
-                openImport={openImport}
-                setTiles={setTiles}
-            />
-            {storyProgress.environment.solid && (
-                <>
-                    <p>Now select image for spawn area (start location)</p>
-                    <PropRow
-                        tile={lockedTiles[1]}
-                        openImport={openImport}
-                        setTiles={setTiles}
-                    />
-                </>
-            )}
-            {storyProgress.environment.spawn && (
-                <>
-                    <p>Select episode ending prop (something smarter here about goal or task of the agent)</p>
-                    <PropRow
-                        tile={lockedTiles[2]}
-                        openImport={openImport}
-                        setTiles={setTiles}
-                    />
-                </>
-            )}
-            <Separator />
-            {storyProgress.environment.spawn && (
-                <>
-                    <h3>Other props</h3>
+            <div className={style.toolWrapper}>
+                <div className={style.textSection}>
+                    <p>
+                        Environment is the playground of the agent where it acts, receives rewards and learns. Here you
+                        design the world for your agent!
+                    </p>
+                    <h3>Design your environment!</h3>
 
                     <p>
-                        There is not yet lot to do for your agent in the environment. You should add atleast one more
-                        prop to act as rewards (kirjoittele jotain et think and define task and so on...)
+                        Here you select what your world looks like. You can select from premade props and emojis or
+                        import your own images.
                     </p>
-                    {libraryTiles.map((tile) => (
+                    <p>
+                        The agent must be always contained inside of wall-elements in this game. First, select one solid
+                        prop to form that boundary.
+                    </p>
+                </div>
+                <PropRow
+                    tile={lockedTiles[0]}
+                    openImport={openImport}
+                    setTiles={setTiles}
+                />
+                {storyProgress.environment.solid && (
+                    <>
+                        <p>Now select image for spawn area (start location)</p>
                         <PropRow
-                            key={tile.id}
-                            tile={tile}
+                            tile={lockedTiles[1]}
                             openImport={openImport}
                             setTiles={setTiles}
                         />
-                    ))}
-                    <Button
-                        variant="outlined"
-                        onClick={() => addTile()}
-                        className={style.row}
-                    >
-                        Create new prop
-                    </Button>
-                    <p>
-                        Great! You can alter all selections throughtout the whole game so feel free to come back here
-                        later.
-                    </p>
-                    <Separator />
-                </>
-            )}
+                    </>
+                )}
+                {storyProgress.environment.spawn && (
+                    <>
+                        <p>Select episode ending prop (something smarter here about goal or task of the agent)</p>
+                        <PropRow
+                            tile={lockedTiles[2]}
+                            openImport={openImport}
+                            setTiles={setTiles}
+                        />
+                    </>
+                )}
+                <Separator />
+                {storyProgress.environment.spawn && (
+                    <>
+                        <h3>More props</h3>
+
+                        <p>
+                            Your environment has everything needed for full episode or reinforcement learning: Starting
+                            place and ending condition. Also you have those outer walls that are needed in this
+                            particular game.
+                        </p>
+                        <p>
+                            You can make your world more interesting by adding additional props. Maybe consider adding
+                            few "treasures", "big treasures" and "traps", that will give different rewards for the agent
+                            when reached.
+                        </p>
+                        {libraryTiles.map((tile) => (
+                            <PropRow
+                                key={tile.id}
+                                tile={tile}
+                                openImport={openImport}
+                                setTiles={setTiles}
+                            />
+                        ))}
+                        <Button
+                            variant="outlined"
+                            onClick={() => addTile()}
+                            className={style.row}
+                        >
+                            Create new prop
+                        </Button>
+                        <p>
+                            You can alter all selections throughtout the whole game so feel free to come back here
+                            later.
+                        </p>
+                        <Separator />
+                    </>
+                )}
+            </div>
         </div>
     );
 }

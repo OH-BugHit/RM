@@ -53,7 +53,6 @@ export default function SettingsItem({ tiles }: PropRewardProps) {
             <div className={style.reward}>
                 {tiles.map((tile) => (
                     <div style={{ flexDirection: 'column' }}>
-                        <p style={{ paddingBottom: '0.2rem' }}>{tile.name}</p>
                         <img
                             key={tile.id}
                             src={tile.image}

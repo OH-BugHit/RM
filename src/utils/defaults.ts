@@ -9,6 +9,7 @@ import {
     StoryProgress,
     TileDefinition,
     TimeStepData,
+    UiHelp,
     WorldGeneratorProps,
 } from '../types';
 
@@ -22,6 +23,13 @@ export const manhattanDirecitons = [
 export const defaultAgentSettings = { epsilon: 0.1, gamma: 0.9, alpha: 0.1, learning: true };
 export const defaultControls = { isRunning: false, isFast: false, takeStep: false };
 export const defaultAudioSettings = { volume: 1 };
+
+export const defaultUIHelp: UiHelp = {
+    creativeClose: false,
+    statsArrow: false,
+    hideSideOpener: true, // Set to false on normal game?
+    sideOpener: false,
+};
 
 export const defaultImages = {
     potsAndBurglar: <PropImages>{
@@ -319,6 +327,7 @@ export const defaultStoryProgress: StoryProgress = {
         spawn: false,
         modifyOpened: false,
         props: false,
+        goalSet: false,
     },
     rewards: false,
 };
@@ -386,7 +395,6 @@ export const initialTiles: TileDefinition[] = [
     {
         id: '0',
         type: CellType.Solid,
-        name: 'Wall',
         image: 'none',
         isCoreTile: true,
         reloadTime: -1,
@@ -395,7 +403,6 @@ export const initialTiles: TileDefinition[] = [
     {
         id: '1',
         type: CellType.Spawn,
-        name: 'Spawn area',
         image: 'none',
         isCoreTile: true,
         reloadTime: -1,
@@ -404,7 +411,6 @@ export const initialTiles: TileDefinition[] = [
     {
         id: '2',
         type: CellType.Trigger,
-        name: 'Goal',
         image: 'none',
         isCoreTile: true,
         reloadTime: -1,

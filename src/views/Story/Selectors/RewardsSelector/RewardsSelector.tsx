@@ -1,5 +1,5 @@
 import { useAtomValue, useSetAtom } from 'jotai';
-import style from '../style.module.css';
+import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { StoryProgressAtom, TilePropsAtom } from '../../../../atoms/uiState';
 import PropRewardItem from './PropRewardItem';
@@ -39,8 +39,10 @@ export default function RewardsSelector() {
     return (
         <div className={style.selectorContainer}>
             <h1>{t('story.rewards.title')}</h1>
-            <p>Now you need do define reward function</p>
+            <p>Now you need to define reward function</p>
             <p>That means that you select what reward is given for agent in each state</p>
+            <p>You can keep these as they are if you want and come back later to alter agent's behaviour.</p>
+            <p>When ready, proceed to last step that allows you to tweak game settings.</p>
             <h3>Your states:</h3>
             <div className={style.rowContainer}>
                 <TimeStepReward />

@@ -1,4 +1,4 @@
-import style from '../style.module.css';
+import style from './style.module.css';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import HeartBrokenIcon from '@mui/icons-material/HeartBroken';
 import { CellType, GenericReward, TileDefinition } from '../../../../types';
@@ -53,7 +53,6 @@ export default function PropRewardItem({ tiles }: PropRewardProps) {
             <div className={style.reward}>
                 {tiles.map((tile) => (
                     <div style={{ flexDirection: 'column' }}>
-                        <p style={{ paddingBottom: '0.2rem' }}>{tile.name}</p>
                         <img
                             key={tile.id}
                             src={tile.image}

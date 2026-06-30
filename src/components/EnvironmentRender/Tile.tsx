@@ -4,7 +4,7 @@ import style from './style.module.css';
 import { getOnSight } from '../GameComponents/drawComponent';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { ActiveAgentAtom } from '../../atoms/state';
-import { PropToolAtom, VisibleTilesAtom } from '../../atoms/uiState';
+import { PropToolAtom, StoryProgressAtom, VisibleTilesAtom } from '../../atoms/uiState';
 import { InnerFillCellAtom, SetRewardsPulseAtom } from '../../atoms/gameState';
 
 interface TileProps {
@@ -21,6 +21,7 @@ export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation 
     const [trigger, setTrigger] = useState<boolean>(true);
     const fillerTile = useAtomValue(InnerFillCellAtom);
     const updateWorldPulse = useSetAtom(SetRewardsPulseAtom);
+    const setStoryProgress = useSetAtom(StoryProgressAtom);
 
     const agentImage = useMemo(() => {
         return agent.img;
@@ -255,6 +256,17 @@ export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation 
         e.preventDefault();
         if (propTool) {
             //TODO: TRACK IF MODIFYING OUTER BOUNDARY (HAS TO BE SOLID!)
+            if (propTool.type === CellType.Trigger) {
+                setStoryProgress((old) => {
+                    return {
+                        ...old,
+                        environment: {
+                            ...old.environment,
+                            goalSet: true,
+                        },
+                    };
+                });
+            }
             setTrigger(!trigger);
             cell.image = propTool.image;
             cell.type = propTool.type;

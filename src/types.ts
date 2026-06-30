@@ -46,6 +46,7 @@ export type StoryProgress = {
         obsShape: boolean;
     };
     environment: {
+        goalSet: boolean;
         goal: boolean;
         solid: boolean;
         spawn: boolean;
@@ -57,7 +58,7 @@ export type StoryProgress = {
 };
 
 export type StatsContent = {
-    mode: 'stats' | 'text';
+    mode: 'stats' | 'text' | 'textNext';
     phase: number;
 };
 
@@ -76,10 +77,16 @@ export type HUDvisibility = {
 export type EdgeType = RoomType | 'lockedDoor' | 'newEdge';
 export type RoomType = 'spawnArea' | 'lockedRoom' | 'openRoom';
 
+export type UiHelp = {
+    statsArrow: boolean;
+    creativeClose: boolean;
+    hideSideOpener: boolean;
+    sideOpener: boolean;
+};
+
 export type TileDefinition = {
     id: string;
     type: CellType;
-    name: string;
     reloadTime: number;
     timer: number;
     image: string;

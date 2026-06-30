@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import SelectorItem from '../SelectorItem';
 import ModifyEnvironment from './ModifyEnvironment';
-import ModifyProps from './ModifyProps';
 import Separator from '../../../../components/Separator/Separator';
 import { useAtomValue } from 'jotai';
 import { StoryProgressAtom } from '../../../../atoms/uiState';
+import PropSelector from './PropSelector';
 
 type EnvMode = 'props' | 'modify' | undefined;
 
@@ -39,7 +39,7 @@ export default function EnvironmentOptions() {
                     </SelectorItem>
                 </div>
             )}
-            {mode === 'props' && <ModifyProps goHome={goHome} />}
+            {mode === 'props' && <PropSelector goHome={goHome} />}
             {mode === 'modify' && <ModifyEnvironment goHome={goHome} />}
         </>
     );

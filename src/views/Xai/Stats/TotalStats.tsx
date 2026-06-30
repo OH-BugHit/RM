@@ -15,7 +15,7 @@ export default function TotalStats() {
                 {t('stats.totLosses')}: {episodicData?.losses}
             </li>
             <li>
-                {t('stats.totPots')}: {episodicData?.triggered}
+                {t('stats.totTriggers')}: {episodicData?.triggered}
             </li>
             <li>
                 {t('stats.totLastEpisode')}: {episodicData?.fullEpisodeReward}

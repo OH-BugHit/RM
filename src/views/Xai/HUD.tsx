@@ -69,7 +69,7 @@ export default function HUD({ agentRef, qvalueRef, disabled }: XaiProps) {
                         height={100}
                         visible={hudVis.cableRight}
                     />
-                    <NewFrame visible={true}>
+                    <NewFrame visible={hudVis.controls}>
                         <Controls />
                     </NewFrame>
                 </div>

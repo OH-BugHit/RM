@@ -1,4 +1,4 @@
-import style from '../style.module.css';
+import style from './style.module.css';
 import SelectorItem from '../SelectorItem';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { ActiveAgentAtom, ImportedAgentImgAtom } from '../../../../atoms/state';

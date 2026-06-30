@@ -65,7 +65,7 @@ function StoryGame({ agentRef, obsRef, actionRef, qvalueRef, infoRef }: GenericW
     }, [setWorldGrid]);
 
     useEffect(() => {
-        setStoryStep(1);
+        setStoryStep(0);
     }, [setStoryStep]);
 
     const sounds = useMemo(() => {
