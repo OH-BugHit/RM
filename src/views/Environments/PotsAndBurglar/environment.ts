@@ -43,6 +43,7 @@ const SIDES: SixthSenseDirection[] = [
     SixthSenseDirection.South,
     SixthSenseDirection.East,
     SixthSenseDirection.West,
+    SixthSenseDirection.Away,
 ];
 
 export class RLGridEnv {
@@ -165,7 +166,7 @@ export class RLGridEnv {
 
     getObservation(offsets: Offset[] = this.agentObsOffset): GenericObservation {
         return {
-            neighbors: offsets.map((o) => this.getCell(this.position.x + o.dx, this.position.y + o.dy)),
+            neighbours: offsets.map((o) => this.getCell(this.position.x + o.dx, this.position.y + o.dy)),
             POIdirection: SIDES.indexOf(this.POI.side),
         };
     }

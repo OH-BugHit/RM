@@ -38,13 +38,13 @@ export const getAgentSounds = (type: AgentType): string[] => {
 export const getDefaultObservation = (type: ObservationShape): GenericObservation => {
     switch (type) {
         case 'small': {
-            return { neighbors: [0, 0, 0, 0], POIdirection: 4 };
+            return { neighbours: [0, 0, 0, 0], POIdirection: 4 };
         }
         case 'large': {
-            return { neighbors: Array(20).fill(0), POIdirection: 4 };
+            return { neighbours: Array(20).fill(0), POIdirection: 4 };
         }
         default: {
-            return { neighbors: [0, 0, 0, 0], POIdirection: 4 };
+            return { neighbours: [0, 0, 0, 0], POIdirection: 4 };
         }
     }
 };

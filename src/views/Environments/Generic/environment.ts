@@ -37,6 +37,7 @@ export interface EnvironmentOptions {
     trap1?: number;
     triggerIsWin?: boolean;
     agentObsOffset: Offset[];
+    POIactive?: boolean;
 }
 
 function getSpawnCells(world: Cell[][]): Position[] {
@@ -68,6 +69,7 @@ const SIDES: SixthSenseDirection[] = [
     SixthSenseDirection.South,
     SixthSenseDirection.East,
     SixthSenseDirection.West,
+    SixthSenseDirection.Away,
 ];
 
 export class GenericRLEnv {
@@ -88,6 +90,7 @@ export class GenericRLEnv {
     rLoseByTimeEnds: number; // Reward for losing episode
     winByCount: number; // Reward for episode end on enough items collected
     POI = { side: SixthSenseDirection.Away };
+    POIactive = false;
     stepsTaken: number = 0;
     triggerIsWin: boolean;
     agentObsOffset: Offset[];
@@ -110,6 +113,7 @@ export class GenericRLEnv {
         rLoseByTimeEnds,
         winByCount,
         triggerIsWin,
+        POIactive,
     }: EnvironmentOptions) {
         this.world = world;
         this.maxTurns = maxTurns ?? 0;
@@ -130,6 +134,7 @@ export class GenericRLEnv {
         this.triggerIsWin = triggerIsWin ?? false;
         this.position = getStartingPosition(this.spawnCells);
         this.keys = 0;
+        this.POIactive = POIactive ?? false;
         this.reset();
     }
 
@@ -191,7 +196,7 @@ export class GenericRLEnv {
 
     getObservation(offsets: Offset[] = this.agentObsOffset): GenericObservation {
         return {
-            neighbors: offsets.map((o) => this.getCell(this.position.x + o.dx, this.position.y + o.dy)),
+            neighbours: offsets.map((o) => this.getCell(this.position.x + o.dx, this.position.y + o.dy)),
             POIdirection: SIDES.indexOf(this.POI.side),
         };
     }
@@ -211,7 +216,7 @@ export class GenericRLEnv {
     }
 
     private POIstep(): { terminated: boolean } {
-        if (this.POI.side === SixthSenseDirection.Away) {
+        if (this.POI.side === SixthSenseDirection.Away && this.POIactive) {
             this.POI.side = SIDES[Math.floor(Math.random() * SIDES.length)];
         }
         this.stepsTaken++;

@@ -1,4 +1,7 @@
 import { Actions, GenericObservation } from '../../types';
+import { defaultSprites } from '../../utils/defaults';
+import { SpriteStore, WorldStore } from '../QTable/utils';
+import { serializeObservation } from './utils';
 
 const ACTIONS: number[] = [Actions.up, Actions.down, Actions.left, Actions.right, Actions.specialAction, Actions.stay];
 
@@ -6,43 +9,26 @@ export interface QLearningAgentOptions {
     alpha?: number;
     gamma?: number;
     epsilon?: number;
-}
-export function serializeObservation(obs: GenericObservation): string {
-    return `${obs.neighbors.map((n) => String(n)).join(',')}-${obs.POIdirection}`;
-}
-
-export function parseObservationState(state: string): { neighbors: string[]; POIdirection: string } {
-    const separator = state.lastIndexOf('-');
-
-    if (separator === -1) {
-        return {
-            neighbors: state.split(''),
-            POIdirection: '4',
-        };
-    }
-
-    const neighborsPart = state.slice(0, separator);
-    const POIdirection = state.slice(separator + 1);
-
-    return {
-        neighbors: neighborsPart.includes(',') ? neighborsPart.split(',') : neighborsPart.split(''),
-        POIdirection,
-    };
+    lWorld: WorldStore;
 }
 export class QLearningAgent {
-    Q: Record<string, number[]> = {}; // Q-"table"
-    visitTimes: Record<string, number> = {}; // For rendering memoizing. Memo checks if this is updated for record and renders based on that.
+    Q: Record<string, number[]> = {}; // Q-"table" String is the state, number[] are the Q-values
+    visitTimes: Record<string, number> = {}; // For invalidation on Q-map
 
+    spriteStore: SpriteStore<number>;
+    lWorld: WorldStore;
     alpha = 0.1;
     gamma = 0.9;
     epsilon = 0.1;
     tableSize = 0;
     learning = true;
 
-    constructor(options: QLearningAgentOptions = {}) {
-        if (options.alpha !== undefined) this.alpha = options.alpha;
-        if (options.gamma !== undefined) this.gamma = options.gamma;
-        if (options.epsilon !== undefined) this.epsilon = options.epsilon;
+    constructor({ lWorld, alpha, gamma, epsilon }: QLearningAgentOptions) {
+        if (alpha !== undefined) this.alpha = alpha;
+        if (gamma !== undefined) this.gamma = gamma;
+        if (epsilon !== undefined) this.epsilon = epsilon;
+        this.lWorld = lWorld;
+        this.spriteStore = new SpriteStore<number>(defaultSprites);
     }
 
     getTableSize() {
@@ -57,6 +43,8 @@ export class QLearningAgent {
         const state = this.getStateKey(obs);
 
         if (!this.Q[state]) {
+            // If new state
+            this.lWorld.addState(state);
             this.Q[state] = Array(ACTIONS.length).fill(0);
             this.tableSize++;
             this.visitTimes[state] = 0;

@@ -5,7 +5,7 @@ import {
     StoryProgressAtom,
     StoryStepAtom,
     UiHelpAtom,
-    VisibleTilesAtom,
+    TileVisibilityAtom,
 } from '../../atoms/uiState';
 import { useEffect } from 'react';
 
@@ -14,7 +14,7 @@ export default function StoryProgress() {
     const setHud = useSetAtom(HUDvisAtom);
     const setStatsContent = useSetAtom(StatsContentAtom);
     const progress = useAtomValue(StoryProgressAtom);
-    const setVisibleTiles = useSetAtom(VisibleTilesAtom);
+    const setVisibleTiles = useSetAtom(TileVisibilityAtom);
     const setUIHelper = useSetAtom(UiHelpAtom);
 
     useEffect(() => {

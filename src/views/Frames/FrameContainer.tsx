@@ -9,14 +9,15 @@ interface FrameContainerProps {
 const positions: Record<FrameContainerProps['position'], React.CSSProperties> = {
     'top-left': { top: 0, left: 0 },
     'top-right': { top: 0, right: 0 },
-    'bottom-left': { bottom: 0, left: 0 },
-    'bottom-right': { bottom: 0, right: 0 },
+    'bottom-left': { bottom: 0, left: 0, zIndex: '0' },
+    'bottom-right': { bottom: 0, right: 0, zIndex: '0' },
     'top-center': {
         top: 0,
         left: 0,
         right: 0,
         display: 'flex',
         justifyContent: 'center',
+        zIndex: '0',
     },
 };
 
@@ -26,6 +27,7 @@ export default function FrameContainer({ position, width = '', children }: Frame
             style={{
                 position: 'absolute',
                 width: width,
+                zIndex: 1,
                 ...positions[position],
             }}
         >

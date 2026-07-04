@@ -16,7 +16,7 @@ export const StoryStepAtom = atom<number>(0);
 export const HUDvisAtom = atom<HUDvisibility>(defaultHUDvis);
 
 export const StoryProgressAtom = atom<StoryProgress>(defaultStoryProgress);
-export const VisibleTilesAtom = atom<VisibleTiles>(defaultVisibleTiles);
+export const TileVisibilityAtom = atom<VisibleTiles>(defaultVisibleTiles);
 export const StatsContentAtom = atom<StatsContent>({ mode: 'stats', phase: 0 });
 export const TilePropsAtom = atom<TileDefinition[]>(initialTiles);
 

@@ -63,7 +63,6 @@ export default function PropSelector({ goHome }: EnvModeProps) {
                         switch (activeTile.type) {
                             case CellType.Trigger: {
                                 if (image) {
-                                    console.log('trigger set');
                                     setStoryProgress((old) => {
                                         return {
                                             ...old,
@@ -74,7 +73,6 @@ export default function PropSelector({ goHome }: EnvModeProps) {
                                             },
                                         };
                                     });
-                                    console.log(storyProgress);
                                 }
                                 break;
                             }

@@ -4,8 +4,8 @@ import style from './style.module.css';
 import { getOnSight } from '../GameComponents/drawComponent';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { ActiveAgentAtom } from '../../atoms/state';
-import { PropToolAtom, StoryProgressAtom, VisibleTilesAtom } from '../../atoms/uiState';
-import { InnerFillCellAtom, SetRewardsPulseAtom } from '../../atoms/gameState';
+import { PropToolAtom, StoryProgressAtom, TileVisibilityAtom } from '../../atoms/uiState';
+import { InnerFillCellAtom, RewardsPulseAtom } from '../../atoms/gameState';
 
 interface TileProps {
     cell: Cell;
@@ -16,11 +16,11 @@ interface TileProps {
 }
 export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation }: TileProps) {
     const agent = useAtomValue(ActiveAgentAtom);
-    const visibleTiles = useAtomValue(VisibleTilesAtom);
+    const visibleTiles = useAtomValue(TileVisibilityAtom);
     const propTool = useAtomValue(PropToolAtom);
     const [trigger, setTrigger] = useState<boolean>(true);
     const fillerTile = useAtomValue(InnerFillCellAtom);
-    const updateWorldPulse = useSetAtom(SetRewardsPulseAtom);
+    const updateWorldPulse = useSetAtom(RewardsPulseAtom);
     const setStoryProgress = useSetAtom(StoryProgressAtom);
 
     const agentImage = useMemo(() => {

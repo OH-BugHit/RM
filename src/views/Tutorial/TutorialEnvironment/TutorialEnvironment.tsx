@@ -26,6 +26,7 @@ import { useTranslation } from 'react-i18next';
 import { useTutorialStepEffects } from '../../../hooks/useTutorialStepEffects';
 import RewardFloats from '../../../components/RewardFloats.tsx/RewardFloats';
 import { useRewardFloats } from '../../../hooks/useRewardFloats';
+import { WorldStore } from '../../../components/QTable/utils';
 
 const STEP_INTERVAL = 400; // ms
 const FAST_STEPS = 5000;
@@ -130,6 +131,7 @@ function TutorialEnvironment() {
             alpha: agentSettingsData.alpha,
             gamma: agentSettingsData.gamma,
             epsilon: agentSettingsData.epsilon,
+            lWorld: new WorldStore(),
         });
 
         actionRef.current = undefined;

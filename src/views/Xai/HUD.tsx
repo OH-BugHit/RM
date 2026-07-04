@@ -4,7 +4,6 @@ import FrameContainer from '../Frames/FrameContainer';
 import Controls from '../Controls/Controls';
 import QTable from './NewQTable/QTable';
 import TableControls from './NewQTable/TableControls';
-import { useGridRef } from 'react-window';
 import { RewardChart } from '../../components/Charts/RewardChart';
 import Agent from './Agent/Agent';
 import { Cable } from '../Frames/CableFrame/Cable';
@@ -12,14 +11,17 @@ import Environment from './Environment/Environment';
 import { useAtomValue } from 'jotai';
 import { HUDvisAtom } from '../../atoms/uiState';
 import { NewFrame } from '../Frames/NewFrame';
+import { WorldStore } from '../../components/QTable/utils';
 
 interface XaiProps {
     agentRef: React.RefObject<QLearningAgent | undefined>;
-    qvalueRef: React.RefObject<number[]>;
-    disabled?: boolean;
+    lWorld: WorldStore;
+    mapRef: React.RefObject<L.Map | null>;
+    currentStateRef: React.RefObject<string>;
+    layerRef: React.RefObject<L.GridLayer | null>;
 }
-export default function HUD({ agentRef, qvalueRef, disabled }: XaiProps) {
-    const gridRef = useGridRef(null);
+export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRef }: XaiProps) {
+    //const gridRef = useGridRef(null);
     const hudVis = useAtomValue(HUDvisAtom);
 
     return (
@@ -32,15 +34,25 @@ export default function HUD({ agentRef, qvalueRef, disabled }: XaiProps) {
                     />
                 </NewFrame>
             </FrameContainer>
+
             <FrameContainer position="top-center">
+                <Cable
+                    variant="center"
+                    width={100}
+                    height={100}
+                    visible={hudVis.cableLeft}
+                />
                 <Environment />
+                <Cable
+                    variant="center"
+                    width={100}
+                    height={100}
+                    visible={hudVis.cableLeft}
+                />
             </FrameContainer>
             <FrameContainer position="top-right">
                 <NewFrame visible={hudVis.agentVision}>
-                    <AgentVision
-                        agentRef={agentRef}
-                        qvalueRef={qvalueRef}
-                    />
+                    <AgentVision agentRef={agentRef} />
                 </NewFrame>
             </FrameContainer>
             <FrameContainer
@@ -48,14 +60,25 @@ export default function HUD({ agentRef, qvalueRef, disabled }: XaiProps) {
                 width="100%"
             >
                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'end', flexGrow: 1 }}>
-                    <NewFrame visible={hudVis.qTable}>
-                        <TableControls gridRef={gridRef} />
-                        <QTable
-                            agentRef={agentRef}
-                            disabled={disabled}
-                            gridRef={gridRef}
-                        />
-                    </NewFrame>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <NewFrame visible={hudVis.qTable}>
+                            <TableControls
+                                world={lWorld}
+                                mapRef={mapRef}
+                                layerRef={layerRef}
+                                currentStateRef={currentStateRef}
+                            />
+                        </NewFrame>
+                        <NewFrame visible={hudVis.qTable}>
+                            <QTable
+                                agentRef={agentRef}
+                                disabled={false} // No disable currently
+                                lWorld={lWorld}
+                                mapRef={mapRef}
+                                layerRef={layerRef}
+                            />
+                        </NewFrame>
+                    </div>
                     <Cable
                         variant="center"
                         width={100}

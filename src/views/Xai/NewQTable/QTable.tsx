@@ -1,19 +1,20 @@
 import { QLearningAgent } from '../../../components/agents/rlAgentQ';
 import style from './style.module.css';
-import LodNear from './LodNear/LodNear';
 import LodFar from './LodFar/LodFar';
 import { useAtomValue } from 'jotai';
 import { LodStateAtom } from '../../../atoms/uiState';
-import { GridImperativeAPI } from 'react-window';
-import { RefObject } from 'react';
+import TileTable from './TileTable/TileTable';
+import { WorldStore } from '../../../components/QTable/utils';
 
 interface QTableProps {
     agentRef: React.RefObject<QLearningAgent | undefined>;
-    gridRef: RefObject<GridImperativeAPI | null>;
     disabled?: boolean;
+    lWorld: WorldStore;
+    mapRef: React.RefObject<L.Map | null>;
+    layerRef: React.RefObject<L.GridLayer | null>;
 }
 
-export default function QTable({ agentRef, disabled, gridRef }: QTableProps) {
+export default function QTable({ agentRef, disabled, lWorld, mapRef, layerRef }: QTableProps) {
     const lod = useAtomValue(LodStateAtom);
 
     return (
@@ -23,9 +24,11 @@ export default function QTable({ agentRef, disabled, gridRef }: QTableProps) {
                 (lod == 1 ? (
                     <LodFar agentRef={agentRef} />
                 ) : (
-                    <LodNear
+                    <TileTable
                         agentRef={agentRef}
-                        gridRef={gridRef}
+                        lWorld={lWorld}
+                        mapRef={mapRef}
+                        layerRef={layerRef}
                     />
                 ))}
         </main>

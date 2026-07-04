@@ -52,7 +52,10 @@ export default function PropRewardItem({ tiles }: PropRewardProps) {
             <h3>{t(`common.cell.${type}`)}</h3>
             <div className={style.reward}>
                 {tiles.map((tile) => (
-                    <div style={{ flexDirection: 'column' }}>
+                    <div
+                        key={tile.id}
+                        style={{ flexDirection: 'column' }}
+                    >
                         <img
                             key={tile.id}
                             src={tile.image}

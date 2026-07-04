@@ -5,23 +5,30 @@ import ZoomInMapIcon from '@mui/icons-material/ZoomInMap';
 import { useAtom } from 'jotai';
 import { LodStateAtom } from '../../../atoms/uiState';
 import { AnimatePresence, motion } from 'framer-motion';
-import { RefObject } from 'react';
-import { GridImperativeAPI } from 'react-window';
+import { WorldStore } from '../../../components/QTable/utils';
+import L from 'leaflet';
 
 interface TableControlsProps {
-    gridRef: RefObject<GridImperativeAPI | null>;
+    mapRef: React.RefObject<L.Map | null>;
+    world: WorldStore;
+    currentStateRef: React.RefObject<string>;
+    layerRef: React.RefObject<L.GridLayer | null>;
 }
-export default function TableControls({ gridRef }: TableControlsProps) {
+
+export default function TableControls({ mapRef, world, currentStateRef, layerRef }: TableControlsProps) {
     const [lod, setLod] = useAtom(LodStateAtom);
     const handlePrevious = () => {
-        const grid = gridRef.current;
-        grid?.scrollToCell({
-            behavior: 'smooth',
-            columnAlign: 'center',
-            rowAlign: 'center',
-            columnIndex: 0,
-            rowIndex: 1,
-        });
+        if (lod === 1) return;
+        const map = mapRef.current;
+        if (!map) return;
+
+        const pos = world.statePos.get(currentStateRef.current);
+        if (!pos) return;
+
+        const p = L.point((pos.x + 0.5) * 256, (pos.y + 0.5) * 256);
+        map.unproject(p, 14);
+        map.setView(map.unproject(p, 14), 14, { animate: true });
+        layerRef.current?.redraw();
     };
 
     const handleLodChange = () => {
@@ -46,6 +53,7 @@ export default function TableControls({ gridRef }: TableControlsProps) {
             <GameButton
                 title="Center Qtable"
                 onClick={handlePrevious}
+                disabled={lod === 1}
                 variant="outlined"
             >
                 <CenterFocusWeakIcon

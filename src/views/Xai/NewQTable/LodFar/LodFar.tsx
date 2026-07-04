@@ -1,6 +1,6 @@
 import { useAtomValue } from 'jotai';
 import { QLearningAgent } from '../../../../components/agents/rlAgentQ';
-import { gridLargeCongig, gridSmallConfig } from '../../../Observation/gridConfigs';
+import { gridLargeCongig, gridSmallConfig } from '../../../../components/QTable/gridConfigs';
 import CompactHeatmapCanvas from '../CompactHeatmapCanvas';
 import style from './style.module.css';
 import { useEffect, useMemo, useRef, useState } from 'react';

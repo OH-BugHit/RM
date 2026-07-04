@@ -83,36 +83,38 @@ export default function AgentIndex() {
                     <ObservationSelector />
                 </>
             )}
-            <div className={style.selectorContainer}>
-                {selectedAgent.observationShape && (
-                    <>
-                        <h3>Give your agent an epic name: </h3>
-                        <TextField
-                            label={t('story.agent.nameInputLabel')}
-                            value={selectedAgent.name}
-                            sx={{ color: 'white' }}
-                            onChange={(e) => {
-                                setSelectedAgent((old) => {
-                                    return {
-                                        ...old,
-                                        name: e.target.value,
-                                    };
-                                });
+            {selectedAgent.observationShape && (
+                <div className={style.selectorContainer}>
+                    {selectedAgent.observationShape && (
+                        <>
+                            <h3>Give your agent an epic name: </h3>
+                            <TextField
+                                label={t('story.agent.nameInputLabel')}
+                                value={selectedAgent.name}
+                                sx={{ color: 'white' }}
+                                onChange={(e) => {
+                                    setSelectedAgent((old) => {
+                                        return {
+                                            ...old,
+                                            name: e.target.value,
+                                        };
+                                    });
 
-                                handleSubmit(e.target.value);
-                            }}
-                            required
-                            error={!!errors.username}
-                            helperText={
-                                errors.username
-                                    ? t(`enterUsername.messages.usernameError.${errors.username}`)
-                                    : undefined
-                            }
-                            margin="normal"
-                        />
-                    </>
-                )}
-            </div>
+                                    handleSubmit(e.target.value);
+                                }}
+                                required
+                                error={!!errors.username}
+                                helperText={
+                                    errors.username
+                                        ? t(`enterUsername.messages.usernameError.${errors.username}`)
+                                        : undefined
+                                }
+                                margin="normal"
+                            />
+                        </>
+                    )}
+                </div>
+            )}
         </div>
     );
 }

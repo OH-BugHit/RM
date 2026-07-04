@@ -6,28 +6,20 @@ import { PropsWithChildren } from 'react';
 interface Props extends PropsWithChildren {
     onClick: () => void;
     title: string;
+    disabled?: boolean;
     variant?: OverridableStringUnion<'text' | 'outlined' | 'contained', ButtonPropsVariantOverrides> | undefined;
 }
 
-export default function GameButton({ onClick, variant, title, children }: Props) {
+export default function GameButton({ onClick, variant, title, disabled = false, children }: Props) {
     return (
         <Button
             title={title}
             variant={variant}
+            disabled={disabled}
             onClick={onClick}
             sx={{
                 minWidth: 64,
                 minHeight: 64,
-
-                backgroundImage: "url('/images/buttonFrames/frame_square.png')",
-                backgroundSize: '100% 100%',
-                backgroundRepeat: 'no-repeat',
-                color: 'white',
-                textTransform: 'none',
-
-                '&:hover': {
-                    backgroundImage: "url('/ui/button-hover.png')",
-                },
             }}
         >
             {children}

@@ -1,5 +1,5 @@
 import style from './style.module.css';
-import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import { IconButton } from '@mui/material';
 import { useAtom, useSetAtom } from 'jotai';
 import { UiHelpAtom, UiShowSidePanelAtom } from '../../atoms/uiState';
@@ -31,7 +31,7 @@ export function SidePanelOpener() {
                         angle={180}
                     />
                 )}
-                {<MenuOpenIcon fontSize="large" />}
+                {<AutoFixHighIcon fontSize="large" />}
             </IconButton>
         </>
     );

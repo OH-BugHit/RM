@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
-import { parseObservationState } from '../../components/agents/rlAgentQ';
+import { parseObservationState } from '../../components/agents/utils';
 import { EnvironmentTypes, GridConfig, ObservationShape } from '../../types';
 import { getQColor } from '../../utils/common';
-import { gridSmallConfig, gridLargeCongig } from './gridConfigs';
+import { gridSmallConfig, gridLargeCongig } from '../../components/QTable/gridConfigs';
 import { defaultImages } from '../../utils/defaults';
 
 interface QTableProps {
@@ -24,7 +24,7 @@ export default function DrawObservation({
     envType = 'potsAndBurglar',
     tileSize = 40,
 }: QTableProps) {
-    const { neighbors: neighbours, POIdirection } = parseObservationState(state);
+    const { neighbours: neighbours, POIdirection } = parseObservationState(state);
     const burglar = String(POIdirection);
     const qValues = actionValues;
     const maxQ = Math.max(...qValues);

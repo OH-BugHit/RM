@@ -11,7 +11,7 @@ import {
 } from '../../../components/GameComponents/agentProps';
 import { useSound } from '../../../hooks/useSound';
 import { useAtomValue, useSetAtom, useStore } from 'jotai';
-import { AgentSettingsAtom, GameControlAtom, ResetUiPulseAtom } from '../../../atoms/state';
+import { AgentSettingsAtom, GameControlAtom, ResetUiPulseAtom, UpdateWorldPulseAtom } from '../../../atoms/state';
 import { motion } from 'framer-motion';
 import {
     ChartAtom,
@@ -19,7 +19,7 @@ import {
     FacingAtom,
     LargeObsAtom,
     SelectedObsShapeAtom,
-    SetRewardsPulseAtom,
+    RewardsPulseAtom,
     SmallObsAtom,
     StateDataAtom,
     TimeStepDataAtom,
@@ -38,6 +38,7 @@ import { StoryStepAtom } from '../../../atoms/uiState';
 import StoryProgress from '../../../components/GameComponents/StoryProgress';
 import ResizeButton from '../../../components/Buttons/ReziseButton/ResizeButton';
 import AgentBridge from '../../../components/GameComponents/AgentBridge';
+import { WorldStore } from '../../../components/QTable/utils';
 
 const STEP_INTERVAL = 400; //ms
 const FAST_STEPS = 5000;
@@ -49,15 +50,18 @@ interface GenericWorldProps {
     actionRef: React.RefObject<Actions | undefined>;
     qvalueRef: React.RefObject<number[]>;
     infoRef: React.RefObject<GameEnvironmentInfo | undefined>;
+    lWorld: WorldStore;
+    currentStateRef: React.RefObject<string>;
 }
 
-function StoryGame({ agentRef, obsRef, actionRef, qvalueRef, infoRef }: GenericWorldProps) {
+function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, currentStateRef }: GenericWorldProps) {
     const worldGrid = useRef(defaultWorldGrid);
     const setChart = useSetAtom(ChartAtom);
     const setLastState = useSetAtom(StateDataAtom);
     const setStoryStep = useSetAtom(StoryStepAtom);
     const obsShape = useAtomValue<ObservationShape>(SelectedObsShapeAtom);
     const setWorldGrid = useSetAtom(WorldGridRenderAtom);
+    const setUpdateWorldPulse = useSetAtom(UpdateWorldPulseAtom);
 
     useEffect(() => {
         // set world grid
@@ -85,7 +89,7 @@ function StoryGame({ agentRef, obsRef, actionRef, qvalueRef, infoRef }: GenericW
     const setFacing = useSetAtom(FacingAtom);
     const setEpisodicData = useSetAtom(EpisodicDataAtom);
     const setTimeStepData = useSetAtom(TimeStepDataAtom);
-    const setSetRewardsPulse = useSetAtom(SetRewardsPulseAtom);
+    const setSetRewardsPulse = useSetAtom(RewardsPulseAtom);
 
     const envRef = useRef<GenericRLEnv>(undefined);
 
@@ -139,6 +143,7 @@ function StoryGame({ agentRef, obsRef, actionRef, qvalueRef, infoRef }: GenericW
             alpha: agentSettingsData.alpha,
             gamma: agentSettingsData.gamma,
             epsilon: agentSettingsData.epsilon,
+            lWorld: lWorld,
         });
         setSetRewardsPulse((prev) => !prev);
         actionRef.current = undefined;
@@ -171,6 +176,7 @@ function StoryGame({ agentRef, obsRef, actionRef, qvalueRef, infoRef }: GenericW
         setEpisodicData,
         setChart,
         setSetRewardsPulse,
+        lWorld,
     ]);
 
     useEffect(() => {
@@ -202,8 +208,9 @@ function StoryGame({ agentRef, obsRef, actionRef, qvalueRef, infoRef }: GenericW
             });
 
             qvalueRef.current = agentRef.current.getQValues(obsRef.current);
+            setUpdateWorldPulse((old) => !old);
         }
-    }, [agentRef, obsRef, qvalueRef, setObs, setTimeStepData, setEpisodicData]);
+    }, [agentRef, obsRef, qvalueRef, setObs, setTimeStepData, setEpisodicData, setUpdateWorldPulse]);
 
     const stepUI = React.useCallback(() => {
         if (obsRef.current && agentRef.current && obsRef.current && envRef.current) {
@@ -220,6 +227,7 @@ function StoryGame({ agentRef, obsRef, actionRef, qvalueRef, infoRef }: GenericW
             episodicRewardRef.current += reward;
             lastActionRef.current = action;
             const currentState = agentRef.current?.getStateKey(nextObs);
+            currentStateRef.current = currentState; // Set current state to this ref to pass it for Q-table navigation
             setLastState((old) => {
                 return {
                     previous: old.current,
@@ -247,7 +255,19 @@ function StoryGame({ agentRef, obsRef, actionRef, qvalueRef, infoRef }: GenericW
 
             syncUI();
         }
-    }, [syncUI, playSound, spawnFloat, setFacing, setLastState, actionRef, obsRef, infoRef, agentRef, envRef]);
+    }, [
+        syncUI,
+        playSound,
+        spawnFloat,
+        setFacing,
+        setLastState,
+        currentStateRef,
+        actionRef,
+        obsRef,
+        infoRef,
+        agentRef,
+        envRef,
+    ]);
 
     useEffect(() => {
         stepUI();
@@ -327,7 +347,10 @@ function StoryGame({ agentRef, obsRef, actionRef, qvalueRef, infoRef }: GenericW
             transition={{ duration: 0.4 }}
             className={style.container}
         >
-            <AgentBridge envRef={envRef} />
+            <AgentBridge
+                envRef={envRef}
+                agentRef={agentRef}
+            />
             <StoryProgress />
             {envRef.current && (
                 <div className={style.worldContainer}>

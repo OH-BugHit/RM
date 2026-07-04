@@ -43,7 +43,7 @@ export default function Tutorial() {
             case 'ready': {
                 setAgentSettings(defaultAgentSettings);
                 setSoundSettings(defaultAudioSettings);
-                navigate('/story?view=story&sub=agent');
+                navigate('/');
                 break;
             }
 

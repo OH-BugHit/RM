@@ -38,4 +38,4 @@ export const ChartAtom = atom<ChartState>({
 export const TempSettingsAtom = atom<EnvSettings>(defaultEnvSettings);
 export const EnvSettingsAtom = atom<EnvSettings>(defaultEnvSettings);
 
-export const SetRewardsPulseAtom = atom<boolean>(true);
+export const RewardsPulseAtom = atom<boolean>(true);

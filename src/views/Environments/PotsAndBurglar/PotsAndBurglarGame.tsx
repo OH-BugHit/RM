@@ -5,7 +5,13 @@ import { Actions, GameEnvironmentInfo, GenericObservation } from '../../../types
 import style from './style.module.css';
 import { useSound } from '../../../hooks/useSound';
 import { useStore, useAtomValue, useSetAtom } from 'jotai';
-import { ActiveAgentAtom, AgentSettingsAtom, GameControlAtom, ResetUiPulseAtom } from '../../../atoms/state';
+import {
+    ActiveAgentAtom,
+    AgentSettingsAtom,
+    GameControlAtom,
+    ResetUiPulseAtom,
+    UpdateWorldPulseAtom,
+} from '../../../atoms/state';
 import { EnvSettingsAtom } from '../../../atoms/gameState';
 import {
     getLargeOffset,
@@ -26,8 +32,9 @@ import {
     TimeStepDataAtom,
 } from '../../../atoms/gameState';
 import { defaultEpisodicData, defaultTimeStepData } from '../../../utils/defaults';
-import HUD from '../../Xai/HUD';
 import { ingest, onEpisodeEnd, resetAll } from '../../../components/Charts/rewardStreamEngine';
+import { WorldStore } from '../../../components/QTable/utils';
+import { HUDvisAtom, StatsContentAtom } from '../../../atoms/uiState';
 
 const STEP_INTERVAL = 400; // ms
 const FAST_STEPS = 5000;
@@ -41,9 +48,23 @@ interface PotsAndBurglarGameProps {
     actionRef: React.RefObject<Actions | undefined>;
     qvalueRef: React.RefObject<number[]>;
     infoRef: React.RefObject<GameEnvironmentInfo | undefined>;
+    lWorld: WorldStore;
+    currentStateRef: React.RefObject<string>;
 }
 
-function PotsAndBurglarGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, infoRef }: PotsAndBurglarGameProps) {
+function PotsAndBurglarGame({
+    envRef,
+    agentRef,
+    obsRef,
+    actionRef,
+    qvalueRef,
+    infoRef,
+    lWorld,
+    currentStateRef,
+}: PotsAndBurglarGameProps) {
+    const setHud = useSetAtom(HUDvisAtom);
+    const setStatsContent = useSetAtom(StatsContentAtom);
+    const setUpdateWorldPulse = useSetAtom(UpdateWorldPulseAtom);
     const setChart = useSetAtom(ChartAtom);
     const setLastState = useSetAtom(StateDataAtom);
     const agent = useAtomValue(ActiveAgentAtom);
@@ -85,6 +106,26 @@ function PotsAndBurglarGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, in
     const winsRef = useRef(0);
     const lossesRef = useRef(0);
 
+    useEffect(() => {
+        setHud({
+            charts: true,
+            agentVision: true,
+            qTable: true,
+            stats: true,
+            cableLeft: true,
+            cableRight: true,
+            envTitle: true,
+            controls: true,
+            agent: true,
+        });
+        setStatsContent((old) => {
+            return {
+                ...old,
+                mode: 'stats',
+            };
+        });
+    }, [setHud, setStatsContent]);
+
     const resetUI = React.useCallback(() => {
         potsBrokenRef.current = 0;
 
@@ -110,6 +151,7 @@ function PotsAndBurglarGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, in
             alpha: agentSettingsData.alpha,
             gamma: agentSettingsData.gamma,
             epsilon: agentSettingsData.epsilon,
+            lWorld: lWorld,
         });
 
         actionRef.current = undefined;
@@ -147,6 +189,7 @@ function PotsAndBurglarGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, in
         setTimeStepData,
         setEpisodicData,
         setChart,
+        lWorld,
     ]);
 
     useEffect(() => {
@@ -175,8 +218,9 @@ function PotsAndBurglarGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, in
             });
 
             qvalueRef.current = agentRef.current.getQValues(obsRef.current);
+            setUpdateWorldPulse((old) => !old);
         }
-    }, [agentRef, obsRef, qvalueRef, setObs, setTimeStepData, setEpisodicData]);
+    }, [agentRef, obsRef, qvalueRef, setObs, setTimeStepData, setEpisodicData, setUpdateWorldPulse]);
 
     const stepUI = React.useCallback(() => {
         if (obsRef.current && agentRef.current && obsRef.current && envRef.current) {
@@ -192,6 +236,7 @@ function PotsAndBurglarGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, in
             episodicRewardRef.current += reward;
             lastActionRef.current = action;
             const currentState = agentRef.current?.getStateKey(nextObs);
+            currentStateRef.current = currentState; // Set current state to this ref to pass it for Q-table navigation
             setLastState((old) => {
                 return {
                     previous: old.current,
@@ -218,7 +263,19 @@ function PotsAndBurglarGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, in
 
             syncUI();
         }
-    }, [syncUI, playBark, spawnFloat, setFacing, setLastState, actionRef, obsRef, infoRef, agentRef, envRef]);
+    }, [
+        syncUI,
+        playBark,
+        spawnFloat,
+        setFacing,
+        setLastState,
+        currentStateRef,
+        actionRef,
+        obsRef,
+        infoRef,
+        agentRef,
+        envRef,
+    ]);
 
     // take single step
     useEffect(() => {
@@ -296,10 +353,6 @@ function PotsAndBurglarGame({ envRef, agentRef, obsRef, actionRef, qvalueRef, in
             transition={{ duration: 0.4 }}
             className={style.container}
         >
-            <HUD
-                agentRef={agentRef}
-                qvalueRef={qvalueRef}
-            />
             <div className={style.gameContainer}>
                 <PotsAndBurglarRender
                     gridSize={gridSize}

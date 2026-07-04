@@ -225,7 +225,7 @@ export type SubView = 'agent' | 'environment' | 'rewards' | 'interaction' | null
 export type Overlay = 'import' | null;
 
 export type GenericObservation = {
-    neighbors: CellType[];
+    neighbours: CellType[];
     POIdirection?: SixthSenseDirection;
 };
 

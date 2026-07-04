@@ -417,3 +417,19 @@ export const initialTiles: TileDefinition[] = [
         timer: 0,
     },
 ];
+
+export const defaultSprites: Record<number, string> = {
+    [-1]: '/images/assets/cleanWhiteStone.png', // Spawn
+    0: '/images/assets/cleanWhiteStone.png', // Empty
+    1: '/images/assets/wall.png', // Solid
+    2: '/images/assets/bush_240.png', // Trigger
+    3: '/images/assets/key1.png', // Key
+    4: '/images/assets/door1.png', // Door
+    5: '/images/assets/doorLocked1_260.png', // Locked Door
+    6: '/images/assets/smallTreasure_260.png', // Treasure
+    7: '/images/assets/bigTreasure_260.png', // Big Treasure
+    8: '/images/assets/cleanWhiteStone.png', // Outside
+    9: '/images/assets/trap2_260.png', // Trap
+    10: '/images/assets/burglar.png',
+    11: '/images/assets/hau.png',
+};
