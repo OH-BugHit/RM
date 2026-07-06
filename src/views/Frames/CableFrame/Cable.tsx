@@ -7,7 +7,7 @@ const frameConfig = {
         image: '/images/frames/connectorLeft.png',
     },
     center: {
-        image: '/images/frames/cable.png',
+        image: '/images/frames/cablePink.png',
     },
     right: {
         image: '/images/frames/connector.png',

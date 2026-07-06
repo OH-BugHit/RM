@@ -3,7 +3,7 @@ import style from './style.module.css';
 import LodFar from './LodFar/LodFar';
 import { useAtomValue } from 'jotai';
 import { LodStateAtom } from '../../../atoms/uiState';
-import TileTable from './TileTable/TileTable';
+import TileTable, { CustomGridLayer } from './TileTable/TileTable';
 import { WorldStore } from '../../../components/QTable/utils';
 
 interface QTableProps {
@@ -11,7 +11,7 @@ interface QTableProps {
     disabled?: boolean;
     lWorld: WorldStore;
     mapRef: React.RefObject<L.Map | null>;
-    layerRef: React.RefObject<L.GridLayer | null>;
+    layerRef: React.RefObject<CustomGridLayer | null>;
 }
 
 export default function QTable({ agentRef, disabled, lWorld, mapRef, layerRef }: QTableProps) {

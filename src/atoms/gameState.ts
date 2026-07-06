@@ -18,7 +18,7 @@ export const LargeObsAtom = atom<GenericObservation>(getDefaultObservation('larg
 export const FacingAtom = atom<1 | 0 | -1>(1);
 export const TimeStepDataAtom = atom<TimeStepData>();
 export const EpisodicDataAtom = atom<EpisodicData>();
-export const StateDataAtom = atom<StateData>({ previous: '', current: '' });
+export const StateDataAtom = atom<StateData>({ previous: '', current: '' }); // Used by AgentVision to show current state
 
 export const SelectedObsShapeAtom = atom<ObservationShape>('unset');
 

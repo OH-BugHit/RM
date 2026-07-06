@@ -1,5 +1,6 @@
 import { Actions, GenericObservation } from '../../types';
 import { defaultSprites } from '../../utils/defaults';
+import { MarkerManager } from '../QTable/MarkerManager/MargerManager';
 import { SpriteStore, WorldStore } from '../QTable/utils';
 import { serializeObservation } from './utils';
 
@@ -13,7 +14,7 @@ export interface QLearningAgentOptions {
 }
 export class QLearningAgent {
     Q: Record<string, number[]> = {}; // Q-"table" String is the state, number[] are the Q-values
-    visitTimes: Record<string, number> = {}; // For invalidation on Q-map
+    visitTimes: Record<string, number> = {}; // For invalidation on Q-map, K=state V=update time
 
     spriteStore: SpriteStore<number>;
     lWorld: WorldStore;
@@ -22,6 +23,11 @@ export class QLearningAgent {
     epsilon = 0.1;
     tableSize = 0;
     learning = true;
+    private markerManager?: MarkerManager;
+
+    setMarkerManager(markerManager?: MarkerManager) {
+        this.markerManager = markerManager;
+    }
 
     constructor({ lWorld, alpha, gamma, epsilon }: QLearningAgentOptions) {
         if (alpha !== undefined) this.alpha = alpha;
@@ -89,9 +95,10 @@ export class QLearningAgent {
         const aIdx = ACTIONS.indexOf(action);
 
         const maxNext = isTerminal ? 0 : Math.max(...nextValues);
-
         values[aIdx] += this.alpha * (reward + this.gamma * maxNext - values[aIdx]);
 
         this.visitTimes[state] = (this.visitTimes[state] || 0) + 1; // Update visited count (version count)
+
+        if (reward !== 0) this.markerManager?.show(state, aIdx, reward >= 0 ? 'positive' : 'negative');
     }
 }

@@ -116,10 +116,10 @@ export const GRID_7: ObservationGridConfig = {
 export const GRID_5: ObservationGridConfig = {
     size: 5,
     neighborSlots: [
-        [1, 2], // ylä
-        [2, 1], // vasen
-        [2, 3], // oikea
-        [3, 2], // ala
+        [1, 2], // top
+        [3, 2], // bottom
+        [2, 1], // left
+        [2, 3], // right
     ],
     qTileMap: qTileMap5,
     specialLocation: { col: 3, row: 1 },

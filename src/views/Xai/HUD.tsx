@@ -12,13 +12,15 @@ import { useAtomValue } from 'jotai';
 import { HUDvisAtom } from '../../atoms/uiState';
 import { NewFrame } from '../Frames/NewFrame';
 import { WorldStore } from '../../components/QTable/utils';
+import { CustomGridLayer } from './NewQTable/TileTable/TileTable';
+import { StateData } from '../../types';
 
 interface XaiProps {
     agentRef: React.RefObject<QLearningAgent | undefined>;
     lWorld: WorldStore;
     mapRef: React.RefObject<L.Map | null>;
-    currentStateRef: React.RefObject<string>;
-    layerRef: React.RefObject<L.GridLayer | null>;
+    currentStateRef: React.RefObject<StateData>;
+    layerRef: React.RefObject<CustomGridLayer | null>;
 }
 export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRef }: XaiProps) {
     //const gridRef = useGridRef(null);
@@ -39,14 +41,14 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                 <Cable
                     variant="center"
                     width={100}
-                    height={100}
+                    height={80}
                     visible={hudVis.cableLeft}
                 />
                 <Environment />
                 <Cable
                     variant="center"
                     width={100}
-                    height={100}
+                    height={80}
                     visible={hudVis.cableLeft}
                 />
             </FrameContainer>
@@ -61,15 +63,17 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
             >
                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'end', flexGrow: 1 }}>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <NewFrame visible={hudVis.qTable}>
-                            <TableControls
-                                world={lWorld}
-                                mapRef={mapRef}
-                                layerRef={layerRef}
-                                currentStateRef={currentStateRef}
-                            />
-                        </NewFrame>
-                        <NewFrame visible={hudVis.qTable}>
+                        <NewFrame
+                            visible={hudVis.qTable}
+                            overlayRight={
+                                <TableControls
+                                    world={lWorld}
+                                    mapRef={mapRef}
+                                    layerRef={layerRef}
+                                    currentStateRef={currentStateRef}
+                                />
+                            }
+                        >
                             <QTable
                                 agentRef={agentRef}
                                 disabled={false} // No disable currently
@@ -82,14 +86,14 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                     <Cable
                         variant="center"
                         width={100}
-                        height={100}
+                        height={80}
                         visible={hudVis.cableLeft}
                     />
                     <Agent />
                     <Cable
                         variant="center"
                         width={100}
-                        height={100}
+                        height={80}
                         visible={hudVis.cableRight}
                     />
                     <NewFrame visible={hudVis.controls}>

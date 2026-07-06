@@ -24,10 +24,6 @@ export class WorkerPool {
     private latestWorld: Array<[string, string]> | null = null;
     private latestSprites: SpriteData[] = [];
 
-    constructor(workerCount = typeof navigator !== 'undefined' ? (navigator.hardwareConcurrency ?? 4) : 4) {
-        this.createWorkers(workerCount);
-    }
-
     private createWorkers(workerCount = typeof navigator !== 'undefined' ? (navigator.hardwareConcurrency ?? 4) : 4) {
         const count = Math.max(1, Math.min(workerCount, 8));
 
@@ -87,7 +83,9 @@ export class WorkerPool {
     }
 
     destroy() {
-        this.workers.forEach((w) => w.terminate());
+        this.workers.forEach((w) => {
+            w.terminate();
+        });
         this.workers = [];
 
         this.pending.clear();
@@ -99,7 +97,7 @@ export class WorkerPool {
         message: InitSpritesMessage | UpdateSpritesMessage | InitWorldMessage | UpdateWorldMessage | RenderTileMessage
     ) {
         if (this.workers.length === 0) {
-            this.createWorkers();
+            throw new Error('WorkerPool destroyed');
         }
 
         if (this.workers.length === 0) {

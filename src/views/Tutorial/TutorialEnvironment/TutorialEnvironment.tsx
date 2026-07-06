@@ -127,11 +127,12 @@ function TutorialEnvironment() {
 
         obsRef.current = defaultObs;
         const agentSettingsData = store.get(AgentSettingsAtom);
+        const lWorld = new WorldStore(agentRef);
         agentRef.current = new QLearningAgent({
             alpha: agentSettingsData.alpha,
             gamma: agentSettingsData.gamma,
             epsilon: agentSettingsData.epsilon,
-            lWorld: new WorldStore(),
+            lWorld: lWorld,
         });
 
         actionRef.current = undefined;

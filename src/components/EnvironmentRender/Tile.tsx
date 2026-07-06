@@ -13,8 +13,10 @@ interface TileProps {
     agentLocation: Position;
     cellLocation: Position;
     onSight?: boolean;
+    worldWidth: number;
+    worldHeight: number;
 }
-export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation }: TileProps) {
+export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation, worldHeight, worldWidth }: TileProps) {
     const agent = useAtomValue(ActiveAgentAtom);
     const visibleTiles = useAtomValue(TileVisibilityAtom);
     const propTool = useAtomValue(PropToolAtom);
@@ -23,6 +25,11 @@ export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation 
     const updateWorldPulse = useSetAtom(RewardsPulseAtom);
     const setStoryProgress = useSetAtom(StoryProgressAtom);
 
+    const border =
+        cellLocation.x === 0 ||
+        cellLocation.y === 0 ||
+        cellLocation.x === worldWidth - 1 ||
+        cellLocation.y === worldHeight - 1;
     const agentImage = useMemo(() => {
         return agent.img;
     }, [agent.img]);
@@ -254,7 +261,7 @@ export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation 
     };
     const handleTileClick = (e: React.PointerEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        if (propTool) {
+        if (propTool && !border) {
             //TODO: TRACK IF MODIFYING OUTER BOUNDARY (HAS TO BE SOLID!)
             if (propTool.type === CellType.Trigger) {
                 setStoryProgress((old) => {
@@ -285,6 +292,12 @@ export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation 
             }}
             className={style.tile}
             onPointerDown={(e) => handleTileClick(e)}
+            onPointerEnter={(e) => {
+                // TODO: Do tool selector for this on pointer enter thingy. Maybe? Like, toggle for single / paint or smth
+                if (e.buttons & 1) {
+                    handleTileClick(e);
+                }
+            }}
         >
             {getCell()}
         </button>

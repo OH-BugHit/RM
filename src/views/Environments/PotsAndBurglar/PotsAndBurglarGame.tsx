@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { QLearningAgent } from '../../../components/agents/rlAgentQ';
 import { RLGridEnv } from './environment';
-import { Actions, GameEnvironmentInfo, GenericObservation } from '../../../types';
+import { Actions, GameEnvironmentInfo, GenericObservation, StateData } from '../../../types';
 import style from './style.module.css';
 import { useSound } from '../../../hooks/useSound';
 import { useStore, useAtomValue, useSetAtom } from 'jotai';
@@ -31,9 +31,9 @@ import {
     StateDataAtom,
     TimeStepDataAtom,
 } from '../../../atoms/gameState';
-import { defaultEpisodicData, defaultTimeStepData } from '../../../utils/defaults';
+import { defaultEpisodicData, defaultPotsAndBurglarSprites, defaultTimeStepData } from '../../../utils/defaults';
 import { ingest, onEpisodeEnd, resetAll } from '../../../components/Charts/rewardStreamEngine';
-import { WorldStore } from '../../../components/QTable/utils';
+import { SpriteStore, WorldStore } from '../../../components/QTable/utils';
 import { HUDvisAtom, StatsContentAtom } from '../../../atoms/uiState';
 
 const STEP_INTERVAL = 400; // ms
@@ -49,7 +49,7 @@ interface PotsAndBurglarGameProps {
     qvalueRef: React.RefObject<number[]>;
     infoRef: React.RefObject<GameEnvironmentInfo | undefined>;
     lWorld: WorldStore;
-    currentStateRef: React.RefObject<string>;
+    currentStateRef: React.RefObject<StateData>;
 }
 
 function PotsAndBurglarGame({
@@ -153,6 +153,7 @@ function PotsAndBurglarGame({
             epsilon: agentSettingsData.epsilon,
             lWorld: lWorld,
         });
+        agentRef.current.spriteStore = new SpriteStore<number>(defaultPotsAndBurglarSprites);
 
         actionRef.current = undefined;
         qvalueRef.current = [];
@@ -236,8 +237,9 @@ function PotsAndBurglarGame({
             episodicRewardRef.current += reward;
             lastActionRef.current = action;
             const currentState = agentRef.current?.getStateKey(nextObs);
-            currentStateRef.current = currentState; // Set current state to this ref to pass it for Q-table navigation
+
             setLastState((old) => {
+                currentStateRef.current = { previous: old.current, current: currentState }; // Set current and old state also to this ref to pass it for Q-table
                 return {
                     previous: old.current,
                     current: currentState,

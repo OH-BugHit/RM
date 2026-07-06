@@ -1,0 +1,35 @@
+.marker {
+    position: relative;
+    width: 24px;
+    height: 32px;
+    overflow: visible;
+}
+
+.dot {
+    position: absolute;
+    left: -50%;
+    top: 0;
+
+    width: 24px;
+    height: 32px;
+
+    font-size: 2rem;
+    line-height: 1;
+    user-select: none;
+    will-change: transform, opacity;
+
+    transform: translate(-50%, -80px);
+    animation: rewardFloat 1s ease-in forwards;
+}
+
+@keyframes rewardFloat {
+    from {
+        opacity: 0;
+        transform: translateY(-80px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}

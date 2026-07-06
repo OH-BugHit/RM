@@ -433,3 +433,19 @@ export const defaultSprites: Record<number, string> = {
     10: '/images/assets/burglar.png',
     11: '/images/assets/hau.png',
 };
+
+export const defaultPotsAndBurglarSprites: Record<number, string> = {
+    [-1]: '/images/assets/cleanWhiteStone.png', // Spawn
+    0: '/images/assets/cleanWhiteStone.png', // Empty
+    1: '/images/assets/pot_intact.png', // Solid
+    2: '/images/assets/wall.png', // Trigger
+    3: '/images/assets/cleanWhiteStone.png', // Key
+    4: '/images/assets/cleanWhiteStone.png', // Door
+    5: '/images/assets/cleanWhiteStone.png', // Locked Door
+    6: '/images/assets/cleanWhiteStone.png', // Treasure
+    7: '/images/assets/cleanWhiteStone.png', // Big Treasure
+    8: '/images/assets/cleanWhiteStone.png', // Outside
+    9: '/images/assets/cleanWhiteStone.png', // Trap
+    10: '/images/assets/burglar.png',
+    11: '/images/assets/hau.png',
+};

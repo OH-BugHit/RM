@@ -52,6 +52,8 @@ export default function WorldComponent({
                             tileSize={tileSize}
                             agentLocation={env.position}
                             cellLocation={{ x: x, y: y }}
+                            worldHeight={height}
+                            worldWidth={width}
                         />
                     </div>
                 ))

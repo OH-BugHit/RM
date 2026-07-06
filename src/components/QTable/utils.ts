@@ -2,6 +2,8 @@
  * Stores images to render. Agent has this and updates it when props are changed
  */
 
+import { QLearningAgent } from '../agents/rlAgentQ';
+
 export class SpriteStore<T extends number, TImage extends CanvasImageSource = HTMLImageElement> {
     images = new Map<T, TImage>();
 
@@ -35,6 +37,8 @@ export class WorldStore {
     statePos = new Map<string, { x: number; y: number }>();
     grid = new Map<string, string>();
 
+    constructor(private agentRef: React.RefObject<QLearningAgent | undefined>) {}
+
     private cursorX = 0;
     private cursorY = 0;
 
@@ -52,6 +56,31 @@ export class WorldStore {
         this.grid.set(key, stateId);
         this.statePos.set(stateId, { x, y });
         this.moveCursor();
+    }
+
+    getTileVersion(tileX: number, tileY: number, z: number): number {
+        const visitTimes = this.agentRef.current?.visitTimes;
+        if (!visitTimes) return 0;
+        let version = 0;
+
+        const maxZoom = 14;
+        const scale = 1 << (maxZoom - z);
+
+        const fromX = tileX * scale;
+        const fromY = tileY * scale;
+        const toX = fromX + scale;
+        const toY = fromY + scale;
+
+        for (let x = fromX; x < toX; x++) {
+            for (let y = fromY; y < toY; y++) {
+                const state = this.grid.get(`${x},${y}`);
+                if (!state) continue;
+
+                version += visitTimes[state] ?? 0;
+            }
+        }
+
+        return version;
     }
 
     private moveCursor() {

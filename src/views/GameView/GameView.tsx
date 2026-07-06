@@ -3,7 +3,7 @@ import PotsAndBurglarGame from '../Environments/PotsAndBurglar/PotsAndBurglarGam
 import style from './style.module.css';
 import { RLGridEnv } from '../Environments/PotsAndBurglar/environment';
 import { QLearningAgent } from '../../components/agents/rlAgentQ';
-import { Actions, GameEnvironmentInfo, GenericObservation } from '../../types';
+import { Actions, GameEnvironmentInfo, GenericObservation, StateData } from '../../types';
 import { useAtomValue } from 'jotai';
 import { ActiveEnvironmentAtom } from '../../atoms/state';
 import { AnimatePresence } from 'framer-motion';
@@ -12,20 +12,21 @@ import StoryGame from '../Environments/StoryGame/StoryGame';
 import HUD from '../Xai/HUD';
 import SidePanelWrapper from '../SidePanel/SidePanelWrapper';
 import { WorldStore } from '../../components/QTable/utils';
+import { CustomGridLayer } from '../Xai/NewQTable/TileTable/TileTable';
 
 // React component
 function GameView() {
     const environment = useAtomValue(ActiveEnvironmentAtom);
-    const lWorld = useMemo(() => new WorldStore(), []);
-    const envRef = useRef<RLGridEnv>(undefined);
     const agentRef = useRef<QLearningAgent>(undefined);
+    const lWorld = useMemo(() => new WorldStore(agentRef), []);
+    const envRef = useRef<RLGridEnv>(undefined);
     const obsRef = useRef<GenericObservation>(undefined);
     const actionRef = useRef<Actions>(undefined);
     const qvalueRef = useRef<number[]>([]);
     const infoRef = useRef<GameEnvironmentInfo>(undefined);
     const mapRef = useRef<L.Map | null>(null);
-    const layerRef = useRef<L.GridLayer | null>(null);
-    const currentStateRef = useRef<string>('');
+    const layerRef = useRef<CustomGridLayer | null>(null);
+    const currentStateRef = useRef<StateData>({ previous: '', current: '' });
 
     const config = { image: '/images/background/background.png' }; //TODO: Change to get background image from somewher
 

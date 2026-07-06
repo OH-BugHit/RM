@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { QLearningAgent } from '../../../components/agents/rlAgentQ';
-import { Actions, GameEnvironmentInfo, GenericObservation, ObservationShape } from '../../../types';
+import { Actions, GameEnvironmentInfo, GenericObservation, ObservationShape, StateData } from '../../../types';
 import WorldComponent from '../../World/WorldComponent';
 import style from './style.module.css';
 import {
@@ -51,7 +51,7 @@ interface GenericWorldProps {
     qvalueRef: React.RefObject<number[]>;
     infoRef: React.RefObject<GameEnvironmentInfo | undefined>;
     lWorld: WorldStore;
-    currentStateRef: React.RefObject<string>;
+    currentStateRef: React.RefObject<StateData>;
 }
 
 function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, currentStateRef }: GenericWorldProps) {
@@ -227,8 +227,8 @@ function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, cu
             episodicRewardRef.current += reward;
             lastActionRef.current = action;
             const currentState = agentRef.current?.getStateKey(nextObs);
-            currentStateRef.current = currentState; // Set current state to this ref to pass it for Q-table navigation
             setLastState((old) => {
+                currentStateRef.current = { previous: old.current, current: currentState }; // Set current and old state also to this ref to pass it for Q-table
                 return {
                     previous: old.current,
                     current: currentState,

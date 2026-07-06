@@ -38,22 +38,22 @@ export function renderObservation({
     let poiCol = -1;
 
     switch (obs.POIdirection) {
-        case '0':
+        case '3':
             poiRow = center;
             poiCol = 0;
             break;
 
-        case '1':
+        case '0':
             poiRow = 0;
             poiCol = center;
             break;
 
-        case '2':
+        case '1':
             poiRow = grid.size - 1;
             poiCol = center;
             break;
 
-        case '3':
+        case '2':
             poiRow = center;
             poiCol = grid.size - 1;
             break;

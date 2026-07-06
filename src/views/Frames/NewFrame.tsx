@@ -6,8 +6,9 @@ interface FrameProps {
     minHeight?: number | string;
     maxWidth?: number | string;
     maxHeight?: number | string;
-    backgroundColour?: string; // Korvaa vihreän taustan tarvittaessa
+    backgroundColour?: string;
     visible?: boolean;
+    overlayRight?: React.ReactNode;
 }
 
 export function NewFrame({
@@ -18,6 +19,7 @@ export function NewFrame({
     maxWidth,
     maxHeight,
     backgroundColour,
+    overlayRight,
 }: FrameProps) {
     if (!visible) return null;
 
@@ -33,6 +35,8 @@ export function NewFrame({
             className={style.frame}
             style={styleProps}
         >
+            {overlayRight && <div className={style.overlayRight}>{overlayRight}</div>}
+
             <div
                 className={style.content}
                 style={backgroundColour ? { backgroundColor: backgroundColour, backgroundImage: 'none' } : undefined}

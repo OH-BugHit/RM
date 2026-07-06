@@ -9,14 +9,17 @@ import { WorldStore } from '../../../../components/QTable/utils';
 import { WorkerPool } from '../../../../components/QTable/workers/WorkerPool';
 import style from './style.module.css';
 import PoolUpdater from '../../../../components/QTable/PoolUpdater';
+import { MarkerManager } from '../../../../components/QTable/MarkerManager/MargerManager';
 
 interface TileTableProps {
     lWorld: WorldStore;
     mapRef: React.RefObject<L.Map | null>;
     agentRef: React.RefObject<QLearningAgent | undefined>;
-    layerRef: React.RefObject<L.GridLayer | null>;
+    layerRef: React.RefObject<CustomGridLayer | null>;
 }
-
+export interface CustomGridLayer extends L.GridLayer {
+    clearCache(): void;
+}
 export default function TileTable({ agentRef, lWorld, mapRef, layerRef }: TileTableProps) {
     const agentSelections = useAtomValue(ActiveAgentAtom);
 
@@ -66,16 +69,25 @@ export default function TileTable({ agentRef, lWorld, mapRef, layerRef }: TileTa
             pool,
             256,
             agentSelections.observationShape,
-            () => agentRef.current?.Q ?? {}
+            () => agentRef.current?.Q ?? {},
+            (x, y, z) => lWorld.getTileVersion(x, y, z)
         );
 
         const map = L.map('map', {
             crs: L.CRS.Simple,
+            fadeAnimation: false,
             minZoom: 9,
             maxZoom: 14,
         }).setView([0, 0], 14);
+        const agent = agentRef.current;
 
-        const layer = new CustomLayer();
+        mapRef.current = map;
+
+        const markerManager = new MarkerManager(map, lWorld, agentSelections.observationShape);
+
+        agent?.setMarkerManager(markerManager);
+
+        const layer = new CustomLayer() as CustomGridLayer;
 
         layer.addTo(map);
 
@@ -83,10 +95,12 @@ export default function TileTable({ agentRef, lWorld, mapRef, layerRef }: TileTa
         mapRef.current = map;
 
         return () => {
+            agent?.setMarkerManager(undefined);
+            markerManager.destroy();
             pool.destroy();
             map.remove();
         };
-    }, [pool, layerRef, mapRef, agentRef, agentSelections.observationShape]);
+    }, [pool, layerRef, mapRef, agentRef, lWorld, agentSelections.observationShape]);
 
     return (
         <>

@@ -2,55 +2,49 @@ import style from './style.module.css';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
 import FastForwardIcon from '@mui/icons-material/FastForward';
-import { useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { GameControlAtom } from '../../atoms/state';
 import GameButton from '../../components/Buttons/GameButton/GameButton';
+import { LodStateAtom } from '../../atoms/uiState';
 
 function Controls() {
-    const setControls = useSetAtom(GameControlAtom);
+    const [controls, setControls] = useAtom(GameControlAtom);
+    const setLod = useSetAtom(LodStateAtom);
 
     return (
         <div className={style.controlsWrapper}>
             <div className={style.controlsContainer}>
                 <GameButton
-                    title="Play"
+                    title={controls.isRunning ? 'Play' : 'Pause'}
                     variant="outlined"
                     onClick={() => {
+                        setLod(2);
                         setControls((old) => {
                             return {
                                 ...old,
-                                isRunning: true,
+                                isRunning: controls.isRunning ? false : true,
                                 isFast: false,
                             };
                         });
                     }}
                 >
-                    <PlayCircleOutlineIcon
-                        fontSize="large"
-                        color="secondary"
-                    />
-                </GameButton>
-                <GameButton
-                    title="Pause"
-                    variant="outlined"
-                    onClick={() => {
-                        setControls((old) => {
-                            return {
-                                ...old,
-                                isRunning: false,
-                            };
-                        });
-                    }}
-                >
-                    <PauseCircleOutlineIcon
-                        fontSize="large"
-                        color="secondary"
-                    />
+                    {controls.isRunning ? (
+                        <PauseCircleOutlineIcon
+                            fontSize="large"
+                            color="secondary"
+                        />
+                    ) : (
+                        <PlayCircleOutlineIcon
+                            fontSize="large"
+                            color="secondary"
+                        />
+                    )}
                 </GameButton>
                 <GameButton
                     title="Fast forward"
                     variant="outlined"
                     onClick={() => {
+                        setLod(1);
                         setControls((old) => {
                             return {
                                 ...old,
@@ -69,9 +63,12 @@ function Controls() {
                     title="One step"
                     variant="outlined"
                     onClick={() => {
+                        setLod(2);
                         setControls((old) => {
                             return {
                                 ...old,
+                                isRunning: false,
+                                isFast: false,
                                 takeStep: !old.takeStep,
                             };
                         });

@@ -4,12 +4,13 @@ import { WorkerPool } from './workers/WorkerPool';
 import { WorldStore } from './utils';
 import { QLearningAgent } from '../agents/rlAgentQ';
 import { UpdateWorldPulseAtom, UpdateSpritesPulseAtom } from '../../atoms/state';
+import { CustomGridLayer } from '../../views/Xai/NewQTable/TileTable/TileTable';
 
 interface SpriteUpdaterProps {
     pool: WorkerPool;
     lWorld: WorldStore;
     agentRef: React.RefObject<QLearningAgent | undefined>;
-    layerRef: React.RefObject<L.GridLayer | null>;
+    layerRef: React.RefObject<CustomGridLayer | null>;
 }
 export default function PoolUpdater({ pool, lWorld, agentRef, layerRef }: SpriteUpdaterProps) {
     const updateSpritesPulse = useAtomValue<boolean>(UpdateSpritesPulseAtom);
@@ -51,6 +52,7 @@ export default function PoolUpdater({ pool, lWorld, agentRef, layerRef }: Sprite
                 type: 'updateSprites',
                 sprites,
             });
+            layerRef.current?.clearCache();
             layerRef.current?.redraw();
         })();
 

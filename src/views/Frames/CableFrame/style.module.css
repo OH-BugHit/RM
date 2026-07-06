@@ -37,6 +37,7 @@
 }
 
 .cable {
-    margin-bottom: 1%;
-    margin-top: 0.8%;
+    margin-bottom: 2%;
+    margin-top: 2%;
+    opacity: 0.4
 }
