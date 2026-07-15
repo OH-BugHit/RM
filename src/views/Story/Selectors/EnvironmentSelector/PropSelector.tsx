@@ -8,13 +8,9 @@ import { useAtom, useSetAtom } from 'jotai';
 import { ActiveViewAtom, StoryProgressAtom, TilePropsAtom } from '../../../../atoms/uiState';
 import { Button } from '@genai-fi/base';
 import PropRow from './Prop/PropRow';
-import { IconButton } from '@mui/material';
 import { InnerFillCellAtom, WorldGridRenderAtom } from '../../../../atoms/gameState';
 
-interface EnvModeProps {
-    goHome: () => void;
-}
-export default function PropSelector({ goHome }: EnvModeProps) {
+export default function PropSelector() {
     const setActiveView = useSetAtom(ActiveViewAtom);
     const [storyProgress, setStoryProgress] = useAtom(StoryProgressAtom);
     const [tiles, setTiles] = useAtom<TileDefinition[]>(TilePropsAtom);
@@ -51,6 +47,8 @@ export default function PropSelector({ goHome }: EnvModeProps) {
 
     return (
         <div className={style.selectorContainer}>
+            <h1>Design your world</h1>
+            <Separator />
             <ImportDialog
                 type="tile"
                 preprocess={preprocessImage}
@@ -129,7 +127,6 @@ export default function PropSelector({ goHome }: EnvModeProps) {
                     }
                 }}
             />
-            <IconButton onClick={goHome}>home</IconButton>
             <div className={style.toolWrapper}>
                 <div className={style.textSection}>
                     <p>

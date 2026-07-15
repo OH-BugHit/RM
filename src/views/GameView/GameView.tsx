@@ -13,6 +13,7 @@ import HUD from '../Xai/HUD';
 import SidePanelWrapper from '../SidePanel/SidePanelWrapper';
 import { WorldStore } from '../../components/QTable/utils';
 import { CustomGridLayer } from '../Xai/NewQTable/TileTable/TileTable';
+import { SidePanelOpener } from '../../components/Buttons/SidePanelOpener';
 
 // React component
 function GameView() {
@@ -99,6 +100,7 @@ function GameView() {
 
     return (
         <>
+            <SidePanelOpener />
             <div
                 className={style.gameView}
                 style={{ ['--background-image']: `url(${config.image})` } as React.CSSProperties}

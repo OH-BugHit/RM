@@ -1,5 +1,14 @@
 import { atom } from 'jotai';
-import { HUDvisibility, StatsContent, StoryProgress, TileDefinition, UiHelp, View, VisibleTiles } from '../types';
+import {
+    HUDvisibility,
+    PanelOptions,
+    StatsContent,
+    StoryProgress,
+    TileDefinition,
+    UiHelp,
+    View,
+    VisibleTiles,
+} from '../types';
 import {
     defaultHUDvis,
     defaultStoryProgress,
@@ -8,7 +17,7 @@ import {
     initialTiles,
 } from '../utils/defaults';
 
-export const UiShowSidePanelAtom = atom<boolean>(false);
+export const UiShowSidePanelAtom = atom<PanelOptions>({ visible: false, content: undefined });
 export const LodStateAtom = atom<1 | 2>(1);
 export const ActiveViewAtom = atom<View>({});
 export const StoryStepAtom = atom<number>(0);

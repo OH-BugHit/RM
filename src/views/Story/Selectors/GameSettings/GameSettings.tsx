@@ -6,6 +6,7 @@ import { TextErrors } from '../../../../types';
 import { useEffect, useState } from 'react';
 import { TextField } from '@mui/material';
 import { ActiveEnvironmentAtom } from '../../../../atoms/state';
+import Separator from '../../../../components/Separator/Separator';
 
 export default function GameSettings() {
     const { t } = useTranslation();
@@ -17,7 +18,10 @@ export default function GameSettings() {
         setStoryProgress((old) => {
             return {
                 ...old,
-                rewards: true,
+                settings: {
+                    ...old.settings,
+                    opened: true,
+                },
             };
         });
     }, [setStoryProgress]);
@@ -58,6 +62,7 @@ export default function GameSettings() {
     return (
         <div className={style.selectorContainer}>
             <h1>{t('story.settings.title')}</h1>
+            <Separator />
             <p>TODO: Here just slider for episode length</p>
             <p>Last thing to do:.</p>
 

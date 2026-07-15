@@ -1,31 +1,99 @@
 import { SidePanel } from '@genai-fi/base';
-import { SidePanelOpener } from '../../components/Buttons/SidePanelOpener';
 import CreateMenu from '../GameView/CreateMenu';
-import { useAtom, useSetAtom } from 'jotai';
-import { StoryStepAtom, UiHelpAtom, UiShowSidePanelAtom } from '../../atoms/uiState';
+import { useAtom, useSetAtom, useStore } from 'jotai';
+import { StoryProgressAtom, UiHelpAtom, UiShowSidePanelAtom } from '../../atoms/uiState';
 
 export default function SidePanelWrapper() {
     const [sidePanelOpen, setSidePanelOpen] = useAtom(UiShowSidePanelAtom);
-    const [uiHelp, setUIHelper] = useAtom(UiHelpAtom);
-    const setStep = useSetAtom(StoryStepAtom);
+    const setUIHelper = useSetAtom(UiHelpAtom);
+    const store = useStore();
+    const setProgress = useSetAtom(StoryProgressAtom);
+
+    const storyProgressHelper = () => {
+        setUIHelper((old) => {
+            return {
+                ...old,
+                creativeClose: false,
+            };
+        });
+        const progress = store.get(StoryProgressAtom);
+        if (!progress.agent.closed && progress.agent.obsShape) {
+            setProgress((old) => {
+                return {
+                    ...old,
+                    agent: {
+                        ...old.agent,
+                        closed: true,
+                    },
+                };
+            });
+        }
+        if (!progress.design.closed && progress.environment.goal) {
+            setProgress((old) => {
+                return {
+                    ...old,
+                    design: {
+                        ...old.design,
+                        closed: true,
+                    },
+                };
+            });
+        }
+        if (!progress.environment.closed && progress.environment.goalSet) {
+            setProgress((old) => {
+                return {
+                    ...old,
+                    environment: {
+                        ...old.environment,
+                        closed: true,
+                    },
+                };
+            });
+        }
+        if (!progress.rewards.closed && progress.rewards.rewards) {
+            setProgress((old) => {
+                return {
+                    ...old,
+                    rewards: {
+                        ...old.rewards,
+                        closed: true,
+                    },
+                };
+            });
+        }
+        if (!progress.settings.closed && progress.environment.name) {
+            setProgress((old) => {
+                return {
+                    ...old,
+                    settings: {
+                        ...old.settings,
+                        closed: true,
+                    },
+                };
+            });
+        }
+    };
 
     return (
         <div style={{ zIndex: 1000 }}>
-            <SidePanelOpener />
             <SidePanel
-                open={sidePanelOpen}
+                open={sidePanelOpen.visible}
                 closeLabel="asdasd"
-                onOpen={() => setSidePanelOpen(true)}
-                position={'right'}
-                onClose={() => {
-                    if (uiHelp.creativeClose) {
-                        setStep((old) => old + 1);
-                    }
-                    setSidePanelOpen(false);
-                    setUIHelper((old) => {
+                onOpen={() =>
+                    setSidePanelOpen((old) => {
                         return {
                             ...old,
-                            creativeClose: false,
+                            visible: true,
+                        };
+                    })
+                }
+                position={'right'}
+                onClose={() => {
+                    storyProgressHelper();
+                    setSidePanelOpen((old) => {
+                        return {
+                            ...old,
+                            visible: false,
                         };
                     });
                 }}

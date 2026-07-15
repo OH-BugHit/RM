@@ -9,6 +9,7 @@ interface ArrowProps {
     radius: number; // etäisyys keskipisteestä
     angle: number; // asteina
     showAnchor?: boolean;
+    position?: 'absolute' | 'fixed';
 }
 
 /**
@@ -29,6 +30,7 @@ export default function Arrow({
     showAnchor = false,
     radius = 100,
     angle = 0,
+    position = 'absolute',
 }: ArrowProps) {
     const rad = (angle * Math.PI) / 180;
 
@@ -36,7 +38,7 @@ export default function Arrow({
     const y = Math.sin(rad) * radius;
 
     return (
-        <div style={{ position: 'absolute', right: right, top: top, bottom: bottom, left: left, zIndex: 9999 }}>
+        <div style={{ position: position, right: right, top: top, bottom: bottom, left: left, zIndex: 9999 }}>
             <div
                 style={{
                     position: 'absolute',

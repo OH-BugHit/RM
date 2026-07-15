@@ -24,6 +24,12 @@ export interface WorldErrors {
 
 export type Side = 'top' | 'bottom' | 'right' | 'left';
 
+export type SideOptions = 'agent' | 'props' | 'world' | 'reward' | 'settings' | undefined;
+export type PanelOptions = {
+    visible: boolean;
+    content: SideOptions;
+};
+
 export type VisibleTiles = {
     agent: boolean;
     observation: boolean;
@@ -44,6 +50,10 @@ export type StoryProgress = {
         name: boolean;
         img: boolean;
         obsShape: boolean;
+        closed: boolean;
+    };
+    design: {
+        closed: boolean;
     };
     environment: {
         goalSet: boolean;
@@ -53,8 +63,16 @@ export type StoryProgress = {
         name: boolean;
         props: boolean;
         modifyOpened: boolean;
+        closed: boolean;
     };
-    rewards: boolean;
+    rewards: {
+        rewards: boolean;
+        closed: boolean;
+    };
+    settings: {
+        opened: boolean;
+        closed: boolean;
+    };
 };
 
 export type StatsContent = {
@@ -81,7 +99,7 @@ export type UiHelp = {
     statsArrow: boolean;
     creativeClose: boolean;
     hideSideOpener: boolean;
-    sideOpener: boolean;
+    sideOpener: SideOptions;
 };
 
 export type TileDefinition = {

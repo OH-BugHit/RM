@@ -28,7 +28,7 @@ export const defaultUIHelp: UiHelp = {
     creativeClose: false,
     statsArrow: false,
     hideSideOpener: true, // Set to false on normal game?
-    sideOpener: false,
+    sideOpener: undefined,
 };
 
 export const defaultImages = {
@@ -319,6 +319,10 @@ export const defaultStoryProgress: StoryProgress = {
         name: false,
         img: false,
         obsShape: false,
+        closed: false,
+    },
+    design: {
+        closed: false,
     },
     environment: {
         goal: false,
@@ -328,8 +332,16 @@ export const defaultStoryProgress: StoryProgress = {
         modifyOpened: false,
         props: false,
         goalSet: false,
+        closed: false,
     },
-    rewards: false,
+    rewards: {
+        rewards: false,
+        closed: false,
+    },
+    settings: {
+        opened: false,
+        closed: false,
+    },
 };
 
 export const defaultHUDvis: HUDvisibility = {

@@ -1,6 +1,16 @@
 .container {
     position: relative;
     display: inline-block;
+    background-color: rgb(255, 255, 255);
+    padding: 1rem 0.4rem 1rem 0.4rem;
+    mask-image: url("/images/misc/arrow.png");
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+    -webkit-mask-image: url("/images/misc/arrow.png");
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
 }
 
 .container img {
@@ -14,17 +24,16 @@
     pointer-events: none;
     overflow: hidden;
 
-    /* Käytetään samaa kuvaa maskina */
     mask-image: url("/images/misc/arrow.png");
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: contain;
-
     -webkit-mask-image: url("/images/misc/arrow.png");
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
     -webkit-mask-size: contain;
 }
+
 
 .gloss::before {
     content: "";

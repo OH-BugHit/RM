@@ -7,6 +7,7 @@ import { CellType, TileDefinition } from '../../../../types';
 import { useEffect } from 'react';
 import TimeStepReward from './TimeStepReward';
 import TimeUpReward from './TimeUpReward';
+import Separator from '../../../../components/Separator/Separator';
 
 export default function RewardsSelector() {
     const setStoryProgress = useSetAtom(StoryProgressAtom);
@@ -15,7 +16,10 @@ export default function RewardsSelector() {
         setStoryProgress((old) => {
             return {
                 ...old,
-                rewards: true,
+                rewards: {
+                    ...old.rewards,
+                    rewards: true,
+                },
             };
         });
     }, [setStoryProgress]);
@@ -39,6 +43,7 @@ export default function RewardsSelector() {
     return (
         <div className={style.selectorContainer}>
             <h1>{t('story.rewards.title')}</h1>
+            <Separator />
             <p>Now you need to define reward function</p>
             <p>That means that you select what reward is given for agent in each state</p>
             <p>You can keep these as they are if you want and come back later to alter agent's behaviour.</p>

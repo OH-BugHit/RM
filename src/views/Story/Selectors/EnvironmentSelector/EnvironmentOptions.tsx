@@ -12,10 +12,6 @@ export default function EnvironmentOptions() {
     const [mode, setMode] = useState<EnvMode>(undefined);
     const storyProgress = useAtomValue(StoryProgressAtom);
 
-    const goHome = () => {
-        setMode(undefined);
-    };
-
     const handleSetMode = (mode: EnvMode) => {
         setMode(mode);
     };
@@ -39,8 +35,8 @@ export default function EnvironmentOptions() {
                     </SelectorItem>
                 </div>
             )}
-            {mode === 'props' && <PropSelector goHome={goHome} />}
-            {mode === 'modify' && <ModifyEnvironment goHome={goHome} />}
+            {mode === 'props' && <PropSelector />}
+            {mode === 'modify' && <ModifyEnvironment />}
         </>
     );
 }

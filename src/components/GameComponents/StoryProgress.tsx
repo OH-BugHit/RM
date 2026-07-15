@@ -18,38 +18,61 @@ export default function StoryProgress() {
     const setUIHelper = useSetAtom(UiHelpAtom);
 
     useEffect(() => {
-        if (step > 11) return; // creative stuff is under 11
+        if (step > 17) return; // creative stuff is under 18
+        if (progress.settings.closed) {
+            setStep(17);
+            return;
+        }
         if (progress.environment.name) {
+            setStep(16);
+            return;
+        }
+        if (progress.settings.opened) {
+            setStep(15);
+            return;
+        }
+        if (progress.rewards.closed) {
+            setStep(14);
+            return;
+        }
+        if (progress.rewards.rewards) {
+            setStep(13);
+            return;
+        }
+        if (progress.environment.closed) {
+            setStep(12);
+            return;
+        }
+        if (progress.environment.goalSet) {
             setStep(11);
             return;
         }
 
-        if (progress.rewards) {
+        if (progress.environment.modifyOpened) {
             setStep(10);
             return;
         }
-
-        if (progress.environment.goalSet) {
+        if (progress.design.closed) {
             setStep(9);
             return;
         }
 
-        if (progress.environment.modifyOpened) {
+        if (progress.environment.goal) {
             setStep(8);
             return;
         }
 
-        if (progress.environment.goal) {
+        if (progress.environment.spawn) {
             setStep(7);
             return;
         }
 
-        if (progress.environment.spawn) {
+        if (progress.environment.solid) {
             setStep(6);
             return;
         }
 
-        if (progress.environment.solid) {
+        if (progress.agent.closed) {
             setStep(5);
             return;
         }
@@ -68,12 +91,13 @@ export default function StoryProgress() {
             setStep(2);
             return;
         }
-    }, [progress, setStep]);
+    }, [progress, setStep, step]);
 
     useEffect(() => {
         setStatsContent((old) => {
             return { mode: old.mode, phase: step };
         });
+        console.log(step);
         switch (step) {
             case 0: {
                 setStatsContent({ mode: 'textNext', phase: step });
@@ -94,7 +118,7 @@ export default function StoryProgress() {
                     return {
                         ...old,
                         statsArrow: false,
-                        sideOpener: true,
+                        sideOpener: 'agent',
                         hideSideOpener: false,
                     };
                 });
@@ -113,11 +137,21 @@ export default function StoryProgress() {
                 });
                 break;
             }
-            case 5: {
-                setVisibleTiles((old) => {
+            case 4: {
+                setUIHelper((old) => {
                     return {
                         ...old,
-                        wall: true,
+                        sideOpener: 'props',
+                        creativeClose: true,
+                    };
+                });
+                break;
+            }
+            case 5: {
+                setUIHelper((old) => {
+                    return {
+                        ...old,
+                        creativeClose: false,
                     };
                 });
                 break;
@@ -126,12 +160,48 @@ export default function StoryProgress() {
                 setVisibleTiles((old) => {
                     return {
                         ...old,
+                        wall: true,
+                    };
+                });
+                break;
+            }
+            case 7: {
+                setVisibleTiles((old) => {
+                    return {
+                        ...old,
                         spawn: true,
                     };
                 });
                 break;
             }
+            case 8: {
+                setUIHelper((old) => {
+                    return {
+                        ...old,
+                        sideOpener: 'world',
+                    };
+                });
+                break;
+            }
             case 11: {
+                setUIHelper((old) => {
+                    return {
+                        ...old,
+                        sideOpener: 'reward',
+                    };
+                });
+                break;
+            }
+            case 14: {
+                setUIHelper((old) => {
+                    return {
+                        ...old,
+                        sideOpener: 'settings',
+                    };
+                });
+                break;
+            }
+            case 16: {
                 setHud((old) => {
                     return {
                         ...old,
@@ -146,11 +216,11 @@ export default function StoryProgress() {
                 });
                 break;
             }
-            case 12: {
+            case 17: {
                 setStatsContent({ mode: 'textNext', phase: step });
                 break;
             }
-            case 15: {
+            case 19: {
                 setHud({
                     charts: true,
                     agentVision: true,

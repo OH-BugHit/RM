@@ -1,14 +1,11 @@
 import style from './style.module.css';
-import { IconButton } from '@mui/material';
 import { useEffect } from 'react';
 import Separator from '../../../../components/Separator/Separator';
 import { useSetAtom } from 'jotai';
 import { StoryProgressAtom } from '../../../../atoms/uiState';
 import PropTool from './Prop/PropTool/PropTool';
-interface EnvModeProps {
-    goHome: () => void;
-}
-export default function ModifyEnvironment({ goHome }: EnvModeProps) {
+
+export default function ModifyEnvironment() {
     const setStoryProgress = useSetAtom(StoryProgressAtom);
 
     useEffect(() => {
@@ -35,7 +32,8 @@ export default function ModifyEnvironment({ goHome }: EnvModeProps) {
 
     return (
         <div className={style.selectorContainer}>
-            <IconButton onClick={goHome}>prev</IconButton>
+            <h1>Modify your world</h1>
+            <Separator />
             <div className={style.textSection}>
                 <h3>Alter your environment!</h3>
                 <p>You can resize your world by clicking on the edges of your world.</p>

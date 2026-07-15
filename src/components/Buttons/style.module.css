@@ -1,12 +1,43 @@
-@value primary, secondary, bgColourful1, textDark from "@genai-fi/base/css/colours.module.css";
+.sideOpenerItems {
+    position: absolute;
+    inset: 0;
+    right: 2rem;
+    z-index: 9999;
+
+    pointer-events: none;
+}
+
+.menuButton {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    pointer-events: auto;
+}
+
+.buttonList {
+    position: absolute;
+    height: 100vh;
+    top: 10%;
+    bottom: 10%;
+    right: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4%;
+
+    pointer-events: none;
+}
+
+.buttonList>* {
+    pointer-events: auto;
+}
 
 .icon {
-    position: absolute;
-    right: 10px;
-    background: secondary
+    background: rgba(50, 249, 242, 0.48);
 }
 
 .icon:hover {
-    background: rgb(242, 31, 221);
     scale: 1.1;
 }
