@@ -151,6 +151,18 @@ export function SidePanelOpener() {
                             )}
                         </IconButton>
                     </motion.div>
+                    <motion.div
+                        className={style.background}
+                        initial={false}
+                        animate={{
+                            scaleX: menuOpen ? 1 : 0,
+                        }}
+                        transition={{
+                            type: 'spring',
+                            stiffness: 220,
+                            damping: 24,
+                        }}
+                    />
 
                     <AnimatePresence>
                         {showButtons && (

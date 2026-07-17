@@ -97,7 +97,6 @@ export default function StoryProgress() {
         setStatsContent((old) => {
             return { mode: old.mode, phase: step };
         });
-        console.log(step);
         switch (step) {
             case 0: {
                 setStatsContent({ mode: 'textNext', phase: step });

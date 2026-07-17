@@ -64,7 +64,7 @@ export default function AgentIndex() {
 
     return (
         <div className={style.selectorContainer}>
-            <h1>Agent</h1>
+            <h1>{t('story.agents.title')}</h1>
             <ImportDialog
                 preprocess={preprocessImageWScale}
                 onSelect={(image) => {

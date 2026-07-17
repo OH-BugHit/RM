@@ -1,16 +1,27 @@
 .sideOpenerItems {
     position: absolute;
-    inset: 0;
-    right: 2rem;
-    z-index: 9999;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 100;
+    pointer-events: none;
+    width: 8rem;
+}
 
+.background {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.48);
+    transform-origin: right center;
+    z-index: 99;
     pointer-events: none;
 }
 
 .menuButton {
     position: absolute;
+    z-index: 100;
     top: 50%;
-    right: 0;
+    right: 1.5rem;
     transform: translateY(-50%);
     pointer-events: auto;
 }
@@ -18,15 +29,15 @@
 .buttonList {
     position: absolute;
     height: 100vh;
+    z-index: 100;
     top: 10%;
     bottom: 10%;
-    right: 0;
+    right: 1.5rem;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 4%;
-
     pointer-events: none;
 }
 
@@ -40,4 +51,5 @@
 
 .icon:hover {
     scale: 1.1;
+    background: rgba(136, 255, 251, 0.48);
 }

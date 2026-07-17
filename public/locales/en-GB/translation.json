@@ -82,6 +82,12 @@
         "title": "Reward Machine",
         "tutorial": "Tutorial"
     },
+    "exploGauge": {
+        "tooltip": {
+            "exploit": "Exploitation: Prefer actions with the highest estimated reward.",
+            "explore": "Exploration: Occasionally try random actions to discover potentially better strategies."
+        }
+    },
     "import": {
         "actions": {
             "loadingImage": "loading image",
@@ -129,7 +135,7 @@
             "title": "Actions"
         },
         "agents": {
-            "title": "Agent"
+            "title": "Agent menu"
         },
         "bubbles": {
             "capable": "it was very capable and was able to do all sorts of actions!",
@@ -140,14 +146,17 @@
             "seenAt": "The <AgentName/> was often seen at the...",
             "thereWas": "...there was an..."
         },
+        "design": {
+            "title": "Design menu"
+        },
         "environment": {
-            "title": "Environment"
+            "title": "Environment editor"
         },
         "interaction": {
             "title": "Interaction"
         },
         "rewards": {
-            "title": "Rewards"
+            "title": "Reward shaping"
         },
         "settings": {
             "title": "Game settings"

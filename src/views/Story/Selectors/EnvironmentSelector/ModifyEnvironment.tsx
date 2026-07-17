@@ -4,8 +4,10 @@ import Separator from '../../../../components/Separator/Separator';
 import { useSetAtom } from 'jotai';
 import { StoryProgressAtom } from '../../../../atoms/uiState';
 import PropTool from './Prop/PropTool/PropTool';
+import { useTranslation } from 'react-i18next';
 
 export default function ModifyEnvironment() {
+    const { t } = useTranslation();
     const setStoryProgress = useSetAtom(StoryProgressAtom);
 
     useEffect(() => {
@@ -32,7 +34,7 @@ export default function ModifyEnvironment() {
 
     return (
         <div className={style.selectorContainer}>
-            <h1>Modify your world</h1>
+            <h1>{t('story.environment.title')}</h1>
             <Separator />
             <div className={style.textSection}>
                 <h3>Alter your environment!</h3>

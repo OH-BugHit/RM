@@ -14,6 +14,7 @@ import { NewFrame } from '../Frames/NewFrame';
 import { WorldStore } from '../../components/QTable/utils';
 import { CustomGridLayer } from './NewQTable/TileTable/TileTable';
 import { StateData } from '../../types';
+import ExplotationExploration from './ExplorationExplotation/ExplorationExplotation';
 
 interface XaiProps {
     agentRef: React.RefObject<QLearningAgent | undefined>;
@@ -53,6 +54,9 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                 />
             </FrameContainer>
             <FrameContainer position="top-right">
+                <NewFrame visible={hudVis.agentVision}>
+                    <ExplotationExploration />
+                </NewFrame>
                 <NewFrame visible={hudVis.agentVision}>
                     <AgentVision agentRef={agentRef} />
                 </NewFrame>

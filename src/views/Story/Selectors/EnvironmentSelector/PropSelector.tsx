@@ -9,8 +9,10 @@ import { ActiveViewAtom, StoryProgressAtom, TilePropsAtom } from '../../../../at
 import { Button } from '@genai-fi/base';
 import PropRow from './Prop/PropRow';
 import { InnerFillCellAtom, WorldGridRenderAtom } from '../../../../atoms/gameState';
+import { useTranslation } from 'react-i18next';
 
 export default function PropSelector() {
+    const { t } = useTranslation();
     const setActiveView = useSetAtom(ActiveViewAtom);
     const [storyProgress, setStoryProgress] = useAtom(StoryProgressAtom);
     const [tiles, setTiles] = useAtom<TileDefinition[]>(TilePropsAtom);
@@ -47,7 +49,7 @@ export default function PropSelector() {
 
     return (
         <div className={style.selectorContainer}>
-            <h1>Design your world</h1>
+            <h1>{t('story.design.title')}</h1>
             <Separator />
             <ImportDialog
                 type="tile"
