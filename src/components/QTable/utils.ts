@@ -37,6 +37,8 @@ export class WorldStore {
     statePos = new Map<string, { x: number; y: number }>();
     grid = new Map<string, string>();
 
+    // Okay, here is a loop so that agent actually owns reference for itself as the WorldStore is owned by an agent.
+    // But hey, I think agent should not be bothered with this code and store has slightly different lifecycle so this is how it's implemented.
     constructor(private agentRef: React.RefObject<QLearningAgent | undefined>) {}
 
     private cursorX = 0;
@@ -58,6 +60,7 @@ export class WorldStore {
         this.moveCursor();
     }
 
+    // For invaliding areas in the Q-map. Agent has visit time at record for each state.
     getTileVersion(tileX: number, tileY: number, z: number): number {
         const visitTimes = this.agentRef.current?.visitTimes;
         if (!visitTimes) return 0;
@@ -83,8 +86,8 @@ export class WorldStore {
         return version;
     }
 
+    // Cursor goes around for nice layout over the origo
     private moveCursor() {
-        // Cursor goes around and
         switch (this.dir) {
             case 0:
                 this.cursorX += 1;

@@ -1,4 +1,4 @@
-import style from '../../style.module.css';
+import style from '../../../style.module.css';
 import { Button } from '@genai-fi/base';
 import { useTranslation } from 'react-i18next';
 import { useSetAtom } from 'jotai';

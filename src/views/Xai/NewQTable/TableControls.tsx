@@ -1,11 +1,14 @@
 import style from './style.module.css';
 import GameButton from '../../../components/Buttons/GameButton/GameButton';
 import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
-import { useAtomValue } from 'jotai';
+import GpsFixedIcon from '@mui/icons-material/GpsFixed';
+import GpsOffIcon from '@mui/icons-material/GpsOff';
+import { useAtom, useAtomValue } from 'jotai';
 import { LodStateAtom } from '../../../atoms/uiState';
 import { WorldStore } from '../../../components/QTable/utils';
 import L from 'leaflet';
 import { StateData } from '../../../types';
+import { MoveQmapAtom } from '../../../atoms/gameState';
 
 interface TableControlsProps {
     mapRef: React.RefObject<L.Map | null>;
@@ -16,6 +19,7 @@ interface TableControlsProps {
 
 export default function TableControls({ mapRef, world, currentStateRef, layerRef }: TableControlsProps) {
     const lod = useAtomValue(LodStateAtom);
+    const [mapFollow, setMapFollow] = useAtom(MoveQmapAtom);
     const handlePrevious = () => {
         if (lod === 1) return;
         const map = mapRef.current;
@@ -42,6 +46,24 @@ export default function TableControls({ mapRef, world, currentStateRef, layerRef
                     fontSize="large"
                     color="primary"
                 />
+            </GameButton>
+            <GameButton
+                title={!mapFollow ? 'Move map to current state' : 'Disable moving'}
+                onClick={() => setMapFollow(!mapFollow)}
+                disabled={lod === 1}
+                variant="outlined"
+            >
+                {!mapFollow ? (
+                    <GpsOffIcon
+                        fontSize="large"
+                        color="primary"
+                    />
+                ) : (
+                    <GpsFixedIcon
+                        fontSize="large"
+                        color="primary"
+                    />
+                )}
             </GameButton>
         </div>
     );

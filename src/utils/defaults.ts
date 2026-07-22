@@ -316,26 +316,28 @@ export const defaultVisibleTiles = {
 
 export const defaultStoryProgress: StoryProgress = {
     agent: {
+        opened: false,
         name: false,
         img: false,
         obsShape: false,
         closed: false,
     },
     design: {
+        opened: false,
         closed: false,
-    },
-    environment: {
         goal: false,
-        name: false,
         solid: false,
         spawn: false,
-        modifyOpened: false,
+    },
+    environment: {
+        name: false,
+        opened: false,
         props: false,
         goalSet: false,
         closed: false,
     },
     rewards: {
-        rewards: false,
+        opened: false,
         closed: false,
     },
     settings: {

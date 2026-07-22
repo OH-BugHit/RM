@@ -7,12 +7,14 @@ import { useEffect, useState } from 'react';
 import { TextField } from '@mui/material';
 import { ActiveEnvironmentAtom } from '../../../../atoms/state';
 import Separator from '../../../../components/Separator/Separator';
+import { EnvSettingsAtom } from '../../../../atoms/gameState';
 
 export default function GameSettings() {
     const { t } = useTranslation();
     const setStoryProgress = useSetAtom(StoryProgressAtom);
     const [errors, setErrors] = useState<TextErrors>({});
     const [environment, setEnvironment] = useAtom(ActiveEnvironmentAtom);
+    const [envSettings, setEnvsettings] = useAtom(EnvSettingsAtom);
 
     useEffect(() => {
         setStoryProgress((old) => {
@@ -61,15 +63,50 @@ export default function GameSettings() {
 
     return (
         <div className={style.selectorContainer}>
-            <h1>{t('story.settings.title')}</h1>
+            <h1>{t('createMenu.settings.title')}</h1>
+            <em>{t('createMenu.settings.titleDesc')}</em>
             <Separator />
-            <p>TODO: Here just slider for episode length</p>
-            <p>Last thing to do:.</p>
-
             <div className={style.selectorContainer}>
-                <h3>Give your environment an epic name: </h3>
+                <h3>{t('createMenu.settings.episodeLength')}</h3>
+                <em>{t('createMenu.settings.episodeLengthDesc')}</em>
+                <br />
                 <TextField
-                    label={t('story.agent.nameInputLabel')}
+                    label={t('createMenu.settings.lengthInputLabel')}
+                    type="number"
+                    slotProps={{
+                        htmlInput: {
+                            min: 1,
+                            max: 100,
+                            step: 1,
+                        },
+                    }}
+                    value={envSettings.generic.env.maxTurns}
+                    sx={{ color: 'white' }}
+                    onChange={(e) => {
+                        setEnvsettings((old) => {
+                            return {
+                                ...old,
+                                generic: {
+                                    ...old.generic,
+                                    env: {
+                                        ...old.generic.env,
+                                        maxTurns: Number(e.target.value),
+                                    },
+                                },
+                            };
+                        });
+                    }}
+                    required
+                    margin="normal"
+                />
+            </div>
+            <Separator />
+            <div className={style.selectorContainer}>
+                <h3>{t('createMenu.settings.nameTitle')}</h3>
+                <em>{t('createMenu.settings.nameDesc')}</em>
+                <br />
+                <TextField
+                    label={t('createMenu.settings.nameInputLabel')}
                     value={environment.name}
                     sx={{ color: 'white' }}
                     onChange={(e) => {
@@ -90,6 +127,7 @@ export default function GameSettings() {
                     margin="normal"
                 />
             </div>
+            <Separator />
         </div>
     );
 }

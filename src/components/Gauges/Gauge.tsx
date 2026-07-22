@@ -6,13 +6,25 @@ type ExplGaugeProps = {
     max?: number;
     width?: number;
     height?: number;
+    green: { from: number; to: number };
+    yellow: { from: number; to: number };
+    red: { from: number; to: number };
 };
 
-export default function ExplGauge({ min = 0, value, max = 1, width = 220, height = 120 }: ExplGaugeProps) {
+export default function ExplGauge({
+    green,
+    yellow,
+    red,
+    min = 0,
+    value,
+    max = 1,
+    width = 220,
+    height = 120,
+}: ExplGaugeProps) {
     const segments = [
-        { from: min, to: 0.1 * max, color: '#2e7d32' },
-        { from: 0.1, to: 0.12 * max, color: '#ffc354' },
-        { from: 0.12, to: max, color: '#d32f2f' },
+        { from: red.from, to: red.to, color: '#d32f2f' },
+        { from: yellow.from, to: yellow.to * max, color: '#ffc354' },
+        { from: green.from, to: green.to * max, color: '#2e7d32' },
     ];
 
     return (

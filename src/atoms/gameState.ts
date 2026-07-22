@@ -35,7 +35,8 @@ export const ChartAtom = atom<ChartState>({
     reward: [],
     win: [],
 });
-export const TempSettingsAtom = atom<EnvSettings>(defaultEnvSettings);
 export const EnvSettingsAtom = atom<EnvSettings>(defaultEnvSettings);
 
 export const RewardsPulseAtom = atom<boolean>(true);
+
+export const MoveQmapAtom = atom<boolean>(true);

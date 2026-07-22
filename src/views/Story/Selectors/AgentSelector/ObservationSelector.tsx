@@ -1,12 +1,14 @@
-import style from './style.module.css';
+import style from '../style.module.css';
 import SelectorItem from '../SelectorItem';
 import DrawObservation from '../../../Observation/DrawObservation';
 import { useAtom, useSetAtom } from 'jotai';
 import { ActiveAgentAtom } from '../../../../atoms/state';
 import { StoryProgressAtom } from '../../../../atoms/uiState';
 import { ObservationShape } from '../../../../types';
+import { useTranslation } from 'react-i18next';
 
 export default function ObservationSelector() {
+    const { t } = useTranslation('', { keyPrefix: 'createMenu.agent' });
     const [activeAgent, setActiveAgent] = useAtom(ActiveAgentAtom);
     const setProgress = useSetAtom(StoryProgressAtom);
 
@@ -31,11 +33,8 @@ export default function ObservationSelector() {
     return (
         <div className={style.selectorContainer}>
             <div className={style.textSection}>
-                <h3>Select observation shape</h3>
-                <p>
-                    Agents can have different observation spaces, meaning some agents see further away. Seeing more can
-                    help agent to find solutions, but learning is also harder and slower.
-                </p>
+                <h3>{t('obsShapeTitle')}</h3>
+                <em>{t('obsShapeTitleDesc')}</em>
             </div>
             <ul className={style.selectorItemContainer}>
                 <SelectorItem

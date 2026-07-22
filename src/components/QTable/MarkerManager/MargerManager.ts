@@ -18,10 +18,10 @@ export class MarkerManager {
         private observationShape: ObservationShape
     ) {}
 
-    show(stateId: string, action: number, type: MarkerType) {
+    show(stateId: string, action: number, type: MarkerType, move: boolean = true) {
         const latLng = getActionPosition(this.map, this.world, stateId, this.observationShape, action);
         if (!latLng) return;
-        this.map.setView(latLng);
+        if (move) this.map.setView(latLng);
 
         const marker = L.marker(latLng, {
             icon: L.divIcon({

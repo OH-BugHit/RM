@@ -35,7 +35,7 @@ export default function StoryProgress() {
             setStep(14);
             return;
         }
-        if (progress.rewards.rewards) {
+        if (progress.rewards.opened) {
             setStep(13);
             return;
         }
@@ -48,7 +48,7 @@ export default function StoryProgress() {
             return;
         }
 
-        if (progress.environment.modifyOpened) {
+        if (progress.environment.opened) {
             setStep(10);
             return;
         }
@@ -57,17 +57,17 @@ export default function StoryProgress() {
             return;
         }
 
-        if (progress.environment.goal) {
+        if (progress.design.goal) {
             setStep(8);
             return;
         }
 
-        if (progress.environment.spawn) {
+        if (progress.design.spawn) {
             setStep(7);
             return;
         }
 
-        if (progress.environment.solid) {
+        if (progress.design.solid) {
             setStep(6);
             return;
         }

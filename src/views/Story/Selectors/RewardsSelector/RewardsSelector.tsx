@@ -10,6 +10,7 @@ import TimeUpReward from './TimeUpReward';
 import Separator from '../../../../components/Separator/Separator';
 
 export default function RewardsSelector() {
+    const { t } = useTranslation('', { keyPrefix: 'createMenu.rewards' });
     const setStoryProgress = useSetAtom(StoryProgressAtom);
 
     useEffect(() => {
@@ -18,13 +19,11 @@ export default function RewardsSelector() {
                 ...old,
                 rewards: {
                     ...old.rewards,
-                    rewards: true,
+                    opened: true,
                 },
             };
         });
     }, [setStoryProgress]);
-
-    const { t } = useTranslation();
     const tiles = useAtomValue(TilePropsAtom);
     const groups = Object.values(
         tiles.reduce(
@@ -42,16 +41,15 @@ export default function RewardsSelector() {
 
     return (
         <div className={style.selectorContainer}>
-            <h1>{t('story.rewards.title')}</h1>
+            <h1>{t('title')}</h1>
+            <em>{t('titleDesc')}</em>
             <Separator />
-            <p>Now you need to define reward function</p>
-            <p>That means that you select what reward is given for agent in each state</p>
-            <p>You can keep these as they are if you want and come back later to alter agent's behaviour.</p>
-            <p>When ready, proceed to last step that allows you to tweak game settings.</p>
-            <h3>Your states:</h3>
             <div className={style.rowContainer}>
+                <h3>{t('general')}</h3>
                 <TimeStepReward />
                 <TimeUpReward />
+                <Separator />
+                <h3>{t('objects')}</h3>
                 {groups.map((tiles) => (
                     <PropRewardItem
                         key={tiles[0].type}
@@ -59,6 +57,7 @@ export default function RewardsSelector() {
                     />
                 ))}
             </div>
+            <Separator />
         </div>
     );
 }

@@ -28,7 +28,7 @@ export default function SidePanelWrapper() {
                 };
             });
         }
-        if (!progress.design.closed && progress.environment.goal) {
+        if (!progress.design.closed && progress.design.goal) {
             setProgress((old) => {
                 return {
                     ...old,
@@ -50,7 +50,7 @@ export default function SidePanelWrapper() {
                 };
             });
         }
-        if (!progress.rewards.closed && progress.rewards.rewards) {
+        if (!progress.rewards.closed && progress.rewards.opened) {
             setProgress((old) => {
                 return {
                     ...old,

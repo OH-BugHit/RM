@@ -12,7 +12,7 @@ import {
     ResetUiPulseAtom,
     UpdateWorldPulseAtom,
 } from '../../../atoms/state';
-import { EnvSettingsAtom } from '../../../atoms/gameState';
+import { EnvSettingsAtom, MoveQmapAtom } from '../../../atoms/gameState';
 import {
     getLargeOffset,
     getDefaultObservation,
@@ -232,7 +232,7 @@ function PotsAndBurglarGame({
             if (action === Actions.specialAction) playBark();
             const { info, obs: nextObs, reward, terminated } = envRef.current.step(action);
             infoRef.current = info;
-            agentRef.current.update(currentObs, action, reward, nextObs);
+            agentRef.current.update(currentObs, action, reward, nextObs, terminated, store.get(MoveQmapAtom));
             potsBrokenRef.current += info.trigger ? 1 : 0;
             episodicRewardRef.current += reward;
             lastActionRef.current = action;
@@ -266,6 +266,7 @@ function PotsAndBurglarGame({
             syncUI();
         }
     }, [
+        store,
         syncUI,
         playBark,
         spawnFloat,
@@ -292,7 +293,8 @@ function PotsAndBurglarGame({
                 actionRef.current = action;
                 const { info, obs: nextObs, reward, terminated } = envRef.current.step(action);
                 infoRef.current = info;
-                agentRef.current.update(currentObs, action, reward, nextObs);
+
+                agentRef.current.update(currentObs, action, reward, nextObs, terminated, store.get(MoveQmapAtom));
                 potsBrokenRef.current += info.trigger ? 1 : 0;
 
                 lastActionRef.current = action;
@@ -314,7 +316,7 @@ function PotsAndBurglarGame({
             }
             syncUI();
         }
-    }, [syncUI, obsRef, agentRef, envRef, infoRef, actionRef]);
+    }, [store, syncUI, obsRef, agentRef, envRef, infoRef, actionRef]);
 
     // Fast loop
     useEffect(() => {

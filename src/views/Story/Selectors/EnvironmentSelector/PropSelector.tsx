@@ -1,4 +1,4 @@
-import style from './style.module.css';
+import style from '../style.module.css';
 import Separator from '../../../../components/Separator/Separator';
 import ImportDialog from '../../../../components/ImportDialog/ImportDialog';
 import { useEffect, useState } from 'react';
@@ -12,7 +12,7 @@ import { InnerFillCellAtom, WorldGridRenderAtom } from '../../../../atoms/gameSt
 import { useTranslation } from 'react-i18next';
 
 export default function PropSelector() {
-    const { t } = useTranslation();
+    const { t } = useTranslation('', { keyPrefix: 'createMenu.design' });
     const setActiveView = useSetAtom(ActiveViewAtom);
     const [storyProgress, setStoryProgress] = useAtom(StoryProgressAtom);
     const [tiles, setTiles] = useAtom<TileDefinition[]>(TilePropsAtom);
@@ -26,6 +26,18 @@ export default function PropSelector() {
     useEffect(() => {
         setInnerFill(lockedTiles[1]);
     }, [lockedTiles, setInnerFill]);
+
+    useEffect(() => {
+        setStoryProgress((old) => {
+            return {
+                ...old,
+                design: {
+                    ...old.design,
+                    opened: true,
+                },
+            };
+        });
+    }, [setStoryProgress]);
 
     const openImport = (tile: TileDefinition) => {
         setActiveTile(tile);
@@ -49,7 +61,8 @@ export default function PropSelector() {
 
     return (
         <div className={style.selectorContainer}>
-            <h1>{t('story.design.title')}</h1>
+            <h1>{t('title')}</h1>
+            <em>{t('titleDesc')}</em>
             <Separator />
             <ImportDialog
                 type="tile"
@@ -66,8 +79,8 @@ export default function PropSelector() {
                                     setStoryProgress((old) => {
                                         return {
                                             ...old,
-                                            environment: {
-                                                ...old.environment,
+                                            design: {
+                                                ...old.design,
                                                 goal: true,
                                                 props: true,
                                             },
@@ -81,8 +94,8 @@ export default function PropSelector() {
                                     setStoryProgress((old) => {
                                         return {
                                             ...old,
-                                            environment: {
-                                                ...old.environment,
+                                            design: {
+                                                ...old.design,
                                                 solid: true,
                                             },
                                         };
@@ -105,8 +118,8 @@ export default function PropSelector() {
                                     setStoryProgress((old) => {
                                         return {
                                             ...old,
-                                            environment: {
-                                                ...old.environment,
+                                            design: {
+                                                ...old.design,
                                                 spawn: true,
                                             },
                                         };
@@ -131,29 +144,18 @@ export default function PropSelector() {
             />
             <div className={style.toolWrapper}>
                 <div className={style.textSection}>
-                    <p>
-                        Environment is the playground of the agent where it acts, receives rewards and learns. Here you
-                        design the world for your agent!
-                    </p>
-                    <h3>Design your environment!</h3>
-
-                    <p>
-                        Here you select what your world looks like. You can select from premade props and emojis or
-                        import your own images.
-                    </p>
-                    <p>
-                        The agent must be always contained inside of wall-elements in this game. First, select one solid
-                        prop to form that boundary.
-                    </p>
+                    <h3>{t('makeWorkTitle')}</h3>
+                    <em>{t('makeWorkTitleDesc')}</em>
                 </div>
+                <p>{t('solid')}</p>
                 <PropRow
                     tile={lockedTiles[0]}
                     openImport={openImport}
                     setTiles={setTiles}
                 />
-                {storyProgress.environment.solid && (
+                {storyProgress.design.solid && (
                     <>
-                        <p>Now select image for spawn area (start location)</p>
+                        <p>{t('solid')}</p>
                         <PropRow
                             tile={lockedTiles[1]}
                             openImport={openImport}
@@ -161,9 +163,9 @@ export default function PropSelector() {
                         />
                     </>
                 )}
-                {storyProgress.environment.spawn && (
+                {storyProgress.design.spawn && (
                     <>
-                        <p>Select episode ending prop (something smarter here about goal or task of the agent)</p>
+                        <p>{t('goal')}</p>
                         <PropRow
                             tile={lockedTiles[2]}
                             openImport={openImport}
@@ -172,20 +174,11 @@ export default function PropSelector() {
                     </>
                 )}
                 <Separator />
-                {storyProgress.environment.spawn && (
+                {storyProgress.design.spawn && (
                     <>
-                        <h3>More props</h3>
+                        <h3>{t('makeBeautifullTitle')}</h3>
 
-                        <p>
-                            Your environment has everything needed for full episode or reinforcement learning: Starting
-                            place and ending condition. Also you have those outer walls that are needed in this
-                            particular game.
-                        </p>
-                        <p>
-                            You can make your world more interesting by adding additional props. Maybe consider adding
-                            few "treasures", "big treasures" and "traps", that will give different rewards for the agent
-                            when reached.
-                        </p>
+                        <p>{t('makeBeautifullTitleDesc')}</p>
                         {libraryTiles.map((tile) => (
                             <PropRow
                                 key={tile.id}
@@ -199,12 +192,9 @@ export default function PropSelector() {
                             onClick={() => addTile()}
                             className={style.row}
                         >
-                            Create new prop
+                            {t('createNew')}
                         </Button>
-                        <p>
-                            You can alter all selections throughtout the whole game so feel free to come back here
-                            later.
-                        </p>
+                        <p>{t('ps')}</p>
                         <Separator />
                     </>
                 )}

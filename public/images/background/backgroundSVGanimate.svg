@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+  <defs>
+    <style>
+      /* Animation 1, edge pulse flow */
+      @keyframes pulseFlow {
+        0% {
+          stroke-dashoffset: 1020;
+        }
+        100% {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      /* Animation 2, node glow */
+      @keyframes nodeGlow {
+        0%, 100% {
+          opacity: 0.2;
+          r: 2px;
+        }
+        50% {
+          opacity: 0.8;
+          r: 4px;
+        }
+      }
+
+      /* pulse lines -class */
+      .pulse-line {
+        /* stroke-dasharray: 40px light, 300px nothing */
+        stroke-dasharray: 40 300; 
+        animation: pulseFlow 8s linear infinite;
+        stroke: #ffffff;
+        stroke-width: 2px;
+        opacity: 0.6;
+        filter: drop-shadow(0px 0px 3px rgba(255, 255, 255, 0.8));
+      }
+
+      /* Eri reiteille eri nopeudet/viiveet luonnollisuuden vuoksi */
+      .pulse-1 { animation-duration: 10s; animation-delay: 0s}
+      .pulse-2 { animation-duration: 13s; animation-delay: -6s; }
+      .pulse-3 { animation-duration: 11s; animation-delay: -8s; }
+
+      .glowing-node {
+        animation: nodeGlow 4s ease-in-out infinite;
+        fill: #ffffff;
+      }
+      .node-delay-1 { animation-delay: -1.3s; }
+      .node-delay-2 { animation-delay: -2.6s; }
+    </style>
+
+    <!-- Background gradient -->
+    <radialGradient id="bgGradient" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#fdf9f3" />
+      <stop offset="40%" stop-color="#f4ebe1" />
+      <stop offset="80%" stop-color="#e2f0e3" />
+      <stop offset="100%" stop-color="#d3ebd5" />
+    </radialGradient>
+
+    <!-- Seamless pattern -->
+    <pattern id="aiPattern" width="400" height="400" patternUnits="userSpaceOnUse">
+      
+      <!-- Paths in background -->
+      <g stroke="#3a2f2a" stroke-width="1.2" opacity="0.08" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path id="path1" d="M 0,100 L 80,100 L 120,60 L 220,60 L 260,100 L 320,100 L 360,140 L 400,140" />
+        <path id="path2" d="M 40,200 L 100,200 L 140,240 L 180,240 L 220,200 L 300,200" />
+        <path id="path3" d="M 200,0 L 200,40 L 240,80 L 240,160 L 280,200 L 280,300 L 240,340 L 240,400" />
+      </g>
+
+      <!-- Animated paths following same paths -->
+      <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M 0,100 L 80,100 L 120,60 L 220,60 L 260,100 L 320,100 L 360,140 L 400,140" class="pulse-line pulse-1" />
+        <path d="M 40,200 L 100,200 L 140,240 L 180,240 L 220,200 L 300,200" class="pulse-line pulse-2" />
+        <path d="M 200,0 L 200,40 L 240,80 L 240,160 L 280,200 L 280,300 L 240,340 L 240,400" class="pulse-line pulse-3" />
+      </g>
+
+      <!-- Glowing nodes -->
+      <g>
+        <circle cx="120" cy="60" class="glowing-node" />
+        <circle cx="260" cy="100" class="glowing-node node-delay-1" />
+        <circle cx="140" cy="240" class="glowing-node node-delay-2" />
+        <circle cx="280" cy="200" class="glowing-node node-delay-1" />
+      </g>
+
+      <!-- Polygons -->
+      <g fill="#ffffff" opacity="0.2">
+        <polygon points="80,50 90,40 100,50 95,65 85,65" />
+        <polygon points="280,120 295,110 310,125 300,140 285,135" />
+      </g>
+    </pattern>
+  </defs>
+
+  <rect width="100%" height="100%" fill="url(#bgGradient)" />
+  <rect width="100%" height="100%" fill="url(#aiPattern)" />
+</svg>

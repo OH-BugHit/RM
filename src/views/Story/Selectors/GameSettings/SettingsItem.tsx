@@ -70,7 +70,6 @@ export default function SettingsItem({ tiles }: PropRewardProps) {
                 <RewardControl
                     min={-20}
                     max={20}
-                    // TODO: value tulee CellType-kohtaisesta rewardista
                     value={value}
                     step={1}
                     onChange={updateReward}

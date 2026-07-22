@@ -29,7 +29,7 @@ function GameView() {
     const layerRef = useRef<CustomGridLayer | null>(null);
     const currentStateRef = useRef<StateData>({ previous: '', current: '' });
 
-    const config = { image: '/images/background/background.png' }; //TODO: Change to get background image from somewher
+    const config = { image: '/images/background/backgroundSVGanimate.svg' }; //TODO: Change to get background image from somewher
 
     //TODO: Set settings when game is selected now they are here:
 

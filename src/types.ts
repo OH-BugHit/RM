@@ -50,23 +50,25 @@ export type StoryProgress = {
         name: boolean;
         img: boolean;
         obsShape: boolean;
+        opened: boolean;
         closed: boolean;
     };
     design: {
+        opened: boolean;
         closed: boolean;
-    };
-    environment: {
-        goalSet: boolean;
         goal: boolean;
         solid: boolean;
         spawn: boolean;
+    };
+    environment: {
+        goalSet: boolean;
         name: boolean;
         props: boolean;
-        modifyOpened: boolean;
+        opened: boolean;
         closed: boolean;
     };
     rewards: {
-        rewards: boolean;
+        opened: boolean;
         closed: boolean;
     };
     settings: {
@@ -132,7 +134,21 @@ export enum CellType {
     Trap = 9,
 }
 
+/**
+ * CELL_TYPE_OPTIONS, is full set of celltypes, not in use anymore.
+ */
 export const CELL_TYPE_OPTIONS = Object.values(CellType).filter((v) => typeof v === 'number') as CellType[];
+
+// Basic options for celltypes
+export const BASIC_CELL_TYPE_OPTIONS: CellType[] = [
+    CellType.Spawn,
+    CellType.Empty,
+    CellType.Solid,
+    CellType.Trigger,
+    CellType.Treasure,
+    CellType.TreasureBig,
+    CellType.Trap,
+];
 
 export type TileLibraryCategory =
     | 'walls'

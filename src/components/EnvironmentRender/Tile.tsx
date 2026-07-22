@@ -30,9 +30,6 @@ export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation,
         cellLocation.y === 0 ||
         cellLocation.x === worldWidth - 1 ||
         cellLocation.y === worldHeight - 1;
-    const agentImage = useMemo(() => {
-        return agent.img;
-    }, [agent.img]);
 
     const onSight = useMemo(
         () =>
@@ -51,27 +48,17 @@ export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation,
         if (cellLocation.y !== agentLocation.y || cellLocation.x !== agentLocation.x) return base;
 
         return (
-            <div
-                className={style.tileOverlay}
-                style={{ width: tileSize, height: tileSize }}
-            >
-                <img
-                    src={`${cell.image}`}
-                    alt="Agent location background"
-                    className={`${style.tileLayer} ${style.tileBackground}`}
-                    style={{
-                        opacity: visibleTiles.agent ? 0.4 : 0,
-                    }}
-                />
-                <img
-                    src={agentImage}
-                    alt="Agent Image"
-                    className={`${style.tileLayer} ${style.tileForeground}`}
-                    style={{
-                        opacity: visibleTiles.agent ? 1 : 0,
-                    }}
-                />
-            </div>
+            <img
+                src={`${cell.image}`}
+                alt="Agent location background"
+                width={tileSize}
+                height={tileSize}
+                style={{
+                    opacity: visibleTiles.agent ? 0.4 : 0,
+                    transition: 'opacity 60ms ease',
+                    transitionDelay: '120ms',
+                }}
+            />
         );
     };
 
@@ -262,7 +249,6 @@ export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation,
     const handleTileClick = (e: React.PointerEvent<HTMLButtonElement>) => {
         e.preventDefault();
         if (propTool && !border) {
-            //TODO: TRACK IF MODIFYING OUTER BOUNDARY (HAS TO BE SOLID!)
             if (propTool.type === CellType.Trigger) {
                 setStoryProgress((old) => {
                     return {
@@ -287,13 +273,14 @@ export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation,
                 width: tileSize,
                 height: tileSize,
                 pointerEvents: cell.type === CellType.Outside ? 'none' : 'auto',
-                background: onSight ? '#ffffffc5' : 'transparent', //836a0e44
+                background: onSight ? '#eaffdeef' : 'transparent', //836a0e44
                 zIndex: 1000,
             }}
             className={style.tile}
             onPointerDown={(e) => handleTileClick(e)}
             onPointerEnter={(e) => {
-                // TODO: Do tool selector for this on pointer enter thingy. Maybe? Like, toggle for single / paint or smth
+                // TODO: Not maybe, even more complex? Do tool selector for this on pointer enter thingy. Maybe? Like, toggle for single / paint or smth
+                // TODO: Allow modifying solid edge to solid other
                 if (e.buttons & 1) {
                     handleTileClick(e);
                 }

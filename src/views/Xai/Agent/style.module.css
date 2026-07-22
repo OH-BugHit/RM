@@ -15,4 +15,5 @@
 
 .flipped {
     transform: scaleX(-1);
+    max-width: 10vw;
 }

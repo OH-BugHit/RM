@@ -8,29 +8,26 @@ import { WorldStore } from '../../../components/QTable/utils';
 
 interface QTableProps {
     agentRef: React.RefObject<QLearningAgent | undefined>;
-    disabled?: boolean;
     lWorld: WorldStore;
     mapRef: React.RefObject<L.Map | null>;
     layerRef: React.RefObject<CustomGridLayer | null>;
 }
 
-export default function QTable({ agentRef, disabled, lWorld, mapRef, layerRef }: QTableProps) {
+export default function QTable({ agentRef, lWorld, mapRef, layerRef }: QTableProps) {
     const lod = useAtomValue(LodStateAtom);
 
     return (
         <main className={style.tableContainer}>
-            {disabled && <em>Game is running</em>}
-            {!disabled &&
-                (lod == 1 ? (
-                    <LodFar agentRef={agentRef} />
-                ) : (
-                    <TileTable
-                        agentRef={agentRef}
-                        lWorld={lWorld}
-                        mapRef={mapRef}
-                        layerRef={layerRef}
-                    />
-                ))}
+            {lod == 1 ? (
+                <LodFar agentRef={agentRef} />
+            ) : (
+                <TileTable
+                    agentRef={agentRef}
+                    lWorld={lWorld}
+                    mapRef={mapRef}
+                    layerRef={layerRef}
+                />
+            )}
         </main>
     );
 }

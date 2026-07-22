@@ -3,14 +3,16 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100vh;
-    background: white;
     gap: 2rem;
     overflow: auto;
     padding: 1rem 0;
     box-sizing: border-box;
     position: relative;
+    background-image: url('/images/background/backgroundSVGanimate.svg');
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
 }
 
 .cards {
@@ -25,22 +27,6 @@
     margin-top: 2rem;
     font-style: italic;
     font-size: 1.2rem;
-}
-
-
-.homeContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100vh;
-    background: white;
-    gap: 2rem;
-    overflow: auto;
-    padding: 1rem 0;
-    box-sizing: border-box;
-    position: relative;
 }
 
 @media only screen and (max-width: 600px) {

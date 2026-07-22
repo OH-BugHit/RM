@@ -25,7 +25,7 @@ export default function TileTable({ agentRef, lWorld, mapRef, layerRef }: TileTa
 
     const pool = useMemo(() => new WorkerPool(), []);
 
-    // Init world
+    // Workers init world
     useEffect(() => {
         pool.initWorld({
             type: 'initWorld',
@@ -33,7 +33,7 @@ export default function TileTable({ agentRef, lWorld, mapRef, layerRef }: TileTa
         });
     }, [pool, lWorld]);
 
-    // Init Sprites
+    // Workers init sprites
     useEffect(() => {
         const spriteStore = agentRef.current?.spriteStore;
         if (!spriteStore) return;

@@ -9,16 +9,16 @@ export default function TotalStats() {
     return (
         <ul className={style.stats}>
             <li>
-                {t('stats.totWins')}: {episodicData?.wins}
+                <span>{t('stats.totLosses')}</span>
+                <span>{episodicData?.losses}</span>
             </li>
             <li>
-                {t('stats.totLosses')}: {episodicData?.losses}
+                <span>{t('stats.totTriggers')}</span>
+                <span>{episodicData?.triggered}</span>
             </li>
             <li>
-                {t('stats.totTriggers')}: {episodicData?.triggered}
-            </li>
-            <li>
-                {t('stats.totLastEpisode')}: {episodicData?.fullEpisodeReward}
+                <span>{t('stats.totEpisodes')}</span>
+                <span>{(episodicData?.losses ?? 0) + (episodicData?.triggered ?? 0)}</span>
             </li>
         </ul>
     );

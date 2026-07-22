@@ -82,20 +82,85 @@
         "title": "Reward Machine",
         "tutorial": "Tutorial"
     },
-    "exploGauge": {
+    "createMenu": {
+        "agent": {
+            "giveName": "Give your agent an epic name:",
+            "giveNameDesc": "Naming things is really hard sometimes. Try to think for example: What would capture this agent's true essense? Or what is its' objective? Who am I? Who are you? Or: Why there is this helper text for the name input?",
+            "imgTitle": "Select your agent",
+            "imgDesc": "Select what your agent looks like.",
+            "nameInputLabel": "Name your agent",
+            "obsShapeTitle": "Select observation shape",
+            "obsShapeTitleDesc": "Agents can have different observation spaces, meaning some agents see further away. Seeing more can help agent to find solutions, but learning is also harder and slower.",
+            "title": "Agent menu",
+            "titleDesc": "Create your own Q-learning agent"
+        },
+        "design": {
+            "createNew": "Create new tile",
+            "goal": "Select episode ending tile",
+            "makeBeautifullTitle": "Make it beautiful!",
+            "makeBeautifullTitleDesc": "Now you can make your world more interesting by adding additional props. Maybe consider adding few \"treasures\", \"big treasures\" and \"traps\", that will give different rewards for the agent when reached.",
+            "makeWorkTitle": "Make it work!",
+            "makeWorkTitleDesc": "In reinforcement learning it is usually required to have starting place and ending condition. This game also requires walls around the environment. Start by selecting how those look in your environment.",
+            "ps": "You can alter all selections throughtout the whole game so feel free to come back here later.",
+            "solid": "Select one solid tile to create walls.",
+            "spawn": "Select tile for spawn area (start location)",
+            "title": "Design menu",
+            "titleDesc": "Environment is the playground of the agent where it acts, receives rewards and learns. Here you design the world for your agent!"
+        },
+        "modify": {
+            "alterTitle": "Alter your environment!",
+            "alterDesc": "You can resize your world by clicking on the edges of your world.\nYou can change bordering tiles style, but they always have to be \"Solid\"-type.",
+            "modifyTitle": "Modify world",
+            "modifyDesc": "Select tile-element from your prop list and click your world to change tiles",
+            "title": "Environment editor",
+            "titleDesc": "Build your environment"
+        },
+        "rewards": {
+            "general": "General rewards:",
+            "title": "Reward shaping",
+            "titleDesc": "Tune reward to alter agent's objective",
+            "objects": "Rewards for reaching objects:"
+        },
+        "settings": {
+            "episodeLength": "Set the episode length",
+            "episodeLengthDesc": "Episode length is the maximum number of steps allowed in one game. The agent must reach the goal before this limit. If it runs out of steps first, the episode ends with a loss.",
+            "lengthInputLabel": "Episode length",
+            "nameTitle": "Give your environment an epic name",
+            "nameDesc": "Once upon a time... there was a completely unnecessary helper text. It existed only for visual purposes. But, bound by its task and purpose, it was doomed to destruction.",
+            "nameInputLabel": "Name your environment",
+            "title": "Game settings",
+            "titleDesc": "Tune general settings for your game"
+        }
+    },
+    "gauge": {
         "tooltip": {
             "exploit": "Exploitation: Prefer actions with the highest estimated reward.",
-            "explore": "Exploration: Occasionally try random actions to discover potentially better strategies."
+            "explore": "Exploration: Occasionally try random actions to discover potentially better strategies.",
+            "smallAlpha": "Low learning rate: Learn slowly by making only small updates from new experiences.",
+            "largeAlpha": "High learning rate: Learn quickly by making large updates from new experiences.",
+            "smallGamma": "Low discount factor: Future rewards have little influence when updating learned values.",
+            "largeGamma": "High discount factor: Future rewards have a strong influence when updating learned values."
+        }
+    },
+    "help": {
+        "hud": {
+            "agentVis": "This observation view visualizes the observation received by the agent from the environment and combines it with the Q-values stored and updated by the agent. Actual observation in this game is not images but just numbers. Q-values, the values that represent expected reward from action, are stored paired to the state values.",
+            "alpha": "The learning rate controls how quickly the agent learns from new experiences. A higher value changes learned Q-values more after each update, while a lower value changes them more gradually.",
+            "gamma": "The discount factor controls how much future rewards affect learning. A higher value makes the agent learn with long-term rewards in mind, while a lower value focuses learning more on immediate rewards.",
+            "epsilon": "The exploration rate controls how often the agent tries a random action instead of the best action it currently knows. Random actions help the agent discover better strategies.",
+            "qTable": "This map visualizes the Q-Table of Q-learning agent. You can zoom and pan around. Focus on to current observation with button on the right side of this frame. When in fast-mode, it shows lower resolution ",
+            "stats": "See how the reward and win/lose rate progress"
         }
     },
     "import": {
         "actions": {
             "loadingImage": "loading image",
             "openFileExplorer": "Select image from your files",
-            "setImage": "Set prop image"
+            "setImage": "Accept selected"
         },
         "messages": {
-            "selectTile": "Choose a tile from the library, use an emoji, or upload your own image."
+            "selectTile": "Choose a tile from the library, use an emoji, or upload your own image.",
+            "selectAgent": "Upload your own image."
         },
         "titles": {
             "agent": "Choose image for agent",
@@ -121,11 +186,12 @@
             "shout": "Shout",
             "5": "Stay"
         },
-        "episodicReward": "Episode reward",
+        "episodicReward": "Current episode reward",
         "lastAction": "Last action",
         "title": "Stats",
-        "totLosses": "Losses",
+        "totLosses": "Episode end reached",
         "totTriggers": "Goal reached",
+        "totEpisodes": "Total episodes",
         "totPots": "Pots destroyed",
         "totLastEpisode": "Last episode reward",
         "totWins": "Wins"
@@ -134,9 +200,7 @@
         "actions": {
             "title": "Actions"
         },
-        "agents": {
-            "title": "Agent menu"
-        },
+
         "bubbles": {
             "capable": "it was very capable and was able to do all sorts of actions!",
             "end1": "And those rewards lead the agent to learn!",
@@ -146,20 +210,38 @@
             "seenAt": "The <AgentName/> was often seen at the...",
             "thereWas": "...there was an..."
         },
-        "design": {
-            "title": "Design menu"
-        },
-        "environment": {
-            "title": "Environment editor"
-        },
         "interaction": {
             "title": "Interaction"
         },
-        "rewards": {
-            "title": "Reward shaping"
-        },
-        "settings": {
-            "title": "Game settings"
+        "tasks": {
+            "agent": {
+                "openMenu": "Open Agent menu",
+                "agentImage": "Select your agent",
+                "agentName": "Name your agent",
+                "obsShape": "Select Observation shape",
+                "title": "Agent tasks"
+            },
+            "design": {
+                "goal": "Goal",
+                "solid": "Solid",
+                "openMenu": "Open Design menu",
+                "spawn": "Spawn area",
+                "title": "Design tasks"
+            },
+            "environment": {
+                "goalSet": "Place one goal",
+                "openMenu": "Open agent menu",
+                "title": "Environment tasks"
+            },
+            "rewards": {
+                "title": "Reward task",
+                "openMenu": "Open reward shaping menu"
+            },
+            "settings": {
+                "name": "Name your environment",
+                "openMenu": "Open Game Settings",
+                "title": "Settings tasks"
+            }
         },
         "text": {
             "0": "Hi! And welcome to create your own Reinforcement Learning game!",
@@ -175,9 +257,9 @@
             "10": "Here you build your world. You can rezise the world by clicking those buttons around your world. To add stuff to your world, select tile tool from the list and just click where you want to place it. To proceed from here, you need to add at least one Goal-tile",
             "11": "Great! You can always come back to modify your world and choises. When you are ready with your world, close the Environment editor.",
             "12": "Few more steps remaining. Now you may proceed to the Reward shaping!",
-            "13": "Here you set the rewards, all preset rewards are already good but feel free to tune them and come back here after your agent has learned something to alter its' behaviour. You can close the Reward shaping now.",
+            "13": "Here you set the rewards, all preset rewards are already good but feel free to tune them and come back here after your agent has learned something to alter its' behaviour. Proceed by closing the Reward shaping now.",
             "14": "Last menu! I promise! Open the Game Settings menu!",
-            "15": "In these settings you can set episode length, so the length of one round of your game. Also the very last thing is to give your environment an epic name!",
+            "15": "In these settings you can set episode length, so the length of one round of your game. Also the very last thing is to give your environment an epic name! Remember, as always, you can come back later to change these too!",
             "16": "Great! You are all set! Feel free to come back to this creative menu at any point you like. Proceed by closing Game Settings.",
             "17": "Nice looking environment I have for me to act! Well... I don't know should I call myself \"I\" or \"me\"... After all I'm just large chunck of code. But anyway! Please proceed!"
         }
@@ -214,7 +296,7 @@
             "22": "Hey! Yeah, I spooked the burglar away and got a nice reward!",
             "23": "But yeah, I'm an AI agent so let's speed things up...",
             "25": "Whoa, that was fast!",
-            "26": "Now no burglar can evade me! And I only occasionally break some pots 😇"
+            "26": "Now no burglar can evade me! 😇"
         },
         "concepts": {
             "title": "Concepts",

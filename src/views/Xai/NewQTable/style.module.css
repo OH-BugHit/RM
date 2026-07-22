@@ -1,16 +1,16 @@
 .tableContainer {
     position: flex;
     flex-direction: column;
-    width: 400px;
-    height: 300px;
-    max-width: 100%;
-    max-height: 100%;
+    min-width: 100px;
+    min-height: 100px;
     position: relative;
     overflow: hidden;
     border-radius: 1rem;
 }
 
 .controlsContainer {
+    display: flex;
+    flex-direction: column;
     background: linear-gradient(to bottom, #fbf3ea 0%, #f3e7d9 50%, #ead8c7 100%);
     border-radius: 42px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);

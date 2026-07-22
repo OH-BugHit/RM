@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { QLearningAgent } from '../../../components/agents/rlAgentQ';
 import { Actions, GameEnvironmentInfo, GenericObservation, Agent, SixthSenseDirection } from '../../../types';
 import { useSound } from '../../../hooks/useSound';
-import { useStore, useAtomValue, useAtom, useSetAtom } from 'jotai';
-import { AgentSettingsAtom, GameControlAtom } from '../../../atoms/state';
+import { useAtomValue, useAtom, useSetAtom } from 'jotai';
+import { GameControlAtom } from '../../../atoms/state';
 import {
     StepsProcentageAtom,
     StepsTakenAtom,
@@ -60,13 +60,10 @@ function TutorialEnvironment() {
 
     const playBark = useSound(sounds);
     const controls = useAtomValue(GameControlAtom);
-    const agentSettings = useAtomValue(AgentSettingsAtom);
     const [tutorialStep, setTutorialStep] = useAtom(TutorialStepAtom);
     const setStepsTaken = useSetAtom(StepsTakenAtom);
     const setStepsProcentage = useSetAtom(StepsProcentageAtom);
     const tutorialPhase = useAtomValue(TutorialPhaseAtom);
-
-    const store = useStore();
 
     const gridSize = 7;
     const maxTurns = 999;
@@ -126,12 +123,11 @@ function TutorialEnvironment() {
         });
 
         obsRef.current = defaultObs;
-        const agentSettingsData = store.get(AgentSettingsAtom);
         const lWorld = new WorldStore(agentRef);
         agentRef.current = new QLearningAgent({
-            alpha: agentSettingsData.alpha,
-            gamma: agentSettingsData.gamma,
-            epsilon: agentSettingsData.epsilon,
+            alpha: 0.1,
+            gamma: 0.2,
+            epsilon: 0.1,
             lWorld: lWorld,
         });
 
@@ -155,7 +151,6 @@ function TutorialEnvironment() {
         barkSuccessReward,
         barkFailReward,
         burglarWonReward,
-        store,
         actionRef,
         envRef,
         infoRef,
@@ -164,15 +159,6 @@ function TutorialEnvironment() {
         qvalueRef,
         defaultObs,
     ]);
-
-    useEffect(() => {
-        if (agentRef.current) {
-            agentRef.current.alpha = agentSettings.alpha;
-            agentRef.current.gamma = agentSettings.gamma;
-            agentRef.current.epsilon = agentSettings.epsilon;
-            agentRef.current.learning = agentSettings.learning;
-        }
-    }, [agentSettings, agentRef]);
 
     useEffect(() => {
         resetUI();
@@ -224,6 +210,7 @@ function TutorialEnvironment() {
 
     const stepUI = React.useCallback(() => {
         if (obsRef.current && agentRef.current && obsRef.current && envRef.current) {
+            console.log('epsilon', agentRef.current.epsilon);
             const prev = envRef.current.position;
             const currentObs = obsRef.current;
             const action = agentRef.current.chooseAction(currentObs);
@@ -281,7 +268,12 @@ function TutorialEnvironment() {
 
                 stepsTakenRef.current++;
             }
-            if (stepsTakenRef.current >= 1000000) setTutorialStep(25);
+            if (stepsTakenRef.current >= 1000000) {
+                if (agentRef.current) {
+                    agentRef.current.epsilon = 0; // Set epsilon to zero at the end of tutorial play
+                }
+                setTutorialStep(25);
+            }
             setStepsTaken(stepsTakenRef.current);
             const progress = Math.floor(stepsTakenRef.current / 20000);
 

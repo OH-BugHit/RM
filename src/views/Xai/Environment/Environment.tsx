@@ -1,3 +1,4 @@
+import style from './style.module.css';
 import { useAtomValue } from 'jotai';
 import { ActiveEnvironmentAtom } from '../../../atoms/state';
 import { HUDvisAtom } from '../../../atoms/uiState';
@@ -9,9 +10,18 @@ export default function Environment() {
     return (
         <>
             <NewFrame visible={hudVis.envTitle}>
-                <h3 style={{ minHeight: '70px', alignContent: 'center', margin: 0, justifySelf: 'center' }}>
+                <h1
+                    className={style.envTitle}
+                    style={{
+                        fontFamily: 'Tektur, Andika;',
+                        minHeight: '70px',
+                        alignContent: 'center',
+                        margin: 0,
+                        justifySelf: 'center',
+                    }}
+                >
                     {environment.name}
-                </h3>
+                </h1>
             </NewFrame>
         </>
     );

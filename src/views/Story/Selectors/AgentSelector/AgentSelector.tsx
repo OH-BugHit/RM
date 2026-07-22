@@ -1,12 +1,14 @@
-import style from './style.module.css';
+import style from '../style.module.css';
 import SelectorItem from '../SelectorItem';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { ActiveAgentAtom, ImportedAgentImgAtom } from '../../../../atoms/state';
 import { ActiveViewAtom } from '../../../../atoms/uiState';
 
 import { defaultAgents } from '../../../../utils/defaults';
+import { useTranslation } from 'react-i18next';
 
 export default function AgentSelector() {
+    const { t } = useTranslation('', { keyPrefix: 'createMenu.agent' });
     const setActiveAgent = useSetAtom(ActiveAgentAtom);
     const setActiveView = useSetAtom(ActiveViewAtom);
     const [selectedAgent, setSelectedAgent] = useAtom(ActiveAgentAtom);
@@ -15,8 +17,8 @@ export default function AgentSelector() {
     return (
         <div className={style.selectorContainer}>
             <div className={style.textSection}>
-                <h3>Select your agent</h3>
-                <p>Select what your agent looks like.</p>
+                <h3>{t('imgTitle')}</h3>
+                <em>{t('imgDesc')}</em>
             </div>
             <ul className={style.selectorItemContainer}>
                 <SelectorItem

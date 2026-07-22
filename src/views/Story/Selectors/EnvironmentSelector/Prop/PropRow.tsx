@@ -1,6 +1,6 @@
-import style from '../style.module.css';
+import style from '../../style.module.css';
 import { IconButton, MenuItem, Select } from '@mui/material';
-import { CELL_TYPE_OPTIONS, CellType, TileDefinition } from '../../../../../types';
+import { BASIC_CELL_TYPE_OPTIONS, CellType, TileDefinition } from '../../../../../types';
 import { SetStateAction } from 'jotai';
 import { useTranslation } from 'react-i18next';
 import CollectionsIcon from '@mui/icons-material/Collections';
@@ -29,7 +29,7 @@ export default function PropRow({ tile, openImport, setTiles }: PropRowProps) {
                         setTiles((old) => old.map((t) => (t.id === tile.id ? { ...t, type: value } : t)));
                     }}
                 >
-                    {CELL_TYPE_OPTIONS.map((type) => (
+                    {BASIC_CELL_TYPE_OPTIONS.map((type) => (
                         <MenuItem
                             key={type}
                             value={type}

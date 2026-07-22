@@ -52,7 +52,7 @@ export default function ResizeButton({ envRef, side, sx }: Props) {
         <Box
             sx={{
                 display: 'flex',
-                visibility: visibility.environment.modifyOpened ? 'visible' : 'hidden',
+                visibility: visibility.environment.opened ? 'visible' : 'hidden',
                 flexDirection: side === 'top' || side === 'bottom' ? 'column' : 'row',
                 width: '100%',
                 height: '100%',

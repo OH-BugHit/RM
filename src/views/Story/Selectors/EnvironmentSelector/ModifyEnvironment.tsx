@@ -1,4 +1,4 @@
-import style from './style.module.css';
+import style from '../style.module.css';
 import { useEffect } from 'react';
 import Separator from '../../../../components/Separator/Separator';
 import { useSetAtom } from 'jotai';
@@ -7,16 +7,17 @@ import PropTool from './Prop/PropTool/PropTool';
 import { useTranslation } from 'react-i18next';
 
 export default function ModifyEnvironment() {
-    const { t } = useTranslation();
+    const { t } = useTranslation('', { keyPrefix: 'createMenu.modify' });
     const setStoryProgress = useSetAtom(StoryProgressAtom);
 
+    // Sets false when unmounting since that is used in addition to follow story progress, for resize button toggle.
     useEffect(() => {
         setStoryProgress((old) => {
             return {
                 ...old,
                 environment: {
                     ...old.environment,
-                    modifyOpened: true,
+                    opened: true,
                 },
             };
         });
@@ -26,7 +27,7 @@ export default function ModifyEnvironment() {
                     ...old,
                     environment: {
                         ...old.environment,
-                        modifyOpened: false,
+                        opened: false,
                     },
                 };
             });
@@ -34,15 +35,18 @@ export default function ModifyEnvironment() {
 
     return (
         <div className={style.selectorContainer}>
-            <h1>{t('story.environment.title')}</h1>
+            <h1>{t('title')}</h1>
+            <em>{t('titleDesc')}</em>
             <Separator />
             <div className={style.textSection}>
-                <h3>Alter your environment!</h3>
-                <p>You can resize your world by clicking on the edges of your world.</p>
-                <p>You can change bordering tiles style, but they always have to be "Solid"-type.</p>
+                <h3>{t('alterTitle')}</h3>
+                <p>{t('alterDesc')}</p>
+            </div>
+            <div className={style.textSection}>
+                <h3>{t('modifyTitle')}</h3>
+                <p>{t('modifyDesc')}</p>
             </div>
             <PropTool />
-
             <Separator />
         </div>
     );

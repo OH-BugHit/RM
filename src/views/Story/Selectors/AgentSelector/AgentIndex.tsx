@@ -16,7 +16,7 @@ export default function AgentIndex() {
     const { t } = useTranslation();
     const [errors, setErrors] = useState<TextErrors>({});
     const [selectedAgent, setSelectedAgent] = useAtom(ActiveAgentAtom);
-    const setStoryProgress = useSetAtom(StoryProgressAtom);
+    const [storyProgress, setStoryProgress] = useAtom(StoryProgressAtom);
     const setActiveAgent = useSetAtom(ActiveAgentAtom);
     const setImportedImg = useSetAtom(ImportedAgentImgAtom);
 
@@ -37,6 +37,18 @@ export default function AgentIndex() {
             });
         }
     }, [errors, selectedAgent, setStoryProgress]);
+
+    useEffect(() => {
+        setStoryProgress((old) => {
+            return {
+                ...old,
+                agent: {
+                    ...old.agent,
+                    opened: true,
+                },
+            };
+        });
+    }, [setStoryProgress]);
 
     const handleSubmit = (e: string) => {
         const trimmed = e.trim();
@@ -64,7 +76,8 @@ export default function AgentIndex() {
 
     return (
         <div className={style.selectorContainer}>
-            <h1>{t('story.agents.title')}</h1>
+            <h1>{t('createMenu.agent.title')}</h1>
+            <em>{t('createMenu.agent.titleDesc')}</em>
             <ImportDialog
                 preprocess={preprocessImageWScale}
                 onSelect={(image) => {
@@ -78,44 +91,46 @@ export default function AgentIndex() {
             />
             <Separator />
             <AgentSelector />
-            {selectedAgent.img && (
+            {storyProgress.agent.img && (
                 <>
                     <Separator />
                     <ObservationSelector />
                 </>
             )}
-            {selectedAgent.observationShape && (
+            {storyProgress.agent.obsShape && (
                 <div className={style.selectorContainer}>
-                    {selectedAgent.observationShape && (
-                        <>
-                            <h3>Give your agent an epic name: </h3>
-                            <TextField
-                                label={t('story.agent.nameInputLabel')}
-                                value={selectedAgent.name}
-                                sx={{ color: 'white' }}
-                                onChange={(e) => {
-                                    setSelectedAgent((old) => {
-                                        return {
-                                            ...old,
-                                            name: e.target.value,
-                                        };
-                                    });
+                    <>
+                        <Separator />
+                        <h3>{t('createMenu.agent.giveName')}</h3>
+                        <em>{t('createMenu.agent.giveNameDesc')}</em>
+                        <br />
+                        <TextField
+                            label={t('createMenu.agent.nameInputLabel')}
+                            value={selectedAgent.name}
+                            sx={{ color: 'white' }}
+                            onChange={(e) => {
+                                setSelectedAgent((old) => {
+                                    return {
+                                        ...old,
+                                        name: e.target.value,
+                                    };
+                                });
 
-                                    handleSubmit(e.target.value);
-                                }}
-                                required
-                                error={!!errors.username}
-                                helperText={
-                                    errors.username
-                                        ? t(`enterUsername.messages.usernameError.${errors.username}`)
-                                        : undefined
-                                }
-                                margin="normal"
-                            />
-                        </>
-                    )}
+                                handleSubmit(e.target.value);
+                            }}
+                            required
+                            error={!!errors.username}
+                            helperText={
+                                errors.username
+                                    ? t(`enterUsername.messages.usernameError.${errors.username}`)
+                                    : undefined
+                            }
+                            margin="normal"
+                        />
+                    </>
                 </div>
             )}
+            <Separator />
         </div>
     );
 }

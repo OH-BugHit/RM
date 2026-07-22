@@ -141,7 +141,7 @@ function ImportDialog({ type = 'agent', preprocess, onSelect }: ImportDialogProp
         <Dialog
             open={activeView.overlay === 'import'}
             onClose={doClose}
-            maxWidth={type === 'agent' ? 'md' : 'lg'}
+            maxWidth={type === 'agent' ? 'sm' : 'md'}
             fullWidth
         >
             <DialogTitle className={style.title}>
@@ -150,7 +150,9 @@ function ImportDialog({ type = 'agent', preprocess, onSelect }: ImportDialogProp
 
             <DialogContent>
                 <div className={style.selectModelMessage}>
-                    <div className={style.columnItem}>{t('import.messages.selectTile')}</div>
+                    <div className={style.columnItem}>
+                        {type === 'tile' ? t('import.messages.selectTile') : t('import.messages.selectAgent')}
+                    </div>
 
                     <div className={style.previewSection}>
                         {selectedPreview ? (
@@ -164,6 +166,30 @@ function ImportDialog({ type = 'agent', preprocess, onSelect }: ImportDialogProp
                             <div className={style.emptyPreview}>No selection</div>
                         )}
                     </div>
+                    {type === 'tile' && (
+                        <div className={`${style.buttonGroupTile} ${style.buttonGroup}`}>
+                            <LargeButton
+                                title={t('common.cancel')}
+                                variant="contained"
+                                color="primary"
+                                onClick={doClose}
+                                disabled={loading}
+                            >
+                                {t('common.cancel')}
+                            </LargeButton>
+
+                            <LargeButton
+                                title={loading ? t('import.actions.loadingImage') : t('import.actions.setImage')}
+                                variant="contained"
+                                color="secondary"
+                                data-testid="teacher-start-button"
+                                onClick={handleAccept}
+                                disabled={!hasSelection || loading}
+                            >
+                                {loading ? t('import.actions.loadingImage') : t('import.actions.setImage')}
+                            </LargeButton>
+                        </div>
+                    )}
                 </div>
 
                 {type === 'tile' && (
@@ -193,7 +219,7 @@ function ImportDialog({ type = 'agent', preprocess, onSelect }: ImportDialogProp
                         </button>
                     </div>
                 )}
-                {tab !== 'upload' && (
+                {type !== 'agent' && tab !== 'upload' && (
                     <LibrarySearch
                         onSelectTile={handleLibrarySelect}
                         onSelectEmoji={handleEmojiSelect}
@@ -222,6 +248,30 @@ function ImportDialog({ type = 'agent', preprocess, onSelect }: ImportDialogProp
                         </IconButton>
                     </div>
                 )}
+                {type === 'agent' && (
+                    <div className={style.buttonGroup}>
+                        <LargeButton
+                            title={t('common.cancel')}
+                            variant="contained"
+                            color="primary"
+                            onClick={doClose}
+                            disabled={loading}
+                        >
+                            {t('common.cancel')}
+                        </LargeButton>
+
+                        <LargeButton
+                            title={loading ? t('import.actions.loadingImage') : t('import.actions.setImage')}
+                            variant="contained"
+                            color="secondary"
+                            data-testid="teacher-start-button"
+                            onClick={handleAccept}
+                            disabled={!hasSelection || loading}
+                        >
+                            {loading ? t('import.actions.loadingImage') : t('import.actions.setImage')}
+                        </LargeButton>
+                    </div>
+                )}
 
                 {type === 'tile' && tab === 'library' && (
                     <TileLibrary
@@ -236,29 +286,6 @@ function ImportDialog({ type = 'agent', preprocess, onSelect }: ImportDialogProp
                         selectedEmoji={selectedEmoji?.emoji}
                     />
                 )}
-
-                <div className={style.buttonGroup}>
-                    <LargeButton
-                        title={t('common.cancel')}
-                        variant="contained"
-                        color="primary"
-                        onClick={doClose}
-                        disabled={loading}
-                    >
-                        {t('common.cancel')}
-                    </LargeButton>
-
-                    <LargeButton
-                        title={loading ? t('import.actions.loadingImage') : t('import.actions.setImage')}
-                        variant="contained"
-                        color="secondary"
-                        data-testid="teacher-start-button"
-                        onClick={handleAccept}
-                        disabled={!hasSelection || loading}
-                    >
-                        {loading ? t('import.actions.loadingImage') : t('import.actions.setImage')}
-                    </LargeButton>
-                </div>
             </DialogContent>
         </Dialog>
     );

@@ -89,6 +89,16 @@
     background: rgba(0, 0, 0, 0.015);
 }
 
+.buttonGroupTile {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+
 .buttonGroup {
     display: flex;
     justify-content: flex-end;

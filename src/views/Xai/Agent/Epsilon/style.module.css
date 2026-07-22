@@ -1,0 +1,9 @@
+.epsilonSlider {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem
+}
+
+h3 {
+    margin: 0 0 0.2rem 0
+}

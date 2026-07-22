@@ -13,11 +13,11 @@ export interface QLearningAgentOptions {
     lWorld: WorldStore;
 }
 export class QLearningAgent {
-    Q: Record<string, number[]> = {}; // Q-"table" String is the state, number[] are the Q-values
+    Q: Record<string, number[]> = {}; // Q-table String is the state, number[] are the Q-values
     visitTimes: Record<string, number> = {}; // For invalidation on Q-map, K=state V=update time
 
-    spriteStore: SpriteStore<number>;
-    lWorld: WorldStore;
+    spriteStore: SpriteStore<number>; // For Q-map and Observation rendering, contains sprites for rendering purposes of observation. Don't look if you don't like typed stuff
+    lWorld: WorldStore; // For Q-map. Keeps
     alpha = 0.1;
     gamma = 0.9;
     epsilon = 0.1;
@@ -85,7 +85,8 @@ export class QLearningAgent {
         action: number,
         reward: number,
         nextObs: GenericObservation,
-        isTerminal: boolean = false
+        isTerminal: boolean = false,
+        move: boolean = true
     ) {
         if (!this.learning) return; // Does not update visited count also!
         const state = this.getStateKey(obs);
@@ -94,11 +95,12 @@ export class QLearningAgent {
 
         const aIdx = ACTIONS.indexOf(action);
 
-        const maxNext = isTerminal ? 0 : Math.max(...nextValues);
-        values[aIdx] += this.alpha * (reward + this.gamma * maxNext - values[aIdx]);
+        const maxNext = isTerminal ? 0 : Math.max(...nextValues); // Maximum reward if following best policy in state reached by step
+        const adjustment = this.alpha * (reward + this.gamma * maxNext - values[aIdx]);
+        values[aIdx] += adjustment; // Update rule
 
         this.visitTimes[state] = (this.visitTimes[state] || 0) + 1; // Update visited count (version count)
 
-        if (reward !== 0) this.markerManager?.show(state, aIdx, reward >= 0 ? 'positive' : 'negative');
+        if (adjustment !== 0) this.markerManager?.show(state, aIdx, adjustment >= 0 ? 'positive' : 'negative', move);
     }
 }

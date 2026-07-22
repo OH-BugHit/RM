@@ -24,6 +24,7 @@ import {
     StateDataAtom,
     TimeStepDataAtom,
     WorldGridRenderAtom,
+    MoveQmapAtom,
 } from '../../../atoms/gameState';
 import { useRewardFloats } from '../../../hooks/useRewardFloats';
 import { ingest, onEpisodeEnd, resetAll } from '../../../components/Charts/rewardStreamEngine';
@@ -39,6 +40,7 @@ import StoryProgress from '../../../components/GameComponents/StoryProgress';
 import ResizeButton from '../../../components/Buttons/ReziseButton/ResizeButton';
 import AgentBridge from '../../../components/GameComponents/AgentBridge';
 import { WorldStore } from '../../../components/QTable/utils';
+import AgentRender from '../../../components/EnvironmentRender/AgentRender';
 
 const STEP_INTERVAL = 400; //ms
 const FAST_STEPS = 5000;
@@ -100,7 +102,7 @@ function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, cu
             agentObsOffset: obsShape === 'small' ? smallOffset : getLargeOffset(),
             delay1: envSettings.generic.env.propReloadDelay1,
             rewardStep: envSettings.generic.reward.endByTrigger,
-
+            triggerIsWin: true,
             reward1: envSettings.generic.reward.reward1,
             reward2: envSettings.generic.reward.reward2,
             rPickObject: envSettings.generic.reward.rPickObject,
@@ -134,6 +136,7 @@ function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, cu
         envRef.current = new GenericRLEnv({
             world: worldGrid.current,
             maxTurns: 40,
+            triggerIsWin: true,
             agentObsOffset: obsShape === 'small' ? smallOffset : getLargeOffset(),
         });
 
@@ -221,7 +224,7 @@ function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, cu
             if (action === Actions.specialAction) playSound();
             const { info, obs: nextObs, reward, terminated } = envRef.current.step(action);
             infoRef.current = info;
-            agentRef.current.update(currentObs, action, reward, nextObs);
+            agentRef.current.update(currentObs, action, reward, nextObs, terminated, store.get(MoveQmapAtom));
             triggersSetRef.current += info.reachedEndStateProp ? 1 : 0;
 
             episodicRewardRef.current += reward;
@@ -256,6 +259,7 @@ function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, cu
             syncUI();
         }
     }, [
+        store,
         syncUI,
         playSound,
         spawnFloat,
@@ -281,7 +285,7 @@ function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, cu
                 actionRef.current = action;
                 const { info, obs: nextObs, reward, terminated } = envRef.current.step(action);
                 infoRef.current = info;
-                agentRef.current.update(currentObs, action, reward, nextObs);
+                agentRef.current.update(currentObs, action, reward, nextObs, terminated, store.get(MoveQmapAtom));
                 triggersSetRef.current += info.reachedEndStateProp ? 1 : 0;
 
                 lastActionRef.current = action;
@@ -303,7 +307,7 @@ function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, cu
             }
             syncUI();
         }
-    }, [syncUI, obsRef, agentRef, envRef, infoRef, actionRef]);
+    }, [store, syncUI, obsRef, agentRef, envRef, infoRef, actionRef]);
 
     useEffect(() => {
         if (!controls.isRunning || !controls.isFast) return;
@@ -382,6 +386,7 @@ function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, cu
                             }}
                         />
                         <div>
+                            <AgentRender env={env} />
                             <WorldComponent
                                 worldGrid={worldGrid}
                                 envRef={envRef}
