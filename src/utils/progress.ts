@@ -86,11 +86,6 @@ export const TASK_GROUPS: TaskGroup[] = [
         visibleTo: 12,
         tasks: [
             {
-                id: 'environment-menu',
-                text: 'story.tasks.design.openMenu',
-                field: 'environment.opened',
-            },
-            {
                 id: 'solid',
                 text: 'story.tasks.environment.goalSet',
                 field: 'environment.goalSet',

@@ -1,10 +1,23 @@
 import { parseObservationState } from '../agents/utils';
 import { getColor } from './utils';
 import { ObservationGridConfig } from './gridConfigs';
+import { StateViewType } from '../../types';
+import { getNumberSpriteId } from '../../utils/spriteStoreUtils';
 
 export type RenderContext = Pick<
     CanvasRenderingContext2D,
-    'drawImage' | 'fillRect' | 'strokeRect' | 'fillStyle' | 'strokeStyle' | 'globalAlpha'
+    | 'drawImage'
+    | 'fillRect'
+    | 'strokeRect'
+    | 'fillStyle'
+    | 'strokeStyle'
+    | 'globalAlpha'
+    | 'fillText'
+    | 'strokeText'
+    | 'font'
+    | 'textAlign'
+    | 'textBaseline'
+    | 'lineWidth'
 >;
 
 export interface RenderObservationOptions {
@@ -16,6 +29,7 @@ export interface RenderObservationOptions {
     grid: ObservationGridConfig;
     imgStore: Map<number, CanvasImageSource>;
     qValues?: number[];
+    type?: StateViewType;
 }
 
 export function renderObservation({
@@ -27,6 +41,7 @@ export function renderObservation({
     grid,
     imgStore,
     qValues = [],
+    type = 'sprite',
 }: RenderObservationOptions) {
     const obs = parseObservationState(stateId);
 
@@ -98,6 +113,14 @@ export function renderObservation({
 
                 if (img) {
                     ctx.drawImage(img, px, py, cellSize, cellSize);
+                }
+                if (type === 'agent') {
+                    ctx.fillStyle = '#ffffff5d';
+                    ctx.fillRect(px, py, cellSize, cellSize);
+                    const sprite = imgStore.get(getNumberSpriteId(value));
+                    if (sprite) {
+                        ctx.drawImage(sprite, px, py, cellSize, cellSize);
+                    }
                 }
             }
         }

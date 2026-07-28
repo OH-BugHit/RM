@@ -14,7 +14,7 @@ export default function Agent() {
     return (
         <>
             <NewFrame
-                visible={vis.stats}
+                visible={vis.text}
                 overlayRightTop={
                     vis.charts && (
                         <span>

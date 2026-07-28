@@ -24,7 +24,7 @@ export interface WorldErrors {
 
 export type Side = 'top' | 'bottom' | 'right' | 'left';
 
-export type SideOptions = 'agent' | 'props' | 'world' | 'reward' | 'settings' | undefined;
+export type SideOptions = 'agent' | 'design' | 'newTile' | 'reward' | 'settings' | 'create' | undefined;
 export type PanelOptions = {
     visible: boolean;
     content: SideOptions;
@@ -59,6 +59,7 @@ export type StoryProgress = {
         goal: boolean;
         solid: boolean;
         spawn: boolean;
+        tools: boolean;
     };
     environment: {
         goalSet: boolean;
@@ -83,6 +84,7 @@ export type StatsContent = {
 };
 
 export type HUDvisibility = {
+    text: boolean;
     charts: boolean;
     agentVision: boolean;
     qTable: boolean;
@@ -98,11 +100,15 @@ export type EdgeType = RoomType | 'lockedDoor' | 'newEdge';
 export type RoomType = 'spawnArea' | 'lockedRoom' | 'openRoom';
 
 export type UiHelp = {
-    statsArrow: boolean;
+    devMenu: boolean;
+    designMenu: boolean;
+    textArrow: boolean;
     creativeClose: boolean;
     hideSideOpener: boolean;
     sideOpener: SideOptions;
 };
+
+export type StateViewType = 'agent' | 'sprite';
 
 export type TileDefinition = {
     id: string;

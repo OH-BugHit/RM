@@ -12,7 +12,7 @@ export default function Epsilon() {
     const [agentSettings, setAgentSettings] = useAtom(AgentSettingsAtom);
     return (
         <div>
-            <h3>Exploration rate gauge</h3>
+            <h3>{t('gauge.title.epsilon')}</h3>
             <ExplGauge
                 value={agentSettings.epsilon}
                 green={{ from: 0, to: 0.1 }}

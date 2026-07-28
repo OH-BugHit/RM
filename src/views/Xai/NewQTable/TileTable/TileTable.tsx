@@ -1,4 +1,4 @@
-import { useAtomValue } from 'jotai';
+import { useAtomValue, useSetAtom, useStore } from 'jotai';
 import * as L from 'leaflet';
 import { useEffect, useMemo } from 'react';
 
@@ -10,20 +10,27 @@ import { WorkerPool } from '../../../../components/QTable/workers/WorkerPool';
 import style from './style.module.css';
 import PoolUpdater from '../../../../components/QTable/PoolUpdater';
 import { MarkerManager } from '../../../../components/QTable/MarkerManager/MargerManager';
+import { MapCenterAtom, QmapViewTypeAtom, ZoomLevelAtom } from '../../../../atoms/uiState';
+import { FocusOverlay } from '../../../../components/QTable/FocusOverlay/FocusOverlay';
 
 interface TileTableProps {
     lWorld: WorldStore;
     mapRef: React.RefObject<L.Map | null>;
     agentRef: React.RefObject<QLearningAgent | undefined>;
     layerRef: React.RefObject<CustomGridLayer | null>;
+    focusFrameRef: React.RefObject<FocusOverlay | undefined>;
 }
 export interface CustomGridLayer extends L.GridLayer {
     clearCache(): void;
 }
-export default function TileTable({ agentRef, lWorld, mapRef, layerRef }: TileTableProps) {
+export default function TileTable({ agentRef, lWorld, mapRef, layerRef, focusFrameRef }: TileTableProps) {
     const agentSelections = useAtomValue(ActiveAgentAtom);
-
     const pool = useMemo(() => new WorkerPool(), []);
+    const viewType = useAtomValue(QmapViewTypeAtom);
+    const setZoomLevel = useSetAtom(ZoomLevelAtom);
+    const setMapCenter = useSetAtom(MapCenterAtom);
+    const setMapType = useSetAtom(QmapViewTypeAtom);
+    const store = useStore();
 
     // Workers init world
     useEffect(() => {
@@ -69,21 +76,35 @@ export default function TileTable({ agentRef, lWorld, mapRef, layerRef }: TileTa
             pool,
             256,
             agentSelections.observationShape,
+            viewType,
             () => agentRef.current?.Q ?? {},
             (x, y, z) => lWorld.getTileVersion(x, y, z)
         );
+
+        const center = store.get(MapCenterAtom);
 
         const map = L.map('map', {
             crs: L.CRS.Simple,
             fadeAnimation: false,
             minZoom: 9,
             maxZoom: 14,
-        }).setView([0, 0], 14);
+        }).setView(center ? [center.lat, center.lng] : [0, 0], store.get(ZoomLevelAtom));
         const agent = agentRef.current;
 
         mapRef.current = map;
 
+        map.on('moveend', () => {
+            setMapCenter(map.getCenter());
+            const zoom = map.getZoom();
+            setZoomLevel(zoom);
+            if (zoom < 13) setMapType('sprite');
+        });
+
+        // Asetetaan myös alkutila
+
         const markerManager = new MarkerManager(map, lWorld, agentSelections.observationShape);
+        const focusOverlay = new FocusOverlay(map);
+        focusFrameRef.current = focusOverlay;
 
         agent?.setMarkerManager(markerManager);
 
@@ -97,10 +118,25 @@ export default function TileTable({ agentRef, lWorld, mapRef, layerRef }: TileTa
         return () => {
             agent?.setMarkerManager(undefined);
             markerManager.destroy();
+            focusOverlay.destroy();
             pool.destroy();
+            map.off('moveend');
             map.remove();
         };
-    }, [pool, layerRef, mapRef, agentRef, lWorld, agentSelections.observationShape]);
+    }, [
+        pool,
+        layerRef,
+        mapRef,
+        agentRef,
+        lWorld,
+        agentSelections.observationShape,
+        viewType,
+        focusFrameRef,
+        setZoomLevel,
+        store,
+        setMapCenter,
+        setMapType,
+    ]);
 
     return (
         <>

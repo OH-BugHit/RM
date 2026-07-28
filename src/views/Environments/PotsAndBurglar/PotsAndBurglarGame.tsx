@@ -117,6 +117,7 @@ function PotsAndBurglarGame({
             envTitle: true,
             controls: true,
             agent: true,
+            text: true,
         });
         setStatsContent((old) => {
             return {

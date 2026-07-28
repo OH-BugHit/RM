@@ -32,7 +32,7 @@ export default function SelectorItem({
                 >
                     <img
                         src={img}
-                        height={180}
+                        height={140}
                     />
                     {children}
                 </Button>

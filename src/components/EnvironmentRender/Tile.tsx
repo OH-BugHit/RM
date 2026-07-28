@@ -4,7 +4,7 @@ import style from './style.module.css';
 import { getOnSight } from '../GameComponents/drawComponent';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { ActiveAgentAtom } from '../../atoms/state';
-import { PropToolAtom, StoryProgressAtom, TileVisibilityAtom } from '../../atoms/uiState';
+import { DesignOpenAtom, CurrentTileToolAtom, StoryProgressAtom, TileVisibilityAtom } from '../../atoms/uiState';
 import { InnerFillCellAtom, RewardsPulseAtom } from '../../atoms/gameState';
 
 interface TileProps {
@@ -19,11 +19,12 @@ interface TileProps {
 export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation, worldHeight, worldWidth }: TileProps) {
     const agent = useAtomValue(ActiveAgentAtom);
     const visibleTiles = useAtomValue(TileVisibilityAtom);
-    const propTool = useAtomValue(PropToolAtom);
+    const propTool = useAtomValue(CurrentTileToolAtom);
     const [trigger, setTrigger] = useState<boolean>(true);
     const fillerTile = useAtomValue(InnerFillCellAtom);
     const updateWorldPulse = useSetAtom(RewardsPulseAtom);
     const setStoryProgress = useSetAtom(StoryProgressAtom);
+    const design = useAtomValue(DesignOpenAtom);
 
     const border =
         cellLocation.x === 0 ||
@@ -246,9 +247,10 @@ export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation,
             }
         }
     };
-    const handleTileClick = (e: React.PointerEvent<HTMLButtonElement>) => {
+    const handleTileClick = (e: React.SyntheticEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        if (propTool && !border) {
+        if (propTool) {
+            if (border && propTool.type !== CellType.Solid) return;
             if (propTool.type === CellType.Trigger) {
                 setStoryProgress((old) => {
                     return {
@@ -273,13 +275,14 @@ export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation,
                 width: tileSize,
                 height: tileSize,
                 pointerEvents: cell.type === CellType.Outside ? 'none' : 'auto',
-                background: onSight ? '#eaffdeef' : 'transparent', //836a0e44
+
                 zIndex: 1000,
             }}
-            className={style.tile}
+            disabled={!design}
+            className={`${style.tile} ${onSight ? style.onSight : style.notOnSight}`}
+            onClick={(e) => handleTileClick(e)}
             onPointerDown={(e) => handleTileClick(e)}
             onPointerEnter={(e) => {
-                // TODO: Not maybe, even more complex? Do tool selector for this on pointer enter thingy. Maybe? Like, toggle for single / paint or smth
                 // TODO: Allow modifying solid edge to solid other
                 if (e.buttons & 1) {
                     handleTileClick(e);

@@ -1,10 +1,10 @@
 import { SidePanel } from '@genai-fi/base';
 import CreateMenu from '../GameView/CreateMenu';
 import { useAtom, useSetAtom, useStore } from 'jotai';
-import { StoryProgressAtom, UiHelpAtom, UiShowSidePanelAtom } from '../../atoms/uiState';
+import { StoryProgressAtom, UiHelpAtom, SetupVisibleAtom } from '../../atoms/uiState';
 
 export default function SidePanelWrapper() {
-    const [sidePanelOpen, setSidePanelOpen] = useAtom(UiShowSidePanelAtom);
+    const [, setSidePanelOpen] = useAtom(SetupVisibleAtom);
     const setUIHelper = useSetAtom(UiHelpAtom);
     const store = useStore();
     const setProgress = useSetAtom(StoryProgressAtom);
@@ -75,9 +75,9 @@ export default function SidePanelWrapper() {
     };
 
     return (
-        <div style={{ zIndex: 1000 }}>
+        <div>
             <SidePanel
-                open={sidePanelOpen.visible}
+                open={false} // sidePanelOpen.visible
                 closeLabel="asdasd"
                 onOpen={() =>
                     setSidePanelOpen((old) => {

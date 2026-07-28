@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import Arrow from '../../HelperArrow/Arrow';
 import { useTranslation } from 'react-i18next';
 
-export type SidePanelContent = 'agent' | 'props' | 'world' | 'reward' | 'settings';
+export type SidePanelContent = 'agent' | 'newTile' | 'reward' | 'settings' | 'create';
 
 interface Props {
     icon: ReactNode;
@@ -58,7 +58,6 @@ export function SidePanelButton({ icon, value, activeHelp, onClick, className, d
                         angle={180}
                     />
                 )}
-
                 {icon}
             </IconButton>
         </motion.div>

@@ -2,16 +2,18 @@ import style from '../style.module.css';
 import { useEffect } from 'react';
 import Separator from '../../../../components/Separator/Separator';
 import { useSetAtom } from 'jotai';
-import { StoryProgressAtom } from '../../../../atoms/uiState';
+import { DesignOpenAtom, StoryProgressAtom } from '../../../../atoms/uiState';
 import PropTool from './Prop/PropTool/PropTool';
 import { useTranslation } from 'react-i18next';
 
 export default function ModifyEnvironment() {
     const { t } = useTranslation('', { keyPrefix: 'createMenu.modify' });
     const setStoryProgress = useSetAtom(StoryProgressAtom);
+    const setDesignOpen = useSetAtom(DesignOpenAtom);
 
     // Sets false when unmounting since that is used in addition to follow story progress, for resize button toggle.
     useEffect(() => {
+        setDesignOpen(true); // Enable tile buttons
         setStoryProgress((old) => {
             return {
                 ...old,
@@ -21,7 +23,9 @@ export default function ModifyEnvironment() {
                 },
             };
         });
-        return () =>
+
+        return () => {
+            setDesignOpen(false);
             setStoryProgress((old) => {
                 return {
                     ...old,
@@ -31,7 +35,8 @@ export default function ModifyEnvironment() {
                     },
                 };
             });
-    }, [setStoryProgress]);
+        };
+    }, [setDesignOpen, setStoryProgress]);
 
     return (
         <div className={style.selectorContainer}>

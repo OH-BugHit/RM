@@ -7,6 +7,7 @@ import { useAtomValue } from 'jotai';
 import { WorldGridRenderAtom } from '../../atoms/gameState';
 import { useEffect } from 'react';
 import { GenericRLEnv } from '../Environments/Generic/environment';
+import StepsLeft from '../../components/Counters/StepsLeft';
 
 interface worldComponentProps {
     worldGrid: React.RefObject<Cell[][]>;
@@ -44,6 +45,7 @@ export default function WorldComponent({
                 gridTemplateRows: `repeat(${height}, ${tileSize}px)`,
             }}
         >
+            <StepsLeft />
             {worldGridA.map((row, y) =>
                 row.map((cell, x) => (
                     <div key={`${x}-${y}`}>

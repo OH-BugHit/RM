@@ -25,6 +25,7 @@ import {
     TimeStepDataAtom,
     WorldGridRenderAtom,
     MoveQmapAtom,
+    StepsLeftAtom,
 } from '../../../atoms/gameState';
 import { useRewardFloats } from '../../../hooks/useRewardFloats';
 import { ingest, onEpisodeEnd, resetAll } from '../../../components/Charts/rewardStreamEngine';
@@ -64,6 +65,7 @@ function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, cu
     const obsShape = useAtomValue<ObservationShape>(SelectedObsShapeAtom);
     const setWorldGrid = useSetAtom(WorldGridRenderAtom);
     const setUpdateWorldPulse = useSetAtom(UpdateWorldPulseAtom);
+    const setStepsLeft = useSetAtom(StepsLeftAtom);
 
     useEffect(() => {
         // set world grid
@@ -223,6 +225,7 @@ function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, cu
             actionRef.current = action;
             if (action === Actions.specialAction) playSound();
             const { info, obs: nextObs, reward, terminated } = envRef.current.step(action);
+            setStepsLeft(info.timeLeft);
             infoRef.current = info;
             agentRef.current.update(currentObs, action, reward, nextObs, terminated, store.get(MoveQmapAtom));
             triggersSetRef.current += info.reachedEndStateProp ? 1 : 0;
@@ -265,6 +268,7 @@ function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, cu
         spawnFloat,
         setFacing,
         setLastState,
+        setStepsLeft,
         currentStateRef,
         actionRef,
         obsRef,

@@ -12,7 +12,7 @@ export default function Gamma() {
     const [agentSettings, setAgentSettings] = useAtom(AgentSettingsAtom);
     return (
         <div>
-            <h3>Discount factor gauge</h3>
+            <h3>{t('gauge.title.gamma')}</h3>
             <ExplGauge
                 value={agentSettings.gamma}
                 green={{ from: 0.85, to: 0.95 }}

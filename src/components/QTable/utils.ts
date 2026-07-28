@@ -31,6 +31,47 @@ export class SpriteStore<T extends number, TImage extends CanvasImageSource = HT
     clear() {
         this.images.clear();
     }
+
+    populateNumberSprites(
+        getId: (value: number) => T,
+        options?: {
+            size?: number;
+            font?: string;
+            fillStyle?: string;
+            strokeStyle?: string;
+            lineWidth?: number;
+        }
+    ) {
+        const {
+            size = 64,
+            font = 'bold 42px sans-serif',
+            fillStyle = '#111',
+            strokeStyle = '#fff',
+            lineWidth = 5,
+        } = options ?? {};
+
+        for (let value = -1; value <= 9; value++) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+
+            const ctx = canvas.getContext('2d');
+            if (!ctx) continue;
+
+            ctx.font = font;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = strokeStyle;
+            ctx.strokeText(String(value), size / 2, size / 2);
+
+            ctx.fillStyle = fillStyle;
+            ctx.fillText(String(value), size / 2, size / 2);
+
+            this.set(getId(value), canvas as TImage);
+        }
+    }
 }
 
 export class WorldStore {

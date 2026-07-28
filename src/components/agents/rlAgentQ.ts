@@ -1,5 +1,6 @@
 import { Actions, GenericObservation } from '../../types';
 import { defaultSprites } from '../../utils/defaults';
+import { getNumberSpriteId } from '../../utils/spriteStoreUtils';
 import { MarkerManager } from '../QTable/MarkerManager/MargerManager';
 import { SpriteStore, WorldStore } from '../QTable/utils';
 import { serializeObservation } from './utils';
@@ -35,6 +36,7 @@ export class QLearningAgent {
         if (epsilon !== undefined) this.epsilon = epsilon;
         this.lWorld = lWorld;
         this.spriteStore = new SpriteStore<number>(defaultSprites);
+        this.spriteStore.populateNumberSprites(getNumberSpriteId);
     }
 
     getTableSize() {

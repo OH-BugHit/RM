@@ -44,6 +44,7 @@ self.onmessage = (e: MessageEvent<WorkerRequest>) => {
                 imgStore: spriteStore,
                 qTable: msg.qTable,
                 grid: msg.observationShape === 'large' ? GRID_7 : GRID_5,
+                type: msg.viewType,
             });
 
             const bitmap = canvas.transferToImageBitmap();

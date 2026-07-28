@@ -1,4 +1,4 @@
-import { ObservationShape } from '../../../types';
+import { ObservationShape, StateViewType } from '../../../types';
 
 export interface SpriteData {
     id: number;
@@ -39,6 +39,7 @@ export interface RenderTileMessage {
     observationShape: ObservationShape;
 
     qTable: Record<string, number[]>;
+    viewType: StateViewType;
 }
 
 export interface TileRenderedMessage {

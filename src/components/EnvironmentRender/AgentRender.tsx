@@ -4,16 +4,21 @@ import { useAtomValue } from 'jotai';
 import { ActiveAgentAtom } from '../../atoms/state';
 import { GenericRLEnv } from '../../views/Environments/Generic/environment';
 import { FacingAtom } from '../../atoms/gameState';
-import { TileVisibilityAtom } from '../../atoms/uiState';
+import { AgentRenderPulseAtom, TileVisibilityAtom } from '../../atoms/uiState';
+import { useEffect } from 'react';
 
 interface AgentRenderInterface {
     env: GenericRLEnv;
 }
 
 export default function AgentRender({ env }: AgentRenderInterface) {
+    const trigger = useAtomValue(AgentRenderPulseAtom);
     const agent = useAtomValue(ActiveAgentAtom);
     const facing = useAtomValue(FacingAtom);
     const visibleTiles = useAtomValue(TileVisibilityAtom);
+
+    useEffect(() => {}, [trigger]);
+
     return (
         <motion.div
             style={{
@@ -41,7 +46,7 @@ export default function AgentRender({ env }: AgentRenderInterface) {
                     left: '16px',
                     width: 40,
                     height: 40,
-                    opacity: visibleTiles.agent ? 1 : 0,
+                    display: visibleTiles.agent ? 'block' : 'none',
                 }}
                 initial={{ opacity: 0 }}
                 animate={{

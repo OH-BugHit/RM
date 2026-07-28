@@ -4,13 +4,13 @@ type FrameVariant = 'left' | 'center' | 'right';
 
 const frameConfig = {
     left: {
-        image: '/images/frames/connectorLeft.png',
+        image: '/images/frames/cable.svg',
     },
     center: {
-        image: '/images/frames/cablePink.png',
+        image: '/images/frames/cable.svg',
     },
     right: {
-        image: '/images/frames/connector.png',
+        image: '/images/frames/cable.svg',
     },
 };
 

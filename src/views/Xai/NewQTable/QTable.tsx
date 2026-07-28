@@ -5,15 +5,17 @@ import { useAtomValue } from 'jotai';
 import { LodStateAtom } from '../../../atoms/uiState';
 import TileTable, { CustomGridLayer } from './TileTable/TileTable';
 import { WorldStore } from '../../../components/QTable/utils';
+import { FocusOverlay } from '../../../components/QTable/FocusOverlay/FocusOverlay';
 
 interface QTableProps {
     agentRef: React.RefObject<QLearningAgent | undefined>;
     lWorld: WorldStore;
     mapRef: React.RefObject<L.Map | null>;
     layerRef: React.RefObject<CustomGridLayer | null>;
+    focusFrameRef: React.RefObject<FocusOverlay | undefined>;
 }
 
-export default function QTable({ agentRef, lWorld, mapRef, layerRef }: QTableProps) {
+export default function QTable({ agentRef, lWorld, mapRef, layerRef, focusFrameRef }: QTableProps) {
     const lod = useAtomValue(LodStateAtom);
 
     return (
@@ -26,6 +28,7 @@ export default function QTable({ agentRef, lWorld, mapRef, layerRef }: QTablePro
                     lWorld={lWorld}
                     mapRef={mapRef}
                     layerRef={layerRef}
+                    focusFrameRef={focusFrameRef}
                 />
             )}
         </main>

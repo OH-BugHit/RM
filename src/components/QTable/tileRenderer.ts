@@ -1,5 +1,6 @@
 // Observation/tileRenderer.ts
 
+import { StateViewType } from '../../types';
 import { ObservationGridConfig } from './gridConfigs';
 import { renderObservation, RenderContext } from './observationRenderer';
 
@@ -19,9 +20,10 @@ interface RenderTileArgs {
     qTable: Record<string, number[]>;
 
     grid: ObservationGridConfig;
+    type: StateViewType;
 }
 
-export function renderTile({ ctx, tileSize, tileX, tileY, zoom, world, imgStore, qTable, grid }: RenderTileArgs) {
+export function renderTile({ ctx, tileSize, tileX, tileY, zoom, world, imgStore, qTable, grid, type }: RenderTileArgs) {
     ctx.fillStyle = '#f7f7f7';
     ctx.fillRect(0, 0, tileSize, tileSize);
 
@@ -55,6 +57,7 @@ export function renderTile({ ctx, tileSize, tileX, tileY, zoom, world, imgStore,
                 grid,
                 imgStore,
                 qValues: qTable[stateId],
+                type,
             });
         }
     }

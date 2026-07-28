@@ -1,0 +1,35 @@
+.focus {
+    position: absolute;
+
+    width: 256px;
+    height: 256px;
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    border: 2px solid #00d26a;
+    border-radius: 6px;
+
+    pointer-events: none;
+    animation-name: disappear;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes disappear {
+    0% {
+        opacity: 1;
+        scale: 1;
+    }
+
+    80% {
+        opacity: 1;
+        scale: 1
+    }
+
+    100% {
+        opacity: 0;
+        scale: 1.5
+    }
+}

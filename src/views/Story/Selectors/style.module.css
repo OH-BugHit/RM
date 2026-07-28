@@ -1,8 +1,11 @@
 @value primary, secondary textDark from "@genai-fi/base/css/colours.module.css";
 
+
 .selectorItemContainer {
     display: flex;
+    justify-content: center;
     flex-direction: row;
+    flex-wrap: wrap;
     padding-bottom: 2rem;
 }
 
@@ -11,15 +14,14 @@
     position: relative;
     flex-direction: column;
     align-items: center;
-    background: rgb(255, 255, 255);
-    height: 100%;
     overflow: auto;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 
 .textSection {
-    max-width: 600px;
+    max-width: 80%;
     margin-bottom: 2rem;
 }
 
@@ -64,7 +66,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: white;
     padding: 0rem 1em 0rem 1rem;
     justify-content: start;
     align-items: center;
@@ -77,9 +78,48 @@
 }
 
 em {
-    max-width: 600px;
+    max-width: 80%;
 }
 
 p {
-    max-width: 600px;
+    max-width: 80%;
+}
+
+.icon {
+    background-color: rgb(165, 170, 174);
+    width: min-content;
+    margin-right: 6px;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon:disabled::after {
+    background-color: #123;
+}
+
+.icon:hover {
+    scale: 1.1;
+    filter: brightness(1.1)
+}
+
+.icon h1 {
+    font-family: 'Tektur';
+    font-weight: bold;
+    font-size: 3rem;
+    margin: 0;
+    text-wrap: nowrap;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.selectedIcon {
+    border-color: secondary;
+    border-radius: 0.8rem;
+    background-color: #19b1a770;
+    padding-right: 16px;
+}
+
+
+.notSelectedIcon {
+    border-radius: 6rem;
 }

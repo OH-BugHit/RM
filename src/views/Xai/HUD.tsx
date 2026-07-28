@@ -8,7 +8,7 @@ import Agent from './Agent/Agent';
 import { Cable } from '../Frames/CableFrame/Cable';
 import Environment from './Environment/Environment';
 import { useAtomValue } from 'jotai';
-import { HUDvisAtom } from '../../atoms/uiState';
+import { HideHudAtom, HUDvisAtom } from '../../atoms/uiState';
 import { NewFrame } from '../Frames/NewFrame';
 import { WorldStore } from '../../components/QTable/utils';
 import { CustomGridLayer } from './NewQTable/TileTable/TileTable';
@@ -19,6 +19,10 @@ import Gamma from './Agent/Gamma/Gamma';
 import Progress from './Stats/Progress';
 import { useTranslation } from 'react-i18next';
 import { Help } from '@genai-fi/base';
+import { RewardChart } from '../../components/Charts/RewardChart';
+import StateViewTypeButton from '../../components/Buttons/StateViewTypeButton/StateViewTypeButton';
+import { FocusOverlay } from '../../components/QTable/FocusOverlay/FocusOverlay';
+import { useRef } from 'react';
 
 interface XaiProps {
     agentRef: React.RefObject<QLearningAgent | undefined>;
@@ -29,7 +33,9 @@ interface XaiProps {
 }
 export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRef }: XaiProps) {
     const { t } = useTranslation();
+    const hideHud = useAtomValue(HideHudAtom);
     const hudVis = useAtomValue(HUDvisAtom);
+    const focusFrameRef = useRef<FocusOverlay | undefined>(undefined);
 
     return (
         <div style={{ zIndex: 0 }}>
@@ -38,25 +44,26 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                     variant="center"
                     width={100}
                     height={80}
-                    visible={hudVis.cableLeft}
+                    visible={hudVis.cableLeft && !hideHud}
                 />
                 <Environment />
                 <Cable
                     variant="center"
                     width={100}
                     height={80}
-                    visible={hudVis.cableLeft}
+                    visible={hudVis.cableLeft && !hideHud}
                 />
             </FrameContainer>
             <FrameContainer position="top-left">
                 <NewFrame
-                    visible={hudVis.qTable}
+                    visible={hudVis.qTable && !hideHud}
                     overlayRight={
                         <TableControls
                             world={lWorld}
                             mapRef={mapRef}
                             layerRef={layerRef}
                             currentStateRef={currentStateRef}
+                            focusFrameRef={focusFrameRef}
                         />
                     }
                     overlayRightTop={
@@ -73,12 +80,14 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                         lWorld={lWorld}
                         mapRef={mapRef}
                         layerRef={layerRef}
+                        focusFrameRef={focusFrameRef}
                     />
                 </NewFrame>
             </FrameContainer>
             <FrameContainer position="top-right">
                 <NewFrame
-                    visible={hudVis.agentVision}
+                    visible={hudVis.agentVision && !hideHud}
+                    overlayLeft={<StateViewTypeButton screen={'observation'} />}
                     overlayRightTop={
                         <span>
                             <Help
@@ -104,13 +113,19 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                             visible={false}
                         />
                     )}
+                    <NewFrame visible={hudVis.charts && !hideHud}>
+                        <RewardChart
+                            width={600}
+                            height={400}
+                        />
+                    </NewFrame>
                     {!hudVis.agentVision && (
                         <NewFrame>
                             <Progress />
                         </NewFrame>
                     )}
                     <Agent />
-                    {hudVis.cableRight && (
+                    {hudVis.cableRight && !hideHud && (
                         <Cable
                             variant="center"
                             width={100}
@@ -119,7 +134,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                         />
                     )}
                     <NewFrame
-                        visible={hudVis.agentVision}
+                        visible={hudVis.agentVision && !hideHud}
                         overlayRightTop={
                             <span>
                                 <Help
@@ -132,7 +147,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                         <Alpha />
                     </NewFrame>
                     <NewFrame
-                        visible={hudVis.agentVision}
+                        visible={hudVis.agentVision && !hideHud}
                         overlayRightTop={
                             <span>
                                 <Help
@@ -145,7 +160,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                         <Gamma />
                     </NewFrame>
                     <NewFrame
-                        visible={hudVis.agentVision}
+                        visible={hudVis.agentVision && !hideHud}
                         overlayRightTop={
                             <span>
                                 <Help
@@ -161,9 +176,9 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                         variant="center"
                         width={100}
                         height={80}
-                        visible={hudVis.cableRight}
+                        visible={hudVis.cableRight && !hideHud}
                     />
-                    <NewFrame visible={hudVis.controls}>
+                    <NewFrame visible={hudVis.controls && !hideHud}>
                         <Controls />
                     </NewFrame>
                 </div>

@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <!-- Kontrastikkaampi beige ulkoreunan liukuväri -->
+    <linearGradient id="hudOuterBeige" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fdf8f2" />
+      <stop offset="50%" stop-color="#f0e2d0" />
+      <stop offset="100%" stop-color="#d9c3b0" />
+    </linearGradient>
+
+    <!-- Tummempi ja kontrastikkaampi vihreä sisäosan liukuväri -->
+    <radialGradient id="hudInnerGreen" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#c5f2c5" />
+      <stop offset="60%" stop-color="#8ce38c" />
+      <stop offset="100%" stop-color="#5cb85c" />
+    </radialGradient>
+
+    <!-- Tumma, terävämpi drop shadow tuomaan HUD-elementille syvyyttä -->
+    <filter id="hudShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#211814" flood-opacity="0.3" />
+    </filter>
+
+    <!-- Yläreunan heijastus/kiilto -->
+    <linearGradient id="hudHighlight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0" />
+    </linearGradient>
+  </defs>
+
+  <!-- 1. Ulompi beige kehyslaatikko + varjo -->
+  <rect 
+    x="8" 
+    y="8" 
+    width="184" 
+    height="184" 
+    rx="32" 
+    ry="32" 
+    fill="url(#hudOuterBeige)" 
+    filter="url(#hudShadow)" 
+  />
+
+  <!-- 2. Vahva ruskea kehysviiva (Takaa kontrastin vaaleaan taustaan) -->
+  <rect 
+    x="18" 
+    y="18" 
+    width="164" 
+    height="164" 
+    rx="24" 
+    ry="24" 
+    fill="none" 
+    stroke="#2e221c" 
+    stroke-width="3.5" 
+    opacity="0.95" 
+  />
+
+  <!-- 3. Sisempi vihreä tausta (HUD-sisällölle) -->
+  <rect 
+    x="23" 
+    y="23" 
+    width="154" 
+    height="154" 
+    rx="20" 
+    ry="20" 
+    fill="url(#hudInnerGreen)" 
+  />
+
+  <!-- 4. Yläreunan kaareva valoheijastus (samanlainen kuin alkuperäisessä teemassa) -->
+  <path 
+    d="M 35,45 C 70,30 130,30 165,45" 
+    fill="none" 
+    stroke="#ffffff" 
+    stroke-opacity="0.4" 
+    stroke-width="4" 
+    stroke-linecap="round" 
+  />
+
+  <!-- 5. Hienovaraiset HUD-kulma-aksentit (tuo AI/Tech-henkeä ilman öykkäröintiä) -->
+  <g fill="#2e221c" opacity="0.3">
+    <circle cx="35" cy="35" r="2" />
+    <circle cx="165" cy="35" r="2" />
+    <circle cx="35" cy="165" r="2" />
+    <circle cx="165" cy="165" r="2" />
+  </g>
+</svg>

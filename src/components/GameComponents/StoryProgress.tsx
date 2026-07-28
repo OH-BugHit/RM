@@ -39,7 +39,7 @@ export default function StoryProgress() {
             setStep(13);
             return;
         }
-        if (progress.environment.closed) {
+        if (progress.design.closed) {
             setStep(12);
             return;
         }
@@ -48,26 +48,27 @@ export default function StoryProgress() {
             return;
         }
 
-        if (progress.environment.opened) {
+        if (progress.design.tools) {
             setStep(10);
-            return;
-        }
-        if (progress.design.closed) {
-            setStep(9);
             return;
         }
 
         if (progress.design.goal) {
-            setStep(8);
+            setStep(9);
             return;
         }
 
         if (progress.design.spawn) {
-            setStep(7);
+            setStep(8);
             return;
         }
 
         if (progress.design.solid) {
+            setStep(7);
+            return;
+        }
+
+        if (progress.design.opened) {
             setStep(6);
             return;
         }
@@ -101,12 +102,12 @@ export default function StoryProgress() {
             case 0: {
                 setStatsContent({ mode: 'textNext', phase: step });
                 setHud((old) => {
-                    return { ...old, stats: true };
+                    return { ...old, text: true };
                 });
                 setUIHelper((old) => {
                     return {
                         ...old,
-                        statsArrow: true,
+                        textArrow: true,
                     };
                 });
                 break;
@@ -116,7 +117,7 @@ export default function StoryProgress() {
                 setUIHelper((old) => {
                     return {
                         ...old,
-                        statsArrow: false,
+                        textArrow: false,
                         sideOpener: 'agent',
                         hideSideOpener: false,
                     };
@@ -140,7 +141,6 @@ export default function StoryProgress() {
                 setUIHelper((old) => {
                     return {
                         ...old,
-                        sideOpener: 'props',
                         creativeClose: true,
                     };
                 });
@@ -151,6 +151,8 @@ export default function StoryProgress() {
                     return {
                         ...old,
                         creativeClose: false,
+                        designMenu: true,
+                        sideOpener: 'newTile',
                     };
                 });
                 break;
@@ -173,13 +175,24 @@ export default function StoryProgress() {
                 });
                 break;
             }
-            case 8: {
+            case 9: {
                 setUIHelper((old) => {
                     return {
                         ...old,
-                        sideOpener: 'world',
+                        sideOpener: undefined,
                     };
                 });
+                setStatsContent({ mode: 'textNext', phase: step });
+                break;
+            }
+            case 10: {
+                setUIHelper((old) => {
+                    return {
+                        ...old,
+                        sideOpener: undefined,
+                    };
+                });
+                setStatsContent({ mode: 'text', phase: step });
                 break;
             }
             case 11: {
@@ -187,8 +200,10 @@ export default function StoryProgress() {
                     return {
                         ...old,
                         sideOpener: 'reward',
+                        designMenu: false,
                     };
                 });
+                setStatsContent({ mode: 'text', phase: step });
                 break;
             }
             case 14: {
@@ -221,6 +236,7 @@ export default function StoryProgress() {
             }
             case 19: {
                 setHud({
+                    text: false,
                     charts: true,
                     agentVision: true,
                     qTable: true,

@@ -10,10 +10,10 @@ import { AnimatePresence } from 'framer-motion';
 import { Bridge } from '../../components/Charts/ChartBridge';
 import StoryGame from '../Environments/StoryGame/StoryGame';
 import HUD from '../Xai/HUD';
-import SidePanelWrapper from '../SidePanel/SidePanelWrapper';
 import { WorldStore } from '../../components/QTable/utils';
 import { CustomGridLayer } from '../Xai/NewQTable/TileTable/TileTable';
-import { SidePanelOpener } from '../../components/Buttons/SidePanelOpener';
+import { SidePanelOpener } from '../../components/SidePanel/SidePanelOpener';
+import Overlay from '../../components/SetupOverlay/Overlay/Overlay';
 
 // React component
 function GameView() {
@@ -29,7 +29,7 @@ function GameView() {
     const layerRef = useRef<CustomGridLayer | null>(null);
     const currentStateRef = useRef<StateData>({ previous: '', current: '' });
 
-    const config = { image: '/images/background/backgroundSVGanimate.svg' }; //TODO: Change to get background image from somewher
+    const config = { image: '/images/background/backgroundSVGanimate.svg' };
 
     //TODO: Set settings when game is selected now they are here:
 
@@ -68,6 +68,7 @@ function GameView() {
                                 position: 'relative',
                                 width: '100%',
                                 height: '100%',
+                                overflow: 'hidden',
                             }}
                         >
                             <HUD
@@ -107,7 +108,7 @@ function GameView() {
             >
                 <Bridge />
                 <div className={style.containerBox}>{gameContent()}</div>
-                <SidePanelWrapper />
+                <Overlay />
             </div>
         </>
     );

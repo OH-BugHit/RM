@@ -12,7 +12,7 @@ export default function Alpha() {
     const [agentSettings, setAgentSettings] = useAtom(AgentSettingsAtom);
     return (
         <div>
-            <h3>Learing rate gauge</h3>
+            <h3>{t('gauge.title.alpha')}</h3>
             <ExplGauge
                 value={agentSettings.alpha}
                 green={{ from: 0.05, to: 0.15 }}

@@ -30,8 +30,6 @@
     position: absolute;
     inset: 0;
     background-image: var(--frame-image);
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
     pointer-events: none;
     z-index: 1;
 }

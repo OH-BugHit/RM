@@ -8,7 +8,7 @@ export type TileCoords = {
 
 export type TileKey = string;
 
-import { ObservationShape } from '../../types';
+import { ObservationShape, StateViewType } from '../../types';
 import { WorkerPool } from './workers/WorkerPool';
 
 type CachedTile = {
@@ -20,6 +20,7 @@ export function createTileLayer(
     pool: WorkerPool,
     tileSize: number,
     observationShape: ObservationShape,
+    type: StateViewType,
     getQTable: () => Record<string, number[]>,
     getTileVersion: (x: number, y: number, z: number) => number
 ) {
@@ -50,6 +51,7 @@ export function createTileLayer(
                         zoom: coords.z,
                         observationShape,
                         qTable: getQTable(),
+                        viewType: type,
                     }).then((bitmap) => {
                         const ctx = cached.canvas.getContext('2d');
 
@@ -79,6 +81,7 @@ export function createTileLayer(
                 zoom: coords.z,
                 observationShape,
                 qTable: getQTable(),
+                viewType: type,
             })
                 .then((bitmap) => {
                     const ctx = canvas.getContext('2d');

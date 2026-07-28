@@ -7,7 +7,6 @@ import {
     HUDvisibility,
     PropImages,
     StoryProgress,
-    TileDefinition,
     TimeStepData,
     UiHelp,
     WorldGeneratorProps,
@@ -25,10 +24,26 @@ export const defaultControls = { isRunning: false, isFast: false, takeStep: fals
 export const defaultAudioSettings = { volume: 1 };
 
 export const defaultUIHelp: UiHelp = {
+    designMenu: false,
+    devMenu: false,
     creativeClose: false,
-    statsArrow: false,
+    textArrow: false,
     hideSideOpener: true, // Set to false on normal game?
     sideOpener: undefined,
+};
+
+export const CELL_TYPE_COLORS: Record<CellType, string> = {
+    [CellType.Spawn]: '#74e8ff',
+    [CellType.Empty]: '#F5F5F5',
+    [CellType.Solid]: 'rgb(247, 142, 255)',
+    [CellType.Trigger]: '#28ff1d',
+    [CellType.Treasure]: '#ffbd6c',
+    [CellType.TreasureBig]: '#ffa305',
+    [CellType.Trap]: '#ff5c0a',
+    [CellType.Door]: '#ffffff',
+    [CellType.Key]: '#ffffff',
+    [CellType.LockedDoor]: '#ffffff',
+    [CellType.Outside]: '#ffffff',
 };
 
 export const defaultImages = {
@@ -328,6 +343,7 @@ export const defaultStoryProgress: StoryProgress = {
         goal: false,
         solid: false,
         spawn: false,
+        tools: false,
     },
     environment: {
         name: false,
@@ -347,6 +363,7 @@ export const defaultStoryProgress: StoryProgress = {
 };
 
 export const defaultHUDvis: HUDvisibility = {
+    text: false,
     charts: false,
     agentVision: false,
     qTable: false,
@@ -403,33 +420,6 @@ export const defaultWorldGrid: Cell[][] = [
     [W, S, S, S, S, S, S, S, S, S, S, W],
     [W, S, S, S, S, S, S, S, S, S, S, W],
     [W, W, W, W, W, W, W, W, W, W, W, W],
-];
-
-export const initialTiles: TileDefinition[] = [
-    {
-        id: '0',
-        type: CellType.Solid,
-        image: 'none',
-        isCoreTile: true,
-        reloadTime: -1,
-        timer: 0,
-    },
-    {
-        id: '1',
-        type: CellType.Spawn,
-        image: 'none',
-        isCoreTile: true,
-        reloadTime: -1,
-        timer: 0,
-    },
-    {
-        id: '2',
-        type: CellType.Trigger,
-        image: 'none',
-        isCoreTile: true,
-        reloadTime: -1,
-        timer: 0,
-    },
 ];
 
 export const defaultSprites: Record<number, string> = {

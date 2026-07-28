@@ -5,6 +5,7 @@ import { QLearningAgent } from '../../components/agents/rlAgentQ';
 import { renderObservation } from '../../components/QTable/observationRenderer';
 import { useAtomValue } from 'jotai';
 import { StateDataAtom } from '../../atoms/gameState';
+import { ObsViewTypeAtom } from '../../atoms/uiState';
 
 interface ObservationCanvasProps {
     size?: number;
@@ -14,6 +15,7 @@ interface ObservationCanvasProps {
 
 export default function ObservationCanvas({ size = 256, observationShape, agentRef }: ObservationCanvasProps) {
     const state = useAtomValue(StateDataAtom);
+    const stateViewType = useAtomValue(ObsViewTypeAtom);
     const stateId = state.current;
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -54,8 +56,9 @@ export default function ObservationCanvas({ size = 256, observationShape, agentR
             grid,
             imgStore,
             qValues: agentRef.current?.Q[stateId],
+            type: stateViewType,
         });
-    }, [stateId, size, grid, agentRef]);
+    }, [stateId, size, grid, agentRef, stateViewType]);
 
     return (
         <canvas

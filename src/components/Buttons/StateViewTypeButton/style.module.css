@@ -1,0 +1,9 @@
+.controlsContainer {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to bottom, #fbf3ea 0%, #f3e7d9 50%, #ead8c7 100%);
+    border-radius: 42px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    border: 1px solid #123;
+    overflow: hidden;
+}

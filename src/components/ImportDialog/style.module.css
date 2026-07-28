@@ -1,3 +1,5 @@
+@value primary, secondary textDark from "@genai-fi/base/css/colours.module.css";
+
 .title {
     padding-bottom: 8px;
 }
@@ -77,6 +79,37 @@
     font-weight: 600;
 }
 
+.enabled:hover,
+.activeType:hover {
+    scale: 1.05;
+    filter: brightness(1.1);
+    border-color: primary;
+}
+
+.types,
+.activeType {
+    position: relative;
+    overflow: hidden;
+    appearance: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: white;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition:
+        background 120ms ease,
+        border-color 120ms ease,
+        color 120ms ease;
+}
+
+.activeType {
+    border-color: rgb(37, 165, 174);
+    background: rgba(37, 119, 174, 0.08);
+    color: primary;
+    font-weight: 600;
+}
+
 .uploadSection {
     display: flex;
     align-items: center;
@@ -104,4 +137,48 @@
     justify-content: flex-end;
     gap: 12px;
     margin-top: 20px;
+}
+
+.actionButton:disabled {
+    background:
+        linear-gradient(rgba(188, 188, 188, 0.381), rgba(188, 188, 188, 0.381)),
+        white;
+}
+
+.optionContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+.optionContainer>* {
+    flex: 0 0 calc((100% - 3 * 12px) / 4);
+}
+
+.types.gloss::before {
+    content: "";
+    position: absolute;
+    inset: -50%;
+
+    width: 40%;
+    left: -50%;
+
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, .5),
+            transparent);
+
+    transform: rotate(25deg);
+    animation: shine 1.5s linear infinite;
+}
+
+@keyframes shine {
+    from {
+        left: -50%;
+    }
+
+    to {
+        left: 150%;
+    }
 }

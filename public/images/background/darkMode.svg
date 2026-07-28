@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+  <defs>
+    <!-- CSS-animaatiot ja -tyylit -->
+    <style>
+      /* Saumaton 680px liike (2 * 340px katkoviivosykli) */
+      @keyframes pulseFlow {
+        0% {
+          stroke-dashoffset: 680;
+        }
+        100% {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      @keyframes nodeGlow {
+        0%, 100% {
+          opacity: 0.3;
+          r: 2.5px;
+        }
+        50% {
+          opacity: 0.9;
+          r: 4px;
+        }
+      }
+
+      .pulse-line {
+        stroke-dasharray: 40 300; 
+        stroke: #72f2b8; /* Kirkas neon/mintunvihreä valopulssi */
+        stroke-width: 2px;
+        opacity: 0.7;
+        filter: drop-shadow(0px 0px 4px rgba(114, 242, 184, 0.8));
+      }
+
+      .pulse-1 { 
+        animation: pulseFlow 15s linear infinite; 
+      } 
+
+      .pulse-2 { 
+        animation: pulseFlow 21s linear infinite; 
+        animation-delay: -7s; 
+      } 
+
+      .pulse-3 { 
+        animation: pulseFlow 18s linear infinite; 
+        animation-delay: -12s; 
+      }
+
+      .glowing-node {
+        animation: nodeGlow 4s ease-in-out infinite;
+        fill: #72f2b8;
+      }
+      .node-delay-1 { animation-delay: -1.5s; }
+      .node-delay-2 { animation-delay: -3s; }
+    </style>
+
+    <!-- Tumma, syvä taustagradientti -->
+    <radialGradient id="darkBgGradient" cx="50%" cy="40%" r="80%">
+      <stop offset="0%" stop-color="#14241d" />
+      <stop offset="50%" stop-color="#0d1814" />
+      <stop offset="100%" stop-color="#060a08" />
+    </radialGradient>
+
+    <!-- Pystysuuntainen saumaton kuvio (400 x 800 px) -->
+    <pattern id="darkAiPattern" width="400" height="800" patternUnits="userSpaceOnUse">
+      
+      <!-- 1. Kiinteät piirilevylinjat (pystysuuntaiset reitit) -->
+      <g stroke="#2f4a3d" stroke-width="1.2" opacity="0.35" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Reitti 1 (Ylhäältä alas vasemmalla) -->
+        <path d="M 100,0 L 100,160 L 60,240 L 60,440 L 100,520 L 100,680 L 140,760 L 140,800" />
+        
+        <!-- Reitti 2 (Pääteos keskellä/oikealla) -->
+        <path d="M 300,0 L 300,120 L 340,200 L 340,360 L 260,440 L 260,600 L 300,680 L 300,800" />
+        
+        <!-- Reitti 3 (Keskireitti) -->
+        <path d="M 200,80 L 200,280 L 160,340 L 160,540 L 200,600 L 200,720" />
+      </g>
+
+      <!-- 2. ANIMOIDUT VALOPULSSIT -->
+      <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M 100,0 L 100,160 L 60,240 L 60,440 L 100,520 L 100,680 L 140,760 L 140,800" class="pulse-line pulse-1" />
+        <path d="M 300,0 L 300,120 L 340,200 L 340,360 L 260,440 L 260,600 L 300,680 L 300,800" class="pulse-line pulse-2" />
+        <path d="M 200,80 L 200,280 L 160,340 L 160,540 L 200,600 L 200,720" class="pulse-line pulse-3" />
+      </g>
+
+      <!-- 3. Sykkivät solmukohdat -->
+      <g>
+        <circle cx="60" cy="240" class="glowing-node" />
+        <circle cx="100" cy="520" class="glowing-node node-delay-1" />
+        <circle cx="340" cy="200" class="glowing-node node-delay-2" />
+        <circle cx="260" cy="440" class="glowing-node" />
+        <circle cx="160" cy="340" class="glowing-node node-delay-1" />
+        <circle cx="200" cy="600" class="glowing-node node-delay-2" />
+      </g>
+
+      <!-- 4. Hienovaraiset kide- / geometriakuviot (Tummaan teemaan sopivat) -->
+      <g fill="#72f2b8" opacity="0.08">
+        <polygon points="180,140 195,125 215,140 205,160 185,160" />
+        <polygon points="70,380 85,365 100,380 90,400 75,395" />
+        <polygon points="280,520 295,505 315,520 305,540 285,540" />
+        <polygon points="120,700 135,685 150,700 140,720 125,715" />
+      </g>
+
+      <!-- Pienet timanttiakselit -->
+      <g fill="#ffffff" opacity="0.15">
+        <polygon points="200,200 203,205 200,210 197,205" />
+        <polygon points="300,300 303,305 300,310 297,305" />
+        <polygon points="100,600 103,605 100,610 97,605" />
+      </g>
+
+    </pattern>
+  </defs>
+
+  <!-- Päätaustaväri -->
+  <rect width="100%" height="100%" fill="url(#darkBgGradient)" />
+
+  <!-- Kuviointikerros -->
+  <rect width="100%" height="100%" fill="url(#darkAiPattern)" />
+</svg>

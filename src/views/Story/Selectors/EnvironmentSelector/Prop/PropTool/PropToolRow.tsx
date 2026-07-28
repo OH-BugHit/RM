@@ -2,7 +2,7 @@ import style from '../../../style.module.css';
 import { Button } from '@genai-fi/base';
 import { useTranslation } from 'react-i18next';
 import { useSetAtom } from 'jotai';
-import { PropToolAtom } from '../../../../../../atoms/uiState';
+import { CurrentTileToolAtom } from '../../../../../../atoms/uiState';
 import { TileDefinition } from '../../../../../../types';
 
 interface PropRowProps {
@@ -11,7 +11,7 @@ interface PropRowProps {
 }
 export default function PropToolRow({ tile, selected }: PropRowProps) {
     const { t } = useTranslation();
-    const setSelected = useSetAtom(PropToolAtom);
+    const setSelected = useSetAtom(CurrentTileToolAtom);
     return (
         <Button
             className={`${style.row} ${selected ? style.selectedButton : style.notSelectedButton}`}
