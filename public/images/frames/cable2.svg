@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="100%" height="100%">
+  <defs>
+    <!-- CSS-animaatiot -->
+    <style>
+      /* Saumaton 680px liike */
+      @keyframes pcbPulseFlow {
+        0% { stroke-dashoffset: 680; }
+        100% { stroke-dashoffset: 0; }
+      }
+
+      @keyframes pcbNodePulse {
+        0%, 100% { opacity: 0.25; r: 2.5px; }
+        50% { opacity: 0.95; r: 5px; }
+      }
+
+      /* Kiinteät pohjajohtimet (Eri paksuuksia syvyyttä varten) */
+      .pcb-trace-thick {
+        stroke: #3a2f2a9b;
+        stroke-width: 2px;
+        opacity: 0.22;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .pcb-trace-main {
+        stroke: #3a2f2ab5;
+        stroke-width: 1px;
+        opacity: 0.16;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .pcb-trace-thin {
+        stroke: #3a2f2a;
+        stroke-width: 0.5px;
+        opacity: 0.1;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      /* Animoidut valopulssit */
+      .pcb-pulse {
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 40 300;
+        stroke: #ffffff;
+        stroke-width: 2.2px;
+        filter: drop-shadow(0px 0px 4px rgba(255, 255, 255, 0.9));
+      }
+
+      .pulse-1 { animation: pcbPulseFlow 12s linear infinite; }
+      .pulse-2 { animation: pcbPulseFlow 18s linear infinite; animation-delay: -5s; }
+      .pulse-3 { animation: pcbPulseFlow 15s linear infinite; animation-delay: -9s; }
+      .pulse-4 { animation: pcbPulseFlow 22s linear infinite; animation-delay: -14s; }
+
+      /* Sykkivät juotossolmukohdat */
+      .pcb-node {
+        fill: #ffffff;
+        animation: pcbNodePulse 3.5s ease-in-out infinite;
+      }
+      .node-d1 { animation-delay: -0.9s; }
+      .node-d2 { animation-delay: -1.8s; }
+      .node-d3 { animation-delay: -2.7s; }
+    </style>
+
+    <!-- Pyydetty radialGradient-tausta -->
+    <radialGradient id="bgGradient" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#fdf9f3" />
+      <stop offset="40%" stop-color="#f4ebe1" />
+      <stop offset="80%" stop-color="#e2f0e3" />
+      <stop offset="100%" stop-color="#d3ebd5" />
+    </radialGradient>
+  </defs>
+
+  <!-- 1. TAUSTARUUTU GRADIENTILLA -->
+  <rect width="100%" height="100%" fill="url(#bgGradient)" />
+
+  <!-- 2. MONIMUTKAINEN PIIRILEVYVERKOSTO -->
+
+  <!-- Yläosaston pääväylät -->
+  <g class="pcb-trace-thick">
+    <path d="M 0,50 L 180,50 L 230,25 L 450,25 L 500,50 L 700,50 L 750,25 L 970,25 L 1020,50 L 1200,50" />
+    <path d="M 0,200 L 180,200 L 220,160 L 380,160 L 420,200 L 780,200 L 820,160 L 980,160 L 1020,200 L 1200,200" />
+  </g>
+
+  <g class="pcb-trace-main">
+    <path d="M 0,70 L 160,70 L 210,45 L 430,45 L 480,70 L 680,70 L 730,45 L 950,45 L 1000,70 L 1200,70" />
+    <path d="M 0,90 L 140,90 L 190,65 L 410,65 L 460,90 L 660,90 L 710,65 L 930,65 L 980,90 L 1200,90" />
+    
+    <!-- Keskialueen risteävät loopit -->
+    <path d="M 230,25 L 260,70 L 260,130 L 290,160" />
+    <path d="M 750,25 L 720,70 L 720,130 L 690,160" />
+  </g>
+
+  <!-- Keskialueen ja alaosaston väylät -->
+  <g class="pcb-trace-main">
+    <path d="M 0,220 L 160,220 L 200,180 L 360,180 L 400,220 L 800,220 L 840,180 L 1000,180 L 1040,220 L 1200,220" />
+    <path d="M 0,310 L 120,310 L 170,350 L 410,350 L 460,310 L 740,310 L 790,350 L 1030,350 L 1080,310 L 1200,310" />
+    <path d="M 0,330 L 100,330 L 150,370 L 390,370 L 440,330 L 720,330 L 770,370 L 1010,370 L 1060,330 L 1200,330" />
+  </g>
+
+  <g class="pcb-trace-thick">
+    <path d="M 0,350 L 80,350 L 130,385 L 370,385 L 420,350 L 700,350 L 750,385 L 990,385 L 1040,350 L 1200,350" />
+  </g>
+
+  <!-- Ohuet signaalilinjat ja pystyytännät (Datasignaalit) -->
+  <g class="pcb-trace-thin">
+    <path d="M 160,70 L 180,110 L 320,110 L 340,70" />
+    <path d="M 680,70 L 660,110 L 520,110 L 500,70" />
+    <path d="M 220,160 L 240,240 L 360,240 L 380,200" />
+    <path d="M 820,160 L 800,240 L 680,240 L 660,220" />
+    <path d="M 420,200 L 440,280 L 560,280 L 580,220" />
+    <path d="M 0,290  L 1200,290" />
+    
+    <!-- Pystysuorat yhdyslinjat -->
+    <path d="M 450,25 L 450,160" />
+    <path d="M 700,220 L 700,350" />
+    <path d="M 120,220 L 120,310" />
+  </g>
+
+
+  <!-- 3. ANIMOIDUT VALOPULSSIT -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Pulssi 1: Yläväylä (Nopea) -->
+    <path d="M 0,50 L 180,50 L 230,25 L 450,25 L 500,50 L 700,50 L 750,25 L 970,25 L 1020,50 L 1200,50" class="pcb-pulse pulse-1" />
+
+    <!-- Pulssi 2: Keskipääväylä (Aktiivisin) -->
+    <path d="M 0,200 L 180,200 L 220,160 L 380,160 L 420,200 L 780,200 L 820,160 L 980,160 L 1020,200 L 1200,200" class="pcb-pulse pulse-2" />
+
+    <!-- Pulssi 3: Mutkitteleva keskisignaali -->
+    <path d="M 0,70 L 160,70 L 210,45 L 430,45 L 480,70 L 680,70 L 730,45 L 950,45 L 1000,70 L 1200,70" class="pcb-pulse pulse-3" />
+
+    <!-- Pulssi 4: Alaväylä (Rauhallinen) -->
+    <path d="M 0,350 L 80,350 L 130,385 L 370,385 L 420,350 L 700,350 L 750,385 L 990,385 L 1040,350 L 1200,350" class="pcb-pulse pulse-4" />
+  </g>
+
+
+  <!-- 4. SYKKIVÄT LIITOSSOLMUKOHDAT -->
+  <g>
+    <!-- Ylärivin solmukohdat -->
+    <circle cx="230" cy="25" class="pcb-node" />
+    <circle cx="500" cy="50" class="pcb-node node-d1" />
+    <circle cx="750" cy="25" class="pcb-node node-d2" />
+    <circle cx="1020" cy="50" class="pcb-node node-d3" />
+
+    <!-- Keskirivin solmukohdat -->
+    <circle cx="220" cy="160" class="pcb-node node-d1" />
+    <circle cx="380" cy="160" class="pcb-node node-d3" />
+    <circle cx="820" cy="160" class="pcb-node node-d2" />
+    <circle cx="980" cy="160" class="pcb-node" />
+
+    <!-- Risteyspisteet / juotokset -->
+    <circle cx="450" cy="25" class="pcb-node node-d2" />
+    <circle cx="450" cy="160" class="pcb-node node-d1" />
+    <circle cx="260" cy="70" class="pcb-node node-d3" />
+    <circle cx="720" cy="70" class="pcb-node node-d1" />
+
+    <!-- Alarivin solmukohdat -->
+    <circle cx="170" cy="350" class="pcb-node node-d2" />
+    <circle cx="460" cy="310" class="pcb-node node-d1" />
+    <circle cx="790" cy="350" class="pcb-node node-d3" />
+    <circle cx="1080" cy="310" class="pcb-node" />
+  </g>
+
+  <!-- Pienet geometriset kide-akselit taustalla -->
+  <g fill="#3a2f2a" opacity="0.12">
+    <polygon points="300,90 305,85 310,90 305,95" />
+    <polygon points="500,140 505,135 510,140 505,145" />
+    <polygon points="900,260 905,255 910,260 905,265" />
+  </g>
+</svg>

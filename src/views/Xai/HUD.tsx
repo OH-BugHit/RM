@@ -4,11 +4,10 @@ import FrameContainer from '../Frames/FrameContainer';
 import Controls from '../Controls/Controls';
 import QTable from './NewQTable/QTable';
 import TableControls from './NewQTable/TableControls';
-import Agent from './Agent/Agent';
 import { Cable } from '../Frames/CableFrame/Cable';
 import Environment from './Environment/Environment';
 import { useAtomValue } from 'jotai';
-import { HideHudAtom, HUDvisAtom } from '../../atoms/uiState';
+import { HideHudAtom, HUDvisAtom, MinimizeAtom } from '../../atoms/uiState';
 import { NewFrame } from '../Frames/NewFrame';
 import { WorldStore } from '../../components/QTable/utils';
 import { CustomGridLayer } from './NewQTable/TileTable/TileTable';
@@ -16,13 +15,15 @@ import { StateData } from '../../types';
 import Epsilon from './Agent/Epsilon/Epsilon';
 import Alpha from './Agent/Alpha/Alpha';
 import Gamma from './Agent/Gamma/Gamma';
-import Progress from './Stats/Progress';
+import Progress from './GameTutorial/Progress';
 import { useTranslation } from 'react-i18next';
 import { Help } from '@genai-fi/base';
 import { RewardChart } from '../../components/Charts/RewardChart';
 import StateViewTypeButton from '../../components/Buttons/StateViewTypeButton/StateViewTypeButton';
 import { FocusOverlay } from '../../components/QTable/FocusOverlay/FocusOverlay';
 import { useRef } from 'react';
+import TutorialFrame from './GameTutorial/TutorialFrame/TutorialFrame';
+import Hide from '../../components/Buttons/Hide/Hide';
 
 interface XaiProps {
     agentRef: React.RefObject<QLearningAgent | undefined>;
@@ -36,9 +37,23 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
     const hideHud = useAtomValue(HideHudAtom);
     const hudVis = useAtomValue(HUDvisAtom);
     const focusFrameRef = useRef<FocusOverlay | undefined>(undefined);
+    const minimize = useAtomValue(MinimizeAtom);
 
     return (
         <div style={{ zIndex: 0 }}>
+            <TutorialFrame visible={!hudVis.charts} />
+            <FrameContainer position="left">
+                {!hudVis.agentVision && (
+                    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+                        <Cable variant="vertical" />
+                        <NewFrame variant="tutorial">
+                            <Progress />
+                        </NewFrame>
+                        <Cable variant="vertical" />
+                    </div>
+                )}
+            </FrameContainer>
+
             <FrameContainer position="top-center">
                 <Cable
                     variant="center"
@@ -66,13 +81,21 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                             focusFrameRef={focusFrameRef}
                         />
                     }
+                    minimize={minimize.qTable}
                     overlayRightTop={
-                        <span>
-                            <Help
-                                inplace
-                                message={t('help.hud.qTable')}
+                        <>
+                            <Hide
+                                component={'qTable'}
+                                state={minimize.qTable}
                             />
-                        </span>
+                            <span>
+                                <Help
+                                    inplace
+                                    keepOpen
+                                    message={t('help.hud.qTable')}
+                                />
+                            </span>
+                        </>
                     }
                 >
                     <QTable
@@ -88,13 +111,21 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                 <NewFrame
                     visible={hudVis.agentVision && !hideHud}
                     overlayLeft={<StateViewTypeButton screen={'observation'} />}
+                    minimize={minimize.agentVision}
                     overlayRightTop={
-                        <span>
-                            <Help
-                                inplace
-                                message={t('help.hud.agentVis')}
+                        <>
+                            <Hide
+                                component={'agentVision'}
+                                state={minimize.agentVision}
                             />
-                        </span>
+                            <span>
+                                <Help
+                                    inplace
+                                    keepOpen
+                                    message={t('help.hud.agentVis')}
+                                />
+                            </span>
+                        </>
                     }
                 >
                     <AgentVision agentRef={agentRef} />
@@ -113,18 +144,30 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                             visible={false}
                         />
                     )}
-                    <NewFrame visible={hudVis.charts && !hideHud}>
+                    <NewFrame
+                        minimize={minimize.charts}
+                        overlayRightTop={
+                            <>
+                                <Hide
+                                    component={'charts'}
+                                    state={minimize.charts}
+                                />
+                                <span>
+                                    <Help
+                                        inplace
+                                        keepOpen
+                                        message={t('help.hud.chart')}
+                                    />
+                                </span>
+                            </>
+                        }
+                        visible={hudVis.charts && !hideHud}
+                    >
                         <RewardChart
                             width={600}
                             height={400}
                         />
                     </NewFrame>
-                    {!hudVis.agentVision && (
-                        <NewFrame>
-                            <Progress />
-                        </NewFrame>
-                    )}
-                    <Agent />
                     {hudVis.cableRight && !hideHud && (
                         <Cable
                             variant="center"
@@ -135,39 +178,63 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                     )}
                     <NewFrame
                         visible={hudVis.agentVision && !hideHud}
+                        minimize={minimize.alpha}
                         overlayRightTop={
-                            <span>
-                                <Help
-                                    inplace
-                                    message={t('help.hud.alpha')}
+                            <>
+                                <Hide
+                                    component={'alpha'}
+                                    state={minimize.alpha}
                                 />
-                            </span>
+                                <span>
+                                    <Help
+                                        inplace
+                                        keepOpen
+                                        message={t('help.hud.alpha')}
+                                    />
+                                </span>
+                            </>
                         }
                     >
                         <Alpha />
                     </NewFrame>
                     <NewFrame
                         visible={hudVis.agentVision && !hideHud}
+                        minimize={minimize.gamma}
                         overlayRightTop={
-                            <span>
-                                <Help
-                                    inplace
-                                    message={t('help.hud.gamma')}
+                            <>
+                                <Hide
+                                    component={'gamma'}
+                                    state={minimize.gamma}
                                 />
-                            </span>
+                                <span>
+                                    <Help
+                                        inplace
+                                        keepOpen
+                                        message={t('help.hud.gamma')}
+                                    />
+                                </span>
+                            </>
                         }
                     >
                         <Gamma />
                     </NewFrame>
                     <NewFrame
                         visible={hudVis.agentVision && !hideHud}
+                        minimize={minimize.epsilon}
                         overlayRightTop={
-                            <span>
-                                <Help
-                                    inplace
-                                    message={t('help.hud.epsilon')}
+                            <>
+                                <Hide
+                                    component={'epsilon'}
+                                    state={minimize.epsilon}
                                 />
-                            </span>
+                                <span>
+                                    <Help
+                                        inplace
+                                        keepOpen
+                                        message={t('help.hud.epsilon')}
+                                    />
+                                </span>
+                            </>
                         }
                     >
                         <Epsilon />

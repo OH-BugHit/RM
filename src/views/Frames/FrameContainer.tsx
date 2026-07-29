@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface FrameContainerProps {
-    position: 'top-right' | 'top-left' | 'bottom-left' | 'bottom-right' | 'top-center';
+    position: 'top-right' | 'top-left' | 'bottom-left' | 'bottom-right' | 'top-center' | 'left';
     width?: string;
     children: React.ReactNode;
 }
@@ -19,6 +19,7 @@ const positions: Record<FrameContainerProps['position'], React.CSSProperties> = 
         justifyContent: 'center',
         zIndex: '0',
     },
+    left: { top: 0, left: 0 },
 };
 
 export default function FrameContainer({ position, width = '', children }: FrameContainerProps) {

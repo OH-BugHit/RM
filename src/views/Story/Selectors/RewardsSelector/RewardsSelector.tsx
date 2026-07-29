@@ -1,4 +1,4 @@
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom, useStore } from 'jotai';
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { StoryProgressAtom, TilePropsAtom } from '../../../../atoms/uiState';
@@ -12,6 +12,8 @@ import Separator from '../../../../components/Separator/Separator';
 export default function RewardsSelector() {
     const { t } = useTranslation('', { keyPrefix: 'createMenu.rewards' });
     const setStoryProgress = useSetAtom(StoryProgressAtom);
+    const tiles = useAtomValue(TilePropsAtom);
+    const store = useStore();
 
     useEffect(() => {
         setStoryProgress((old) => {
@@ -23,8 +25,22 @@ export default function RewardsSelector() {
                 },
             };
         });
-    }, [setStoryProgress]);
-    const tiles = useAtomValue(TilePropsAtom);
+
+        return () => {
+            const progress = store.get(StoryProgressAtom);
+            if (!progress.rewards.closed && progress.rewards.opened) {
+                setStoryProgress((old) => {
+                    return {
+                        ...old,
+                        rewards: {
+                            ...old.rewards,
+                            closed: true,
+                        },
+                    };
+                });
+            }
+        };
+    }, [setStoryProgress, store]);
     const groups = Object.values(
         tiles.reduce(
             (acc, tile) => {

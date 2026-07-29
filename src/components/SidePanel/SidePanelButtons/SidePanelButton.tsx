@@ -1,10 +1,11 @@
+import style from './style.module.css';
 import { IconButton } from '@mui/material';
-import { motion, Variants } from 'framer-motion';
 import { ReactNode } from 'react';
 import Arrow from '../../HelperArrow/Arrow';
 import { useTranslation } from 'react-i18next';
+import { motion, Variants } from 'framer-motion';
 
-export type SidePanelContent = 'agent' | 'newTile' | 'reward' | 'settings' | 'create';
+export type SidePanelContent = 'agent' | 'design' | 'newTile' | 'reward' | 'settings' | 'create';
 
 interface Props {
     icon: ReactNode;
@@ -13,40 +14,36 @@ interface Props {
     onClick: (value: SidePanelContent) => void;
     className?: string;
     disabled?: boolean;
+    selected?: boolean;
 }
 
-const buttonVariants: Variants = {
-    hidden: {
+const itemVariants: Variants = {
+    closed: {
         opacity: 0,
-        y: -15,
-        scale: 0.3,
+        y: -10,
+        scale: 0.9,
     },
-    visible: {
+    open: {
         opacity: 1,
         y: 0,
         scale: 1,
-        transition: {
-            type: 'spring',
-            stiffness: 500,
-            damping: 28,
-        },
-    },
-    exit: {
-        opacity: 0,
-        y: -15,
-        scale: 0.3,
-        transition: {
-            duration: 0.15,
-        },
     },
 };
 
-export function SidePanelButton({ icon, value, activeHelp, onClick, className, disabled = false }: Props) {
+export function SidePanelButton({
+    icon,
+    value,
+    activeHelp,
+    onClick,
+    className,
+    disabled = false,
+    selected = false,
+}: Props) {
     const { t } = useTranslation();
     return (
-        <motion.div variants={buttonVariants}>
+        <motion.div variants={itemVariants}>
             <IconButton
-                className={className}
+                className={`${className} ${selected ? style.selected : ''}`}
                 onClick={() => onClick(value)}
                 size="large"
                 title={t(`sidePanel.buttons.${value}`)}
@@ -55,7 +52,7 @@ export function SidePanelButton({ icon, value, activeHelp, onClick, className, d
                 {activeHelp === value && (
                     <Arrow
                         radius={110}
-                        angle={180}
+                        angle={125}
                     />
                 )}
                 {icon}

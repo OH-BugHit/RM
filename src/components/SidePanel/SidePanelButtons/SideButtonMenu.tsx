@@ -4,7 +4,7 @@ import style from './style.module.css';
 
 interface SideButtonMenuProps {
     open: boolean;
-    position: 'right' | 'bottom';
+    position: 'right' | 'design';
     children: ReactNode;
     design?: ReactNode;
     designShown?: boolean;
@@ -34,14 +34,12 @@ export default function SideButtonMenu({ open, position, children, design, desig
     return (
         <AnimatePresence>
             <motion.div
-                className={position === 'right' ? style.topButtonList : style.bottomButtonList}
-                style={{
-                    y: position === 'right' ? -90 : 90,
-                }}
+                className={position === 'right' ? style.topButtonList : style.designButtonList}
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
+                key={'sideButtonMenu'}
             >
                 {open && <>{children}</>}
                 {designShown && <>{design}</>}

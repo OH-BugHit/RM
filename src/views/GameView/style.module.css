@@ -22,9 +22,3 @@
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
-
-.tuneContainer {
-    height: 100%;
-    position: relative;
-    flex-grow: 1;
-}

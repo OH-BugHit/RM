@@ -1,5 +1,5 @@
 import style from './style.module.css';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, Variants } from 'framer-motion';
 
 interface FrameProps {
     children: React.ReactNode;
@@ -12,7 +12,35 @@ interface FrameProps {
     overlayLeft?: React.ReactNode;
     overlayRight?: React.ReactNode;
     overlayRightTop?: React.ReactNode;
+    variant?: 'game' | 'tutorial';
+    position?: Pick<React.CSSProperties, 'top' | 'right' | 'bottom' | 'left'>;
+    centerX?: number;
+    centerY?: number;
+    minimize?: boolean;
 }
+
+const minimizeVariants: Variants = {
+    closed: {
+        height: 0,
+        opacity: 0,
+        transition: {
+            type: 'spring',
+            stiffness: 220,
+            damping: 22,
+            delay: 0.05,
+        },
+    },
+    open: {
+        height: '',
+        opacity: 1,
+        transition: {
+            type: 'spring',
+            stiffness: 220,
+            damping: 22,
+            delay: 0.05,
+        },
+    },
+};
 
 export function NewFrame({
     children,
@@ -25,51 +53,75 @@ export function NewFrame({
     overlayLeft,
     overlayRight,
     overlayRightTop,
+    variant = 'game',
+    position,
+    centerX,
+    centerY,
+    minimize = false,
 }: FrameProps) {
-    const styleProps = {
+    const styleProps: React.CSSProperties = {
         minWidth,
         minHeight,
         maxWidth,
         maxHeight,
+
+        ...(position && {
+            position: 'absolute',
+            ...position,
+        }),
     };
 
     return (
         <AnimatePresence mode="popLayout">
             {visible && (
                 <motion.div
-                    className={style.frame}
-                    style={styleProps}
+                    className={`${style.frame} ${variant === 'tutorial' ? style.tutorial : ''}`}
+                    style={{
+                        ...styleProps,
+                        ...position,
+                    }}
                     initial={{
-                        scaleY: 0,
+                        height: 0,
                         opacity: 0,
                     }}
                     animate={{
-                        scaleY: 1,
+                        height: '',
                         opacity: 1,
+
+                        top: position?.top,
+                        right: position?.right,
+                        bottom: position?.bottom,
+                        left: position?.left,
+
+                        x: centerX ? `${centerX}%` : '0%',
+                        y: centerY ? `${centerY}%` : '0%',
                     }}
                     exit={{
                         overflow: 'hidden',
-                        scaleY: 0,
+                        height: 0,
                         opacity: 0,
                     }}
                     transition={{
-                        duration: 0.35,
-                        ease: 'easeOut',
+                        duration: 0.45,
+                        ease: 'easeInOut',
                     }}
                 >
-                    {overlayRight && <div className={style.overlayRight}>{overlayRight}</div>}
-                    {overlayLeft && <div className={style.overlayLeft}>{overlayLeft}</div>}
+                    {overlayRight && !minimize && <div className={style.overlayRight}>{overlayRight}</div>}
+                    {overlayLeft && !minimize && <div className={style.overlayLeft}>{overlayLeft}</div>}
                     {overlayRightTop && <div className={style.overlayRightTop}>{overlayRightTop}</div>}
-                    <div
+                    <motion.div
                         className={style.content}
-                        style={
-                            backgroundColour
-                                ? { backgroundColor: backgroundColour, backgroundImage: 'none' }
-                                : undefined
-                        }
+                        variants={minimizeVariants}
+                        animate={minimize ? 'closed' : 'open'}
+                        style={{
+                            ...(backgroundColour && {
+                                backgroundColor: backgroundColour,
+                                backgroundImage: 'none',
+                            }),
+                        }}
                     >
                         {children}
-                    </div>
+                    </motion.div>
                 </motion.div>
             )}
         </AnimatePresence>

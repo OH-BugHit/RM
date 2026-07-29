@@ -118,6 +118,9 @@ function PotsAndBurglarGame({
             controls: true,
             agent: true,
             text: true,
+            alpha: true,
+            gamma: true,
+            epsilon: true,
         });
         setStatsContent((old) => {
             return {

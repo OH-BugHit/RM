@@ -86,15 +86,12 @@ p {
 }
 
 .icon {
+    display: flex;
+    flex-direction: row;
     background-color: rgb(165, 170, 174);
     width: min-content;
-    margin-right: 6px;
     align-items: center;
     justify-content: center;
-}
-
-.icon:disabled::after {
-    background-color: #123;
 }
 
 .icon:hover {

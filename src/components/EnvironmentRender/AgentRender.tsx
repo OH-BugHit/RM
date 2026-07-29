@@ -26,9 +26,10 @@ export default function AgentRender({ env }: AgentRenderInterface) {
                 zIndex: 20,
             }}
             transition={{
-                type: 'spring',
-                stiffness: 300,
-                damping: 25,
+                type: 'tween',
+                duration: 0.2,
+                ease: 'easeInOut',
+                delay: 0,
             }}
             animate={{
                 x: env.position.x * 40,

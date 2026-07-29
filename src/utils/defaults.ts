@@ -373,6 +373,9 @@ export const defaultHUDvis: HUDvisibility = {
     agent: false,
     envTitle: false,
     controls: false,
+    alpha: false,
+    gamma: false,
+    epsilon: false,
 };
 
 export const defaultAgents = {

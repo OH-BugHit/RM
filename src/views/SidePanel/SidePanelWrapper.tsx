@@ -3,6 +3,7 @@ import CreateMenu from '../GameView/CreateMenu';
 import { useAtom, useSetAtom, useStore } from 'jotai';
 import { StoryProgressAtom, UiHelpAtom, SetupVisibleAtom } from '../../atoms/uiState';
 
+// Not in use
 export default function SidePanelWrapper() {
     const [, setSidePanelOpen] = useAtom(SetupVisibleAtom);
     const setUIHelper = useSetAtom(UiHelpAtom);

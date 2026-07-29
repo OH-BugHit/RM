@@ -1,6 +1,6 @@
 import style from './style.module.css';
 
-type FrameVariant = 'left' | 'center' | 'right';
+type FrameVariant = 'left' | 'center' | 'right' | 'vertical';
 
 const frameConfig = {
     left: {
@@ -12,12 +12,15 @@ const frameConfig = {
     right: {
         image: '/images/frames/cable.svg',
     },
+    vertical: {
+        image: '/images/frames/cable.svg',
+    },
 };
 
 interface FrameProps {
     variant: FrameVariant;
-    width: number | string;
-    height: number | string;
+    width?: number | string;
+    height?: number | string;
     backgroundColour?: string;
     visible?: boolean;
 }
@@ -31,7 +34,7 @@ export function Cable({ variant, width = 300, height = 300, backgroundColour, vi
             style={
                 {
                     visibility: visible ? 'visible' : 'hidden',
-                    flexGrow: variant === 'center' ? 1 : 0,
+                    flexGrow: variant === 'center' || variant === 'vertical' ? 1 : 0,
                     position: 'relative',
                     background: backgroundColour,
                     height,

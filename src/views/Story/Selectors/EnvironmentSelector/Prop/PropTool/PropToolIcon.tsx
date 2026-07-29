@@ -15,21 +15,25 @@ export default function PropToolIcon({ tile, selected, disabled = false }: PropR
     const setSelected = useSetAtom(CurrentTileToolAtom);
     if (tile.image === 'none') return; // Core tiles have 'none' as default image.
     return (
-        <Button
+        <div
             style={{ backgroundColor: CELL_TYPE_COLORS[tile.type] }}
             className={`${style.icon} ${selected ? style.selectedIcon : style.notSelectedIcon}`}
-            disabled={disabled}
-            onPointerDown={() => setSelected(tile)}
-            onClick={() => {
-                setSelected(tile);
-            }}
+            key={tile.id}
         >
-            <img
-                src={tile.image}
-                width={64}
-                height={64}
-            />
+            <Button
+                disabled={disabled}
+                onPointerDown={() => setSelected(tile)}
+                onClick={() => {
+                    setSelected(tile);
+                }}
+            >
+                <img
+                    src={tile.image}
+                    width={64}
+                    height={64}
+                />
+            </Button>
             {selected && <IconButtons />}
-        </Button>
+        </div>
     );
 }

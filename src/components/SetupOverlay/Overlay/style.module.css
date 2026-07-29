@@ -1,9 +1,9 @@
 .wrapper {
     position: absolute;
-    right: 120px;
+    right: 130px;
     height: 92vh;
-    width: 600px;
-    border: #123 solid 3px;
+    max-width: 23%;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
     border-radius: 3rem;
     padding: 28px 0 26px 0;
     overflow: hidden;
@@ -13,20 +13,18 @@
     background-position: center;
 }
 
-.container {
-    border: rgba(17, 34, 51, 0) 1px solid;
-    border-radius: 3rem;
-    height: auto;
-    height: 100%;
-    overflow: auto;
+.designWrapper {
+    margin-right: 8px;
+    background: none;
+    overflow: visible;
+    border-radius: none;
+    box-shadow: none;
 }
 
-.closeButton {
-    position: absolute;
-    right: 24px;
-    top: 14px;
-    z-index: 9999999;
-    background-color: rgba(171, 175, 255, 0.415);
+.container {
+    width: fit-content;
+    height: 100%;
+    overflow: auto;
 }
 
 .container::-webkit-scrollbar-track {

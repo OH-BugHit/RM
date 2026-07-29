@@ -4,11 +4,17 @@
     box-sizing: border-box;
     background: linear-gradient(to bottom, #fbf3ea 0%, #f3e7d9 50%, #ead8c7 100%);
     border-radius: 42px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     border: 1px solid #123;
+    box-shadow: 0 4px 16px rgba(5, 5, 5, 0.5);
     padding: 1.2rem;
     transform-origin: center;
+    z-index: 999;
 }
+
+.tutorial {
+    background: linear-gradient(to bottom, #eaf9fb 0%, #d9f3f0 50%, #c7d9ea 100%);
+}
+
 
 .frame::before {
     content: "";
@@ -88,6 +94,7 @@
 
 .overlayRightTop {
     position: absolute;
+    display: flex;
     top: 0px;
     right: 0px;
     padding: 4px;

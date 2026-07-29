@@ -2,14 +2,14 @@ import style from './style.module.css';
 import { useAtomValue } from 'jotai';
 import { ActiveEnvironmentAtom } from '../../../atoms/state';
 import { HUDvisAtom } from '../../../atoms/uiState';
-import { NewFrame } from '../../Frames/NewFrame';
+import TypewriterText from '../../../components/Typewriter/TypeWriterText';
 
 export default function Environment() {
     const environment = useAtomValue(ActiveEnvironmentAtom);
     const hudVis = useAtomValue(HUDvisAtom);
     return (
         <>
-            <NewFrame visible={hudVis.envTitle}>
+            {hudVis.envTitle && (
                 <h1
                     className={style.envTitle}
                     style={{
@@ -20,9 +20,15 @@ export default function Environment() {
                         justifySelf: 'center',
                     }}
                 >
-                    {environment.name}
+                    {
+                        <TypewriterText
+                            startDelay={1000}
+                            speed={60}
+                            text={environment.name}
+                        />
+                    }
                 </h1>
-            </NewFrame>
+            )}
         </>
     );
 }

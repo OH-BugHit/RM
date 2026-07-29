@@ -275,8 +275,6 @@ export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation,
                 width: tileSize,
                 height: tileSize,
                 pointerEvents: cell.type === CellType.Outside ? 'none' : 'auto',
-
-                zIndex: 1000,
             }}
             disabled={!design}
             className={`${style.tile} ${onSight ? style.onSight : style.notOnSight}`}

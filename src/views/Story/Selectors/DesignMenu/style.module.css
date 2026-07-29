@@ -1,0 +1,9 @@
+.design {
+    margin-right: 8px;
+    justify-content: end;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+    align-items: self-end;
+    overflow: visible;
+}

@@ -78,13 +78,8 @@ export default function StoryProgress() {
             return;
         }
 
-        if (progress.agent.name) {
-            setStep(4);
-            return;
-        }
-
         if (progress.agent.obsShape) {
-            setStep(3);
+            setStep(4); // Step 3 was the agent name and is removed
             return;
         }
 
@@ -104,12 +99,6 @@ export default function StoryProgress() {
                 setHud((old) => {
                     return { ...old, text: true };
                 });
-                setUIHelper((old) => {
-                    return {
-                        ...old,
-                        textArrow: true,
-                    };
-                });
                 break;
             }
             case 1: {
@@ -120,6 +109,7 @@ export default function StoryProgress() {
                         textArrow: false,
                         sideOpener: 'agent',
                         hideSideOpener: false,
+                        devMenu: true,
                     };
                 });
                 break;
@@ -152,12 +142,15 @@ export default function StoryProgress() {
                         ...old,
                         creativeClose: false,
                         designMenu: true,
-                        sideOpener: 'newTile',
+                        sideOpener: 'design',
                     };
                 });
                 break;
             }
             case 6: {
+                break;
+            }
+            case 7: {
                 setVisibleTiles((old) => {
                     return {
                         ...old,
@@ -166,7 +159,7 @@ export default function StoryProgress() {
                 });
                 break;
             }
-            case 7: {
+            case 8: {
                 setVisibleTiles((old) => {
                     return {
                         ...old,
@@ -246,6 +239,9 @@ export default function StoryProgress() {
                     envTitle: true,
                     controls: true,
                     agent: true,
+                    alpha: true,
+                    gamma: true,
+                    epsilon: true,
                 });
                 setStatsContent((old) => {
                     return {

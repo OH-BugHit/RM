@@ -3,6 +3,7 @@
     cursor: pointer;
     user-select: none;
     background-color: #3446526d;
+    z-index: 1000,
 }
 
 .tile:focus-visible {
@@ -44,11 +45,13 @@
 }
 
 .onSight {
+    transition-delay: 0.1s;
     background: #fffffdef;
     filter: brightness(1.1) contrast(1.1);
     /*There could be separate dropshadow filters to go round the observation?*/
 }
 
 .notOnSight {
+    transition-delay: 0.1s;
     background: transparent;
 }

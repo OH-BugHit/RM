@@ -1,22 +1,13 @@
 .float {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 40px;
     right: 1rem;
     z-index: 100;
     pointer-events: auto;
-}
-
-.icon {
-    background: rgba(50, 249, 242, 0.48);
-}
-
-.top {
-    top: 40%;
-}
-
-
-.icon:hover {
-    scale: 1.1;
-    background: rgba(136, 255, 251, 0.48);
+    max-height: 90vh;
+    width: 90px;
 }
 
 .button {
@@ -25,11 +16,69 @@
     pointer-events: auto;
 }
 
+.icon {
+    background: rgba(50, 249, 242, 0.48);
+    transition: all 0.2s ease;
+    border: 2px solid rgba(255, 255, 255, 0);
+}
+
+
+.icon:hover {
+    scale: 1.1;
+    background: rgba(45, 255, 80, 0.48);
+}
+
+/*uudet nää group ja list*/
+.group {
+    position: fixed;
+    right: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    z-index: 100;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.devButton {
+    margin-bottom: 3rem;
+}
+
+.devButton:hover {
+    scale: 1.1;
+    background: rgba(45, 234, 255, 0.48);
+}
+
+.selected {
+    scale: 1.08;
+    background: rgba(182, 255, 251, 0.75);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow:
+        0 0 12px rgba(50, 249, 242, 0.6),
+        inset 0 0 8px rgba(255, 255, 255, 0.25);
+}
+
+.selected:hover {
+    scale: 1.1;
+    background: rgba(255, 158, 164, 0.48);
+}
+
+.buttonList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
 .topButtonList {
     position: absolute;
-    top: 10%;
-    bottom: 10%;
+    top: 160px;
     right: 1rem;
+    y: -90;
 
     display: flex;
     flex-direction: column;
@@ -40,25 +89,23 @@
     pointer-events: none;
 }
 
-.bottomButtonList {
-    position: absolute;
-    top: 10%;
-    bottom: 10%;
-    right: 1rem;
-
+.designButtonList {
     display: flex;
-    flex-direction: column-reverse;
-    justify-content: center;
-    gap: 4%;
-
+    position: relative;
+    flex-direction: column;
+    flex-wrap: wrap-reverse;
+    max-height: 75vh;
+    width: max-content;
+    align-content: flex-end;
     z-index: 100;
     pointer-events: none;
     overflow: visible;
     align-items: self-end;
+    gap: 2rem 24px;
 }
 
 .topButtonList>*,
-.bottomButtonList>* {
+.designButtonList>* {
     pointer-events: auto;
 }
 

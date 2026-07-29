@@ -94,6 +94,9 @@ export type HUDvisibility = {
     agent: boolean;
     envTitle: boolean;
     controls: boolean;
+    alpha: boolean;
+    gamma: boolean;
+    epsilon: boolean;
 };
 
 export type EdgeType = RoomType | 'lockedDoor' | 'newEdge';

@@ -1,4 +1,4 @@
-import { useAtom, useSetAtom } from 'jotai';
+import { useAtom, useSetAtom, useStore } from 'jotai';
 import style from '../style.module.css';
 import { useTranslation } from 'react-i18next';
 import { StoryProgressAtom } from '../../../../atoms/uiState';
@@ -15,6 +15,7 @@ export default function GameSettings() {
     const [errors, setErrors] = useState<TextErrors>({});
     const [environment, setEnvironment] = useAtom(ActiveEnvironmentAtom);
     const [envSettings, setEnvsettings] = useAtom(EnvSettingsAtom);
+    const store = useStore();
 
     useEffect(() => {
         setStoryProgress((old) => {
@@ -26,7 +27,22 @@ export default function GameSettings() {
                 },
             };
         });
-    }, [setStoryProgress]);
+
+        return () => {
+            const progress = store.get(StoryProgressAtom);
+            if (!progress.settings.closed && progress.environment.name) {
+                setStoryProgress((old) => {
+                    return {
+                        ...old,
+                        settings: {
+                            ...old.settings,
+                            closed: true,
+                        },
+                    };
+                });
+            }
+        };
+    }, [store, setStoryProgress]);
 
     useEffect(() => {
         setStoryProgress((old) => {

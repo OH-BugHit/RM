@@ -254,21 +254,21 @@
             "0": "Hi! And welcome to create your own Reinforcement Learning game!",
             "1": "Start creating your game by opening Agent menu and select your agent.",
             "2": "Next you need to select observation shape",
-            "3": "Last step for agent: Give your agent an epic name!",
-            "4": "Great! You can close the Agent menu now. All menus close from the upper right corner. Feel free to come back to make changes later if you like.",
+            "3": "REMOVED STEP!",
+            "4": "Great! You can close the Agent menu now by pressing Agent menu button again. Feel free to come back to make changes later if you like.",
             "5": "Okay! Now move to Design menu and start designing your world.",
             "6": "First create tile for surrounding walls of your world. You need to select type and image for tiles you create.",
             "7": "Good, now select what normal floor looks like. Normal floor is also agent's spawn area.",
             "8": "Nice! Now you need to choose what would your agent's goal look. Think about what is your story here. Maybe treasure hunting agent trying to find chest full of gold, or agent searching for butterflies, avoiding spiders and bugs? Your world, your choises!",
             "9": "You can make your world more interesting by creating few more props to put to your world if you want. When ready, click Okay!",
             "10": "Now it's time to build your world. You can rezise the world by clicking those buttons around your world. To add stuff to your world, select tile tool from the list and just click where you want to place it. To proceed from here, you need to add at least one Goal-tile",
-            "11": "Great! You can always come back to modify your world and choises. When you are ready with your world, close the Environment editor.",
+            "11": "Great! You can always come back to modify your world and choises. When you are ready with your world, close the Environment editor or move to the Reward shaping menu.",
             "12": "Few more steps remaining. Now you may proceed to the Reward shaping!",
             "13": "Here you set the rewards, all preset rewards are already good but feel free to tune them and come back here after your agent has learned something to alter its' behaviour. Proceed by closing the Reward shaping now.",
             "14": "Last menu! I promise! Open the Game Settings menu!",
             "15": "In these settings you can set episode length, so the length of one round of your game. Also the very last thing is to give your environment an epic name! Remember, as always, you can come back later to change these too!",
             "16": "Great! You are all set! Feel free to come back to this creative menu at any point you like. Proceed by closing Game Settings.",
-            "17": "Nice looking environment I have for me to act! Well... I don't know should I call myself \"I\" or \"me\"... After all I'm just large chunck of code. But anyway! Please proceed!"
+            "17": "Nice looking environment! Please proceed!"
         }
     },
     "tutorial": {

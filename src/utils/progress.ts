@@ -44,11 +44,6 @@ export const TASK_GROUPS: TaskGroup[] = [
                 text: 'story.tasks.agent.obsShape',
                 field: 'agent.obsShape',
             },
-            {
-                id: 'agent-name',
-                text: 'story.tasks.agent.agentName',
-                field: 'agent.name',
-            },
         ],
     },
     {

@@ -13,7 +13,7 @@ export const ActiveEnvironmentAtom = atom<EnvironmentSelection>({
     name: '',
     type: undefined,
 });
-export const ActiveAgentAtom = atom<Agent>({ name: '', observationShape: 'unset', type: 'unset', img: '' });
+export const ActiveAgentAtom = atom<Agent>({ name: 'Agent X', observationShape: 'unset', type: 'unset', img: '' });
 export const ImportedAgentImgAtom = atom<string | undefined>(undefined);
 
 export const UpdateSpritesPulseAtom = atom<boolean>(true);

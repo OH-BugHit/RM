@@ -44,3 +44,4 @@ export const ObsViewTypeAtom = atom<StateViewType>('sprite');
 export const QmapViewTypeAtom = atom<StateViewType>('sprite');
 export const ZoomLevelAtom = atom<number>(14);
 export const MapCenterAtom = atom<{ lat: number; lng: number }>({ lat: 0, lng: 0 });
+export const MinimizeAtom = atom<HUDvisibility>(defaultHUDvis);

@@ -1,6 +1,7 @@
 @value primary, secondary textDark from "@genai-fi/base/css/colours.module.css";
 
 .selectorContainer {
+    min-width: 23vw;
     display: flex;
     position: relative;
     flex-direction: column;
