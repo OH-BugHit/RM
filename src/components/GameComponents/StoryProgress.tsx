@@ -6,19 +6,52 @@ import {
     StoryStepAtom,
     UiHelpAtom,
     TileVisibilityAtom,
+    ControlEnablerAtom,
+    ObsViewTypeAtom,
+    LodStateAtom,
 } from '../../atoms/uiState';
 import { useEffect } from 'react';
+import { GameControlAtom } from '../../atoms/state';
+import { EpisodicDataAtom } from '../../atoms/gameState';
 
 export default function StoryProgress() {
     const [step, setStep] = useAtom(StoryStepAtom);
     const setHud = useSetAtom(HUDvisAtom);
-    const setStatsContent = useSetAtom(StatsContentAtom);
+    const setTextContent = useSetAtom(StatsContentAtom);
     const progress = useAtomValue(StoryProgressAtom);
     const setVisibleTiles = useSetAtom(TileVisibilityAtom);
     const setUIHelper = useSetAtom(UiHelpAtom);
+    const setControls = useSetAtom(ControlEnablerAtom);
+    const [controlState, setGameState] = useAtom(GameControlAtom);
+    const obsViewType = useAtomValue(ObsViewTypeAtom);
+    const gameData = useAtomValue(EpisodicDataAtom);
+    const setLod = useSetAtom(LodStateAtom);
 
     useEffect(() => {
-        if (step > 17) return; // creative stuff is under 18
+        if (step > 26) return;
+        if (gameData?.triggered && gameData.triggered > 10) {
+            setStep(27);
+            return;
+        }
+        if (progress.hud.agentView.steps && controlState.isRunning) {
+            setStep(26);
+            return;
+        }
+        if (step > 23) return;
+        if (obsViewType === 'agent') {
+            setStep(24);
+            return;
+        }
+        if (progress.hud.agentView.steps) {
+            setStep(23);
+            return;
+        }
+        if (step > 20) return;
+        if (controlState.isRunning) {
+            setStep(21);
+            return;
+        }
+        if (step > 16) return;
         if (progress.settings.closed) {
             setStep(17);
             return;
@@ -31,10 +64,7 @@ export default function StoryProgress() {
             setStep(15);
             return;
         }
-        if (progress.rewards.closed) {
-            setStep(14);
-            return;
-        }
+        if (step > 12) return;
         if (progress.rewards.opened) {
             setStep(13);
             return;
@@ -48,7 +78,7 @@ export default function StoryProgress() {
             return;
         }
 
-        if (progress.design.tools) {
+        if (progress.design.clickOkay) {
             setStep(10);
             return;
         }
@@ -87,22 +117,22 @@ export default function StoryProgress() {
             setStep(2);
             return;
         }
-    }, [progress, setStep, step]);
+    }, [progress, setStep, step, controlState, obsViewType, gameData]);
 
     useEffect(() => {
-        setStatsContent((old) => {
+        setTextContent((old) => {
             return { mode: old.mode, phase: step };
         });
         switch (step) {
             case 0: {
-                setStatsContent({ mode: 'textNext', phase: step });
+                setTextContent({ mode: 'textNext', phase: step });
                 setHud((old) => {
-                    return { ...old, text: true };
+                    return { ...old, text: true, progress: true };
                 });
                 break;
             }
             case 1: {
-                setStatsContent({ mode: 'text', phase: step });
+                setTextContent({ mode: 'text', phase: step });
                 setUIHelper((old) => {
                     return {
                         ...old,
@@ -148,6 +178,15 @@ export default function StoryProgress() {
                 break;
             }
             case 6: {
+                setUIHelper((old) => {
+                    return {
+                        ...old,
+                        creativeClose: false,
+                        designMenu: false,
+                        sideOpener: undefined,
+                        createTile: true,
+                    };
+                });
                 break;
             }
             case 7: {
@@ -173,9 +212,10 @@ export default function StoryProgress() {
                     return {
                         ...old,
                         sideOpener: undefined,
+                        createTile: false,
                     };
                 });
-                setStatsContent({ mode: 'textNext', phase: step });
+                setTextContent({ mode: 'textNext', phase: step });
                 break;
             }
             case 10: {
@@ -183,9 +223,10 @@ export default function StoryProgress() {
                     return {
                         ...old,
                         sideOpener: undefined,
+                        createTile: false,
                     };
                 });
-                setStatsContent({ mode: 'text', phase: step });
+                setTextContent({ mode: 'text', phase: step });
                 break;
             }
             case 11: {
@@ -194,9 +235,20 @@ export default function StoryProgress() {
                         ...old,
                         sideOpener: 'reward',
                         designMenu: false,
+                        createTile: false,
                     };
                 });
-                setStatsContent({ mode: 'text', phase: step });
+                setTextContent({ mode: 'text', phase: step });
+                break;
+            }
+            case 13: {
+                setUIHelper((old) => {
+                    return {
+                        ...old,
+                        sideOpener: undefined,
+                    };
+                });
+                setTextContent({ mode: 'textNext', phase: step });
                 break;
             }
             case 14: {
@@ -206,6 +258,7 @@ export default function StoryProgress() {
                         sideOpener: 'settings',
                     };
                 });
+                setTextContent({ mode: 'text', phase: step });
                 break;
             }
             case 16: {
@@ -224,37 +277,119 @@ export default function StoryProgress() {
                 break;
             }
             case 17: {
-                setStatsContent({ mode: 'textNext', phase: step });
+                setTextContent({ mode: 'textNext', phase: step });
+                setControls({ play: true, ff: false, step: false, inspect: false });
                 break;
             }
-            case 19: {
-                setHud({
-                    text: false,
-                    charts: true,
-                    agentVision: true,
-                    qTable: true,
-                    stats: true,
-                    cableLeft: true,
-                    cableRight: true,
-                    envTitle: true,
-                    controls: true,
-                    agent: true,
-                    alpha: true,
-                    gamma: true,
-                    epsilon: true,
-                });
-                setStatsContent((old) => {
+            case 20: {
+                setTextContent({ mode: 'text', phase: step });
+                setHud((old) => {
                     return {
                         ...old,
-                        mode: 'stats',
+                        controls: true,
                     };
                 });
+                break;
+            }
+            case 21: {
+                setTextContent({ mode: 'textNext', phase: step });
+                break;
+            }
+            case 22: {
+                setTextContent({ mode: 'text', phase: step });
+                setHud((old) => {
+                    return {
+                        ...old,
+                        agentVision: true,
+                    };
+                });
+                setGameState((old) => {
+                    return {
+                        ...old,
+                        isRunning: false,
+                    };
+                });
+                setControls({ play: false, ff: false, step: true, inspect: false });
+                break;
+            }
+            case 24: {
+                setTextContent({ mode: 'textNext', phase: step });
+                break;
+            }
+            case 25: {
+                setTextContent({ mode: 'text', phase: step });
+                setControls({ play: true, ff: true, step: true, inspect: false });
+                break;
+            }
+            case 27: {
+                setGameState((old) => {
+                    return {
+                        ...old,
+                        isFast: false,
+                        isRunning: false,
+                    };
+                });
+                setTextContent({ mode: 'textNext', phase: step });
+                break;
+            }
+            case 29: {
+                setHud((old) => {
+                    return {
+                        ...old,
+                        qTable: true,
+                    };
+                });
+                setLod(2);
+                setControls({ play: false, ff: false, step: false, inspect: false });
+                setTextContent({ mode: 'textNext', phase: step });
+                break;
+            }
+            case 31: {
+                setTextContent({ mode: 'text', phase: step });
+                setControls({ play: false, ff: false, step: false, inspect: true });
+                break;
+            }
+            case 32: {
+                setTextContent({ mode: 'inspect', phase: step });
+                break;
+            }
+            case 38: {
+                setTextContent({ mode: 'textNext', phase: step });
+                setControls({ play: false, ff: false, step: false, inspect: false });
+                setHud((old) => {
+                    return {
+                        ...old,
+                        epsilon: true,
+                        gamma: true,
+                        alpha: true,
+                    };
+                });
+                break;
+            }
+            case 40: {
+                setHud((old) => {
+                    return {
+                        ...old,
+                        charts: true,
+                    };
+                });
+                break;
+            }
+            case 44: {
+                setHud((old) => {
+                    return {
+                        ...old,
+                        text: false,
+                        progress: false,
+                    };
+                });
+                setControls({ play: true, ff: true, step: true, inspect: true });
                 break;
             }
             default:
                 return;
         }
-    }, [step, setHud, setStatsContent, setVisibleTiles, setUIHelper]);
+    }, [step, setControls, setHud, setTextContent, setVisibleTiles, setUIHelper, setGameState, setLod]);
 
     return null;
 }

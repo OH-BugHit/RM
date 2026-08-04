@@ -16,6 +16,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import Arrow from '../HelperArrow/Arrow';
 import SideButtonGroup from './SidePanelButtons/SideButtonGroup';
+import { EnvironmentTypes } from '../../types';
 
 const iconStyle = {
     width: '3rem',
@@ -38,26 +39,31 @@ export function SidePanelOpener() {
         value: SidePanelContent;
         icon: JSX.Element;
         disabled: boolean;
+        visibleIn: EnvironmentTypes[];
     }[] = [
         {
             value: 'agent',
             icon: <SmartToyIcon style={iconStyle} />,
             disabled: currentStep < 0,
+            visibleIn: ['created', 'loaded'],
         },
         {
             value: 'reward',
             icon: <FavoriteBorderIcon style={iconStyle} />,
             disabled: currentStep < 10,
+            visibleIn: ['created', 'loaded'],
         },
         {
             value: 'settings',
             icon: <RoomPreferencesIcon style={iconStyle} />,
             disabled: currentStep < 14,
+            visibleIn: ['created', 'modify'],
         },
         {
             value: 'design',
             icon: <BrushIcon style={iconStyle} />,
             disabled: currentStep < 5,
+            visibleIn: ['created', 'modify'],
         },
     ];
 
@@ -108,7 +114,7 @@ export function SidePanelOpener() {
                     className={style.background}
                     initial={false}
                     animate={{
-                        width: settingsMenuOpen ? '' : 0,
+                        width: settingsMenuOpen ? '100%' : '0%',
                     }}
                     transition={{
                         type: 'spring',
@@ -119,8 +125,10 @@ export function SidePanelOpener() {
             </div>
             <SideButtonGroup
                 key={'devButton'}
+                mode={uiHelp.mode}
                 open={settingsMenuOpen}
                 onClick={toggleSettingsMenu}
+                saveDisabled={currentStep < 44}
                 main={
                     <>
                         {helperArrow.devMenu && (
@@ -137,18 +145,20 @@ export function SidePanelOpener() {
                     </>
                 }
             >
-                {buttons.map((button) => (
-                    <SidePanelButton
-                        key={button.value}
-                        className={style.icon}
-                        disabled={button.disabled}
-                        value={button.value}
-                        icon={button.icon}
-                        activeHelp={uiHelp.sideOpener}
-                        onClick={openPanel}
-                        selected={opened.content === button.value}
-                    />
-                ))}
+                {buttons
+                    .filter((button) => button.visibleIn.includes(uiHelp.mode))
+                    .map((button) => (
+                        <SidePanelButton
+                            key={button.value}
+                            className={style.icon}
+                            disabled={button.disabled}
+                            value={button.value}
+                            icon={button.icon}
+                            activeHelp={uiHelp.sideOpener}
+                            onClick={openPanel}
+                            selected={opened.content === button.value}
+                        />
+                    ))}
             </SideButtonGroup>
         </AnimatePresence>
     );

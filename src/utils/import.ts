@@ -1,3 +1,114 @@
+import JSZip from 'jszip';
+import { CellSave, LoadedGame, Manifest, SavePreview, TileDefinitionSave } from './types';
+import { TilePropsAtom } from '../atoms/uiState';
+import { EnvSettingsAtom, InnerFillCellAtom, WorldGridRenderAtom } from '../atoms/gameState';
+import { Store } from 'jotai/vanilla/store';
+import { defaultCell, defaultEnvSettings } from './defaults';
+import { ActiveAgentAtom, ActiveEnvironmentAtom, AgentSettingsAtom } from '../atoms/state';
+import { SAVE_VERSION } from './export';
+import { Cell, CellType, TileDefinition } from '../types';
+
+function restoreImage(image: string, emoji: string): string {
+    return emoji ? emojiToDataUrl(emoji) : image;
+}
+
+export function fromSavedTile(tile: TileDefinitionSave): TileDefinition {
+    return {
+        ...tile,
+        emoji: tile.emoji || undefined,
+        image: restoreImage(tile.image, tile.emoji),
+        reloadTime: 0,
+        timer: 0,
+    };
+}
+
+export function fromSavedCell(cell: CellSave): Cell {
+    return {
+        ...cell,
+        emoji: cell.emoji || undefined,
+        image: restoreImage(cell.image, cell.emoji),
+        reloadTime: 0,
+        timer: 0,
+    };
+}
+
+export async function loadSavePreview(file: File): Promise<SavePreview> {
+    const zip = await JSZip.loadAsync(file);
+
+    const manifest = await readJson<Manifest>(zip, 'manifest.json');
+
+    const world = (await readJson<CellSave[][]>(zip, 'Game/world.json')).map((row) => row.map(fromSavedCell));
+
+    return {
+        manifest,
+        world,
+    };
+}
+
+export function applyLoadedGame(store: Store, loadedGame: LoadedGame) {
+    store.set(TilePropsAtom, loadedGame.tools.tileDefinitions.map(fromSavedTile));
+
+    store.set(
+        WorldGridRenderAtom,
+        loadedGame.game.world.map((row) => row.map(fromSavedCell))
+    );
+
+    store.set(EnvSettingsAtom, {
+        ...defaultEnvSettings,
+        generic: loadedGame.game.envSettings.generic,
+    });
+
+    store.set(
+        InnerFillCellAtom,
+        loadedGame.tools.tileDefinitions.find((tile) => tile.isCoreTile && tile.type === CellType.Spawn) ?? defaultCell
+    );
+
+    store.set(ActiveEnvironmentAtom, { name: loadedGame.manifest.gameName, type: undefined });
+
+    store.set(AgentSettingsAtom, loadedGame.agent.settings);
+
+    store.set(ActiveAgentAtom, loadedGame.agent.activeAgent);
+}
+
+async function readJson<T>(zip: JSZip, path: string): Promise<T> {
+    const file = zip.file(path);
+
+    if (!file) {
+        throw new Error(`Missing file: ${path}`);
+    }
+
+    return JSON.parse(await file.async('string')) as T;
+}
+
+/**
+ * Preprecesses input file to Environment and game data
+ * TODO: Implement, this is just placeholder
+ */
+export async function readSavedFile(file: File): Promise<LoadedGame> {
+    const zip = await JSZip.loadAsync(file);
+
+    const manifest = await readJson<Manifest>(zip, 'manifest.json');
+
+    if (manifest.saveVersion !== SAVE_VERSION) {
+        throw new Error(`Unsupported save version ${manifest.saveVersion}. Expected ${SAVE_VERSION}.`);
+    }
+
+    return {
+        manifest,
+        tools: {
+            tileDefinitions: await readJson(zip, 'Tools/tileDefinitions.json'),
+        },
+        game: {
+            world: await readJson(zip, 'Game/world.json'),
+            envSettings: await readJson(zip, 'Game/envSettings.json'),
+        },
+        agent: {
+            settings: await readJson(zip, 'Agent/settings.json'),
+            activeAgent: await readJson(zip, 'Agent/activeAgent.json'),
+        },
+    };
+}
+
 /**
  * Preprocesses input File to smaller png
  * @param file Input file

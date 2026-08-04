@@ -78,72 +78,74 @@ export default function GameSettings() {
     };
 
     return (
-        <div className={style.selectorContainer}>
-            <h1>{t('createMenu.settings.title')}</h1>
-            <em>{t('createMenu.settings.titleDesc')}</em>
-            <Separator />
+        <div className={style.selector}>
             <div className={style.selectorContainer}>
-                <h3>{t('createMenu.settings.episodeLength')}</h3>
-                <em>{t('createMenu.settings.episodeLengthDesc')}</em>
-                <br />
-                <TextField
-                    label={t('createMenu.settings.lengthInputLabel')}
-                    type="number"
-                    slotProps={{
-                        htmlInput: {
-                            min: 1,
-                            max: 100,
-                            step: 1,
-                        },
-                    }}
-                    value={envSettings.generic.env.maxTurns}
-                    sx={{ color: 'white' }}
-                    onChange={(e) => {
-                        setEnvsettings((old) => {
-                            return {
-                                ...old,
-                                generic: {
-                                    ...old.generic,
-                                    env: {
-                                        ...old.generic.env,
-                                        maxTurns: Number(e.target.value),
+                <h1>{t('createMenu.settings.title')}</h1>
+                <em>{t('createMenu.settings.titleDesc')}</em>
+                <Separator />
+                <div className={style.selectorContainer}>
+                    <h3>{t('createMenu.settings.episodeLength')}</h3>
+                    <em>{t('createMenu.settings.episodeLengthDesc')}</em>
+                    <br />
+                    <TextField
+                        label={t('createMenu.settings.lengthInputLabel')}
+                        type="number"
+                        slotProps={{
+                            htmlInput: {
+                                min: 1,
+                                max: 100,
+                                step: 1,
+                            },
+                        }}
+                        value={envSettings.generic.env.maxTurns}
+                        sx={{ color: 'white' }}
+                        onChange={(e) => {
+                            setEnvsettings((old) => {
+                                return {
+                                    ...old,
+                                    generic: {
+                                        ...old.generic,
+                                        env: {
+                                            ...old.generic.env,
+                                            maxTurns: Number(e.target.value),
+                                        },
                                     },
-                                },
-                            };
-                        });
-                    }}
-                    required
-                    margin="normal"
-                />
-            </div>
-            <Separator />
-            <div className={style.selectorContainer}>
-                <h3>{t('createMenu.settings.nameTitle')}</h3>
-                <em>{t('createMenu.settings.nameDesc')}</em>
-                <br />
-                <TextField
-                    label={t('createMenu.settings.nameInputLabel')}
-                    value={environment.name}
-                    sx={{ color: 'white' }}
-                    onChange={(e) => {
-                        setEnvironment((old) => {
-                            return {
-                                ...old,
-                                name: e.target.value,
-                            };
-                        });
+                                };
+                            });
+                        }}
+                        required
+                        margin="normal"
+                    />
+                </div>
+                <Separator />
+                <div className={style.selectorContainer}>
+                    <h3>{t('createMenu.settings.nameTitle')}</h3>
+                    <em>{t('createMenu.settings.nameDesc')}</em>
+                    <br />
+                    <TextField
+                        label={t('createMenu.settings.nameInputLabel')}
+                        value={environment.name}
+                        sx={{ color: 'white' }}
+                        onChange={(e) => {
+                            setEnvironment((old) => {
+                                return {
+                                    ...old,
+                                    name: e.target.value,
+                                };
+                            });
 
-                        handleSubmit(e.target.value);
-                    }}
-                    required
-                    error={!!errors.username}
-                    helperText={
-                        errors.username ? t(`enterUsername.messages.usernameError.${errors.username}`) : undefined
-                    }
-                    margin="normal"
-                />
+                            handleSubmit(e.target.value);
+                        }}
+                        required
+                        error={!!errors.username}
+                        helperText={
+                            errors.username ? t(`enterUsername.messages.usernameError.${errors.username}`) : undefined
+                        }
+                        margin="normal"
+                    />
+                </div>
+                <Separator />
             </div>
-            <Separator />
         </div>
     );
 }

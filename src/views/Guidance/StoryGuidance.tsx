@@ -3,7 +3,7 @@ import style from './style.module.css';
 import { useAtom } from 'jotai';
 import { useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { SubView, ViewEnum } from '../../types';
 import { StoryStepAtom } from '../../atoms/uiState';
 

@@ -44,6 +44,7 @@ export default function TutorialText() {
                                                 design: {
                                                     ...old.design,
                                                     tools: true,
+                                                    clickOkay: true,
                                                 },
                                             };
                                         });
@@ -58,7 +59,7 @@ export default function TutorialText() {
                                     });
                                 }}
                             >
-                                {t('common.okay')}
+                                {t('common.next')}
                             </Button>
                         </>
                     )}

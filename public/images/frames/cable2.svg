@@ -16,7 +16,7 @@
       /* Kiinteät pohjajohtimet (Eri paksuuksia syvyyttä varten) */
       .pcb-trace-thick {
         stroke: #3a2f2a9b;
-        stroke-width: 2px;
+        stroke-width: 0.4px;
         opacity: 0.22;
         fill: none;
         stroke-linecap: round;
@@ -25,7 +25,7 @@
 
       .pcb-trace-main {
         stroke: #3a2f2ab5;
-        stroke-width: 1px;
+        stroke-width: 0.2px;
         opacity: 0.16;
         fill: none;
         stroke-linecap: round;
@@ -34,7 +34,7 @@
 
       .pcb-trace-thin {
         stroke: #3a2f2a;
-        stroke-width: 0.5px;
+        stroke-width: 0.1px;
         opacity: 0.1;
         fill: none;
         stroke-linecap: round;
@@ -48,7 +48,7 @@
         stroke-linejoin: round;
         stroke-dasharray: 40 300;
         stroke: #ffffff;
-        stroke-width: 2.2px;
+        stroke-width: 1.22px;
         filter: drop-shadow(0px 0px 4px rgba(255, 255, 255, 0.9));
       }
 

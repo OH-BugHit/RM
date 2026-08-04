@@ -111,7 +111,6 @@ function PotsAndBurglarGame({
             charts: true,
             agentVision: true,
             qTable: true,
-            stats: true,
             cableLeft: true,
             cableRight: true,
             envTitle: true,
@@ -121,6 +120,7 @@ function PotsAndBurglarGame({
             alpha: true,
             gamma: true,
             epsilon: true,
+            progress: false,
         });
         setStatsContent((old) => {
             return {

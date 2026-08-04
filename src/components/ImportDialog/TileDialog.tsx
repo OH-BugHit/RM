@@ -4,7 +4,7 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import { LargeButton } from '@genai-fi/base';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ActiveViewAtom, CurrentTileToolAtom, StoryProgressAtom, TilePropsAtom } from '../../atoms/uiState';
 import TileLibrary from './TileLibrary/TileLibrary';
 import EmojiLibrary from './EmojiLibrary/EmojiLibrary';
@@ -13,6 +13,7 @@ import { BASIC_CELL_TYPE_OPTIONS, CellType, TileDefinition, TileLibraryItem } fr
 import { emojiToDataUrl } from '../../utils/import';
 import TypeOption from './TypeOption';
 import DeleteIcon from '@mui/icons-material/Delete';
+import LibrarySearch from './LibrarySearch';
 
 interface ImportDialogProps {
     onSelect: (tile: TileDefinition, newTile: boolean) => void;
@@ -116,20 +117,21 @@ function TileDialog({ onSelect }: ImportDialogProps) {
 
                 if (selectedEmoji && selectedPreview) {
                     selectedTile.image = selectedPreview;
+                    selectedTile.emoji = selectedEmoji.emoji;
                 }
                 if (selectedType === null) return;
                 selectedTile.type = selectedType;
                 onSelect(selectedTile, false);
             } else {
                 if (selectedType === null) return;
-                const newTile = {
+                const newTile: TileDefinition = {
                     id: crypto.randomUUID(),
                     type: selectedType,
                     image: '',
+                    emoji: '',
                     isCoreTile: false,
                     reloadTime: -1,
                     timer: 0,
-                    reward: 0,
                 };
 
                 if (selectedLibraryTile) {
@@ -138,6 +140,7 @@ function TileDialog({ onSelect }: ImportDialogProps) {
 
                 if (selectedEmoji && selectedPreview) {
                     newTile.image = selectedPreview;
+                    newTile.emoji = selectedEmoji.emoji;
                 }
                 onSelect(newTile, true);
             }
@@ -189,7 +192,10 @@ function TileDialog({ onSelect }: ImportDialogProps) {
                         )}
                     </div>
                 </div>
-
+                <LibrarySearch
+                    onSelectTile={handleLibrarySelect}
+                    onSelectEmoji={handleEmojiSelect}
+                />
                 <div className={style.tabBar}>
                     <button
                         type="button"

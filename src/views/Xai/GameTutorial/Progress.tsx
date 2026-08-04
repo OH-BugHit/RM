@@ -64,7 +64,7 @@ export default function Progress() {
                         </ul>
                         {group.tasks.length > 0 && (
                             <>
-                                <b>Current progression</b>
+                                <b>{t(`progress.title.current`)}</b>
                                 <PercentageBar
                                     colour="green"
                                     value={
@@ -79,10 +79,10 @@ export default function Progress() {
                     </motion.section>
                 ))}
             </AnimatePresence>{' '}
-            <b>Total progression</b>
+            <b>{t(`progress.title.total`)}</b>
             <PercentageBar
                 colour="blue"
-                value={(phase / 20) * 100}
+                value={(phase / 43) * 100}
                 style={{ borderRadius: '0.5rem', marginBottom: '0.5rem' }}
             />
         </motion.div>

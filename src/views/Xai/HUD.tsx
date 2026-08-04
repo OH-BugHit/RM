@@ -11,7 +11,7 @@ import { HideHudAtom, HUDvisAtom, MinimizeAtom } from '../../atoms/uiState';
 import { NewFrame } from '../Frames/NewFrame';
 import { WorldStore } from '../../components/QTable/utils';
 import { CustomGridLayer } from './NewQTable/TileTable/TileTable';
-import { StateData } from '../../types';
+import { EnvironmentTypes, StateData } from '../../types';
 import Epsilon from './Agent/Epsilon/Epsilon';
 import Alpha from './Agent/Alpha/Alpha';
 import Gamma from './Agent/Gamma/Gamma';
@@ -31,8 +31,9 @@ interface XaiProps {
     mapRef: React.RefObject<L.Map | null>;
     currentStateRef: React.RefObject<StateData>;
     layerRef: React.RefObject<CustomGridLayer | null>;
+    mode: EnvironmentTypes;
 }
-export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRef }: XaiProps) {
+export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRef, mode }: XaiProps) {
     const { t } = useTranslation();
     const hideHud = useAtomValue(HideHudAtom);
     const hudVis = useAtomValue(HUDvisAtom);
@@ -41,9 +42,16 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
 
     return (
         <div style={{ zIndex: 0 }}>
-            <TutorialFrame visible={!hudVis.charts} />
+            <TutorialFrame
+                textVis={hudVis.text}
+                world={lWorld}
+                mapRef={mapRef}
+                layerRef={layerRef}
+                focusFrameRef={focusFrameRef}
+                agentRef={agentRef}
+            />
             <FrameContainer position="left">
-                {!hudVis.agentVision && (
+                {hudVis.progress && (
                     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
                         <Cable variant="vertical" />
                         <NewFrame variant="tutorial">
@@ -70,42 +78,69 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                 />
             </FrameContainer>
             <FrameContainer position="top-left">
-                <NewFrame
-                    visible={hudVis.qTable && !hideHud}
-                    overlayRight={
-                        <TableControls
-                            world={lWorld}
+                {mode === 'created' ? (
+                    <NewFrame
+                        visible={hudVis.qTable && !hideHud}
+                        overlayRight={
+                            <TableControls
+                                world={lWorld}
+                                mapRef={mapRef}
+                                layerRef={layerRef}
+                                currentStateRef={currentStateRef}
+                                focusFrameRef={focusFrameRef}
+                            />
+                        }
+                        minimize={minimize.qTable}
+                        overlayRightTop={
+                            <>
+                                <Hide
+                                    component={'qTable'}
+                                    state={minimize.qTable}
+                                />
+                                <span>
+                                    <Help
+                                        inplace
+                                        keepOpen
+                                        message={t('help.hud.qTable')}
+                                    />
+                                </span>
+                            </>
+                        }
+                    >
+                        <QTable
+                            agentRef={agentRef}
+                            lWorld={lWorld}
                             mapRef={mapRef}
                             layerRef={layerRef}
-                            currentStateRef={currentStateRef}
                             focusFrameRef={focusFrameRef}
                         />
-                    }
-                    minimize={minimize.qTable}
-                    overlayRightTop={
-                        <>
-                            <Hide
-                                component={'qTable'}
-                                state={minimize.qTable}
-                            />
-                            <span>
-                                <Help
-                                    inplace
-                                    keepOpen
-                                    message={t('help.hud.qTable')}
+                    </NewFrame>
+                ) : (
+                    <NewFrame
+                        minimize={minimize.charts}
+                        overlayRightTop={
+                            <>
+                                <Hide
+                                    component={'charts'}
+                                    state={minimize.charts}
                                 />
-                            </span>
-                        </>
-                    }
-                >
-                    <QTable
-                        agentRef={agentRef}
-                        lWorld={lWorld}
-                        mapRef={mapRef}
-                        layerRef={layerRef}
-                        focusFrameRef={focusFrameRef}
-                    />
-                </NewFrame>
+                                <span>
+                                    <Help
+                                        inplace
+                                        keepOpen
+                                        message={t('help.hud.chart')}
+                                    />
+                                </span>
+                            </>
+                        }
+                        visible={hudVis.charts && !hideHud}
+                    >
+                        <RewardChart
+                            width={600}
+                            height={400}
+                        />
+                    </NewFrame>
+                )}
             </FrameContainer>
             <FrameContainer position="top-right">
                 <NewFrame
@@ -144,30 +179,32 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                             visible={false}
                         />
                     )}
-                    <NewFrame
-                        minimize={minimize.charts}
-                        overlayRightTop={
-                            <>
-                                <Hide
-                                    component={'charts'}
-                                    state={minimize.charts}
-                                />
-                                <span>
-                                    <Help
-                                        inplace
-                                        keepOpen
-                                        message={t('help.hud.chart')}
+                    {mode === 'created' && (
+                        <NewFrame
+                            minimize={minimize.charts}
+                            overlayRightTop={
+                                <>
+                                    <Hide
+                                        component={'charts'}
+                                        state={minimize.charts}
                                     />
-                                </span>
-                            </>
-                        }
-                        visible={hudVis.charts && !hideHud}
-                    >
-                        <RewardChart
-                            width={600}
-                            height={400}
-                        />
-                    </NewFrame>
+                                    <span>
+                                        <Help
+                                            inplace
+                                            keepOpen
+                                            message={t('help.hud.chart')}
+                                        />
+                                    </span>
+                                </>
+                            }
+                            visible={hudVis.charts && !hideHud}
+                        >
+                            <RewardChart
+                                width={600}
+                                height={400}
+                            />
+                        </NewFrame>
+                    )}
                     {hudVis.cableRight && !hideHud && (
                         <Cable
                             variant="center"
@@ -177,7 +214,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                         />
                     )}
                     <NewFrame
-                        visible={hudVis.agentVision && !hideHud}
+                        visible={hudVis.alpha && !hideHud}
                         minimize={minimize.alpha}
                         overlayRightTop={
                             <>
@@ -198,7 +235,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                         <Alpha />
                     </NewFrame>
                     <NewFrame
-                        visible={hudVis.agentVision && !hideHud}
+                        visible={hudVis.gamma && !hideHud}
                         minimize={minimize.gamma}
                         overlayRightTop={
                             <>
@@ -219,7 +256,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                         <Gamma />
                     </NewFrame>
                     <NewFrame
-                        visible={hudVis.agentVision && !hideHud}
+                        visible={hudVis.epsilon && !hideHud}
                         minimize={minimize.epsilon}
                         overlayRightTop={
                             <>
@@ -245,10 +282,12 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                         height={80}
                         visible={hudVis.cableRight && !hideHud}
                     />
-                    <NewFrame visible={hudVis.controls && !hideHud}>
-                        <Controls />
-                    </NewFrame>
                 </div>
+            </FrameContainer>
+            <FrameContainer position="bottom-right">
+                <NewFrame visible={hudVis.controls && !hideHud}>
+                    <Controls />
+                </NewFrame>
             </FrameContainer>
         </div>
     );

@@ -29,17 +29,6 @@ export default function SidePanelWrapper() {
                 };
             });
         }
-        if (!progress.design.closed && progress.design.goal) {
-            setProgress((old) => {
-                return {
-                    ...old,
-                    design: {
-                        ...old.design,
-                        closed: true,
-                    },
-                };
-            });
-        }
         if (!progress.environment.closed && progress.environment.goalSet) {
             setProgress((old) => {
                 return {

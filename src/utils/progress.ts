@@ -50,7 +50,7 @@ export const TASK_GROUPS: TaskGroup[] = [
         id: 'design',
         title: 'story.tasks.design.title',
         visibleFrom: 5,
-        visibleTo: 9,
+        visibleTo: 10,
         tasks: [
             {
                 id: 'design-menu',
@@ -72,12 +72,17 @@ export const TASK_GROUPS: TaskGroup[] = [
                 text: 'story.tasks.design.goal',
                 field: 'design.goal',
             },
+            {
+                id: 'click',
+                text: 'story.tasks.design.clickOkay',
+                field: 'design.clickOkay',
+            },
         ],
     },
     {
         id: 'environment',
         title: 'story.tasks.environment.title',
-        visibleFrom: 9,
+        visibleFrom: 10,
         visibleTo: 12,
         tasks: [
             {
@@ -115,6 +120,29 @@ export const TASK_GROUPS: TaskGroup[] = [
                 id: 'rewards-envName',
                 text: 'story.tasks.settings.name',
                 field: 'environment.name',
+            },
+        ],
+    },
+    {
+        id: 'observation_controls',
+        title: 'story.tasks.hud.obs_controls.title',
+        visibleFrom: 19,
+        visibleTo: 25,
+        tasks: [
+            {
+                id: 'controls-play',
+                text: 'story.tasks.hud.obs_controls.play',
+                field: 'settings.opened',
+            },
+            {
+                id: 'controls-steps',
+                text: 'story.tasks.hud.obs_controls.step',
+                field: 'settings.opened',
+            },
+            {
+                id: 'obs-agent',
+                text: 'story.tasks.hud.obs_controls.agentObs',
+                field: 'settings.opened',
             },
         ],
     },

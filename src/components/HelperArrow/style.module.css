@@ -11,6 +11,8 @@
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
     -webkit-mask-size: contain;
+    z-index: 999999;
+    overflow: visible;
 }
 
 .container img {

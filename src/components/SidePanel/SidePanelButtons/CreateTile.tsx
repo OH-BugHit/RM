@@ -131,13 +131,14 @@ export default function CreateTile() {
                     setTiles((old) => [...old, tile]);
                 }}
             />
+
             <SidePanelButton
                 key={'newTile'}
                 className={style.icon}
                 disabled={false}
                 value={'newTile'}
                 icon={<AddIcon style={iconStyle} />}
-                activeHelp={uiHelp.sideOpener}
+                activeHelp={uiHelp.createTile ? 'newTile' : ''}
                 onClick={() => openImport()} // TODO: Open dialog for creating tile
             />
         </>

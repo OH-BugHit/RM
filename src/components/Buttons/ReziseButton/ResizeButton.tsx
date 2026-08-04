@@ -4,7 +4,7 @@ import { Button } from '@genai-fi/base';
 import Box from '@mui/material/Box';
 import { SxProps, Theme } from '@mui/material/styles';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { AgentRenderPulseAtom, DesignOpenAtom } from '../../../atoms/uiState';
+import { AgentRenderPulseAtom, DesignOpenAtom, StoryProgressAtom } from '../../../atoms/uiState';
 import { Side } from '../../../types';
 import { InnerFillCellAtom, WorldGridRenderAtom } from '../../../atoms/gameState';
 import { resizeGrid } from './resizeUtils';
@@ -21,6 +21,7 @@ export default function ResizeButton({ envRef, side, sx }: Props) {
     const setAgentTrigger = useSetAtom(AgentRenderPulseAtom);
     const [worldGrid, setWorldGrid] = useAtom(WorldGridRenderAtom);
     const visibility = useAtomValue(DesignOpenAtom);
+    const progress = useAtomValue(StoryProgressAtom);
     const innerFillCell = useAtomValue(InnerFillCellAtom);
 
     const handleChange = (side: Side, isAdd: boolean) => {
@@ -54,7 +55,7 @@ export default function ResizeButton({ envRef, side, sx }: Props) {
         <Box
             sx={{
                 display: 'flex',
-                visibility: visibility ? 'visible' : 'hidden',
+                visibility: visibility && progress.design.tools ? 'visible' : 'hidden',
                 flexDirection: side === 'top' || side === 'bottom' ? 'column' : 'row',
                 width: '100%',
                 height: '100%',

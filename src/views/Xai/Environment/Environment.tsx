@@ -13,7 +13,7 @@ export default function Environment() {
                 <h1
                     className={style.envTitle}
                     style={{
-                        fontFamily: 'Tektur, Andika;',
+                        fontFamily: 'Tektur, Andika',
                         minHeight: '70px',
                         alignContent: 'center',
                         margin: 0,

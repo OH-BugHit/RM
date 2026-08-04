@@ -1,6 +1,13 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { QLearningAgent } from '../../../components/agents/rlAgentQ';
-import { Actions, GameEnvironmentInfo, GenericObservation, ObservationShape, StateData } from '../../../types';
+import {
+    Actions,
+    EnvironmentTypes,
+    GameEnvironmentInfo,
+    GenericObservation,
+    ObservationShape,
+    StateData,
+} from '../../../types';
 import WorldComponent from '../../World/WorldComponent';
 import style from './style.module.css';
 import {
@@ -36,7 +43,6 @@ import {
     defaultWorldGrid,
 } from '../../../utils/defaults';
 import { GenericRLEnv } from '../Generic/environment';
-import { StoryStepAtom } from '../../../atoms/uiState';
 import StoryProgress from '../../../components/GameComponents/StoryProgress';
 import ResizeButton from '../../../components/Buttons/ReziseButton/ResizeButton';
 import AgentBridge from '../../../components/GameComponents/AgentBridge';
@@ -55,13 +61,25 @@ interface GenericWorldProps {
     infoRef: React.RefObject<GameEnvironmentInfo | undefined>;
     lWorld: WorldStore;
     currentStateRef: React.RefObject<StateData>;
+    mode?: EnvironmentTypes;
 }
 
-function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, currentStateRef }: GenericWorldProps) {
-    const worldGrid = useRef(defaultWorldGrid);
+function StoryGame({
+    lWorld,
+    agentRef,
+    obsRef,
+    actionRef,
+    qvalueRef,
+    infoRef,
+    currentStateRef,
+    mode,
+}: GenericWorldProps) {
+    const store = useStore();
+    const worldGrid = useRef(
+        mode === 'loaded' ? (store.get(WorldGridRenderAtom) ?? defaultWorldGrid) : defaultWorldGrid
+    );
     const setChart = useSetAtom(ChartAtom);
     const setLastState = useSetAtom(StateDataAtom);
-    const setStoryStep = useSetAtom(StoryStepAtom);
     const obsShape = useAtomValue<ObservationShape>(SelectedObsShapeAtom);
     const setWorldGrid = useSetAtom(WorldGridRenderAtom);
     const setUpdateWorldPulse = useSetAtom(UpdateWorldPulseAtom);
@@ -71,10 +89,6 @@ function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, cu
         // set world grid
         setWorldGrid(worldGrid.current);
     }, [setWorldGrid]);
-
-    useEffect(() => {
-        setStoryStep(0);
-    }, [setStoryStep]);
 
     const sounds = useMemo(() => {
         // TODO: Vaihda äänilogiikka siten, että play sound kutsutaan oikealla äänellä
@@ -87,7 +101,6 @@ function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, cu
     const resetUIpulse = useAtomValue(ResetUiPulseAtom);
     const agentSettings = useAtomValue(AgentSettingsAtom);
     //TODO: Poista uudelleenrenderöinnit console.log('StoryGame renderöi');
-    const store = useStore();
 
     const maxTurns = envSettings?.potsAndBurglar?.env.maxTurns; //TODO: Change to use correct env settings
     const setFacing = useSetAtom(FacingAtom);
@@ -100,7 +113,7 @@ function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, cu
     if (envRef.current === undefined) {
         new GenericRLEnv({
             world: worldGrid.current,
-            maxTurns: 40,
+            maxTurns: envSettings.generic.env.maxTurns,
             agentObsOffset: obsShape === 'small' ? smallOffset : getLargeOffset(),
             delay1: envSettings.generic.env.propReloadDelay1,
             rewardStep: envSettings.generic.reward.endByTrigger,
@@ -137,7 +150,7 @@ function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, cu
         triggersSetRef.current = 0;
         envRef.current = new GenericRLEnv({
             world: worldGrid.current,
-            maxTurns: 40,
+            maxTurns: envSettings.generic.env.maxTurns,
             triggerIsWin: true,
             agentObsOffset: obsShape === 'small' ? smallOffset : getLargeOffset(),
         });
@@ -182,6 +195,7 @@ function StoryGame({ lWorld, agentRef, obsRef, actionRef, qvalueRef, infoRef, cu
         setChart,
         setSetRewardsPulse,
         lWorld,
+        envSettings.generic.env.maxTurns,
     ]);
 
     useEffect(() => {

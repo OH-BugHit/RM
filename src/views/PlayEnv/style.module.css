@@ -1,0 +1,43 @@
+.siteContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    overflow: auto;
+    padding: 1rem 0;
+    box-sizing: border-box;
+    position: relative;
+    background-image: url('/images/frames/cable2.svg');
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.cards {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1200px;
+}
+
+@media only screen and (max-width: 600px) {
+    .siteContainer {
+        padding: 2rem 0.5rem;
+        display: block;
+    }
+}
+
+.cards {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1200px;
+}
+
+.selectGroup {
+    padding: 0 0.5rem;
+}

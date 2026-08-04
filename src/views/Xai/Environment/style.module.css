@@ -1,7 +1,5 @@
-@value primary, secondary textDark from "@genai-fi/base/css/colours.module.css";
-
 .envTitle {
-    font-family: Tektur, Andika;
+    font-family: "Tektur", "Andika";
     font-weight: 700;
     font-size: 3rem;
 }

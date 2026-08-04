@@ -2,6 +2,7 @@ import {
     Actions,
     Cell,
     CellType,
+    ControlOptions,
     EnvSettings,
     EpisodicData,
     HUDvisibility,
@@ -24,11 +25,13 @@ export const defaultControls = { isRunning: false, isFast: false, takeStep: fals
 export const defaultAudioSettings = { volume: 1 };
 
 export const defaultUIHelp: UiHelp = {
+    mode: 'created',
     designMenu: false,
     devMenu: false,
     creativeClose: false,
     textArrow: false,
-    hideSideOpener: true, // Set to false on normal game?
+    hideSideOpener: true,
+    createTile: false,
     sideOpener: undefined,
 };
 
@@ -44,6 +47,22 @@ export const CELL_TYPE_COLORS: Record<CellType, string> = {
     [CellType.Key]: '#ffffff',
     [CellType.LockedDoor]: '#ffffff',
     [CellType.Outside]: '#ffffff',
+};
+
+const defaultImg = {
+    n1: '/images/assets/cleanWhiteStone.png',
+    p0: '/images/assets/cleanWhiteStone.png',
+    p1: '/images/assets/wall1.png',
+    p2: '/images/assets/trap2_260.png',
+    p3: 'images/assets/key1.png',
+    p4: 'images/assets/door1.png',
+    p5: 'images/assets/doorLocked1_260.png',
+    p6: '/images/assets/smallTreasure_260.png',
+    p7: '/images/assets/bigTreasure_260.png',
+    p8: '/images/assets/wall1.png',
+    specialAction1: '/images/assets/hau.png',
+    burglar1: 'none',
+    burglar2: 'none',
 };
 
 export const defaultImages = {
@@ -62,21 +81,9 @@ export const defaultImages = {
         burglar1: '/images/assets/burglar.png',
         burglar2: '/images/assets/burglar2.png',
     },
-    created: <PropImages>{
-        n1: '/images/assets/cleanWhiteStone.png',
-        p0: '/images/assets/cleanWhiteStone.png',
-        p1: '/images/assets/wall1.png',
-        p2: '/images/assets/trap2_260.png',
-        p3: 'images/assets/key1.png',
-        p4: 'images/assets/door1.png',
-        p5: 'images/assets/doorLocked1_260.png',
-        p6: '/images/assets/smallTreasure_260.png',
-        p7: '/images/assets/bigTreasure_260.png',
-        p8: '/images/assets/wall1.png',
-        specialAction1: '/images/assets/hau.png',
-        burglar1: 'none',
-        burglar2: 'none',
-    },
+    created: <PropImages>{ defaultImg },
+    modify: <PropImages>{ defaultImg },
+    loaded: <PropImages>{ defaultImg },
 };
 
 export const rewardConfigs = {
@@ -344,6 +351,7 @@ export const defaultStoryProgress: StoryProgress = {
         solid: false,
         spawn: false,
         tools: false,
+        clickOkay: false,
     },
     environment: {
         name: false,
@@ -360,6 +368,18 @@ export const defaultStoryProgress: StoryProgress = {
         opened: false,
         closed: false,
     },
+    hud: {
+        agentView: {
+            steps: false,
+        },
+    },
+};
+
+export const defaultControlOptions: ControlOptions = {
+    play: true,
+    ff: true,
+    step: true,
+    inspect: true,
 };
 
 export const defaultHUDvis: HUDvisibility = {
@@ -367,7 +387,6 @@ export const defaultHUDvis: HUDvisibility = {
     charts: false,
     agentVision: false,
     qTable: false,
-    stats: false,
     cableLeft: false,
     cableRight: false,
     agent: false,
@@ -376,6 +395,95 @@ export const defaultHUDvis: HUDvisibility = {
     alpha: false,
     gamma: false,
     epsilon: false,
+    progress: false,
+};
+
+export const playStoryProgress: StoryProgress = {
+    agent: {
+        opened: true,
+        name: true,
+        img: true,
+        obsShape: true,
+        closed: true,
+    },
+    design: {
+        opened: true,
+        closed: true,
+        goal: true,
+        solid: true,
+        spawn: true,
+        tools: true,
+        clickOkay: true,
+    },
+    environment: {
+        name: true,
+        opened: true,
+        props: true,
+        goalSet: true,
+        closed: true,
+    },
+    rewards: {
+        opened: true,
+        closed: true,
+    },
+    settings: {
+        opened: true,
+        closed: true,
+    },
+    hud: {
+        agentView: {
+            steps: true,
+        },
+    },
+};
+
+export const playHudyVis: HUDvisibility = {
+    text: false,
+    charts: true,
+    agentVision: false,
+    qTable: false,
+    cableLeft: false,
+    cableRight: false,
+    agent: false,
+    envTitle: true,
+    controls: true,
+    alpha: true,
+    gamma: true,
+    epsilon: true,
+    progress: false,
+};
+
+export const playVisibleTiles = {
+    agent: true,
+    observation: true,
+    spawn: true,
+    empty: true,
+    wall: true,
+    trigger: true,
+    key: true,
+    door: true,
+    lockedDoor: true,
+    treasure: true,
+    treasureBig: true,
+    outside: true,
+};
+
+export const playUIHelp: UiHelp = {
+    mode: 'loaded',
+    designMenu: false,
+    devMenu: false,
+    creativeClose: false,
+    textArrow: false,
+    hideSideOpener: false,
+    createTile: false,
+    sideOpener: undefined,
+};
+
+export const playControls: ControlOptions = {
+    ff: true,
+    play: true,
+    step: true,
+    inspect: true,
 };
 
 export const defaultAgents = {
@@ -408,6 +516,13 @@ const W: Cell = {
     reloadTime: 0,
     timer: 0,
     image: 'images/assets/wall1.png',
+};
+
+export const defaultCell: Cell = {
+    type: CellType.Spawn,
+    reloadTime: 0,
+    timer: 0,
+    image: 'images/assets/smallTreasure_260.png',
 };
 
 export const defaultWorldGrid: Cell[][] = [

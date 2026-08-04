@@ -2,7 +2,7 @@ import { MenuItem, MenuList } from '@mui/material';
 import style from './style.module.css';
 import { useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { SubView } from '../../types';
 
 export default function Guidance() {

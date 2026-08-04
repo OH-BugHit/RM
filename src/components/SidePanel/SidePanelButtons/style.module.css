@@ -6,8 +6,12 @@
     right: 1rem;
     z-index: 100;
     pointer-events: auto;
-    max-height: 90vh;
+    height: 100%;
     width: 90px;
+}
+
+.closed {
+    height: min-content;
 }
 
 .button {
@@ -51,7 +55,7 @@
 
 .devButton:hover {
     scale: 1.1;
-    background: rgba(45, 234, 255, 0.48);
+    background: rgba(162, 255, 252, 0.48);
 }
 
 .selected {
@@ -72,6 +76,8 @@
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
+    height: 100%;
+    margin-bottom: 4rem;
 }
 
 .topButtonList {
@@ -114,6 +120,5 @@
     inset: 0;
     background: rgba(255, 255, 255, 0.48);
     transform-origin: bottom center;
-    z-index: 99;
-    pointer-events: none;
+    z-index: 9999999999;
 }

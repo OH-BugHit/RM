@@ -3,12 +3,21 @@
     flex-direction: column;
     justify-content: center;
     min-height: 70px;
+    margin-top: 0.5rem;
 }
 
 .textContent {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+}
+
+.buttonGroup {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0.5rem;
+    gap: 1rem
 }
 
 .stats {
@@ -43,4 +52,8 @@
     align-self: center;
     height: 100%;
     width: 90%;
+}
+
+.error {
+    color: red;
 }

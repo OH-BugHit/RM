@@ -39,6 +39,7 @@ function GameView() {
                 return (
                     <AnimatePresence mode="wait">
                         <HUD
+                            mode={environment.type}
                             agentRef={agentRef}
                             lWorld={lWorld}
                             mapRef={mapRef}
@@ -60,7 +61,7 @@ function GameView() {
                     </AnimatePresence>
                 );
             }
-            case 'created': {
+            default: {
                 return (
                     <AnimatePresence mode="wait">
                         <div
@@ -72,6 +73,7 @@ function GameView() {
                             }}
                         >
                             <HUD
+                                mode={environment.type}
                                 agentRef={agentRef}
                                 lWorld={lWorld}
                                 mapRef={mapRef}
@@ -80,6 +82,7 @@ function GameView() {
                             />
                             <div className={style.game}>
                                 <StoryGame
+                                    mode={environment.type}
                                     agentRef={agentRef}
                                     obsRef={obsRef}
                                     actionRef={actionRef}
@@ -92,9 +95,6 @@ function GameView() {
                         </div>
                     </AnimatePresence>
                 );
-            }
-            default: {
-                return null;
             }
         }
     };

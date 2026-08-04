@@ -12,6 +12,7 @@ import PoolUpdater from '../../../../components/QTable/PoolUpdater';
 import { MarkerManager } from '../../../../components/QTable/MarkerManager/MargerManager';
 import { MapCenterAtom, QmapViewTypeAtom, ZoomLevelAtom } from '../../../../atoms/uiState';
 import { FocusOverlay } from '../../../../components/QTable/FocusOverlay/FocusOverlay';
+import { InspectMarkerManager } from '../../../../components/QTable/InspectMarkerManager/InspectMarkerManager';
 
 interface TileTableProps {
     lWorld: WorldStore;
@@ -100,13 +101,12 @@ export default function TileTable({ agentRef, lWorld, mapRef, layerRef, focusFra
             if (zoom < 13) setMapType('sprite');
         });
 
-        // Asetetaan myös alkutila
-
+        const inspectMarkerManager = new InspectMarkerManager(map, lWorld, agentSelections.observationShape);
         const markerManager = new MarkerManager(map, lWorld, agentSelections.observationShape);
         const focusOverlay = new FocusOverlay(map);
         focusFrameRef.current = focusOverlay;
 
-        agent?.setMarkerManager(markerManager);
+        agent?.setMarkerManagers(markerManager, inspectMarkerManager);
 
         const layer = new CustomLayer() as CustomGridLayer;
 
@@ -116,8 +116,9 @@ export default function TileTable({ agentRef, lWorld, mapRef, layerRef, focusFra
         mapRef.current = map;
 
         return () => {
-            agent?.setMarkerManager(undefined);
+            agent?.setMarkerManagers(undefined);
             markerManager.destroy();
+            inspectMarkerManager.destroy();
             focusOverlay.destroy();
             pool.destroy();
             map.off('moveend');

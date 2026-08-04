@@ -1,6 +1,8 @@
 import { atom } from 'jotai';
 import {
+    ControlOptions,
     HUDvisibility,
+    InspectState,
     PanelOptions,
     StateViewType,
     StatsContent,
@@ -45,3 +47,7 @@ export const QmapViewTypeAtom = atom<StateViewType>('sprite');
 export const ZoomLevelAtom = atom<number>(14);
 export const MapCenterAtom = atom<{ lat: number; lng: number }>({ lat: 0, lng: 0 });
 export const MinimizeAtom = atom<HUDvisibility>(defaultHUDvis);
+
+export const ControlEnablerAtom = atom<ControlOptions>();
+
+export const InspectAtom = atom<InspectState>({ vis: false, step: 0 });

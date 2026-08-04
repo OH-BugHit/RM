@@ -53,29 +53,31 @@ export default function AgentIndex() {
     }, [selectedAgent, setStoryProgress, store]);
 
     return (
-        <div className={style.selectorContainer}>
-            <h1>{t('createMenu.agent.title')}</h1>
-            <em>{t('createMenu.agent.titleDesc')}</em>
-            <ImportDialog
-                preprocess={preprocessImageWScale}
-                onSelect={(image) => {
-                    setActiveAgent((old) => ({
-                        ...old,
-                        type: 'created',
-                        img: image,
-                    }));
-                    setImportedImg(image);
-                }}
-            />
-            <Separator />
-            <AgentSelector />
-            {storyProgress.agent.img && (
-                <>
-                    <Separator />
-                    <ObservationSelector />
-                </>
-            )}
-            <Separator />
+        <div className={style.selector}>
+            <div className={style.selectorContainer}>
+                <h1>{t('createMenu.agent.title')}</h1>
+                <em>{t('createMenu.agent.titleDesc')}</em>
+                <ImportDialog
+                    preprocess={preprocessImageWScale}
+                    onSelect={(image) => {
+                        setActiveAgent((old) => ({
+                            ...old,
+                            type: 'created',
+                            img: image,
+                        }));
+                        setImportedImg(image);
+                    }}
+                />
+                <Separator />
+                <AgentSelector />
+                {storyProgress.agent.img && (
+                    <>
+                        <Separator />
+                        <ObservationSelector />
+                    </>
+                )}
+                <Separator />
+            </div>
         </div>
     );
 }

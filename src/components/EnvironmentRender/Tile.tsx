@@ -265,6 +265,7 @@ export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation,
             setTrigger(!trigger);
             cell.image = propTool.image;
             cell.type = propTool.type;
+            cell.emoji = propTool.emoji;
             updateWorldPulse((prev) => !prev);
         }
     };
@@ -281,7 +282,6 @@ export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation,
             onClick={(e) => handleTileClick(e)}
             onPointerDown={(e) => handleTileClick(e)}
             onPointerEnter={(e) => {
-                // TODO: Allow modifying solid edge to solid other
                 if (e.buttons & 1) {
                     handleTileClick(e);
                 }

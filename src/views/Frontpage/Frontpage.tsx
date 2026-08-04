@@ -1,21 +1,34 @@
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import Footer from '../Footer/Footer';
-import { theme } from '@genai-fi/base';
+import { Button, theme } from '@genai-fi/base';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import SchoolIcon from '@mui/icons-material/School';
-import { ThemeProvider } from '@mui/material';
+import { TextField, ThemeProvider } from '@mui/material';
 import LinkButton from '../../components/Buttons/LinkButton/LinkButton';
 import Phase from './Phase';
 import { ActiveAgentAtom, ActiveEnvironmentAtom } from '../../atoms/state';
 import { useSetAtom } from 'jotai';
 import { EnvironmentTypes } from '../../types';
 import { getAgentImage } from '../../components/GameComponents/agentProps';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function Frontpage() {
     const { t } = useTranslation();
     const setEnvironment = useSetAtom(ActiveEnvironmentAtom);
     const setAgent = useSetAtom(ActiveAgentAtom);
+    const [inputCode, setInputCode] = useState<string>('');
+    const navigate = useNavigate();
+
+    const toStudent = () => {
+        navigate(`/student/${inputCode}/main`);
+    };
+
+    const toTeacher = () => {
+        navigate('/library/');
+    };
+
     const setPremade = (type: EnvironmentTypes) => {
         switch (type) {
             case 'potsAndBurglar': {
@@ -64,7 +77,7 @@ export default function Frontpage() {
                         <h2>{t('common.subtitle')}</h2>
                         <div className={style.buttons}>
                             <LinkButton
-                                href="https://gen-ai.fi/en/materials/classifier-unit"
+                                href="https://gen-ai.fi/en/"
                                 startIcon={<SchoolIcon />}
                             >
                                 {t('app.teachingMaterials')}
@@ -79,13 +92,37 @@ export default function Frontpage() {
                     </div>
                 </div>
                 <div className={style.selectGroup}>
+                    <div className={style.startBox}>
+                        <TextField
+                            title={t('frontpage.labels.enterCode')}
+                            label={t('frontpage.labels.enterCode')}
+                            type="number"
+                            className={style.codeInput}
+                            value={inputCode}
+                            fullWidth
+                            onChange={(e) => setInputCode(e.target.value)}
+                            onClick={(e) => e.stopPropagation()}
+                        />
+                        <Button
+                            sx={{ fontSize: '14pt', minWidth: '140px' }}
+                            onClick={toStudent}
+                            variant="contained"
+                            disabled={inputCode.length < 5}
+                        >
+                            {t('frontpage.actions.start')}
+                        </Button>
+                        <div className={style.or}>{t('common.or')}</div>
+                        <Button
+                            sx={{ fontSize: '14pt', minWidth: '140px' }}
+                            onClick={toTeacher}
+                            variant="outlined"
+                            title={t('frontpage.actions.createNew')}
+                        >
+                            {t('frontpage.actions.createNew')}
+                        </Button>
+                    </div>
                     <div className={style.intro}>{t('app.goPhase')}</div>
                     <div className={style.cards}>
-                        <Phase
-                            id="tutorial"
-                            image="images/environments/potsAndBurglar.png"
-                            url="/start?view=tutorial"
-                        />
                         <Phase
                             id="yourWorld"
                             image="images/environments/potsAndBurglar.png"
@@ -93,10 +130,14 @@ export default function Frontpage() {
                             onClick={() => setPremade('created')}
                         />
                         <Phase
-                            id="potsAndBurglar"
+                            id="import"
                             image="images/environments/potsAndBurglar.png"
-                            url="/play"
-                            onClick={() => setPremade('potsAndBurglar')}
+                            url="/import"
+                        />
+                        <Phase
+                            id="recap"
+                            image="images/environments/potsAndBurglar.png"
+                            url="/start?view=tutorial"
                         />
                     </div>
                 </div>

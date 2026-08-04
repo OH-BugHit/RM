@@ -1,6 +1,7 @@
 import { Actions, GenericObservation } from '../../types';
 import { defaultSprites } from '../../utils/defaults';
 import { getNumberSpriteId } from '../../utils/spriteStoreUtils';
+import { InspectMarkerManager } from '../QTable/InspectMarkerManager/InspectMarkerManager';
 import { MarkerManager } from '../QTable/MarkerManager/MargerManager';
 import { SpriteStore, WorldStore } from '../QTable/utils';
 import { serializeObservation } from './utils';
@@ -24,10 +25,13 @@ export class QLearningAgent {
     epsilon = 0.1;
     tableSize = 0;
     learning = true;
+    private currentState?: string;
     private markerManager?: MarkerManager;
+    private inspectManager?: InspectMarkerManager;
 
-    setMarkerManager(markerManager?: MarkerManager) {
+    setMarkerManagers(markerManager?: MarkerManager, inspectManager?: InspectMarkerManager) {
         this.markerManager = markerManager;
+        this.inspectManager = inspectManager;
     }
 
     constructor({ lWorld, alpha, gamma, epsilon }: QLearningAgentOptions) {
@@ -94,6 +98,7 @@ export class QLearningAgent {
         const state = this.getStateKey(obs);
         const values = this.getQValues(obs);
         const nextValues = this.getQValues(nextObs);
+        this.currentState = this.getStateKey(nextObs);
 
         const aIdx = ACTIONS.indexOf(action);
 
@@ -104,5 +109,20 @@ export class QLearningAgent {
         this.visitTimes[state] = (this.visitTimes[state] || 0) + 1; // Update visited count (version count)
 
         if (adjustment !== 0) this.markerManager?.show(state, aIdx, adjustment >= 0 ? 'positive' : 'negative', move);
+    }
+
+    getCurrentState() {
+        return this.currentState ?? '';
+    }
+    inspect() {
+        if (this.currentState)
+            this.inspectManager?.show({
+                stateId: this.currentState,
+                qValues: this.Q[this.currentState],
+            });
+    }
+
+    clearInspect() {
+        this.inspectManager?.clear();
     }
 }

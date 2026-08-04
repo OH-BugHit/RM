@@ -2,12 +2,17 @@ import { IconButton } from '@mui/material';
 import { motion, Variants } from 'framer-motion';
 import style from './style.module.css';
 import { ReactNode } from 'react';
+import { t } from 'i18next';
+import SaveButton from '../../Buttons/SaveButton/SaveButton';
+import { EnvironmentTypes } from '../../../types';
 
 interface FloatingButtonProps {
     open: boolean;
+    mode: EnvironmentTypes;
     onClick: () => void;
     children: ReactNode;
     disabled?: boolean;
+    saveDisabled?: boolean;
     main: React.ReactNode;
 }
 
@@ -53,16 +58,25 @@ const listVariants: Variants = {
     },
 };
 
-export default function SideButtonGroup({ open, onClick, children, disabled = false, main }: FloatingButtonProps) {
+export default function SideButtonGroup({
+    open,
+    mode,
+    onClick,
+    children,
+    disabled = false,
+    main,
+    saveDisabled = false,
+}: FloatingButtonProps) {
     return (
         <motion.div
-            className={`${style.float} ${style.top}`}
+            className={`${style.float} ${style.top} ${open ? '' : style.closed}`}
             variants={groupVariants}
             animate={open ? 'open' : 'closed'}
             initial={false}
         >
             <IconButton
                 className={`${style.icon} ${style.devButton}`}
+                title={open ? t('createMenu.title.close') : t('createMenu.title.open')}
                 onClick={onClick}
                 size="large"
                 disabled={disabled}
@@ -77,6 +91,12 @@ export default function SideButtonGroup({ open, onClick, children, disabled = fa
                 initial={false}
             >
                 {children}
+                {mode !== 'loaded' && (
+                    <>
+                        <div style={{ flexGrow: 1 }} />
+                        <SaveButton disabled={saveDisabled} />
+                    </>
+                )}
             </motion.div>
         </motion.div>
     );

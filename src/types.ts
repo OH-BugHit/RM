@@ -24,7 +24,7 @@ export interface WorldErrors {
 
 export type Side = 'top' | 'bottom' | 'right' | 'left';
 
-export type SideOptions = 'agent' | 'design' | 'newTile' | 'reward' | 'settings' | 'create' | undefined;
+export type SideOptions = 'agent' | 'design' | 'newTile' | 'reward' | 'settings' | 'create' | 'save' | undefined;
 export type PanelOptions = {
     visible: boolean;
     content: SideOptions;
@@ -60,6 +60,7 @@ export type StoryProgress = {
         solid: boolean;
         spawn: boolean;
         tools: boolean;
+        clickOkay: boolean;
     };
     environment: {
         goalSet: boolean;
@@ -76,11 +77,28 @@ export type StoryProgress = {
         opened: boolean;
         closed: boolean;
     };
+    hud: {
+        agentView: {
+            steps: boolean;
+        };
+    };
 };
 
 export type StatsContent = {
-    mode: 'stats' | 'text' | 'textNext';
+    mode: 'stats' | 'text' | 'textNext' | 'inspect';
     phase: number;
+};
+
+export type InspectState = {
+    vis: boolean;
+    step: number;
+};
+
+export type ControlOptions = {
+    play: boolean;
+    ff: boolean;
+    step: boolean;
+    inspect: boolean;
 };
 
 export type HUDvisibility = {
@@ -88,7 +106,6 @@ export type HUDvisibility = {
     charts: boolean;
     agentVision: boolean;
     qTable: boolean;
-    stats: boolean;
     cableLeft: boolean;
     cableRight: boolean;
     agent: boolean;
@@ -97,18 +114,21 @@ export type HUDvisibility = {
     alpha: boolean;
     gamma: boolean;
     epsilon: boolean;
+    progress: boolean;
 };
 
 export type EdgeType = RoomType | 'lockedDoor' | 'newEdge';
 export type RoomType = 'spawnArea' | 'lockedRoom' | 'openRoom';
 
 export type UiHelp = {
+    mode: EnvironmentTypes;
     devMenu: boolean;
     designMenu: boolean;
     textArrow: boolean;
     creativeClose: boolean;
     hideSideOpener: boolean;
     sideOpener: SideOptions;
+    createTile: boolean;
 };
 
 export type StateViewType = 'agent' | 'sprite';
@@ -118,6 +138,7 @@ export type TileDefinition = {
     type: CellType;
     reloadTime: number;
     timer: number;
+    emoji?: string;
     image: string;
     isCoreTile?: boolean;
 };
@@ -127,6 +148,7 @@ export type Cell = {
     reloadTime: number; // Time it takes to reload this cell after visited. 0 = always on, -1 = episode.
     timer: number; // Timer for reloading. Cell revisitable when 0
     image?: string;
+    emoji?: string;
 };
 
 export enum CellType {
@@ -376,5 +398,5 @@ export type GameEnvironment = {
 };
 
 export type ObservationShape = 'small' | 'large' | 'unset';
-export type EnvironmentTypes = 'potsAndBurglar' | 'created' | undefined;
+export type EnvironmentTypes = 'potsAndBurglar' | 'created' | 'loaded' | 'modify' | undefined;
 export type AgentType = 'robodog' | 'hoover' | 'adventurer' | 'created' | 'unset';

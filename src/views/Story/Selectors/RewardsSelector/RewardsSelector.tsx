@@ -25,21 +25,6 @@ export default function RewardsSelector() {
                 },
             };
         });
-
-        return () => {
-            const progress = store.get(StoryProgressAtom);
-            if (!progress.rewards.closed && progress.rewards.opened) {
-                setStoryProgress((old) => {
-                    return {
-                        ...old,
-                        rewards: {
-                            ...old.rewards,
-                            closed: true,
-                        },
-                    };
-                });
-            }
-        };
     }, [setStoryProgress, store]);
     const groups = Object.values(
         tiles.reduce(
@@ -56,24 +41,26 @@ export default function RewardsSelector() {
     );
 
     return (
-        <div className={style.selectorContainer}>
-            <h1>{t('title')}</h1>
-            <em>{t('titleDesc')}</em>
-            <Separator />
-            <div className={style.rowContainer}>
-                <h3>{t('general')}</h3>
-                <TimeStepReward />
-                <TimeUpReward />
+        <div className={style.selector}>
+            <div className={style.selectorContainer}>
+                <h1>{t('title')}</h1>
+                <em>{t('titleDesc')}</em>
                 <Separator />
-                <h3>{t('objects')}</h3>
-                {groups.map((tiles) => (
-                    <PropRewardItem
-                        key={tiles[0].type}
-                        tiles={tiles}
-                    />
-                ))}
+                <div className={style.rowContainer}>
+                    <h3>{t('general')}</h3>
+                    <TimeStepReward />
+                    <TimeUpReward />
+                    <Separator />
+                    <h3>{t('objects')}</h3>
+                    {groups.map((tiles) => (
+                        <PropRewardItem
+                            key={tiles[0].type}
+                            tiles={tiles}
+                        />
+                    ))}
+                </div>
+                <Separator />
             </div>
-            <Separator />
         </div>
     );
 }

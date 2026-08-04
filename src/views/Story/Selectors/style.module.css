@@ -9,6 +9,13 @@
     padding-bottom: 2rem;
 }
 
+.selector {
+    display: block;
+    height: 100%;
+    overflow: auto;
+}
+
+
 .selectorContainer {
     display: flex;
     position: relative;
@@ -107,6 +114,17 @@ p {
     text-wrap: nowrap;
     padding-left: 1rem;
     padding-right: 1rem;
+}
+
+.disabled {
+    filter: grayscale(100%) brightness(1);
+    cursor: not-allowed
+}
+
+.disabled:hover {
+    cursor: not-allowed;
+    scale: 1;
+    filter: grayscale(100%) brightness(1);
 }
 
 .selectedIcon {

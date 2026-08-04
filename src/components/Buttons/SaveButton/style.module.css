@@ -1,0 +1,11 @@
+.icon {
+    background: rgba(50, 249, 242, 0.48);
+    transition: all 0.2s ease;
+    border: 2px solid rgba(255, 255, 255, 0);
+}
+
+
+.icon:hover {
+    scale: 1.1;
+    background: rgba(162, 255, 252, 0.48);
+}

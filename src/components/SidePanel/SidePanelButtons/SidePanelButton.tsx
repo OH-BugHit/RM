@@ -5,7 +5,7 @@ import Arrow from '../../HelperArrow/Arrow';
 import { useTranslation } from 'react-i18next';
 import { motion, Variants } from 'framer-motion';
 
-export type SidePanelContent = 'agent' | 'design' | 'newTile' | 'reward' | 'settings' | 'create';
+export type SidePanelContent = 'agent' | 'design' | 'newTile' | 'reward' | 'settings' | 'create' | 'save';
 
 interface Props {
     icon: ReactNode;
@@ -52,7 +52,7 @@ export function SidePanelButton({
                 {activeHelp === value && (
                     <Arrow
                         radius={110}
-                        angle={125}
+                        angle={180}
                     />
                 )}
                 {icon}

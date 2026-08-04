@@ -20,6 +20,7 @@ export default function DesignMenu() {
     const setHideHud = useSetAtom(HideHudAtom);
     const setProgress = useSetAtom(StoryProgressAtom);
     const store = useStore();
+    const progress = useAtomValue(StoryProgressAtom);
 
     const setUiHelp = useSetAtom(UiHelpAtom);
 
@@ -35,17 +36,6 @@ export default function DesignMenu() {
 
         return () => {
             const progress = store.get(StoryProgressAtom);
-            if (!progress.design.closed && progress.design.goal) {
-                setProgress((old) => {
-                    return {
-                        ...old,
-                        design: {
-                            ...old.design,
-                            closed: true,
-                        },
-                    };
-                });
-            }
             if (!progress.environment.closed && progress.environment.goalSet) {
                 setProgress((old) => {
                     return {
@@ -77,7 +67,7 @@ export default function DesignMenu() {
                             key={tile.id}
                             tile={tile}
                             selected={tile === selectedTool}
-                            disabled={false}
+                            disabled={!progress.design.clickOkay}
                         />
                     ))}
                 </SideButtonMenu>
