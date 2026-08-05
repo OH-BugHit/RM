@@ -1,0 +1,155 @@
+.icon {
+    overflow: visible;
+    cursor: pointer;
+    display: block;
+
+    transition:
+        transform 0.18s ease,
+        filter 0.25s ease;
+}
+
+/* Kevyt kirkastuminen */
+
+.icon:hover {
+    filter: brightness(1.08);
+    transform: scale(1.1);
+}
+
+/* Kevyt painallus */
+
+.icon:active {
+    transform: scale(0.97);
+}
+
+/* ===================================== */
+/* Glow                                  */
+/* ===================================== */
+
+.glowShape {
+    fill: #ffd84a;
+
+    opacity: 0;
+
+    filter: blur(8px);
+
+    transition:
+        opacity 0.25s ease,
+        filter 0.25s ease;
+}
+
+.icon:hover .glowShape,
+.icon.active .glowShape {
+
+    opacity: .28;
+
+    animation: iconGlowPulse 1.8s ease-in-out infinite;
+}
+
+/* ===================================== */
+/* PCB                                   */
+/* ===================================== */
+
+.pcb {
+
+    fill: #7B4A00;
+    stroke: #7B4A00;
+
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    opacity: .22;
+
+    transition:
+        opacity .25s ease,
+        stroke .25s ease,
+        fill .25s ease,
+        filter .25s ease;
+}
+
+.pcb path,
+.pcb circle {
+    transition:
+        fill .25s ease,
+        stroke .25s ease,
+        opacity .25s ease,
+        filter .25s ease;
+}
+
+.icon:hover .pcb,
+.icon.active .pcb {
+
+    opacity: .92;
+
+    fill: #FFF3A0;
+    stroke: #FFF3A0;
+
+    filter:
+        drop-shadow(0 0 2px #FFF3A0) drop-shadow(0 0 5px #FFD84A) drop-shadow(0 0 10px #FFC529);
+}
+
+/* ===================================== */
+/* Optional helpers                      */
+/* ===================================== */
+
+.goldStroke {
+    transition: stroke .25s ease;
+}
+
+.icon:hover .goldStroke,
+.icon.active .goldStroke {
+
+    stroke: #FFF2A0;
+}
+
+.goldFill {
+    transition: filter .25s ease;
+}
+
+.icon:hover .goldFill,
+.icon.active .goldFill {
+
+    filter: brightness(1.06);
+}
+
+.disabled {
+    filter: grayscale(100%) brightness(1);
+    cursor: not-allowed
+}
+
+/* ===================================== */
+/* Animations                            */
+/* ===================================== */
+
+@keyframes iconGlowPulse {
+
+    0% {
+        opacity: .18;
+        filter: blur(7px);
+    }
+
+    50% {
+        opacity: .34;
+        filter: blur(10px);
+    }
+
+    100% {
+        opacity: .18;
+        filter: blur(7px);
+    }
+}
+
+@keyframes pcbPowerPulse {
+
+    0% {
+        opacity: .22;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: .92;
+    }
+}

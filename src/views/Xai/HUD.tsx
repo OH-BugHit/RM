@@ -5,7 +5,6 @@ import Controls from '../Controls/Controls';
 import QTable from './NewQTable/QTable';
 import TableControls from './NewQTable/TableControls';
 import { Cable } from '../Frames/CableFrame/Cable';
-import Environment from './Environment/Environment';
 import { useAtomValue } from 'jotai';
 import { HideHudAtom, HUDvisAtom, MinimizeAtom } from '../../atoms/uiState';
 import { NewFrame } from '../Frames/NewFrame';
@@ -24,6 +23,7 @@ import { FocusOverlay } from '../../components/QTable/FocusOverlay/FocusOverlay'
 import { useRef } from 'react';
 import TutorialFrame from './GameTutorial/TutorialFrame/TutorialFrame';
 import Hide from '../../components/Buttons/Hide/Hide';
+import TopBar from './TopBar/Topbar';
 
 interface XaiProps {
     agentRef: React.RefObject<QLearningAgent | undefined>;
@@ -60,6 +60,36 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                         <Cable variant="vertical" />
                     </div>
                 )}
+                {mode === 'loaded' && (
+                    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+                        <Cable variant="vertical" />
+                        <NewFrame
+                            minimize={minimize.charts}
+                            overlayRightTop={
+                                <>
+                                    <Hide
+                                        component={'charts'}
+                                        state={minimize.charts}
+                                    />
+                                    <span>
+                                        <Help
+                                            inplace
+                                            keepOpen
+                                            message={t('help.hud.chart')}
+                                        />
+                                    </span>
+                                </>
+                            }
+                            visible={hudVis.charts && !hideHud}
+                        >
+                            <RewardChart
+                                width={600}
+                                height={400}
+                            />
+                        </NewFrame>
+                        <Cable variant="vertical" />
+                    </div>
+                )}
             </FrameContainer>
 
             <FrameContainer position="top-center">
@@ -69,7 +99,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                     height={80}
                     visible={hudVis.cableLeft && !hideHud}
                 />
-                <Environment />
+                <TopBar hideStuff={hideHud} />
                 <Cable
                     variant="center"
                     width={100}
@@ -78,7 +108,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                 />
             </FrameContainer>
             <FrameContainer position="top-left">
-                {mode === 'created' ? (
+                {mode === 'created' && (
                     <NewFrame
                         visible={hudVis.qTable && !hideHud}
                         overlayRight={
@@ -113,31 +143,6 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                             mapRef={mapRef}
                             layerRef={layerRef}
                             focusFrameRef={focusFrameRef}
-                        />
-                    </NewFrame>
-                ) : (
-                    <NewFrame
-                        minimize={minimize.charts}
-                        overlayRightTop={
-                            <>
-                                <Hide
-                                    component={'charts'}
-                                    state={minimize.charts}
-                                />
-                                <span>
-                                    <Help
-                                        inplace
-                                        keepOpen
-                                        message={t('help.hud.chart')}
-                                    />
-                                </span>
-                            </>
-                        }
-                        visible={hudVis.charts && !hideHud}
-                    >
-                        <RewardChart
-                            width={600}
-                            height={400}
                         />
                     </NewFrame>
                 )}

@@ -22,7 +22,7 @@ interface ArrowProps {
  * @returns
  */
 export default function Arrow({
-    width = 100,
+    width = 160,
     right,
     left,
     top,
@@ -34,8 +34,8 @@ export default function Arrow({
 }: ArrowProps) {
     const rad = (angle * Math.PI) / 180;
 
-    const x = Math.cos(rad) * radius;
-    const y = Math.sin(rad) * radius;
+    const x = Math.cos(rad) * (radius + 30);
+    const y = Math.sin(rad) * (radius + 30);
 
     return (
         <div style={{ position: position, right: right, top: top, bottom: bottom, left: left, zIndex: 9999 }}>
@@ -70,10 +70,9 @@ export default function Arrow({
                     }}
                 >
                     <img
-                        src="/images/misc/arrow.png"
+                        src="/images/misc/game_arrow.svg"
                         width={width}
                     />
-                    <div className={style.gloss} />
                 </div>
             </div>
         </div>

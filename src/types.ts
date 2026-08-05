@@ -89,6 +89,17 @@ export type StatsContent = {
     phase: number;
 };
 
+export type TopBar = {
+    traps: number;
+    treasures: number;
+    bigTreasures: number;
+    score: number;
+    topScore: number;
+    toBeat: number;
+};
+
+export type ObjectType = 'treasure' | 'bigTreasure' | 'trap' | null;
+
 export type InspectState = {
     vis: boolean;
     step: number;

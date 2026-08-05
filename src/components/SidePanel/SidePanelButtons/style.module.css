@@ -10,6 +10,12 @@
     width: 90px;
 }
 
+.buttonWrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
 .closed {
     height: min-content;
 }

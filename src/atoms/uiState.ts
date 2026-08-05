@@ -8,6 +8,7 @@ import {
     StatsContent,
     StoryProgress,
     TileDefinition,
+    TopBar,
     UiHelp,
     View,
     VisibleTiles,
@@ -51,3 +52,5 @@ export const MinimizeAtom = atom<HUDvisibility>(defaultHUDvis);
 export const ControlEnablerAtom = atom<ControlOptions>();
 
 export const InspectAtom = atom<InspectState>({ vis: false, step: 0 });
+
+export const TopbarAtom = atom<TopBar>({ traps: 0, treasures: 0, bigTreasures: 0, score: 0, topScore: 0, toBeat: 0 });

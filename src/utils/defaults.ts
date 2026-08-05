@@ -447,7 +447,7 @@ export const playHudyVis: HUDvisibility = {
     agent: false,
     envTitle: true,
     controls: true,
-    alpha: true,
+    alpha: false,
     gamma: true,
     epsilon: true,
     progress: false,

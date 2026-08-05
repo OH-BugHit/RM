@@ -7,3 +7,40 @@
 h3 {
     margin: 0 0 0.2rem 0
 }
+
+.sightWrapper {
+    position: relative;
+}
+
+.treasure,
+.goal,
+.trap,
+.big,
+.agent {
+    position: absolute;
+}
+
+.treasure {
+    left: 20%;
+    bottom: 2%;
+}
+
+.goal {
+    right: 0;
+    bottom: 4px;
+}
+
+.trap {
+    left: 10%;
+    bottom: 16%;
+}
+
+.big {
+    left: 50%;
+    bottom: 4px;
+}
+
+.agent {
+    left: 0;
+    top: 10px
+}

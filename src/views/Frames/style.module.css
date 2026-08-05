@@ -2,13 +2,13 @@
     display: inline-block;
     position: relative;
     box-sizing: border-box;
-    background: linear-gradient(to bottom, #fbf3ea 0%, #f3e7d9 50%, #ead8c7 100%);
     border-radius: 42px;
     border: 1px solid #123;
     box-shadow: 0 4px 16px rgba(5, 5, 5, 0.5);
     padding: 1.2rem;
     transform-origin: center;
     z-index: 999;
+    margin: 12px
 }
 
 .tutorial {
@@ -19,15 +19,7 @@
 .frame::before {
     content: "";
     position: absolute;
-    top: 1.1rem;
-    left: 1.1rem;
-    right: 1.1rem;
-    bottom: 1.1rem;
 
-    border: 3px solid rgba(58, 47, 42, 0.9);
-    border-radius: 2rem;
-
-    background: radial-gradient(circle at 50% 45%, #eafcea 0%, #c5fcc5 100%);
     z-index: 1;
     pointer-events: none;
 }

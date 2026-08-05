@@ -19,6 +19,10 @@ export default function AgentBridge({ envRef, agentRef }: AgentBridgeProps) {
     const setSpritePulse = useSetAtom(UpdateSpritesPulseAtom);
 
     /**
+     * Updates max steps
+     */
+
+    /**
      * Updates rewards to agent when they are changed
      */
     useEffect(() => {
@@ -27,6 +31,7 @@ export default function AgentBridge({ envRef, agentRef }: AgentBridgeProps) {
             if (worldGrid !== undefined) {
                 envRef.current.setWorld(worldGrid);
             }
+            envRef.current.maxTurns = envSettings.generic.env.maxTurns;
         }
     }, [envSettings, envRef, setRewards, worldGrid]);
 

@@ -1,12 +1,13 @@
 import style from './style.module.css';
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
-import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
-import FastForwardIcon from '@mui/icons-material/FastForward';
-import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { GameControlAtom } from '../../atoms/state';
+import { ActiveEnvironmentAtom, GameControlAtom } from '../../atoms/state';
 import GameButton from '../../components/Buttons/GameButton/GameButton';
 import { ControlEnablerAtom, InspectAtom, LodStateAtom, StoryProgressAtom } from '../../atoms/uiState';
+import PlayIcon from '../../components/Buttons/ButtonIcons/PlayIcon';
+import PauseIcon from '../../components/Buttons/ButtonIcons/PauseIcon';
+import StepIcon from '../../components/Buttons/ButtonIcons/StepIcon';
+import FastForwardIcon from '../../components/Buttons/ButtonIcons/FastForwardIcon';
+import InspectIcon from '../../components/Buttons/ButtonIcons/InspectIcon';
 let stepsTaken = 0;
 
 function Controls() {
@@ -15,9 +16,10 @@ function Controls() {
     const enable = useAtomValue(ControlEnablerAtom);
     const setStoryProgress = useSetAtom(StoryProgressAtom);
     const setInspect = useSetAtom(InspectAtom);
+    const env = useAtomValue(ActiveEnvironmentAtom);
 
     const storySteps = () => {
-        if (stepsTaken < 5) {
+        if (stepsTaken < 8) {
             stepsTaken++;
         } else {
             setStoryProgress((old) => {
@@ -39,55 +41,29 @@ function Controls() {
         <div className={style.controlsWrapper}>
             <div className={style.controlsContainer}>
                 <GameButton
-                    title={controls.isRunning ? 'Play' : 'Pause'}
+                    title={controls.isRunning ? 'Pause' : 'Play'}
                     disabled={!enable?.play}
-                    variant="outlined"
+                    variant="text"
                     onClick={() => {
                         setLod(2);
                         setControls((old) => {
                             return {
                                 ...old,
-                                isRunning: controls.isRunning ? false : true,
+                                isRunning: false,
                                 isFast: false,
                             };
                         });
                     }}
                 >
-                    {controls.isRunning ? (
-                        <PauseCircleOutlineIcon
-                            fontSize="large"
-                            color="secondary"
-                        />
-                    ) : (
-                        <PlayCircleOutlineIcon
-                            fontSize="large"
-                            color={`${enable?.play ? 'secondary' : 'disabled'}`}
-                        />
-                    )}
-                </GameButton>
-                <GameButton
-                    title="Fast forward"
-                    variant="outlined"
-                    disabled={!enable?.ff}
-                    onClick={() => {
-                        setLod(1);
-                        setControls((old) => {
-                            return {
-                                ...old,
-                                isRunning: true,
-                                isFast: true,
-                            };
-                        });
-                    }}
-                >
-                    <FastForwardIcon
-                        fontSize="large"
-                        color={`${enable?.ff ? 'secondary' : 'disabled'}`}
+                    <PauseIcon
+                        active={!controls.isRunning}
+                        disabled={!enable?.play}
                     />
                 </GameButton>
                 <GameButton
                     title="One step"
-                    variant="outlined"
+                    color="success"
+                    variant="text"
                     disabled={!enable?.step}
                     onClick={() => {
                         setLod(2);
@@ -102,29 +78,72 @@ function Controls() {
                         storySteps();
                     }}
                 >
-                    <b style={{ color: `${enable?.step ? 'secondary' : 'disabled'}` }}>Step</b>
+                    <StepIcon disabled={!enable?.step} />
                 </GameButton>
                 <GameButton
-                    title="Inspect"
-                    variant="outlined"
-                    disabled={!enable?.inspect}
+                    title={controls.isRunning ? 'Pause' : 'Play'}
+                    disabled={!enable?.play}
+                    variant="text"
+                    color="success"
                     onClick={() => {
                         setLod(2);
                         setControls((old) => {
                             return {
                                 ...old,
-                                isRunning: false,
+                                isRunning: true,
                                 isFast: false,
                             };
                         });
-                        setInspect({ vis: true, step: 0 });
                     }}
                 >
-                    <TipsAndUpdatesIcon
-                        fontSize="large"
-                        color={`${enable?.inspect ? 'secondary' : 'disabled'}`}
+                    <PlayIcon
+                        active={controls.isRunning}
+                        disabled={!enable?.play}
                     />
                 </GameButton>
+                <GameButton
+                    title="Fast forward"
+                    variant="text"
+                    color="success"
+                    disabled={!enable?.ff}
+                    onClick={() => {
+                        setLod(1);
+                        setControls((old) => {
+                            return {
+                                ...old,
+                                isRunning: true,
+                                isFast: true,
+                            };
+                        });
+                    }}
+                >
+                    <FastForwardIcon
+                        active={controls.isFast}
+                        disabled={!enable?.ff}
+                    />
+                </GameButton>
+
+                {env.type === 'created' && (
+                    <GameButton
+                        title="Inspect"
+                        color="info"
+                        variant="text"
+                        disabled={!enable?.inspect}
+                        onClick={() => {
+                            setLod(2);
+                            setControls((old) => {
+                                return {
+                                    ...old,
+                                    isRunning: false,
+                                    isFast: false,
+                                };
+                            });
+                            setInspect({ vis: true, step: 0 });
+                        }}
+                    >
+                        <InspectIcon disabled={!enable?.inspect} />
+                    </GameButton>
+                )}
             </div>
         </div>
     );

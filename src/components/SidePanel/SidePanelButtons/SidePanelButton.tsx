@@ -41,7 +41,10 @@ export function SidePanelButton({
 }: Props) {
     const { t } = useTranslation();
     return (
-        <motion.div variants={itemVariants}>
+        <motion.div
+            variants={itemVariants}
+            className={style.buttonWrapper}
+        >
             <IconButton
                 className={`${className} ${selected ? style.selected : ''}`}
                 onClick={() => onClick(value)}
@@ -49,14 +52,14 @@ export function SidePanelButton({
                 title={t(`sidePanel.buttons.${value}`)}
                 disabled={disabled}
             >
-                {activeHelp === value && (
-                    <Arrow
-                        radius={110}
-                        angle={180}
-                    />
-                )}
                 {icon}
             </IconButton>
+            {activeHelp === value && (
+                <Arrow
+                    radius={80}
+                    angle={180}
+                />
+            )}
         </motion.div>
     );
 }

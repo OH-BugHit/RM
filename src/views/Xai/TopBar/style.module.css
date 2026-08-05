@@ -1,0 +1,125 @@
+.envTitle {
+    font-family: "Tektur", "Andika";
+    font-weight: 700;
+    font-size: 3rem;
+    background-color: rgba(17, 34, 51, 0.212);
+    padding: 1rem;
+}
+
+.topBar {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.infoBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: min-content;
+
+    width: 900px;
+    padding: 0.45rem 0rem;
+
+    background: rgba(55, 42, 30, 0.55);
+    border-radius: 999px;
+    border: 2px solid rgba(255, 255, 255, .15);
+
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, .08),
+        0 2px 6px rgba(0, 0, 0, .25);
+}
+
+.left,
+.right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.left {
+    justify-content: flex-start;
+    padding-left: 1rem;
+}
+
+.right {
+    justify-content: flex-end;
+    padding-right: 1rem;
+}
+
+.spacer {
+    width: 150px;
+}
+
+.clock {
+    background: rgb(102, 84, 68);
+    border-radius: 999px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border: 2px rgb(255, 255, 255) solid;
+    transform: translate(-50%, -50%);
+    padding: 8px 6px 0 6px;
+    z-index: 2;
+}
+
+.envItem {
+    border-radius: 2rem;
+}
+
+.itemContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    padding: 0 1rem 0 1rem;
+    justify-content: space-evenly;
+
+}
+
+.itemElement {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.gained,
+.toBeat,
+.topScore,
+.traps,
+.treasures,
+.bigTreasures {
+    font-size: 3.5rem;
+    -webkit-text-stroke: 1px #000;
+    paint-order: stroke fill;
+    text-shadow:
+        -1px -1px 0 rgba(0, 0, 0, .8),
+        1px -1px 0 rgba(0, 0, 0, .8),
+        -1px 1px 0 rgba(0, 0, 0, .8),
+        1px 1px 0 rgba(0, 0, 0, .8),
+        0 2px 4px rgba(0, 0, 0, .4);
+}
+
+.gained {
+    color: goldenrod;
+}
+
+.topScore {
+    color: goldenrod;
+}
+
+.toBeat {
+    color: goldenrod;
+}
+
+.traps {
+    color: rgb(235, 75, 75)
+}
+
+.treasures {
+    color: rgb(110, 159, 3)
+}
+
+.bigTreasures {
+    color: rgb(180, 165, 0);
+}

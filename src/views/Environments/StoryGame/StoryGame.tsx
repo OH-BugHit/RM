@@ -33,21 +33,18 @@ import {
     WorldGridRenderAtom,
     MoveQmapAtom,
     StepsLeftAtom,
+    EnvSettingsAtom,
 } from '../../../atoms/gameState';
 import { useRewardFloats } from '../../../hooks/useRewardFloats';
 import { ingest, onEpisodeEnd, resetAll } from '../../../components/Charts/rewardStreamEngine';
-import {
-    defaultEnvSettings,
-    defaultEpisodicData,
-    defaultTimeStepData,
-    defaultWorldGrid,
-} from '../../../utils/defaults';
+import { defaultEpisodicData, defaultTimeStepData, defaultWorldGrid } from '../../../utils/defaults';
 import { GenericRLEnv } from '../Generic/environment';
 import StoryProgress from '../../../components/GameComponents/StoryProgress';
 import ResizeButton from '../../../components/Buttons/ReziseButton/ResizeButton';
 import AgentBridge from '../../../components/GameComponents/AgentBridge';
 import { WorldStore } from '../../../components/QTable/utils';
 import AgentRender from '../../../components/EnvironmentRender/AgentRender';
+import { TopbarAtom } from '../../../atoms/uiState';
 
 const STEP_INTERVAL = 400; //ms
 const FAST_STEPS = 5000;
@@ -84,6 +81,7 @@ function StoryGame({
     const setWorldGrid = useSetAtom(WorldGridRenderAtom);
     const setUpdateWorldPulse = useSetAtom(UpdateWorldPulseAtom);
     const setStepsLeft = useSetAtom(StepsLeftAtom);
+    const setTopBar = useSetAtom(TopbarAtom);
 
     useEffect(() => {
         // set world grid
@@ -96,13 +94,12 @@ function StoryGame({
     }, []);
 
     const playSound = useSound(sounds); //TODO: CHANGE TO KEY SOUND (or other)!
-    const envSettings = defaultEnvSettings;
+    const envSettings = useAtomValue(EnvSettingsAtom);
     const controls = useAtomValue(GameControlAtom);
     const resetUIpulse = useAtomValue(ResetUiPulseAtom);
     const agentSettings = useAtomValue(AgentSettingsAtom);
     //TODO: Poista uudelleenrenderöinnit console.log('StoryGame renderöi');
 
-    const maxTurns = envSettings?.potsAndBurglar?.env.maxTurns; //TODO: Change to use correct env settings
     const setFacing = useSetAtom(FacingAtom);
     const setEpisodicData = useSetAtom(EpisodicDataAtom);
     const setTimeStepData = useSetAtom(TimeStepDataAtom);
@@ -170,15 +167,28 @@ function StoryGame({
         lossesRef.current = 0;
         episodicRewardRef.current = 0;
         lastEpisodeRewardRef.current = 0;
-        infoRef.current = { timeLeft: maxTurns ?? 0, result: 'ongoing', message: 'Game reset', trigger: false };
+        infoRef.current = {
+            timeLeft: envSettings?.generic?.env.maxTurns ?? 0,
+            result: 'ongoing',
+            message: 'Game reset',
+            trigger: false,
+        };
         const { obs } = envRef.current.reset();
         obsRef.current = obs;
+        setTopBar((old) => {
+            return {
+                ...old,
+                score: 0,
+                traps: 0,
+                treasures: 0,
+                bigTreasures: 0,
+            };
+        });
         setObs(obs);
         setTimeStepData(defaultTimeStepData);
         setEpisodicData(defaultEpisodicData);
         resetAll(setChart);
     }, [
-        maxTurns,
         store,
         actionRef,
         envRef,
@@ -189,6 +199,7 @@ function StoryGame({
         defaultObs,
         obsShape,
         worldGrid,
+        setTopBar,
         setObs,
         setTimeStepData,
         setEpisodicData,
@@ -240,6 +251,41 @@ function StoryGame({
             if (action === Actions.specialAction) playSound();
             const { info, obs: nextObs, reward, terminated } = envRef.current.step(action);
             setStepsLeft(info.timeLeft);
+            if (info.object !== null) {
+                switch (info.object) {
+                    case 'trap': {
+                        console.log('trap!');
+                        setTopBar((old) => {
+                            return {
+                                ...old,
+                                traps: old.traps + 1,
+                                score: old.score - 1,
+                            };
+                        });
+                        break;
+                    }
+                    case 'treasure': {
+                        setTopBar((old) => {
+                            return {
+                                ...old,
+                                treasures: old.treasures + 1,
+                                score: old.score + 1,
+                            };
+                        });
+                        break;
+                    }
+                    case 'bigTreasure': {
+                        setTopBar((old) => {
+                            return {
+                                ...old,
+                                bigTreasures: old.bigTreasures + 1,
+                                score: old.score + 2,
+                            };
+                        });
+                        break;
+                    }
+                }
+            }
             infoRef.current = info;
             agentRef.current.update(currentObs, action, reward, nextObs, terminated, store.get(MoveQmapAtom));
             triggersSetRef.current += info.reachedEndStateProp ? 1 : 0;
@@ -260,8 +306,28 @@ function StoryGame({
             if (dx !== 0) setFacing(dx > 0 ? -1 : 1);
 
             if (terminated) {
-                if (infoRef.current.result === 'win') winsRef.current++;
-                else if (infoRef.current.result === 'lose') lossesRef.current++;
+                let win = false;
+                if (infoRef.current.result === 'win') {
+                    winsRef.current++;
+                    win = true;
+                } else if (infoRef.current.result === 'lose') {
+                    lossesRef.current++;
+                    win = false;
+                }
+                setTopBar((old) => {
+                    let topScore = old.topScore;
+                    if (topScore < old.score && win) {
+                        topScore = old.score;
+                    }
+                    return {
+                        ...old,
+                        traps: 0,
+                        treasures: 0,
+                        bigTreasures: 0,
+                        score: 0,
+                        topScore: topScore,
+                    };
+                });
                 lastEpisodeRewardRef.current = episodicRewardRef.current;
                 // Update charts
                 onEpisodeEnd();
@@ -269,6 +335,7 @@ function StoryGame({
                 const { obs: resetObs } = envRef.current.reset();
                 obsRef.current = resetObs;
                 episodicRewardRef.current = 0;
+                setStepsLeft(envSettings.generic.env.maxTurns);
             } else {
                 obsRef.current = nextObs;
             }
@@ -283,12 +350,14 @@ function StoryGame({
         setFacing,
         setLastState,
         setStepsLeft,
+        setTopBar,
         currentStateRef,
         actionRef,
         obsRef,
         infoRef,
         agentRef,
         envRef,
+        envSettings.generic.env.maxTurns,
     ]);
 
     useEffect(() => {
@@ -330,7 +399,15 @@ function StoryGame({
     useEffect(() => {
         if (!controls.isRunning || !controls.isFast) return;
         let running = true;
-
+        setTopBar((old) => {
+            return {
+                ...old,
+                traps: 0,
+                treasures: 0,
+                bigTreasures: 0,
+                score: 0,
+            };
+        });
         const loop = () => {
             if (!running) return;
             stepFast();
@@ -341,7 +418,7 @@ function StoryGame({
         return () => {
             running = false;
         };
-    }, [controls.isFast, controls.isRunning, stepFast]);
+    }, [controls.isFast, controls.isRunning, stepFast, setTopBar]);
 
     useEffect(() => {
         if (!controls.isRunning || controls.isFast) return;
@@ -355,8 +432,13 @@ function StoryGame({
 
     const env = envRef.current;
 
-    if (!env || !maxTurns || !infoRef.current) {
-        console.warn('Missing info - env - maxTurns - inforef', env, maxTurns, infoRef.current);
+    if (!env || !envSettings?.generic?.env.maxTurns || !infoRef.current) {
+        console.warn(
+            'Missing info - env - maxTurns - inforef',
+            env,
+            envSettings?.generic?.env.maxTurns ?? 0,
+            infoRef.current
+        );
         return <div>missing info</div>;
     }
 

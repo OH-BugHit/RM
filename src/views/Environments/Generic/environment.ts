@@ -7,6 +7,7 @@ import {
     CellType,
     Cell,
     GenericReward,
+    ObjectType,
 } from '../../../types';
 import { manhattanDirecitons } from '../../../utils/defaults';
 
@@ -62,6 +63,7 @@ type Info = {
     reachedEndStateProp: boolean;
     result: 'win' | 'lose' | 'ongoing';
     message: string;
+    object: ObjectType;
     trigger: boolean;
 };
 const SIDES: SixthSenseDirection[] = [
@@ -171,6 +173,7 @@ export class GenericRLEnv {
                 result: 'ongoing',
                 message: 'Game reset',
                 trigger: false,
+                object: null,
             },
         };
     }
@@ -265,6 +268,7 @@ export class GenericRLEnv {
                     result: 'lose',
                     message: 'Game step completed. Step limit reached',
                     trigger: trigger,
+                    object: null,
                 },
             };
         }
@@ -287,6 +291,7 @@ export class GenericRLEnv {
                         result: 'ongoing',
                         message: 'Game step completed. Special ability used successfully',
                         trigger: trigger,
+                        object: null,
                     },
                 };
             } else {
@@ -309,6 +314,7 @@ export class GenericRLEnv {
                             result: this.triggerIsWin ? 'win' : 'lose',
                             message: 'Game step completed',
                             trigger: trigger,
+                            object: null,
                         },
                     };
                 }
@@ -331,6 +337,7 @@ export class GenericRLEnv {
                                 result: 'ongoing',
                                 message: 'Game step completed, treasure reward received',
                                 trigger: trigger,
+                                object: 'treasure',
                             },
                         };
                     }
@@ -354,6 +361,7 @@ export class GenericRLEnv {
                                 result: 'ongoing',
                                 message: 'Game step completed, large treasure reward received',
                                 trigger: trigger,
+                                object: 'bigTreasure',
                             },
                         };
                     }
@@ -377,6 +385,7 @@ export class GenericRLEnv {
                                 result: 'ongoing',
                                 message: 'Game step completed, trap reward received',
                                 trigger: trigger,
+                                object: 'trap',
                             },
                         };
                     }
@@ -401,6 +410,7 @@ export class GenericRLEnv {
                                 result: 'ongoing',
                                 message: 'Game step completed, Pickable object picked',
                                 trigger: trigger,
+                                object: null,
                             },
                         };
                     }
@@ -420,6 +430,7 @@ export class GenericRLEnv {
                 result: 'ongoing',
                 message: 'Game step completed. Episode continues',
                 trigger: trigger,
+                object: null,
             },
         };
     }

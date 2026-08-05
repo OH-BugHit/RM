@@ -230,8 +230,8 @@
         "episodicReward": "Current episode reward",
         "lastAction": "Last action",
         "title": "Stats",
-        "totLosses": "Episode end reached",
-        "totTriggers": "Goal reached",
+        "totLosses": "Time run out",
+        "totTriggers": "Win",
         "totEpisodes": "Total episodes",
         "totPots": "Pots destroyed",
         "totLastEpisode": "Last episode reward",
@@ -334,6 +334,13 @@
             "41": "You gain score by collecting treasures, big treasures and traps. Score counts only for those episodes that end to goal state. If time runs out, score is 0.",
             "42": "Score is totally different thing from the rewards. The score is there so you can compete with other people etc...",
             "43": "That's it. To start this tutorial again. Go to homepage and refresh your browser. Click next to start playing."
+        }
+    },
+    "topBar": {
+        "score": {
+            "gained": "Score",
+            "top": "Best Score",
+            "toBeat": "Score to Beat"
         }
     },
     "tutorial": {

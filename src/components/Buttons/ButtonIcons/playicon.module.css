@@ -1,0 +1,117 @@
+.icon {
+    overflow: visible;
+    cursor: pointer;
+
+    transition:
+        transform .18s ease,
+        filter .25s ease;
+}
+
+
+.icon:hover {
+    filter: brightness(1.08);
+}
+
+.active .glowShape {
+    opacity: .3;
+}
+
+.active .pcb {
+    stroke: #FFE978;
+    fill: #FFE978;
+}
+
+.glowShape {
+    opacity: 0;
+
+    fill: #ffd84a;
+
+    filter: blur(8px);
+
+    transition:
+        opacity .25s ease,
+        filter .25s ease;
+}
+
+.icon:hover .glowShape {
+
+    opacity: .28;
+
+    animation: glowPulse 1.6s ease-in-out infinite;
+}
+
+/* PCB */
+
+.pcb {
+
+    fill: #7B4A00;
+    stroke: #7B4A00;
+    stroke-width: 4;
+    stroke-linecap: round;
+
+    opacity: .22;
+
+    transition:
+        stroke .25s ease,
+        fill .25s ease,
+        opacity .25s ease,
+        filter .25s ease;
+}
+
+.icon:hover .pcb {
+
+    stroke: #FFE978;
+    fill: #FFE978;
+
+    opacity: .9;
+
+    filter:
+        drop-shadow(0 0 2px #ffe978) drop-shadow(0 0 6px #ffcb2d);
+
+    animation: powerPulse .8s ease;
+}
+
+/* glow */
+
+@keyframes glowPulse {
+
+    0% {
+        opacity: .18;
+        filter: blur(7px);
+    }
+
+    50% {
+        opacity: .35;
+        filter: blur(10px);
+    }
+
+    100% {
+        opacity: .18;
+        filter: blur(7px);
+    }
+
+}
+
+/* pcb lights up */
+
+@keyframes powerPulse {
+
+    0% {
+
+        opacity: .25;
+
+    }
+
+    50% {
+
+        opacity: 1;
+
+    }
+
+    100% {
+
+        opacity: .9;
+
+    }
+
+}

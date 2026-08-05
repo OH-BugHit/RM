@@ -1,0 +1,20 @@
+.pcb {
+    fill: #2A5FAF;
+    stroke: #2A5FAF;
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    transition:
+        fill .25s,
+        stroke .25s;
+}
+
+.icon:hover .pcb {
+    fill: #86ECFF;
+    stroke: #86ECFF;
+}
+
+.icon:hover polygon {
+    stroke: #86ECFF;
+}

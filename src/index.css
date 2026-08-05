@@ -15,6 +15,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  font-size: 1.3rem;
 }
 
 code {
