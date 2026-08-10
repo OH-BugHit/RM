@@ -2,6 +2,7 @@ import { atom } from 'jotai';
 import {
     AgentCluster,
     BuildCluster,
+    Clusters,
     ControlOptions,
     HUDvisibility,
     InspectCluster,
@@ -76,3 +77,5 @@ export const BuildSavedClustersAtom = atom<{ agent: AgentCluster; inspect: Inspe
 export const InspectCAtom = atom<InspectCluster>(defInspectContent);
 export const AgentCAtom = atom<AgentCluster>(defAgentContent);
 export const RewardCAtom = atom<RewardCluster>(defRewardContent);
+
+export const ClusterOpenAtom = atom<Clusters>({ agent: false, inspect: false, reward: false, build: false });

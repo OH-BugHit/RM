@@ -19,19 +19,19 @@ export default function BuildIcon({ size = 220, title = 'BUILD' }: InvestigatePr
                 >
                     <stop
                         offset="0%"
-                        stop-color="#FFD6D0"
+                        stopColor="#FFD6D0"
                     />
                     <stop
                         offset="22%"
-                        stop-color="#D94A4A"
+                        stopColor="#D94A4A"
                     />
                     <stop
                         offset="55%"
-                        stop-color="#7A2929"
+                        stopColor="#7A2929"
                     />
                     <stop
                         offset="100%"
-                        stop-color="#351212"
+                        stopColor="#351212"
                     />
                 </radialGradient>
 
@@ -44,15 +44,15 @@ export default function BuildIcon({ size = 220, title = 'BUILD' }: InvestigatePr
                 >
                     <stop
                         offset="0%"
-                        stop-color="#543720"
+                        stopColor="#543720"
                     />
                     <stop
                         offset="50%"
-                        stop-color="#f0d5c3"
+                        stopColor="#f0d5c3"
                     />
                     <stop
                         offset="100%"
-                        stop-color="#f0d0c3"
+                        stopColor="#f0d0c3"
                     />
                 </linearGradient>
 
@@ -65,19 +65,19 @@ export default function BuildIcon({ size = 220, title = 'BUILD' }: InvestigatePr
                 >
                     <stop
                         offset="0%"
-                        stop-color="#493F42"
+                        stopColor="#493F42"
                     />
                     <stop
                         offset="35%"
-                        stop-color="#B8B2B4"
+                        stopColor="#B8B2B4"
                     />
                     <stop
                         offset="55%"
-                        stop-color="#F3F0F0"
+                        stopColor="#F3F0F0"
                     />
                     <stop
                         offset="100%"
-                        stop-color="#70686B"
+                        stopColor="#70686B"
                     />
                 </linearGradient>
 
@@ -90,19 +90,19 @@ export default function BuildIcon({ size = 220, title = 'BUILD' }: InvestigatePr
                 >
                     <stop
                         offset="0%"
-                        stop-color="#4A2419"
+                        stopColor="#4A2419"
                     />
                     <stop
                         offset="45%"
-                        stop-color="#B9683E"
+                        stopColor="#B9683E"
                     />
                     <stop
                         offset="75%"
-                        stop-color="#D58B5C"
+                        stopColor="#D58B5C"
                     />
                     <stop
                         offset="100%"
-                        stop-color="#6A3424"
+                        stopColor="#6A3424"
                     />
                 </linearGradient>
             </defs>
@@ -115,7 +115,7 @@ export default function BuildIcon({ size = 220, title = 'BUILD' }: InvestigatePr
                 r="88"
                 fill="url(#build-panel)"
                 stroke="url(#build-metal)"
-                stroke-width="12"
+                strokeWidth="12"
             />
 
             {/* Inner rim */}
@@ -126,8 +126,8 @@ export default function BuildIcon({ size = 220, title = 'BUILD' }: InvestigatePr
                 r="77"
                 fill="none"
                 stroke="#FFECEA"
-                stroke-opacity=".34"
-                stroke-width="2"
+                strokeOpacity=".34"
+                strokeWidth="2"
             />
 
             <circle
@@ -136,8 +136,8 @@ export default function BuildIcon({ size = 220, title = 'BUILD' }: InvestigatePr
                 r="69"
                 fill="none"
                 stroke="#FFECEA"
-                stroke-opacity=".10"
-                stroke-width="1"
+                strokeOpacity=".10"
+                strokeWidth="1"
             />
 
             {/* Hammer shadow */}
@@ -184,15 +184,15 @@ export default function BuildIcon({ size = 220, title = 'BUILD' }: InvestigatePr
                     rx="7"
                     fill="url(#hammer-handle)"
                     stroke="#3A1A14"
-                    stroke-width="3"
+                    strokeWidth="3"
                 />
 
                 <path
                     d="M105 104 V158"
                     stroke="#F0B28D"
-                    stroke-opacity=".45"
-                    stroke-width="3"
-                    stroke-linecap="round"
+                    strokeOpacity=".45"
+                    strokeWidth="3"
+                    strokeLinecap="round"
                 />
 
                 {/* Hammer head */}
@@ -212,8 +212,8 @@ export default function BuildIcon({ size = 220, title = 'BUILD' }: InvestigatePr
             "
                     fill="url(#hammer-metal)"
                     stroke="#3E3739"
-                    stroke-width="4"
-                    stroke-linejoin="round"
+                    strokeWidth="4"
+                    strokeLinejoin="round"
                 />
 
                 {/* Hammer face */}
@@ -231,7 +231,7 @@ export default function BuildIcon({ size = 220, title = 'BUILD' }: InvestigatePr
             "
                     fill="#777174"
                     stroke="#403A3C"
-                    stroke-width="3"
+                    strokeWidth="3"
                 />
 
                 <path
@@ -246,7 +246,7 @@ export default function BuildIcon({ size = 220, title = 'BUILD' }: InvestigatePr
             "
                     fill="#AAA4A6"
                     stroke="#403A3C"
-                    stroke-width="3"
+                    strokeWidth="3"
                 />
 
                 {/* Highlight */}
@@ -254,9 +254,9 @@ export default function BuildIcon({ size = 220, title = 'BUILD' }: InvestigatePr
                 <path
                     d="M79 74 H137"
                     stroke="#FFFFFF"
-                    stroke-opacity=".65"
-                    stroke-width="4"
-                    stroke-linecap="round"
+                    strokeOpacity=".65"
+                    strokeWidth="4"
+                    strokeLinecap="round"
                 />
 
                 {/* Neck */}
@@ -269,7 +269,7 @@ export default function BuildIcon({ size = 220, title = 'BUILD' }: InvestigatePr
                     rx="3"
                     fill="#777174"
                     stroke="#403A3C"
-                    stroke-width="3"
+                    strokeWidth="3"
                 />
             </g>
 
@@ -306,15 +306,15 @@ export default function BuildIcon({ size = 220, title = 'BUILD' }: InvestigatePr
             <text
                 x="110"
                 y="154"
-                text-anchor="middle"
-                font-family="Tektur, sans-serif"
-                font-size="25"
-                font-weight="700"
-                letter-spacing="2"
+                textAnchor="middle"
+                fontFamily="Tektur, sans-serif"
+                fontSize="25"
+                fontWeight="700"
+                letterSpacing="2"
                 fill="#FFF4F2"
                 stroke="#431818"
-                stroke-width="3"
-                paint-order="stroke fill"
+                strokeWidth="3"
+                paintOrder="stroke fill"
             >
                 {title}
             </text>

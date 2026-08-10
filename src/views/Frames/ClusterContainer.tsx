@@ -8,7 +8,7 @@ import getInspectButtons, { InspectButtonProps } from '../../components/Buttons/
 import { getBuildButtons } from '../../components/Buttons/buildButtonList';
 import useWindowSize from '../../hooks/useWindowSize';
 import { useAtomValue } from 'jotai';
-import { HUDvisAtom } from '../../atoms/uiState';
+import { ClusterOpenAtom, HUDvisAtom } from '../../atoms/uiState';
 import { useClusterOpenState } from './useClusterState';
 import BuildToolsContent from './BuildToolsContent';
 
@@ -27,7 +27,7 @@ const RADIUS = 160;
 export default function ClusterContainer({ position, type, vis, children, inspectButtonProps }: FrameContainerProps) {
     const { openState, handleOpenClick } = useClusterOpenState(type);
     const hudVis = useAtomValue(HUDvisAtom);
-
+    const clusterOpen = useAtomValue(ClusterOpenAtom);
     const windowSize = useWindowSize();
 
     const buttons =
@@ -54,54 +54,58 @@ export default function ClusterContainer({ position, type, vis, children, inspec
                     }}
                 >
                     <div className={style.agentWrapper}>
-                        {buttons.map((button) => {
-                            if (!hudVis[type]?.[button.id as keyof (typeof hudVis)[typeof type]]) return;
-                            const rad = (button.angle * Math.PI) / 180;
+                        {clusterOpen[type] && (
+                            <>
+                                {buttons.map((button) => {
+                                    if (!hudVis[type]?.[button.id as keyof (typeof hudVis)[typeof type]]) return;
+                                    const rad = (button.angle * Math.PI) / 180;
 
-                            const origin = {
-                                x: Math.cos(rad) * RADIUS,
-                                y: -Math.sin(rad) * RADIUS,
-                            };
+                                    const origin = {
+                                        x: Math.cos(rad) * RADIUS,
+                                        y: -Math.sin(rad) * RADIUS,
+                                    };
 
-                            return (
-                                <React.Fragment key={button.id}>
-                                    <IconButton
-                                        className={`${style.action} ${style.actionPop}`}
-                                        onClick={() => handleOpenClick(button.id)}
-                                        style={{
-                                            left: `calc(50% + ${origin.x}px)`,
-                                            top: `calc(50% + ${origin.y}px)`,
-                                            transform: 'translate(-50%, -50%)',
-                                        }}
-                                    >
-                                        {button.icon}
-                                    </IconButton>
+                                    return (
+                                        <React.Fragment key={button.id}>
+                                            <IconButton
+                                                className={`${style.action} ${style.actionPop}`}
+                                                onClick={() => handleOpenClick(button.id)}
+                                                style={{
+                                                    left: `calc(50% + ${origin.x}px)`,
+                                                    top: `calc(50% + ${origin.y}px)`,
+                                                    transform: 'translate(-50%, -50%)',
+                                                }}
+                                            >
+                                                {button.icon}
+                                            </IconButton>
 
-                                    {type === 'build' && button.id === 'tools' ? (
-                                        <BuildToolsContent
-                                            open={buildOpenState?.tools ?? false}
-                                            origin={origin}
-                                            baseTarget={button.target}
-                                        />
-                                    ) : (
-                                        <ContentContainer
-                                            open={openState[button.id as keyof typeof openState]}
-                                            unmountOnClose={type === 'inspect' ? false : true}
-                                            origin={origin}
-                                            contentWidth={button.size.w}
-                                            contentHeight={button.size.h}
-                                            background={type}
-                                            target={{
-                                                x: button.target.x,
-                                                y: button.target.y,
-                                            }}
-                                        >
-                                            {button.content}
-                                        </ContentContainer>
-                                    )}
-                                </React.Fragment>
-                            );
-                        })}
+                                            {type === 'build' && button.id === 'tools' ? (
+                                                <BuildToolsContent
+                                                    open={buildOpenState?.tools ?? false}
+                                                    origin={origin}
+                                                    baseTarget={button.target}
+                                                />
+                                            ) : (
+                                                <ContentContainer
+                                                    open={openState[button.id as keyof typeof openState]}
+                                                    unmountOnClose={type === 'inspect' ? false : true}
+                                                    origin={origin}
+                                                    contentWidth={button.size.w}
+                                                    contentHeight={button.size.h}
+                                                    background={type}
+                                                    target={{
+                                                        x: button.target.x,
+                                                        y: button.target.y,
+                                                    }}
+                                                >
+                                                    {button.content}
+                                                </ContentContainer>
+                                            )}
+                                        </React.Fragment>
+                                    );
+                                })}
+                            </>
+                        )}
 
                         <div>{children}</div>
                     </div>

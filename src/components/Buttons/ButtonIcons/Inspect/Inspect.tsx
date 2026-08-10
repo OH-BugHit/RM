@@ -5,7 +5,7 @@ interface InvestigateProps {
     title?: string;
 }
 
-export default function InspectIcon({ size = 220, title = 'INSPECT' }: InvestigateProps) {
+export default function InspectClusterIcon({ size = 220, title = 'INSPECT' }: InvestigateProps) {
     return (
         <svg
             width={size}

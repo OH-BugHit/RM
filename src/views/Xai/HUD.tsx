@@ -11,16 +11,15 @@ import { WorldStore } from '../../components/QTable/utils';
 import { CustomGridLayer } from './NewQTable/TileTable/TileTable';
 import { StateData } from '../../types';
 import Progress from './GameTutorial/Progress';
-import { useTranslation } from 'react-i18next';
 import { FocusOverlay } from '../../components/QTable/FocusOverlay/FocusOverlay';
 import { useRef } from 'react';
 import TutorialFrame from './GameTutorial/TutorialFrame/TutorialFrame';
 import TopBar from './TopBar/Topbar';
 import ClusterContainer from '../Frames/ClusterContainer';
-import Agent from './Agent/Agent';
-import Reward from './Reward/Reward';
-import InspectIcon from '../../components/Buttons/ButtonIcons/Inspect/Inspect';
-import BuildIcon from '../../components/Buttons/ButtonIcons/Build/BuildIcon';
+import AgentClusterParent from '../Frames/ClusterParents/Agent';
+import BuildClusteParent from '../Frames/ClusterParents/Build';
+import RewardClusteParent from '../Frames/ClusterParents/Reward';
+import InspectClusteParent from '../Frames/ClusterParents/Inspect';
 
 interface XaiProps {
     agentRef: React.RefObject<QLearningAgent | undefined>;
@@ -30,7 +29,6 @@ interface XaiProps {
     layerRef: React.RefObject<CustomGridLayer | null>;
 }
 export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRef }: XaiProps) {
-    const { t } = useTranslation();
     const hideHud = useAtomValue(HideHudAtom);
     const hudVis = useAtomValue(HUDvisAtom);
     const inspectC = useAtomValue(InspectCAtom);
@@ -58,7 +56,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                     focusFrameRef,
                 }}
             >
-                <Agent />
+                <AgentClusterParent />
             </ClusterContainer>
             <ClusterContainer
                 vis={hudVis.rewardCluster}
@@ -72,7 +70,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                     focusFrameRef,
                 }}
             >
-                <Reward title={t('reward.title')} />
+                <RewardClusteParent />
             </ClusterContainer>
             <ClusterContainer
                 vis={hudVis.inspectCluster}
@@ -86,10 +84,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                     focusFrameRef,
                 }}
             >
-                <InspectIcon
-                    size={220}
-                    title="INSPECT"
-                />
+                <InspectClusteParent />
             </ClusterContainer>
             <ClusterContainer
                 vis={hudVis.buildCluster}
@@ -103,10 +98,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                     focusFrameRef,
                 }}
             >
-                <BuildIcon
-                    size={220}
-                    title="BUILD"
-                />
+                <BuildClusteParent />
             </ClusterContainer>
 
             <FrameContainer position="left">

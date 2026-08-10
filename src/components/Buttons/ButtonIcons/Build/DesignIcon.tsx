@@ -285,16 +285,16 @@ export default function DesignIcon({ size = 140 }: ToolsIconProps) {
                 className={`${styles.counter} ${pop ? styles.pop : ''}`}
                 x="40"
                 y="44"
-                text-anchor="middle"
-                dominant-baseline="middle"
-                font-family="Tektur, sans-serif"
-                font-size="25"
-                font-weight="700"
-                letter-spacing="2"
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fontFamily="Tektur, sans-serif"
+                fontSize="25"
+                fontWeight="700"
+                letterSpacing="2"
                 fill="#FFF4F2"
                 stroke="#431818"
-                stroke-width="3"
-                paint-order="stroke fill"
+                strokeWidth="3"
+                paintOrder="stroke fill"
             >
                 {tileT.length}
             </text>

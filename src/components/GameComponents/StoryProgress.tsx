@@ -11,6 +11,7 @@ import {
     LodStateAtom,
     AgentCAtom,
     BuildCAtom,
+    InspectCAtom,
 } from '../../atoms/uiState';
 import { useEffect } from 'react';
 import { GameControlAtom } from '../../atoms/state';
@@ -30,7 +31,7 @@ export default function StoryProgress() {
     const setLod = useSetAtom(LodStateAtom);
     const setAgentCluster = useSetAtom(AgentCAtom);
     const setBuildCluster = useSetAtom(BuildCAtom);
-    //const setInspecCluster = useSetAtom(InspectCAtom);
+    const setInspecCluster = useSetAtom(InspectCAtom);
     //const setRewardCluster = useSetAtom(RewardCAtom) progress.design.tools
 
     useEffect(() => {
@@ -195,6 +196,11 @@ export default function StoryProgress() {
 
             case 5: {
                 setAgentCluster({ obs: false, img: false, prm: false });
+                setHud((old) => {
+                    return {
+                        ...old,
+                    };
+                });
                 break;
             }
 
@@ -440,6 +446,11 @@ export default function StoryProgress() {
             }
             case 25: {
                 setLod(2);
+                setInspecCluster({
+                    qMap: false,
+                    agentVision: false,
+                    charts: false,
+                });
                 setHud((old) => {
                     return {
                         ...old,
@@ -454,7 +465,8 @@ export default function StoryProgress() {
                 setTextContent({ mode: 'textNext', phase: step });
                 break;
             }
-            case 31: {
+            case 27: {
+                setTextContent({ mode: 'text', phase: step });
                 setTextContent({ mode: 'text', phase: step });
                 setControls({ play: false, ff: false, step: false, inspect: true });
                 break;
@@ -463,37 +475,8 @@ export default function StoryProgress() {
                 setTextContent({ mode: 'inspect', phase: step });
                 break;
             }
-            case 38: {
+            case 34: {
                 setTextContent({ mode: 'textNext', phase: step });
-                setControls({ play: false, ff: false, step: false, inspect: false });
-                setHud((old) => {
-                    return {
-                        ...old,
-                        agent: {
-                            ...old.agent,
-                            prm: true,
-                        },
-                    };
-                });
-                break;
-            }
-            case 40: {
-                setHud((old) => {
-                    return {
-                        ...old,
-                        charts: true,
-                    };
-                });
-                break;
-            }
-            case 44: {
-                setHud((old) => {
-                    return {
-                        ...old,
-                        text: false,
-                        progress: false,
-                    };
-                });
                 setHud((old) => {
                     return {
                         ...old,
@@ -504,6 +487,23 @@ export default function StoryProgress() {
                         },
                     };
                 });
+                break;
+            }
+
+            case 38: {
+                setHud((old) => {
+                    return {
+                        ...old,
+                        agent: {
+                            prm: true,
+                            obs: true,
+                            img: true,
+                        },
+                        text: false,
+                        progress: false,
+                    };
+                });
+
                 setControls({ play: true, ff: true, step: true, inspect: true });
                 break;
             }
@@ -512,6 +512,7 @@ export default function StoryProgress() {
         }
     }, [
         step,
+        setInspecCluster,
         setBuildCluster,
         setAgentCluster,
         setProgress,

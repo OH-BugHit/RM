@@ -24,19 +24,19 @@ export default function StepRewardIcon({ size = 256 }: StepRewardIconProps) {
                 >
                     <stop
                         offset="0%"
-                        stop-color="#873f35"
+                        stopColor="#873f35"
                     />
                     <stop
                         offset="40%"
-                        stop-color="#df9575"
+                        stopColor="#df9575"
                     />
                     <stop
                         offset="75%"
-                        stop-color="#d4a855"
+                        stopColor="#d4a855"
                     />
                     <stop
                         offset="100%"
-                        stop-color="#fce1a5"
+                        stopColor="#fce1a5"
                     />
                 </linearGradient>
 

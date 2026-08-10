@@ -127,6 +127,13 @@ export type BuildCluster = {
     settings: boolean;
 };
 
+export type Clusters = {
+    reward: boolean;
+    agent: boolean;
+    inspect: boolean;
+    build: boolean;
+};
+
 export type RewardCluster = {
     step: boolean;
     time: boolean;

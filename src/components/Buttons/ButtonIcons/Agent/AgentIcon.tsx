@@ -19,19 +19,19 @@ export default function AgentIcon({ size = 220, title = 'AGENT' }: InvestigatePr
                 >
                     <stop
                         offset="0%"
-                        stop-color="#FFFFFF"
+                        stopColor="#FFFFFF"
                     />
                     <stop
                         offset="22%"
-                        stop-color="#D8E7ED"
+                        stopColor="#D8E7ED"
                     />
                     <stop
                         offset="55%"
-                        stop-color="#8EA7B3"
+                        stopColor="#8EA7B3"
                     />
                     <stop
                         offset="100%"
-                        stop-color="#405762"
+                        stopColor="#405762"
                     />
                 </radialGradient>
 
@@ -44,15 +44,15 @@ export default function AgentIcon({ size = 220, title = 'AGENT' }: InvestigatePr
                 >
                     <stop
                         offset="0%"
-                        stop-color="#526A75"
+                        stopColor="#526A75"
                     />
                     <stop
                         offset="50%"
-                        stop-color="#F2F7F9"
+                        stopColor="#F2F7F9"
                     />
                     <stop
                         offset="100%"
-                        stop-color="#7D96A1"
+                        stopColor="#7D96A1"
                     />
                 </linearGradient>
 
@@ -65,15 +65,15 @@ export default function AgentIcon({ size = 220, title = 'AGENT' }: InvestigatePr
                 >
                     <stop
                         offset="0%"
-                        stop-color="#6D8D99"
+                        stopColor="#6D8D99"
                     />
                     <stop
                         offset="45%"
-                        stop-color="#D9F0F5"
+                        stopColor="#D9F0F5"
                     />
                     <stop
                         offset="100%"
-                        stop-color="#FFFFFF"
+                        stopColor="#FFFFFF"
                     />
                 </linearGradient>
 
@@ -103,7 +103,7 @@ export default function AgentIcon({ size = 220, title = 'AGENT' }: InvestigatePr
                 r="88"
                 fill="url(#agent-panel)"
                 stroke="url(#agent-metal)"
-                stroke-width="12"
+                strokeWidth="12"
             />
 
             {/* INNER RIM */}
@@ -114,8 +114,8 @@ export default function AgentIcon({ size = 220, title = 'AGENT' }: InvestigatePr
                 r="77"
                 fill="none"
                 stroke="#FFFFFF"
-                stroke-opacity=".35"
-                stroke-width="2"
+                strokeOpacity=".35"
+                strokeWidth="2"
             />
 
             {/* PCB FIELD */}
@@ -123,9 +123,9 @@ export default function AgentIcon({ size = 220, title = 'AGENT' }: InvestigatePr
             <g
                 fill="none"
                 stroke="url(#pcb-copper)"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 opacity=".82"
             >
                 {/* upper left */}
@@ -169,7 +169,7 @@ export default function AgentIcon({ size = 220, title = 'AGENT' }: InvestigatePr
             <g
                 fill="#EAF7FA"
                 stroke="#58727D"
-                stroke-width="2"
+                strokeWidth="2"
             >
                 <circle
                     cx="48"
@@ -272,10 +272,10 @@ export default function AgentIcon({ size = 220, title = 'AGENT' }: InvestigatePr
                     height="52"
                     rx="7"
                     fill="#405762"
-                    fill-opacity=".72"
+                    fillOpacity=".72"
                     stroke="#EAF7FA"
-                    stroke-opacity=".75"
-                    stroke-width="3"
+                    strokeOpacity=".75"
+                    strokeWidth="3"
                 />
 
                 <rect
@@ -286,7 +286,7 @@ export default function AgentIcon({ size = 220, title = 'AGENT' }: InvestigatePr
                     rx="3"
                     fill="none"
                     stroke="url(#pcb-copper)"
-                    stroke-width="3"
+                    strokeWidth="3"
                 />
 
                 <path
@@ -297,8 +297,8 @@ export default function AgentIcon({ size = 220, title = 'AGENT' }: InvestigatePr
                M126 110 H136
                M126 119 H133"
                     stroke="#EAF7FA"
-                    stroke-width="2.5"
-                    stroke-linecap="round"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
                 />
 
                 <path
@@ -309,8 +309,8 @@ export default function AgentIcon({ size = 220, title = 'AGENT' }: InvestigatePr
                M110 125 V136
                M119 125 V133"
                     stroke="#EAF7FA"
-                    stroke-width="2.5"
-                    stroke-linecap="round"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
                 />
 
                 <circle
@@ -319,7 +319,7 @@ export default function AgentIcon({ size = 220, title = 'AGENT' }: InvestigatePr
                     r="8"
                     fill="none"
                     stroke="#F7FFFF"
-                    stroke-width="3"
+                    strokeWidth="3"
                 />
 
                 <circle
@@ -335,7 +335,7 @@ export default function AgentIcon({ size = 220, title = 'AGENT' }: InvestigatePr
             <g
                 fill="#526D78"
                 stroke="#EAF7FA"
-                stroke-width="2"
+                strokeWidth="2"
             >
                 <rect
                     x="68"
@@ -372,15 +372,15 @@ export default function AgentIcon({ size = 220, title = 'AGENT' }: InvestigatePr
             <text
                 x="110"
                 y="78" //178
-                text-anchor="middle"
-                font-family="Tektur, sans-serif"
-                font-size="32"
-                font-weight="700"
-                letter-spacing="2"
+                textAnchor="middle"
+                fontFamily="Tektur, sans-serif"
+                fontSize="32"
+                fontWeight="700"
+                letterSpacing="2"
                 fill="#ffffff"
                 stroke="#080a0b"
-                stroke-width="3"
-                paint-order="stroke fill"
+                strokeWidth="3"
+                paintOrder="stroke fill"
             >
                 {title}
             </text>

@@ -1,0 +1,34 @@
+.icon {
+    display: block;
+    overflow: visible;
+
+}
+
+
+.ready {
+    animation:
+        tutorialArrowIntro 600ms ease-out forwards,
+        tutorialArrowPulse 1.2s ease-in-out 600ms infinite;
+}
+
+@keyframes tutorialArrowIntro {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes tutorialArrowPulse {
+
+    0%,
+    100% {
+        scale: 1;
+    }
+
+    50% {
+        scale: 0.9;
+    }
+}

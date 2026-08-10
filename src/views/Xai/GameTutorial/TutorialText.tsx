@@ -5,6 +5,8 @@ import { StatsContentAtom, StoryProgressAtom, StoryStepAtom, UiHelpAtom } from '
 import { Button } from '@genai-fi/base';
 import Arrow from '../../../components/HelperArrow/Arrow';
 import TypewriterText from '../../../components/Typewriter/TypeWriterText';
+import NextArrowIcon from '../../../components/Buttons/ButtonIcons/OtherIcons/NextArrowIcon';
+import { useEffect, useState } from 'react';
 
 export default function TutorialText() {
     const { t } = useTranslation();
@@ -12,6 +14,12 @@ export default function TutorialText() {
     const setStep = useSetAtom(StoryStepAtom);
     const [uiHelp, setUIhelp] = useAtom(UiHelpAtom);
     const setProgress = useSetAtom(StoryProgressAtom);
+    const [ready, setReady] = useState<boolean>(false);
+
+    useEffect(() => {
+        setReady(false);
+    }, [setReady, statsContent.phase]);
+
     return (
         <div
             className={style.textContainer}
@@ -25,9 +33,9 @@ export default function TutorialText() {
                             angle={270}
                         />
                     )}
-                    {statsContent.phase}
                     <p className={style.storyText}>
                         <TypewriterText
+                            onComplete={() => setReady(true)}
                             startDelay={statsContent.phase < 1 ? 600 : 200}
                             speed={25}
                             text={t(`story.text.${statsContent.phase}`)}
@@ -35,8 +43,9 @@ export default function TutorialText() {
                     </p>
                     {statsContent.mode === 'textNext' && (
                         <>
-                            <div style={{ flexGrow: 1 }} />
                             <Button
+                                style={!ready ? { opacity: 0 } : { opacity: 1 }}
+                                disabled={!ready}
                                 onClick={() => {
                                     if (statsContent.phase === 9) {
                                         setProgress((old) => {
@@ -60,7 +69,7 @@ export default function TutorialText() {
                                     });
                                 }}
                             >
-                                {t('common.next')}
+                                <NextArrowIcon />
                             </Button>
                         </>
                     )}
