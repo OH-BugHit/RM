@@ -75,11 +75,12 @@
             "timeUp": "Reward if time ends"
         },
         "close": "Close",
-        "next": "Next",
+        "next": "Go next!",
         "okay": "Okay!",
         "or": "or",
         "paused": "Game Paused",
         "previous": "Previous",
+        "selected": "Selected: <Type>{{type}}</Type>",
         "subtitle": "Game for learning about Reinforcement Learning.",
         "title": "Reward Machine",
         "tutorial": "Tutorial"
@@ -90,10 +91,12 @@
             "giveName": "Give your agent an epic name:",
             "giveNameDesc": "You can call me...",
             "imgTitle": "Select your agent",
-            "imgDesc": "Select what your agent looks like.",
+            "imgDesc": "Change agent's appereance",
             "nameInputLabel": "Name your agent",
             "obsShapeTitle": "Select observation shape",
             "obsShapeTitleDesc": "Agents can have different observation spaces, meaning some agents see further away. Seeing more can help agent to find solutions, but learning is also harder and slower.",
+            "paramDesc": "Tune parameters to alter how agent learns and uses learned.",
+            "paramTitle": "Parameters",
             "title": "Agent menu",
             "titleDesc": "Create your own Q-learning agent"
         },
@@ -121,7 +124,7 @@
         "rewards": {
             "general": "General rewards:",
             "title": "Reward shaping",
-            "titleDesc": "Tune reward to alter agent's objective",
+            "titleDesc": "Tune reward to alter agent's learning.",
             "objects": "Rewards for reaching objects:"
         },
         "settings": {
@@ -186,7 +189,8 @@
         "titles": {
             "agent": "Choose image for agent",
             "game": "Import pre-made game",
-            "tile": "Create tile"
+            "selectedType": "Select pic for <Type>{{type}}</Type> tile",
+            "tileType": "Create tile"
         }
     },
     "inspect": {
@@ -205,8 +209,14 @@
         }
     },
     "progress": {
-        "title": { "current": "Current progression", "total": "Total progression" },
+        "title": {
+            "current": "Current progression",
+            "total": "Tutorial progression"
+        },
         "help": { "toolsDisabled": "Progress tutorial to use or modify your tools" }
+    },
+    "reward": {
+        "title": "Rewards"
     },
     "sidePanel": {
         "buttons": {
@@ -294,46 +304,44 @@
             }
         },
         "text": {
-            "0": "Hi! And welcome to create your own Reinforcement Learning game!",
-            "1": "Start creating your game by opening Agent menu and select your agent.",
-            "2": "Next you need to select observation shape",
-            "3": "REMOVED STEP!",
-            "4": "Great! You can close the Agent menu now by pressing Agent menu button again. Feel free to come back to make changes later if you like.",
-            "5": "Okay! Now move to Design menu and start designing your world.",
-            "6": "First create tile-tool for surrounding walls of your world. You need to select type and image for tiles you create.",
-            "7": "Good, now create tile-tool for spawn area. Tiles painted with this tool are agent's spawn area.",
-            "8": "Nice! Now you need to create tile to represent your agent's goal. Think about what is your story here. Maybe treasure hunting agent trying to find chest full of gold, or agent searching for butterflies, avoiding spiders and bugs? Your world, your choises!",
-            "9": "You can make your world more interesting by creating few more props to put to your world if you want. When ready, click Next!",
-            "10": "Now it's time to build your world. You can rezise the world by clicking those buttons around your world. To modify your world, select tile tool from the list and click where you want to place it. To proceed from here, you need to add at least one Goal-tile",
-            "11": "Great! You can always come back to modify your world and choises. When you are ready with your world, move to the Reward shaping menu.",
-            "12": "Not in use",
-            "13": "Here you set the rewards, all preset rewards are already good but feel free to tune them and come back here after your agent has learned something to alter its' behaviour.",
-            "14": "Last menu! I promise! Open the Game Settings menu!",
-            "15": "In these settings you can set episode length, the maximum length of one round of your game. Also the very last thing is to give your environment an epic name! Remember, as always, you can come back later to change these too!",
-            "16": "Great! You are all set! Feel free to come back to this creative menu at any point you like. Proceed by closing Game Settings.",
-            "17": "Nice looking environment! Please proceed!",
-            "20": "Great! Lets start playing. Here are the controls. Click play to start the game.",
-            "21": "Nice! The agent has started to act on the environment. Lets' have a look how and what it observes.",
-            "22": "Okay, this is agent's observation. It is visualized for you to show what area the agent can see. Use \"step\" button to proceed step by step to see it change for few steps.",
-            "23": "Agent actully receives something else than those images. Click on the \"agent view\" button to reveal what agent actually receives.",
-            "24": "These numbers are actual numbers your agent receives. For example, you created \"Solid\" tiles and agent actually sees them as number 1, for \"Spawn\" tile, it receives number -1 and for \"Goal\" it receives number 2.",
-            "25": "Okay, so that was what agent observes. You can now start the game again and also change the game speed from the controls.",
-            "26": "Tutorial continues when you have reached few rewards. It may take some time, but if it is really hard, consider altering the environment.",
-            "27": "Great! Agent made it to the goal 10 times. Now there should be already something learned.",
-            "28": "Agent have learned from rewards that it received when reached the goal or other rewards. It links those rewards to actions it chose. Lets' have a closer look.",
-            "29": "Okay. This is visualization of agent's memory, \"Q-Table\", or in this game \"Q-map\". It stores expected value of actions for all observations it has seen.",
-            "30": "That value, \"Q-value\", is updated based on immediate reward received after selecting action and the best Q-value of next state.",
-            "31": "How again? Let's have a look. Click on the \"Inspect\" button.",
-            "32": "Nice looking environment! Please proceed!",
-            "33": "Nice looking environment! Please proceed!",
-            "34": "Nice looking environment! Please proceed!",
-            "35": "Nice looking environment! Please proceed!",
-            "38": "Here are the Curiosity, Adaptability and Foresight parameters mentioned in the inspect. You can alter learning by tuning them.",
-            "39": "There is no need to fully undestand that formula or how spesific change did affect. You can also just try and see what happens.",
-            "40": "Just few words more! This is last thing in this game. Here you can see how the learning progress.",
-            "41": "You gain score by collecting treasures, big treasures and traps. Score counts only for those episodes that end to goal state. If time runs out, score is 0.",
-            "42": "Score is totally different thing from the rewards. The score is there so you can compete with other people etc...",
-            "43": "That's it. To start this tutorial again. Go to homepage and refresh your browser. Click next to start playing."
+            "0": "Hi! And welcome to creating your own Reinforcement Learning game!",
+            "1": "In this game, you will create an agent and then an environment for it to play in!",
+            "2": "Let's start by choosing how your agent looks!",
+            "3": "Next, you need to select the observation shape.",
+            "4": "Great! You can come back and make changes later if you like. Your agent also has a few parameters that we will tune later, but let's not worry about those yet.",
+            "5": "Okay! Now it's time to work on the environment. Start by designing the tools you will use to build it.",
+            "6": "Start by creating a new tile tool for walls.",
+            "7": "Good! Now create a tile tool for the spawn area. Tiles painted with this tool will mark where the agent can spawn.",
+            "8": "Nice! Now create a tile to represent your agent's goal. Think about your story. Maybe your agent is searching for a chest full of gold, or looking for butterflies while avoiding spiders and bugs? Your world, your choice!",
+            "9": "You can make your world more interesting by creating a few more tile tools, if you like.",
+            "10": "Now it's time to build your world. Open the toolbox. To modify your world, select a tile tool from the list and click where you want to place it. To continue, you need to add at least one Goal tile.",
+            "11": "The last things to set for your game are the round length and the game name!",
+            "12": "Great! Your game is ready. You can save it from the game settings. Remember, you can always come back and change your world and choices.",
+            "13": "Next, you can change how the agent is rewarded for its actions.",
+            "14": "These are the rewards you can change. They are already set up quite well, but come back later and adjust them to change the agent's behaviour.",
+            "15": "Great! Let's start playing. This bar shows what you have collected and your current score.",
+            "16": "And here are the controls. Click Play to start the game!",
+            "17": "Nice! The agent has started to act in the environment. Let's take a look at what it observes.",
+            "18": "Okay, this is the agent's observation. It is visualized here to show what the agent can see. Use the \"Step\" button to move forward one step at a time and see how the observation changes.",
+            "19": "The agent actually receives something different from these images. Click the \"Agent View\" button to see what the agent actually receives.",
+            "20": "These are the actual numbers your agent receives. For example, you created \"Solid\" tiles, which the agent sees as number 1. For a \"Spawn\" tile, it receives number -1, and for a \"Goal\" tile, it receives number 2.",
+            "21": "Okay, so that's what the agent observes. You can now start the game again and change the game speed using the controls.",
+            "22": "The tutorial continues when you have reached the goal 10 times. This may take some time. The Fast Forward button should get you there in seconds. If reaching the goal is really difficult, try making your world easier.",
+            "23": "Great! The agent has reached the goal 10 times. It should have already learned something.",
+            "24": "The agent learns from the rewards it receives. It learns which actions are good or bad in different states. Let's take a closer look.",
+            "25": "This shows what the agent has learned so far. It keeps track of how useful different actions are in different situations.",
+            "26": "The agent updates what it has learned after each action, based on the reward it receives and what it expects to happen next.",
+            "27": "How does this work? Let's take a closer look. Click the \"Inspect\" button.",
+            "28": "Nice looking environment! Please proceed!",
+            "29": "Nice looking environment! Please proceed!",
+            "30": "Nice looking environment! Please proceed!",
+            "31": "Nice looking environment! Please proceed!",
+            "32": "Here are the Curiosity and Foresight settings mentioned in the Inspect view. You can change how the agent learns by adjusting them.",
+            "33": "You don't need to fully understand the formula or how each change affects learning. You can also just try different settings and see what happens.",
+            "34": "Just a few more things! This is the last part of the game. Here you can see how the agent's learning is progressing.",
+            "35": "You gain score by collecting treasures, big treasures, and traps. Score only counts for episodes that end at the goal. If time runs out, your score is 0.",
+            "36": "Score is completely different from rewards. Your score is used to show how well you did and to let you compete with other players.",
+            "37": "That's it! To start the tutorial again, go to the homepage and refresh your browser. Click Next to start playing."
         }
     },
     "topBar": {
@@ -434,6 +442,27 @@
             "taskScare": "Scare away the burglar",
             "title": "Tasks",
             "tutorialCompletion": "Tutorial completion"
+        }
+    },
+    "wizard": {
+        "actions": {
+            "back": "Previous",
+            "continue": "Continue"
+        },
+        "tabs": {
+            "library": "Library",
+            "emojis": "Emojis"
+        },
+        "tiles": {
+            "desc": {
+                "-1": "Spawn area. The agent can start the game from this tile.",
+                "0": "Floor with no spawning. The agent can move on these tiles, but it will not start here.",
+                "1": "Solid tiles block movement. They can be walls, trees, or anything else that blocks the way.",
+                "2": "Goal. The agent needs to reach the goal to finish the round and count the score.",
+                "6": "Treasure gives one point when the agent reaches it.",
+                "7": "Big treasure gives 2 points when the agent reaches it.",
+                "9": "Reaching this tile costs one point."
+            }
         }
     }
 }

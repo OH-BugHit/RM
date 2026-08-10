@@ -4,6 +4,13 @@
     padding-bottom: 8px;
 }
 
+.typeOption {
+    display: flex;
+    width: 80%;
+    height: 80px;
+    flex-direction: column;
+}
+
 .selectModelMessage {
     display: flex;
     flex-direction: column;

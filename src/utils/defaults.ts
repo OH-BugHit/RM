@@ -1,12 +1,16 @@
 import {
     Actions,
+    AgentCluster,
+    BuildCluster,
     Cell,
     CellType,
     ControlOptions,
     EnvSettings,
     EpisodicData,
     HUDvisibility,
+    InspectCluster,
     PropImages,
+    RewardCluster,
     StoryProgress,
     TimeStepData,
     UiHelp,
@@ -281,7 +285,7 @@ export const defaultEnvSettings: EnvSettings = {
     },
     generic: {
         env: {
-            maxTurns: 20,
+            maxTurns: 35,
             numberOfItemsToGet: 1,
             propReloadDelay1: 'unlimited',
             collectItems: undefined,
@@ -371,6 +375,7 @@ export const defaultStoryProgress: StoryProgress = {
     hud: {
         agentView: {
             steps: false,
+            opened: false,
         },
     },
 };
@@ -389,13 +394,36 @@ export const defaultHUDvis: HUDvisibility = {
     qTable: false,
     cableLeft: false,
     cableRight: false,
-    agent: false,
     envTitle: false,
     controls: false,
     alpha: false,
     gamma: false,
     epsilon: false,
     progress: false,
+    buildCluster: false,
+    inspectCluster: false,
+    rewardCluster: false,
+    agentCluster: false,
+    reward: {
+        step: false,
+        time: false,
+        props: false,
+    },
+    agent: {
+        img: false,
+        obs: false,
+        prm: false,
+    },
+    build: {
+        create: false,
+        tools: false,
+        settings: false,
+    },
+    inspect: {
+        charts: false,
+        agentVision: false,
+        qMap: false,
+    },
 };
 
 export const playStoryProgress: StoryProgress = {
@@ -433,6 +461,7 @@ export const playStoryProgress: StoryProgress = {
     hud: {
         agentView: {
             steps: true,
+            opened: false,
         },
     },
 };
@@ -444,13 +473,36 @@ export const playHudyVis: HUDvisibility = {
     qTable: false,
     cableLeft: false,
     cableRight: false,
-    agent: false,
     envTitle: true,
     controls: true,
     alpha: false,
     gamma: true,
     epsilon: true,
     progress: false,
+    buildCluster: false,
+    inspectCluster: true,
+    rewardCluster: true,
+    agentCluster: true,
+    reward: {
+        step: true,
+        time: true,
+        props: true,
+    },
+    agent: {
+        img: true,
+        obs: true,
+        prm: true,
+    },
+    build: {
+        create: false,
+        tools: false,
+        settings: false,
+    },
+    inspect: {
+        charts: true,
+        agentVision: true,
+        qMap: true,
+    },
 };
 
 export const playVisibleTiles = {
@@ -484,6 +536,30 @@ export const playControls: ControlOptions = {
     play: true,
     step: true,
     inspect: true,
+};
+
+export const defAgentContent: AgentCluster = {
+    img: false,
+    obs: false,
+    prm: false,
+};
+
+export const defBuildContent: BuildCluster = {
+    create: false,
+    tools: false,
+    settings: false,
+};
+
+export const defInspectContent: InspectCluster = {
+    charts: false,
+    agentVision: false,
+    qMap: false,
+};
+
+export const defRewardContent: RewardCluster = {
+    step: false,
+    time: false,
+    props: false,
 };
 
 export const defaultAgents = {

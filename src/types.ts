@@ -80,6 +80,7 @@ export type StoryProgress = {
     hud: {
         agentView: {
             steps: boolean;
+            opened: boolean;
         };
     };
 };
@@ -112,6 +113,40 @@ export type ControlOptions = {
     inspect: boolean;
 };
 
+export type InspectButtons = 'qMap' | 'agentVision' | 'charts';
+
+export type RewardButtons = 'step' | 'time' | 'props';
+
+export type AgentButtons = 'img' | 'obs' | 'prm';
+
+export type BuildButtons = 'create' | 'tools' | 'settings';
+
+export type BuildCluster = {
+    create: boolean;
+    tools: boolean;
+    settings: boolean;
+};
+
+export type RewardCluster = {
+    step: boolean;
+    time: boolean;
+    props: boolean;
+};
+
+export type AgentCluster = {
+    img: boolean;
+    obs: boolean;
+    prm: boolean;
+};
+
+export type InspectCluster = {
+    qMap: boolean;
+    agentVision: boolean;
+    charts: boolean;
+};
+
+export type ClusterType = 'agent' | 'reward' | 'inspect' | 'build';
+
 export type HUDvisibility = {
     text: boolean;
     charts: boolean;
@@ -119,13 +154,21 @@ export type HUDvisibility = {
     qTable: boolean;
     cableLeft: boolean;
     cableRight: boolean;
-    agent: boolean;
     envTitle: boolean;
     controls: boolean;
     alpha: boolean;
     gamma: boolean;
     epsilon: boolean;
     progress: boolean;
+
+    rewardCluster: boolean;
+    agentCluster: boolean;
+    inspectCluster: boolean;
+    buildCluster: boolean;
+    build: BuildCluster;
+    inspect: InspectCluster;
+    reward: RewardCluster;
+    agent: AgentCluster;
 };
 
 export type EdgeType = RoomType | 'lockedDoor' | 'newEdge';

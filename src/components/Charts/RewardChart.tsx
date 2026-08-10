@@ -13,13 +13,16 @@ export function RewardChart({ width, height }: ChartProps) {
     const [data] = useAtom(ChartAtom);
 
     return (
-        <>
+        <div className={style.chartContainer}>
             <LineChart
                 width={width - 70}
-                height={height - 70}
+                height={height}
                 xAxis={[{ data: data.episode, valueFormatter: (value: number) => `Episode ${value}` }]}
                 yAxis={[{ id: 'rewardAxis' }, { id: 'winAxis', min: 0, max: 1 }]}
                 slotProps={{
+                    tooltip: {
+                        sx: { zIndex: 9999 },
+                    },
                     legend: {
                         position: {
                             vertical: 'top',
@@ -29,6 +32,7 @@ export function RewardChart({ width, height }: ChartProps) {
                             paddingTop: '0.5rem',
                             fontSize: '1.5rem',
                             fontWeight: 'bold',
+                            color: 'white',
                         },
                     },
                 }}
@@ -39,6 +43,7 @@ export function RewardChart({ width, height }: ChartProps) {
                         yAxisId: 'rewardAxis',
                         showMark: false,
                         curve: 'monotoneX',
+                        color: 'blue',
                     },
                     {
                         data: data.win,
@@ -53,6 +58,6 @@ export function RewardChart({ width, height }: ChartProps) {
                 <TotalStats />
                 <TimeStepStats />
             </div>
-        </>
+        </div>
     );
 }

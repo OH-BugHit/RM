@@ -210,7 +210,6 @@ function TutorialEnvironment() {
 
     const stepUI = React.useCallback(() => {
         if (obsRef.current && agentRef.current && obsRef.current && envRef.current) {
-            console.log('epsilon', agentRef.current.epsilon);
             const prev = envRef.current.position;
             const currentObs = obsRef.current;
             const action = agentRef.current.chooseAction(currentObs);

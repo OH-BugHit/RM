@@ -1,0 +1,44 @@
+.icon {
+    overflow: visible;
+}
+
+.outer,
+.innerRim,
+.backgroundGrid,
+.foregroundGrid {
+    transition:
+        fill .2s ease,
+        stroke .2s ease,
+        stroke-opacity .2s ease,
+        opacity .2s ease,
+        filter .2s ease,
+        transform .2s ease;
+}
+
+.icon:hover .innerRim {
+    stroke: #FFFFFF;
+    stroke-opacity: .75;
+}
+
+.icon:hover .foregroundGrid {
+    filter: drop-shadow(0 0 4px rgba(234, 246, 250, .45));
+}
+
+.icon:hover .foregroundGrid rect {
+    stroke: #FFFFFF;
+}
+
+.icon:hover .backgroundGrid {
+    opacity: .65;
+}
+
+.icon:hover .outer {
+    stroke: #FFFFFF;
+    stroke-opacity: .75;
+}
+
+.outer {
+    transition:
+        stroke 180ms ease,
+        stroke-opacity 180ms ease;
+}

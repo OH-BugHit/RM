@@ -7,4 +7,9 @@
     overflow: hidden;
     border-radius: 1rem;
     display: block;
+    margin: 24px
+}
+
+.leaflet-attribution-flag {
+    width: 0;
 }

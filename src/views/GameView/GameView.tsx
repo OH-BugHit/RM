@@ -12,8 +12,6 @@ import StoryGame from '../Environments/StoryGame/StoryGame';
 import HUD from '../Xai/HUD';
 import { WorldStore } from '../../components/QTable/utils';
 import { CustomGridLayer } from '../Xai/NewQTable/TileTable/TileTable';
-import { SidePanelOpener } from '../../components/SidePanel/SidePanelOpener';
-import Overlay from '../../components/SetupOverlay/Overlay/Overlay';
 
 // React component
 function GameView() {
@@ -31,15 +29,12 @@ function GameView() {
 
     const config = { image: '/images/background/backgroundSVGanimate.svg' };
 
-    //TODO: Set settings when game is selected now they are here:
-
     const gameContent = () => {
         switch (environment.type) {
             case 'potsAndBurglar': {
                 return (
                     <AnimatePresence mode="wait">
                         <HUD
-                            mode={environment.type}
                             agentRef={agentRef}
                             lWorld={lWorld}
                             mapRef={mapRef}
@@ -73,7 +68,6 @@ function GameView() {
                             }}
                         >
                             <HUD
-                                mode={environment.type}
                                 agentRef={agentRef}
                                 lWorld={lWorld}
                                 mapRef={mapRef}
@@ -101,14 +95,12 @@ function GameView() {
 
     return (
         <>
-            <SidePanelOpener />
             <div
                 className={style.gameView}
                 style={{ ['--background-image']: `url(${config.image})` } as React.CSSProperties}
             >
                 <Bridge />
                 <div className={style.containerBox}>{gameContent()}</div>
-                <Overlay />
             </div>
         </>
     );

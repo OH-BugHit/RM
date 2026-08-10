@@ -6,6 +6,7 @@ import { ActiveAgentAtom } from '../../../../atoms/state';
 import { StoryProgressAtom } from '../../../../atoms/uiState';
 import { ObservationShape } from '../../../../types';
 import { useTranslation } from 'react-i18next';
+import Separator from '../../../../components/Separator/Separator';
 
 export default function ObservationSelector() {
     const { t } = useTranslation('', { keyPrefix: 'createMenu.agent' });
@@ -32,10 +33,7 @@ export default function ObservationSelector() {
 
     return (
         <div className={style.selectorContainer}>
-            <div className={style.textSection}>
-                <h3>{t('obsShapeTitle')}</h3>
-                <em>{t('obsShapeTitleDesc')}</em>
-            </div>
+            <h2>{t('obsShapeTitle')}</h2>
             <ul className={style.selectorItemContainer}>
                 <SelectorItem
                     title="Small"
@@ -52,6 +50,12 @@ export default function ObservationSelector() {
                         />
                     }
                 />
+                <div style={{ position: 'relative', top: '-40px' }}>
+                    <Separator
+                        vertical
+                        color="rgb(38, 114, 189)"
+                    />
+                </div>
                 <SelectorItem
                     title="Large"
                     onClick={() => {

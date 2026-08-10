@@ -16,7 +16,7 @@ export default function StateViewTypeButton({ screen, disabled = false }: StateV
     return (
         <GameButton
             title={viewType === 'sprite' ? 'Actual state' : 'Visualized state'}
-            disabled={disabled || storyDisable < 23}
+            disabled={disabled || storyDisable < 19}
             onClick={() =>
                 setStateViewType(() => {
                     if (viewType === 'sprite') return 'agent';

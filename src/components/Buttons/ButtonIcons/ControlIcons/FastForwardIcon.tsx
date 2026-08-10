@@ -102,7 +102,9 @@ export default function FastForwardIcon({ size = 64, className = '', active = fa
             {/* Glow */}
             <g className={style.glowShape}>
                 <path
+                    transform="translate(-18 -10) scale(1.18 1.10)"
                     d="
+                    
             M32 54
             Q20 54 20 68
             V188
@@ -136,6 +138,7 @@ export default function FastForwardIcon({ size = 64, className = '', active = fa
             <g filter="url(#shadow)">
                 {/* Main body */}
                 <path
+                    transform="translate(-18 -10) scale(1.18 1.10)"
                     fill="url(#gold)"
                     stroke="#5C3200"
                     strokeWidth="10"
@@ -225,15 +228,15 @@ export default function FastForwardIcon({ size = 64, className = '', active = fa
                 <g className={style.pcb}>
                     {/* Left triangle */}
 
-                    <path d="M46 84 H70" />
-                    <path d="M70 84 V104" />
-                    <path d="M70 104 H90" />
+                    <path d="M16 84 H70" />
+                    <path d="M24 84 V104" />
+                    <path d="M24 104 H80" />
 
-                    <path d="M56 128 H94" />
+                    <path d="M16 128 H80" />
 
-                    <path d="M48 166 H74" />
-                    <path d="M74 166 V148" />
-                    <path d="M74 148 H96" />
+                    <path d="M18 166 H64" />
+                    <path d="M44 166 V130" />
+                    <path d="M44 148 H80" />
 
                     {/* Right triangle */}
 
@@ -250,29 +253,29 @@ export default function FastForwardIcon({ size = 64, className = '', active = fa
                     {/* Left vias */}
 
                     <circle
-                        cx="70"
+                        cx="50"
                         cy="84"
                         r="4"
                     />
                     <circle
-                        cx="70"
+                        cx="50"
                         cy="104"
                         r="4"
                     />
 
                     <circle
-                        cx="74"
+                        cx="54"
                         cy="148"
                         r="4"
                     />
                     <circle
-                        cx="74"
+                        cx="54"
                         cy="166"
                         r="4"
                     />
 
                     <circle
-                        cx="94"
+                        cx="74"
                         cy="128"
                         r="4"
                     />

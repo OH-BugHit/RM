@@ -7,7 +7,7 @@
     border-radius: 3rem;
     padding: 28px 0 26px 0;
     overflow: hidden;
-    z-index: 20;
+    z-index: 9;
     background-image: url('/images/background/sidePanel.svg');
     background-size: cover;
     background-position: center;

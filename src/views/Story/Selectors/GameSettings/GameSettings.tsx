@@ -1,5 +1,5 @@
 import { useAtom, useSetAtom, useStore } from 'jotai';
-import style from '../style.module.css';
+import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { StoryProgressAtom } from '../../../../atoms/uiState';
 import { TextErrors } from '../../../../types';
@@ -8,6 +8,8 @@ import { TextField } from '@mui/material';
 import { ActiveEnvironmentAtom } from '../../../../atoms/state';
 import Separator from '../../../../components/Separator/Separator';
 import { EnvSettingsAtom } from '../../../../atoms/gameState';
+import SaveButton from '../../../../components/Buttons/SaveButton/SaveButton';
+import { Help } from '@genai-fi/base';
 
 export default function GameSettings() {
     const { t } = useTranslation();
@@ -78,14 +80,18 @@ export default function GameSettings() {
     };
 
     return (
-        <div className={style.selector}>
-            <div className={style.selectorContainer}>
+        <div className={style.wrapper}>
+            <div className={style.gameSettings}>
                 <h1>{t('createMenu.settings.title')}</h1>
-                <em>{t('createMenu.settings.titleDesc')}</em>
                 <Separator />
                 <div className={style.selectorContainer}>
-                    <h3>{t('createMenu.settings.episodeLength')}</h3>
-                    <em>{t('createMenu.settings.episodeLengthDesc')}</em>
+                    <Help
+                        keepOpen
+                        inplace
+                        message={t('createMenu.settings.episodeLengthDesc')}
+                    >
+                        <h3>{t('createMenu.settings.episodeLength')}</h3>
+                    </Help>
                     <br />
                     <TextField
                         label={t('createMenu.settings.lengthInputLabel')}
@@ -93,7 +99,7 @@ export default function GameSettings() {
                         slotProps={{
                             htmlInput: {
                                 min: 1,
-                                max: 100,
+                                max: 200,
                                 step: 1,
                             },
                         }}
@@ -119,8 +125,13 @@ export default function GameSettings() {
                 </div>
                 <Separator />
                 <div className={style.selectorContainer}>
-                    <h3>{t('createMenu.settings.nameTitle')}</h3>
-                    <em>{t('createMenu.settings.nameDesc')}</em>
+                    <Help
+                        keepOpen
+                        inplace
+                        message={t('createMenu.settings.nameDesc')}
+                    >
+                        <h3>{t('createMenu.settings.nameTitle')}</h3>
+                    </Help>
                     <br />
                     <TextField
                         label={t('createMenu.settings.nameInputLabel')}
@@ -145,6 +156,8 @@ export default function GameSettings() {
                     />
                 </div>
                 <Separator />
+                <h3>Save</h3>
+                <SaveButton />
             </div>
         </div>
     );

@@ -1,0 +1,160 @@
+.icon {
+    display: block;
+
+    overflow: visible;
+
+    transform-origin: center;
+
+    transition:
+        transform 220ms ease,
+        filter 220ms ease;
+}
+
+
+/* ====================================================== */
+/* BUTTON */
+/* ====================================================== */
+
+.button {
+    transition:
+        filter 220ms ease,
+        stroke-opacity 220ms ease;
+}
+
+.buttonShadow {
+    transition:
+        opacity 220ms ease;
+}
+
+
+/* ====================================================== */
+/* INNER RIM */
+/* ====================================================== */
+
+.rim {
+    transition:
+        stroke-opacity 220ms ease,
+        filter 220ms ease;
+}
+
+
+/* ====================================================== */
+/* GLOBE */
+/* ====================================================== */
+
+.globe {
+    transform-origin: 53px 55px;
+
+    transition:
+        filter 220ms ease,
+        transform 300ms ease;
+}
+
+.globeLine,
+.land {
+    transition:
+        opacity 220ms ease,
+        filter 220ms ease;
+}
+
+
+/* ====================================================== */
+/* GEAR */
+/* ====================================================== */
+
+.gear {
+    transform-origin: 91px 84px;
+
+    transition:
+        filter 220ms ease,
+        transform 350ms ease;
+}
+
+.gearInner {
+    transition:
+        filter 220ms ease,
+        stroke-opacity 220ms ease;
+}
+
+.gearHighlight {
+    transition:
+        stroke-opacity 220ms ease,
+        filter 220ms ease;
+}
+
+
+/* ====================================================== */
+/* HOVER */
+/* ====================================================== */
+
+.icon:hover {
+    transform: scale(1.025);
+
+    filter:
+        drop-shadow(0 0 5px rgba(255, 214, 208, 0.35)) drop-shadow(0 0 14px rgba(217, 74, 74, 0.25));
+}
+
+
+/* Button */
+
+.icon:hover .button {
+    filter:
+        brightness(1.05);
+}
+
+.icon:hover .buttonShadow {
+    opacity: .65;
+}
+
+
+/* Inner rim */
+
+.icon:hover .rim {
+    stroke-opacity: .65;
+
+    filter:
+        drop-shadow(0 0 4px rgba(255, 220, 215, 0.5));
+}
+
+
+/* Globe */
+
+.icon:hover .globe {
+    filter:
+        brightness(1.08) drop-shadow(0 0 5px rgba(255, 220, 215, 0.35));
+
+    transform: scale(1.015);
+}
+
+.icon:hover .globeLine {
+    opacity: .48;
+}
+
+.icon:hover .land {
+    filter:
+        brightness(1.15);
+}
+
+
+/* Gear */
+
+.icon:hover .gear {
+    filter:
+        brightness(1.12) drop-shadow(0 0 5px rgba(255, 220, 215, 0.5));
+
+    transform: rotate(8deg);
+}
+
+.icon:hover .gearInner {
+    stroke-opacity: .8;
+
+    filter:
+        drop-shadow(0 0 3px rgba(255, 220, 215, 0.45));
+}
+
+.icon:hover .gearHighlight {
+    stroke-opacity: .65;
+
+    filter:
+        drop-shadow(0 0 3px rgba(255, 230, 225, 0.5));
+}

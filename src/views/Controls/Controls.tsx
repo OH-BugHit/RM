@@ -3,11 +3,11 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { ActiveEnvironmentAtom, GameControlAtom } from '../../atoms/state';
 import GameButton from '../../components/Buttons/GameButton/GameButton';
 import { ControlEnablerAtom, InspectAtom, LodStateAtom, StoryProgressAtom } from '../../atoms/uiState';
-import PlayIcon from '../../components/Buttons/ButtonIcons/PlayIcon';
-import PauseIcon from '../../components/Buttons/ButtonIcons/PauseIcon';
-import StepIcon from '../../components/Buttons/ButtonIcons/StepIcon';
-import FastForwardIcon from '../../components/Buttons/ButtonIcons/FastForwardIcon';
-import InspectIcon from '../../components/Buttons/ButtonIcons/InspectIcon';
+import PlayIcon from '../../components/Buttons/ButtonIcons/ControlIcons/PlayIcon';
+import PauseIcon from '../../components/Buttons/ButtonIcons/ControlIcons/PauseIcon';
+import StepIcon from '../../components/Buttons/ButtonIcons/ControlIcons/StepIcon';
+import FastForwardIcon from '../../components/Buttons/ButtonIcons/ControlIcons/FastForwardIcon';
+import InspectIcon from '../../components/Buttons/ButtonIcons/ControlIcons/InspectIcon';
 let stepsTaken = 0;
 
 function Controls() {

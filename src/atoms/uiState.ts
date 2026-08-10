@@ -1,9 +1,13 @@
 import { atom } from 'jotai';
 import {
+    AgentCluster,
+    BuildCluster,
     ControlOptions,
     HUDvisibility,
+    InspectCluster,
     InspectState,
     PanelOptions,
+    RewardCluster,
     StateViewType,
     StatsContent,
     StoryProgress,
@@ -13,7 +17,16 @@ import {
     View,
     VisibleTiles,
 } from '../types';
-import { defaultHUDvis, defaultStoryProgress, defaultUIHelp, defaultVisibleTiles } from '../utils/defaults';
+import {
+    defAgentContent,
+    defaultHUDvis,
+    defaultStoryProgress,
+    defaultUIHelp,
+    defaultVisibleTiles,
+    defBuildContent,
+    defInspectContent,
+    defRewardContent,
+} from '../utils/defaults';
 import {} from 'leaflet';
 
 export const SetupVisibleAtom = atom<PanelOptions>({ visible: false, content: undefined });
@@ -47,10 +60,19 @@ export const ObsViewTypeAtom = atom<StateViewType>('sprite');
 export const QmapViewTypeAtom = atom<StateViewType>('sprite');
 export const ZoomLevelAtom = atom<number>(14);
 export const MapCenterAtom = atom<{ lat: number; lng: number }>({ lat: 0, lng: 0 });
-export const MinimizeAtom = atom<HUDvisibility>(defaultHUDvis);
 
 export const ControlEnablerAtom = atom<ControlOptions>();
 
 export const InspectAtom = atom<InspectState>({ vis: false, step: 0 });
 
 export const TopbarAtom = atom<TopBar>({ traps: 0, treasures: 0, bigTreasures: 0, score: 0, topScore: 0, toBeat: 0 });
+
+export const BuildCAtom = atom<BuildCluster>(defBuildContent);
+export const BuildSavedClustersAtom = atom<{ agent: AgentCluster; inspect: InspectCluster; reward: RewardCluster }>({
+    agent: defAgentContent,
+    inspect: defInspectContent,
+    reward: defRewardContent,
+});
+export const InspectCAtom = atom<InspectCluster>(defInspectContent);
+export const AgentCAtom = atom<AgentCluster>(defAgentContent);
+export const RewardCAtom = atom<RewardCluster>(defRewardContent);

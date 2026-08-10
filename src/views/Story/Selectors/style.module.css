@@ -15,6 +15,10 @@
     overflow: auto;
 }
 
+.title {
+    display: flex;
+    position: relative;
+}
 
 .selectorContainer {
     display: flex;
@@ -96,9 +100,9 @@ p {
     display: flex;
     flex-direction: row;
     background-color: rgb(165, 170, 174);
-    width: min-content;
     align-items: center;
-    justify-content: center;
+    overflow: visible;
+    height: 100px;
 }
 
 .icon:hover {

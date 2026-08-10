@@ -1,0 +1,38 @@
+.icon {
+    display: block;
+    overflow: visible;
+    cursor: pointer;
+}
+
+.glass {
+    stroke: url(#glass);
+    transition: stroke 180ms ease;
+}
+
+.sand {
+    fill: url(#sand);
+    transition:
+        fill 180ms ease,
+        filter 180ms ease;
+}
+
+.icon:hover .glass {
+    stroke: url(#glassHover);
+    filter: drop-shadow(0 0 2px rgba(255, 230, 120, 0.6)) brightness(1.2);
+}
+
+.icon:hover .sand {
+    fill: url(#sandHover);
+    filter: drop-shadow(0 0 2px rgba(255, 230, 120, 0.6)) brightness(1.2);
+}
+
+.icon:hover .outer {
+    stroke: #FFFFFF;
+    stroke-opacity: .75;
+}
+
+.outer {
+    transition:
+        stroke 180ms ease,
+        stroke-opacity 180ms ease;
+}

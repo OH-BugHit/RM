@@ -16,6 +16,10 @@ body {
   flex-direction: column;
   overflow: hidden;
   font-size: 1.3rem;
+  --color-pReward: rgb(250, 195, 54);
+  --color-nReward: rgb(255, 154, 154);
+  --color-backReward: rgba(42, 42, 42, 0.608);
+  --padding-reward: 4px 6px 4px 6px;
 }
 
 code {
@@ -31,6 +35,10 @@ h1 {
   font-family: 'Sour Gummy', 'Andika';
   font-weight: bold;
   font-size: 3rem;
+  margin: 0;
+}
+
+h4 {
   margin: 0;
 }
 

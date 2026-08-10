@@ -1,0 +1,57 @@
+.agentFrame {
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 42px;
+    border: 1px solid #123;
+    box-shadow: 0 4px 16px rgba(5, 5, 5, 0.5);
+    padding: 1.2rem;
+    margin: 12px
+}
+
+.agentWrapper,
+.rewardWrapper {
+    position: relative;
+    width: 220px;
+    height: 220px;
+}
+
+.agentFrame {
+    border-radius: 50%;
+    position: absolute;
+    inset: 18px;
+    width: 160px;
+    height: 160px;
+    overflow: hidden;
+    background-color: rgba(254, 255, 255, 0.448);
+}
+
+.action {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.actionPop {
+    animation: action-pop 0.25s ease-out;
+    animation-delay: 0.1s;
+}
+
+@keyframes action-pop {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+
+    60% {
+        transform: translate(-50%, -50%) scale(1.16);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}

@@ -1,0 +1,89 @@
+.icon {
+    display: block;
+    overflow: visible;
+
+    transition:
+        transform 220ms ease,
+        filter 220ms ease;
+}
+
+.rim {
+    transition:
+        stroke-opacity 220ms ease,
+        filter 220ms ease;
+}
+
+.tile {
+    transition:
+        filter 220ms ease,
+        opacity 220ms ease;
+}
+
+.landingTile {
+    transition:
+        filter 220ms ease;
+}
+
+.motion {
+    transition:
+        stroke-opacity 220ms ease,
+        filter 220ms ease;
+}
+
+/* Counter of tools */
+
+.counter {
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.pop {
+    animation: pop-anim 0.25s ease-out;
+}
+
+@keyframes pop-anim {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.8);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* HOVER */
+
+.icon:hover {
+    transform: scale(1.025);
+
+    filter:
+        drop-shadow(0 0 5px rgba(255, 214, 208, 0.35)) drop-shadow(0 0 14px rgba(217, 74, 74, 0.25));
+}
+
+.icon:hover .rim {
+    stroke-opacity: 0.65;
+
+    filter:
+        drop-shadow(0 0 4px rgba(255, 220, 215, 0.45));
+}
+
+.icon:hover .tile {
+    filter:
+        brightness(1.12) drop-shadow(0 0 4px rgba(255, 220, 215, 0.35));
+}
+
+.icon:hover .landingTile {
+    filter:
+        brightness(1.15) drop-shadow(0 0 5px rgba(255, 220, 215, 0.5));
+}
+
+.icon:hover .motion {
+    stroke-opacity: 0.7;
+
+    filter:
+        drop-shadow(0 0 3px rgba(255, 230, 225, 0.5));
+}

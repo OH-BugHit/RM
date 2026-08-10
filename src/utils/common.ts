@@ -37,8 +37,9 @@ interface DisplayRewardProps {
     show?: boolean;
 }
 export const displayReward = ({ value, show = true }: DisplayRewardProps) => {
-    if (!show) return '';
-    if (value > 0) return '💚';
-    if (value < 0) return '💔';
-    return '';
+    if (!show) return;
+    if (isNaN(value)) return;
+    if (value > 0) return value;
+    if (value < 0) return value;
+    return;
 };

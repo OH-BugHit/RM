@@ -1,0 +1,75 @@
+.icon {
+    display: block;
+    overflow: visible;
+    cursor: pointer;
+}
+
+.innerRing {
+    stroke: #FFF6E4;
+    stroke-opacity: .30;
+    transition:
+        stroke 180ms ease,
+        stroke-opacity 180ms ease;
+}
+
+.card,
+.cardBack {
+    fill: url(#card);
+    stroke: #5E7582;
+    stroke-width: 3;
+    transition:
+        fill 180ms ease,
+        filter 180ms ease;
+}
+
+.cardBack {
+    opacity: .82;
+}
+
+.question,
+.questionBack {
+    fill: url(#question);
+    font-family: "Tektur", sans-serif;
+    font-size: 37px;
+    font-weight: 700;
+    user-select: none;
+    transition:
+        fill 180ms ease,
+        opacity 180ms ease;
+}
+
+.questionBack {
+    font-size: 36px;
+    opacity: .45;
+}
+
+.icon:hover .innerRing {
+    stroke: #FFFFFF;
+    stroke-opacity: .75;
+}
+
+.icon:hover .card,
+.icon:hover .cardBack {
+    fill: url(#cardHover);
+    filter: drop-shadow(0 0 2px rgba(235, 248, 255, .45)) brightness(1.1);
+}
+
+.icon:hover .question,
+.icon:hover .questionBack {
+    fill: url(#questionHover);
+}
+
+.icon:hover .questionBack {
+    opacity: .65;
+}
+
+.icon:hover .outer {
+    stroke: #FFFFFF;
+    stroke-opacity: .75;
+}
+
+.outer {
+    transition:
+        stroke 180ms ease,
+        stroke-opacity 180ms ease;
+}

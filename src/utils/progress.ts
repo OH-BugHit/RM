@@ -26,14 +26,9 @@ export const TASK_GROUPS: TaskGroup[] = [
     {
         id: 'agent',
         title: 'story.tasks.agent.title',
-        visibleFrom: 1,
+        visibleFrom: 2,
         visibleTo: 5,
         tasks: [
-            {
-                id: 'agent-menu',
-                text: 'story.tasks.agent.openMenu',
-                field: 'agent.opened',
-            },
             {
                 id: 'agent-image',
                 text: 'story.tasks.agent.agentImage',
@@ -49,14 +44,9 @@ export const TASK_GROUPS: TaskGroup[] = [
     {
         id: 'design',
         title: 'story.tasks.design.title',
-        visibleFrom: 5,
+        visibleFrom: 6,
         visibleTo: 10,
         tasks: [
-            {
-                id: 'design-menu',
-                text: 'story.tasks.design.openMenu',
-                field: 'design.opened',
-            },
             {
                 id: 'solid',
                 text: 'story.tasks.design.solid',
@@ -72,18 +62,13 @@ export const TASK_GROUPS: TaskGroup[] = [
                 text: 'story.tasks.design.goal',
                 field: 'design.goal',
             },
-            {
-                id: 'click',
-                text: 'story.tasks.design.clickOkay',
-                field: 'design.clickOkay',
-            },
         ],
     },
     {
         id: 'environment',
         title: 'story.tasks.environment.title',
         visibleFrom: 10,
-        visibleTo: 12,
+        visibleTo: 11,
         tasks: [
             {
                 id: 'solid',
@@ -93,29 +78,11 @@ export const TASK_GROUPS: TaskGroup[] = [
         ],
     },
     {
-        id: 'rewards',
-        title: 'story.tasks.rewards.title',
-        visibleFrom: 12,
-        visibleTo: 14,
-        tasks: [
-            {
-                id: 'solid',
-                text: 'story.tasks.rewards.openMenu',
-                field: 'rewards.opened',
-            },
-        ],
-    },
-    {
         id: 'settings',
         title: 'story.tasks.settings.title',
-        visibleFrom: 14,
-        visibleTo: 17,
+        visibleFrom: 11,
+        visibleTo: 13,
         tasks: [
-            {
-                id: 'rewards-menu',
-                text: 'story.tasks.settings.openMenu',
-                field: 'settings.opened',
-            },
             {
                 id: 'rewards-envName',
                 text: 'story.tasks.settings.name',
@@ -124,10 +91,24 @@ export const TASK_GROUPS: TaskGroup[] = [
         ],
     },
     {
+        id: 'rewards',
+        title: 'story.tasks.rewards.title',
+        visibleFrom: 14,
+        visibleTo: 15,
+        tasks: [
+            {
+                id: 'solid',
+                text: 'story.tasks.rewards.openMenu',
+                field: 'rewards.opened',
+            },
+        ],
+    },
+
+    {
         id: 'observation_controls',
         title: 'story.tasks.hud.obs_controls.title',
-        visibleFrom: 19,
-        visibleTo: 25,
+        visibleFrom: 16,
+        visibleTo: 19,
         tasks: [
             {
                 id: 'controls-play',
@@ -137,7 +118,7 @@ export const TASK_GROUPS: TaskGroup[] = [
             {
                 id: 'controls-steps',
                 text: 'story.tasks.hud.obs_controls.step',
-                field: 'settings.opened',
+                field: 'hud.agentView',
             },
             {
                 id: 'obs-agent',

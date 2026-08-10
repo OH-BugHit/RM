@@ -5,9 +5,6 @@ import { StoryProgressAtom, TilePropsAtom } from '../../../../atoms/uiState';
 import PropRewardItem from './PropRewardItem';
 import { CellType, TileDefinition } from '../../../../types';
 import { useEffect } from 'react';
-import TimeStepReward from './TimeStepReward';
-import TimeUpReward from './TimeUpReward';
-import Separator from '../../../../components/Separator/Separator';
 
 export default function RewardsSelector() {
     const { t } = useTranslation('', { keyPrefix: 'createMenu.rewards' });
@@ -41,25 +38,15 @@ export default function RewardsSelector() {
     );
 
     return (
-        <div className={style.selector}>
-            <div className={style.selectorContainer}>
-                <h1>{t('title')}</h1>
-                <em>{t('titleDesc')}</em>
-                <Separator />
-                <div className={style.rowContainer}>
-                    <h3>{t('general')}</h3>
-                    <TimeStepReward />
-                    <TimeUpReward />
-                    <Separator />
-                    <h3>{t('objects')}</h3>
-                    {groups.map((tiles) => (
-                        <PropRewardItem
-                            key={tiles[0].type}
-                            tiles={tiles}
-                        />
-                    ))}
-                </div>
-                <Separator />
+        <div className={style.selectorContainer}>
+            <h3>{t('title')}</h3>
+            <div className={style.columnContent}>
+                {groups.map((tiles) => (
+                    <PropRewardItem
+                        key={tiles[0].type}
+                        tiles={tiles}
+                    />
+                ))}
             </div>
         </div>
     );

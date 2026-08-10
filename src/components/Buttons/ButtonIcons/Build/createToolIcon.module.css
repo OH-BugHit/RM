@@ -1,0 +1,89 @@
+.icon {
+    display: block;
+    overflow: visible;
+}
+
+/* Inner rim */
+
+.innerRim {
+    transition:
+        stroke-opacity 180ms ease,
+        stroke-width 180ms ease,
+        filter 180ms ease;
+}
+
+/* Tile */
+
+.tile {
+    transition:
+        filter 180ms ease,
+        stroke-opacity 180ms ease;
+}
+
+.tileSide {
+    transition:
+        filter 180ms ease;
+}
+
+.tileDetail,
+.tileHighlight {
+    transition:
+        stroke-opacity 180ms ease,
+        filter 180ms ease;
+}
+
+/* Plus */
+
+.plus {
+    transition:
+        stroke-width 180ms ease,
+        filter 180ms ease;
+}
+
+.plusHighlight {
+    transition:
+        stroke-opacity 180ms ease,
+        filter 180ms ease;
+}
+
+/* Hover */
+
+.icon:hover .innerRim {
+    stroke-opacity: 0.65;
+    stroke-width: 3;
+    filter: drop-shadow(0 0 4px #ffb8b0);
+}
+
+.icon:hover .tile {
+    filter:
+        drop-shadow(0 0 5px #ff9e96) brightness(1.12);
+    stroke-opacity: 1;
+}
+
+.icon:hover .tileSide {
+    filter: brightness(1.08);
+}
+
+.icon:hover .tileDetail {
+    stroke-opacity: 0.45;
+}
+
+.icon:hover .tileHighlight {
+    stroke-opacity: 0.55;
+    filter: drop-shadow(0 0 3px #ffd6d0);
+}
+
+.icon:hover .plus {
+    stroke-width: 10;
+    filter: drop-shadow(0 0 6px #fff0ed);
+}
+
+.icon:hover .plusHighlight {
+    stroke-opacity: 0.9;
+    filter: drop-shadow(0 0 4px #ffd6d0);
+}
+
+.icon:hover .outerRim {
+    stroke: #FFFFFF;
+    stroke-opacity: .75;
+}

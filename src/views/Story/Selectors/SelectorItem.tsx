@@ -21,7 +21,7 @@ export default function SelectorItem({
 }: SelectorItemProps) {
     return (
         <li className={style.itemContent}>
-            <h2>{title}</h2>
+            <h3>{title}</h3>
             <div className={style.selectorItemItems}>
                 <Button
                     onClick={onClick}
@@ -30,10 +30,12 @@ export default function SelectorItem({
                     style={{ flexDirection: `${columnChilds ? 'column' : 'row'}` }}
                     disabled={disabled}
                 >
-                    <img
-                        src={img}
-                        height={140}
-                    />
+                    {img && (
+                        <img
+                            src={img}
+                            height={140}
+                        />
+                    )}
                     {children}
                 </Button>
             </div>

@@ -1,0 +1,16 @@
+.positive {
+    color: var(--color-pReward);
+}
+
+.negative {
+    color: var(--color-nReward);
+}
+
+.negative,
+.positive {
+    position: absolute;
+    pointer-events: none;
+    font-size: xx-large;
+    border-radius: 999px;
+    padding: var(--padding-reward);
+}

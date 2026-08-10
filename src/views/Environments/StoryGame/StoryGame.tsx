@@ -254,7 +254,6 @@ function StoryGame({
             if (info.object !== null) {
                 switch (info.object) {
                     case 'trap': {
-                        console.log('trap!');
                         setTopBar((old) => {
                             return {
                                 ...old,

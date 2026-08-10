@@ -1,11 +1,145 @@
 .icon {
-    background: rgba(50, 249, 242, 0.48);
-    transition: all 0.2s ease;
-    border: 2px solid rgba(255, 255, 255, 0);
+    display: block;
+    overflow: visible;
+
+    transform-origin: center;
+
+    transition:
+        transform 220ms ease,
+        filter 220ms ease;
 }
 
 
+/* ====================================================== */
+/* BUTTON */
+/* ====================================================== */
+
+.button {
+    transition:
+        filter 220ms ease,
+        stroke-opacity 220ms ease;
+}
+
+.buttonShadow {
+    transition:
+        opacity 220ms ease;
+}
+
+
+/* ====================================================== */
+/* INNER RIM */
+/* ====================================================== */
+
+.rim {
+    transition:
+        stroke-opacity 220ms ease,
+        filter 220ms ease;
+}
+
+
+/* ====================================================== */
+/* DOWNLOAD SYMBOL */
+/* ====================================================== */
+
+.arrow,
+.base {
+    transform-origin: center;
+
+    transition:
+        filter 220ms ease,
+        stroke-width 220ms ease,
+        transform 260ms ease;
+}
+
+.arrowHighlight,
+.baseHighlight,
+.topShine {
+    transition:
+        stroke-opacity 220ms ease,
+        filter 220ms ease;
+}
+
+.symbolShadow {
+    transition:
+        opacity 220ms ease,
+        filter 220ms ease;
+}
+
+
+/* ====================================================== */
+/* HOVER */
+/* ====================================================== */
+
 .icon:hover {
-    scale: 1.1;
-    background: rgba(162, 255, 252, 0.48);
+    transform: scale(1.025);
+
+    filter:
+        drop-shadow(0 0 5px rgba(216, 250, 250, 0.35)) drop-shadow(0 0 14px rgba(40, 125, 140, 0.3));
+}
+
+
+/* Button */
+
+.icon:hover .button {
+    filter: brightness(1.06);
+}
+
+.icon:hover .buttonShadow {
+    opacity: .65;
+}
+
+
+/* Inner rim */
+
+.icon:hover .rim {
+    stroke-opacity: .65;
+
+    filter:
+        drop-shadow(0 0 4px rgba(216, 250, 250, 0.55));
+}
+
+
+/* Arrow */
+
+.icon:hover .arrow {
+    filter:
+        drop-shadow(0 0 5px rgba(216, 250, 250, 0.65));
+
+    transform: translateY(-2px);
+}
+
+
+/* Base */
+
+.icon:hover .base {
+    filter:
+        drop-shadow(0 0 5px rgba(216, 250, 250, 0.55));
+}
+
+
+/* Highlights */
+
+.icon:hover .arrowHighlight {
+    stroke-opacity: .7;
+
+    filter:
+        drop-shadow(0 0 3px rgba(255, 255, 255, 0.6));
+}
+
+.icon:hover .baseHighlight {
+    stroke-opacity: .6;
+
+    filter:
+        drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
+}
+
+.icon:hover .topShine {
+    stroke-opacity: .65;
+}
+
+
+/* Symbol shadow */
+
+.icon:hover .symbolShadow {
+    opacity: .6;
 }

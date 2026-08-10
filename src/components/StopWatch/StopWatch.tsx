@@ -1,5 +1,8 @@
+import style from './stopWatch.module.css';
 import { useAtomValue } from 'jotai';
 import { EnvSettingsAtom, StepsLeftAtom } from '../../atoms/gameState';
+import { GameControlAtom } from '../../atoms/state';
+import FastForwardIcon from '../Buttons/ButtonIcons/ControlIcons/FastForwardIcon';
 type StopwatchProps = {
     size?: number;
 };
@@ -7,6 +10,7 @@ type StopwatchProps = {
 export default function Stopwatch({ size = 180 }: StopwatchProps) {
     const envSettings = useAtomValue(EnvSettingsAtom);
     const stepsLeft = useAtomValue(StepsLeftAtom);
+    const gameState = useAtomValue(GameControlAtom);
 
     const maxTurns = envSettings.generic.env.maxTurns;
 
@@ -160,24 +164,24 @@ export default function Stopwatch({ size = 180 }: StopwatchProps) {
                 />
             </g>
 
-            {/* Sininen tausta */}
-            <circle
-                cx="100"
-                cy="100"
-                r={r}
-                fill="none"
-                stroke="url(#blueGradient)"
-                strokeWidth={stroke}
-                transform="rotate(-90 100 100)"
-            />
-
-            {/* Oranssi progress */}
+            {/* Orange ring */}
             <circle
                 cx="100"
                 cy="100"
                 r={r}
                 fill="none"
                 stroke="url(#orangeGradient)"
+                strokeWidth={stroke}
+                transform="rotate(-90 100 100)"
+            />
+
+            {/* Blue ring */}
+            <circle
+                cx="100"
+                cy="100"
+                r={r}
+                fill="none"
+                stroke="url(#blueGradient)"
                 strokeWidth={stroke}
                 strokeDasharray={circumference}
                 strokeDashoffset={circumference * (1 - progress)}
@@ -187,7 +191,36 @@ export default function Stopwatch({ size = 180 }: StopwatchProps) {
                 }}
             />
 
-            {/* Keskusta */}
+            {/* Fast forward overlay */}
+            {gameState.isFast && (
+                <>
+                    <circle
+                        cx="100"
+                        cy="100"
+                        r={r}
+                        fill="none"
+                        stroke="url(#orangeGradient)"
+                        strokeWidth={stroke}
+                        transform="rotate(-90 100 100)"
+                    />
+                    <circle
+                        className={style.ff}
+                        cx="100"
+                        cy="100"
+                        r={r}
+                        fill="none"
+                        stroke="url(#blueGradient)"
+                        strokeWidth={stroke}
+                        strokeDasharray={circumference}
+                        strokeDashoffset={circumference * 0.1}
+                        style={{
+                            transition: 'stroke-dashoffset 250ms linear',
+                        }}
+                    />
+                </>
+            )}
+
+            {/* Center */}
             <circle
                 cx="100"
                 cy="100"
@@ -197,19 +230,28 @@ export default function Stopwatch({ size = 180 }: StopwatchProps) {
                 strokeWidth="2"
             />
 
-            <text
-                x="100"
-                y="112"
-                textAnchor="middle"
-                fontSize="38"
-                fontWeight="900"
-                fontFamily="Verdana"
-                fill="#ffe600"
-                stroke="#444"
-                strokeWidth="1"
-            >
-                {stepsLeft}
-            </text>
+            {gameState.isFast ? (
+                <g
+                    transform="translate(74 70)"
+                    className={style.ffIcon}
+                >
+                    <FastForwardIcon size={60} />
+                </g>
+            ) : (
+                <text
+                    x="100"
+                    y="112"
+                    textAnchor="middle"
+                    fontSize="38"
+                    fontWeight="900"
+                    fontFamily="Verdana"
+                    fill="#ffe600"
+                    stroke="#444"
+                    strokeWidth="1"
+                >
+                    {stepsLeft}
+                </text>
+            )}
         </svg>
     );
 }

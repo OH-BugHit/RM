@@ -1,0 +1,232 @@
+@value primary, secondary textDark from "@genai-fi/base/css/colours.module.css";
+
+.title {
+    position: relative;
+    padding-bottom: 8px;
+    background: rgb(255, 242, 144);
+    border-top-left-radius: 2.4rem;
+    border-top-right-radius: 2.4rem;
+    overflow: hidden;
+    font-size: 2.5rem;
+}
+
+.title::before,
+.title::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 25%;
+    background: repeating-linear-gradient(-45deg,
+            #000000a1 0,
+            #000000e8 24px,
+            transparent 24px,
+            transparent 48px);
+    pointer-events: none;
+}
+
+.title::before {
+    left: 0;
+}
+
+.title::after {
+    right: 0;
+}
+
+.selectModelMessage {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.columnItem,
+.descText {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.descText {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.previewSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 120px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.02);
+    padding: 12px;
+}
+
+.previewSection h2 {
+    font-family: 'Tektur';
+    font-weight: bold;
+    font-size: 2rem;
+    margin: 0 0 1rem 0;
+}
+
+.previewSection img {
+    width: 96px;
+    height: 96px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    border-radius: 8px;
+}
+
+.emptyPreview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 96px;
+    height: 96px;
+    border-radius: 8px;
+    color: rgba(0, 0, 0, 0.55);
+    font-size: 13px;
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.enabled:hover,
+.activeType:hover {
+    scale: 1.05;
+    filter: brightness(1.1);
+    border-color: primary;
+}
+
+.types,
+.activeType {
+    position: relative;
+    overflow: hidden;
+    appearance: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: white;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition:
+        background 120ms ease,
+        border-color 120ms ease,
+        color 120ms ease;
+}
+
+.activeType {
+    border-color: rgb(37, 165, 174);
+    background: rgba(37, 119, 174, 0.08);
+    color: primary;
+    font-weight: 600;
+}
+
+.uploadSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    border: 1px dashed rgba(0, 0, 0, 0.18);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    background: rgba(0, 0, 0, 0.015);
+}
+
+.buttonGroupTile {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.buttonGroup {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.actionButton:disabled {
+    background:
+        linear-gradient(rgba(188, 188, 188, 0.381), rgba(188, 188, 188, 0.381)),
+        white;
+}
+
+.optionContainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    align-items: center;
+}
+
+.optionContainer>* {
+    flex-direction: column;
+}
+
+.types.gloss::before {
+    content: "";
+    position: absolute;
+    inset: -50%;
+
+    width: 40%;
+    left: -50%;
+
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, .5),
+            transparent);
+
+    transform: rotate(25deg);
+    animation: shine 1.5s linear infinite;
+}
+
+.tabBar {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.tab,
+.activeTab {
+    appearance: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: white;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition:
+        background 120ms ease,
+        border-color 120ms ease,
+        color 120ms ease;
+}
+
+.tab:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.activeTab {
+    border-color: rgb(174, 37, 174);
+    background: rgba(174, 37, 174, 0.08);
+    color: rgb(174, 37, 174);
+    font-weight: 600;
+}
+
+@keyframes shine {
+    from {
+        left: -50%;
+    }
+
+    to {
+        left: 150%;
+    }
+}

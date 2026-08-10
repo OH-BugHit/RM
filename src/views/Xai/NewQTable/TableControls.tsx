@@ -13,13 +13,19 @@ import { FocusOverlay } from '../../../components/QTable/FocusOverlay/FocusOverl
 
 interface TableControlsProps {
     mapRef: React.RefObject<L.Map | null>;
-    world: WorldStore;
+    lWorld: WorldStore;
     currentStateRef: React.RefObject<StateData>;
     layerRef: React.RefObject<L.GridLayer | null>;
     focusFrameRef: React.RefObject<FocusOverlay | undefined>;
 }
 
-export default function TableControls({ mapRef, world, currentStateRef, layerRef, focusFrameRef }: TableControlsProps) {
+export default function TableControls({
+    mapRef,
+    lWorld: world,
+    currentStateRef,
+    layerRef,
+    focusFrameRef,
+}: TableControlsProps) {
     const lod = useAtomValue(LodStateAtom);
     const [mapFollow, setMapFollow] = useAtom(MoveQmapAtom);
     const zoomLevel = useAtomValue(ZoomLevelAtom);

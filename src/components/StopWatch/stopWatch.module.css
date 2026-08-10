@@ -1,0 +1,33 @@
+.ff {
+    animation: ffRotate 0.25s linear infinite;
+    transform-origin: 100px 100px;
+}
+
+.ffIcon {
+    animation: ffScale 1s linear infinite;
+    transform-origin: 100px 100px;
+}
+
+@keyframes ffRotate {
+    from {
+        transform: rotate(-90deg);
+    }
+
+    to {
+        transform: rotate(270deg);
+    }
+}
+
+@keyframes ffScale {
+    0% {
+        scale: 0.9
+    }
+
+    50% {
+        scale: 1
+    }
+
+    100% {
+        scale: 0.9
+    }
+}

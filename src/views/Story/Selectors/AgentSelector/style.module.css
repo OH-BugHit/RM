@@ -1,0 +1,17 @@
+.selectorContainer {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+    width: 100%;
+}
+
+.parameters {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem
+}

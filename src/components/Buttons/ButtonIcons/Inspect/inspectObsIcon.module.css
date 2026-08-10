@@ -1,0 +1,170 @@
+.icon {
+    display: block;
+    overflow: visible;
+    transform-origin: center;
+
+    transition:
+        transform 220ms ease,
+        filter 220ms ease;
+}
+
+/* Button */
+
+.button {
+    transition:
+        filter 220ms ease;
+}
+
+.buttonShadow {
+    transition:
+        opacity 220ms ease;
+}
+
+/* Inner rim */
+
+.rim {
+    transition:
+        stroke-opacity 220ms ease,
+        filter 220ms ease;
+}
+
+/* Grid */
+
+.backgroundGrid {
+    transform-origin: 110px 110px;
+
+    transition:
+        opacity 220ms ease,
+        filter 220ms ease,
+        transform 260ms ease;
+}
+
+/* Magnifier */
+
+.magnifier {
+    transform-origin: 125px 113px;
+
+    transition:
+        transform 260ms cubic-bezier(.2, .8, .2, 1),
+        filter 220ms ease;
+}
+
+.glass {
+    transition:
+        filter 220ms ease,
+        stroke-width 220ms ease;
+}
+
+.glassInner {
+    transition:
+        fill-opacity 220ms ease,
+        stroke-opacity 220ms ease;
+}
+
+.glassHighlight,
+.handleHighlight {
+    transition:
+        stroke-opacity 220ms ease,
+        filter 220ms ease;
+}
+
+.handle {
+    transition:
+        filter 220ms ease,
+        stroke-width 220ms ease;
+}
+
+.glassShadow,
+.handleShadow {
+    transition:
+        opacity 220ms ease;
+}
+
+
+/* ================================================= */
+/* HOVER */
+/* ================================================= */
+
+.icon:hover {
+    transform: scale(1.025);
+
+    filter:
+        drop-shadow(0 0 5px rgba(233, 208, 255, .3)) drop-shadow(0 0 14px rgba(180, 107, 209, .3));
+}
+
+
+/* Button */
+
+.icon:hover .button {
+    filter: brightness(1.06);
+}
+
+.icon:hover .buttonShadow {
+    opacity: .65;
+}
+
+
+/* Inner rim */
+
+.icon:hover .rim {
+    stroke-opacity: .65;
+
+    filter:
+        drop-shadow(0 0 4px rgba(233, 208, 255, .55));
+}
+
+
+/* Grid */
+
+.icon:hover .backgroundGrid {
+    opacity: 1;
+
+    filter:
+        drop-shadow(0 0 4px rgba(224, 164, 238, .55));
+
+    transform: translate(-10px, -20px) scale(1.015);
+}
+
+.mapPanel {
+    transition:
+        filter 180ms ease,
+        stroke-opacity 180ms ease;
+}
+
+.icon:hover .mapPanel {
+    filter: brightness(1.5);
+    stroke-opacity: .9;
+}
+
+/* Magnifier */
+
+.icon:hover .magnifier {
+    transform: translate(-4px, 4px) scale(0.95);
+    filter:
+        drop-shadow(0 0 5px rgba(233, 208, 255, .55)) drop-shadow(0 0 10px rgba(180, 107, 209, .35));
+}
+
+.icon:hover .glass {
+    filter:
+        brightness(1.08) drop-shadow(0 0 4px rgba(233, 208, 255, .5));
+}
+
+.icon:hover .glassInner {
+    fill-opacity: .34;
+    stroke-opacity: .7;
+}
+
+.icon:hover .handle {
+    filter:
+        brightness(1.08) drop-shadow(0 0 4px rgba(233, 208, 255, .45));
+}
+
+.icon:hover .glassHighlight,
+.icon:hover .handleHighlight {
+    stroke-opacity: .75;
+}
+
+.icon:hover .glassShadow,
+.icon:hover .handleShadow {
+    opacity: .65;
+}

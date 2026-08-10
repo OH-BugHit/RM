@@ -1,4 +1,3 @@
-import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import React from 'react';
 import { saveAs } from 'file-saver';
 import { useTranslation } from 'react-i18next';
@@ -6,17 +5,12 @@ import { useStore } from 'jotai';
 import style from './style.module.css';
 import { IconButton } from '@mui/material';
 import { createSave } from '../../../utils/export';
+import DownloadIcon from './DownloadIcon';
 
 interface Props {
     showText?: boolean;
     disabled?: boolean;
 }
-
-const iconStyle = {
-    width: '3rem',
-    height: '3rem',
-    padding: '0.5rem',
-};
 
 function SaveButton({ showText, disabled = false }: Props) {
     const { t } = useTranslation();
@@ -32,9 +26,8 @@ function SaveButton({ showText, disabled = false }: Props) {
             onClick={() => downloadResults()}
             aria-label={t('menu.labels.save')}
             disabled={disabled}
-            className={style.icon}
         >
-            <SaveAltIcon style={iconStyle} />
+            <DownloadIcon size={110} />
             <p className={style.guidanceTitle}>{showText ? `${t('menu.labels.saveShort')}` : ''}</p>
         </IconButton>
     );

@@ -128,7 +128,7 @@ export function SidePanelOpener() {
                 mode={uiHelp.mode}
                 open={settingsMenuOpen}
                 onClick={toggleSettingsMenu}
-                saveDisabled={currentStep < 44}
+                saveDisabled={currentStep < 11}
                 main={
                     <>
                         {helperArrow.devMenu && (

@@ -108,7 +108,7 @@ export class QLearningAgent {
 
         this.visitTimes[state] = (this.visitTimes[state] || 0) + 1; // Update visited count (version count)
 
-        if (adjustment !== 0) this.markerManager?.show(state, aIdx, adjustment >= 0 ? 'positive' : 'negative', move);
+        if (adjustment !== 0) this.markerManager?.showReward(state, aIdx, adjustment / this.alpha, move);
     }
 
     getCurrentState() {

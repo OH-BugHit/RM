@@ -8,6 +8,13 @@ import { theme } from '@genai-fi/base';
 
 const spoofTheme = createTheme(theme, {
     components: {
+        MuiPopper: {
+            styleOverrides: {
+                root: {
+                    zIndex: '3000 !important',
+                },
+            },
+        },
         MuiInputLabel: {
             styleOverrides: {
                 root: {

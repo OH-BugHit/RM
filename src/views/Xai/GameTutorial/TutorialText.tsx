@@ -25,6 +25,7 @@ export default function TutorialText() {
                             angle={270}
                         />
                     )}
+                    {statsContent.phase}
                     <p className={style.storyText}>
                         <TypewriterText
                             startDelay={statsContent.phase < 1 ? 600 : 200}

@@ -107,20 +107,23 @@ function PotsAndBurglarGame({
     const lossesRef = useRef(0);
 
     useEffect(() => {
-        setHud({
-            charts: true,
-            agentVision: true,
-            qTable: true,
-            cableLeft: true,
-            cableRight: true,
-            envTitle: true,
-            controls: true,
-            agent: true,
-            text: true,
-            alpha: true,
-            gamma: true,
-            epsilon: true,
-            progress: false,
+        setHud((old) => {
+            return {
+                ...old,
+                charts: true,
+                agentVision: true,
+                qTable: true,
+                cableLeft: true,
+                cableRight: true,
+                envTitle: true,
+                controls: true,
+                agentCluster: true,
+                text: true,
+                alpha: true,
+                gamma: true,
+                epsilon: true,
+                progress: false,
+            };
         });
         setStatsContent((old) => {
             return {

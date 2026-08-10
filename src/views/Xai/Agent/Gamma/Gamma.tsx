@@ -5,9 +5,8 @@ import { ActiveAgentAtom, AgentSettingsAtom } from '../../../../atoms/state';
 import StraightIcon from '@mui/icons-material/Straight';
 import RouteIcon from '@mui/icons-material/Route';
 import { useTranslation } from 'react-i18next';
-import Foresight from '../../../../components/Foresight/Foresight';
-import { TilePropsAtom } from '../../../../atoms/uiState';
-import { CellType } from '../../../../types';
+import Foresight from '../../../../components/AgentTuners/Foresight/Foresight';
+import { Help } from '@genai-fi/base';
 
 /**
  * Gamma gauge was:
@@ -17,18 +16,37 @@ import { CellType } from '../../../../types';
                 yellow={{ from: 0.15, to: 1 }}
                 red={{ from: 0, to: 1 }}
  */
+const gradient = `
+linear-gradient(
+    to right,
+    #d32f2f 0%,
+    #d32f2f 15%,
+    #ffc354 20%,
+    #ffc354 60%,
+    #2e7d32 85%,
+    #2e7d32 90%,
+    #ffc354 95%,
+    #ffc354 100%
+)
+`;
 
 export default function Gamma() {
     const { t } = useTranslation();
     const [agentSettings, setAgentSettings] = useAtom(AgentSettingsAtom);
-    const tooltiles = useAtomValue(TilePropsAtom);
-    const treasure = tooltiles.find((tile) => tile.type === CellType.Treasure);
-    const trap = tooltiles.find((tile) => tile.type === CellType.Trap);
-    const big = tooltiles.find((tile) => tile.type === CellType.TreasureBig);
     const agent = useAtomValue(ActiveAgentAtom);
     return (
         <div>
-            <h3>{t('gauge.title.gamma')}</h3>
+            <h3 style={{ position: 'relative', display: 'flex', justifyContent: 'center', left: 10 }}>
+                <span>
+                    <Help
+                        inplace
+                        keepOpen
+                        message={t('help.hud.gamma')}
+                    >
+                        {t('gauge.title.gamma')}
+                    </Help>
+                </span>
+            </h3>
             <div className={style.sightWrapper}>
                 <Foresight value={agentSettings.gamma} />
                 {agent.img && (
@@ -36,34 +54,14 @@ export default function Gamma() {
                         className={style.agent}
                         src={agent.img}
                         width={34}
+                        height={40}
                     />
                 )}
-                {treasure && (
-                    <img
-                        className={style.treasure}
-                        src={treasure.image}
-                        width={34}
-                    />
-                )}
-                {trap && (
-                    <img
-                        className={style.trap}
-                        src={trap.image}
-                        width={34}
-                    />
-                )}
-                {big && (
-                    <img
-                        className={style.big}
-                        src={big.image}
-                        width={34}
-                    />
-                )}
-                <img
-                    className={style.goal}
-                    src={tooltiles[2].image}
-                    width={34}
-                />
+                <b className={style.treasure}>+2</b>
+                <b className={style.trap}>-1</b>
+                <b className={style.trap2}>-1</b>
+                <b className={style.trap3}>-5</b>
+                <b className={style.goal}>+10</b>
             </div>
             <div className={style.epsilonSlider}>
                 <Tooltip
@@ -78,7 +76,39 @@ export default function Gamma() {
                 <Slider
                     min={0}
                     max={1}
-                    step={0.01}
+                    sx={{
+                        '& .MuiSlider-rail': {
+                            opacity: 1,
+                            background: gradient,
+                            height: '6px',
+                            borderRadius: '9px',
+                        },
+
+                        '& .MuiSlider-track': {
+                            background: 'transparent',
+                            border: 'none',
+                        },
+                        '& .MuiSlider-thumb': {
+                            width: 24,
+                            height: 24,
+                            background: 'linear-gradient(180deg, #fff8c5 0%, #ffd54f 45%, #c98b00 100%)',
+                            border: '2px solid rgb(161, 25, 7)',
+                            boxShadow: '0 2px 6px rgba(0,0,0,.35)',
+                            position: 'relative',
+
+                            '&::after': {
+                                content: '""',
+                                position: 'absolute',
+                                left: 3,
+                                right: 3,
+                                top: 3,
+                                height: '35%',
+                                borderRadius: '50%',
+                                background: 'rgba(255,255,255,.45)',
+                            },
+                        },
+                    }}
+                    step={0.05}
                     valueLabelDisplay="auto"
                     value={agentSettings.gamma}
                     onChange={(_, value) => {

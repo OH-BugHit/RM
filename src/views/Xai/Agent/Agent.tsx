@@ -2,21 +2,26 @@ import style from './style.module.css';
 import { useAtomValue } from 'jotai';
 import { ActiveAgentAtom } from '../../../atoms/state';
 import { HUDvisAtom } from '../../../atoms/uiState';
-import { NewFrame } from '../../Frames/NewFrame';
+import AgentIcon from '../../../components/Buttons/ButtonIcons/Agent/AgentIcon';
 
 export default function Agent() {
     const agent = useAtomValue(ActiveAgentAtom);
     const vis = useAtomValue(HUDvisAtom);
     return (
-        <>
-            <NewFrame visible={vis.agent}>
-                <h3 style={{ margin: '0.5rem' }}>{agent.name}</h3>
-                <img
-                    src={agent.img}
-                    height={160}
-                    className={style.flipped}
-                />
-            </NewFrame>
-        </>
+        <div className={style.agentImg}>
+            {vis.agent && (
+                <>
+                    {agent.img ? (
+                        <img
+                            src={agent.img}
+                            style={{ marginTop: '16px' }}
+                            height={140}
+                        />
+                    ) : (
+                        <AgentIcon size={160} />
+                    )}
+                </>
+            )}
+        </div>
     );
 }

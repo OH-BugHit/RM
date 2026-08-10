@@ -1,0 +1,25 @@
+.icon {
+    overflow: visible;
+}
+
+.icon path,
+.icon circle {
+    transition:
+        opacity .25s ease,
+        fill .25s ease,
+        stroke .25s ease,
+        filter .25s ease;
+}
+
+.icon:hover path {
+    stroke: #5EDBFF;
+}
+
+.icon:hover circle {
+    fill: #5EDBFF;
+    stroke: #1D5FAF;
+}
+
+.icon:hover g[filter] {
+    opacity: .28;
+}

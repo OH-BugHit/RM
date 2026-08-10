@@ -51,7 +51,8 @@
 .storyText {
     align-self: center;
     height: 100%;
-    width: 90%;
+    overflow-wrap: normal;
+    white-space: normal;
 }
 
 .error {

@@ -7,3 +7,58 @@
 h3 {
     margin: 0 0 0.2rem 0
 }
+
+.sightWrapper {
+    position: relative;
+    font-family: 'Chakra Petch';
+    font-weight: 400;
+}
+
+.treasure,
+.treasure2,
+.goal,
+.trap,
+.big {
+    position: absolute;
+    color: var(--color-pReward);
+    background-color: var(--color-backReward);
+    border-radius: 9999px;
+    padding: 2px 6px 2px 6px;
+}
+
+.agent {
+    position: absolute;
+}
+
+.goal {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0%
+}
+
+.treasure2 {
+    left: 8%;
+    top: 30%
+}
+
+.treasure {
+    right: 4%;
+    top: 63%;
+}
+
+.trap {
+    right: 8%;
+    top: 30%;
+    color: var(--color-nReward);
+}
+
+.big {
+    left: 3%;
+    top: 62%
+}
+
+.agent {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+}

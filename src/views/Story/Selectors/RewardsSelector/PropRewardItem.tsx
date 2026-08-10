@@ -1,6 +1,6 @@
 import style from './style.module.css';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import HeartBrokenIcon from '@mui/icons-material/HeartBroken';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
 import { CellType, GenericReward, TileDefinition } from '../../../../types';
 import RewardControl from '../../../Controls/RewardControl';
 import { useAtom } from 'jotai';
@@ -49,7 +49,7 @@ export default function PropRewardItem({ tiles }: PropRewardProps) {
 
     return (
         <div className={style.rewardTuneRow}>
-            <h3>{t(`common.cell.${type}`)}</h3>
+            <h4>{t(`common.cell.${type}`)}</h4>
             <div className={style.reward}>
                 {tiles.map((tile) => (
                     <div
@@ -59,14 +59,14 @@ export default function PropRewardItem({ tiles }: PropRewardProps) {
                         <img
                             key={tile.id}
                             src={tile.image}
-                            width={64}
+                            width={48}
                         />
                     </div>
                 ))}
             </div>
 
             <div className={style.rewardRow}>
-                <HeartBrokenIcon
+                <RemoveIcon
                     color="error"
                     fontSize="large"
                 />
@@ -79,8 +79,8 @@ export default function PropRewardItem({ tiles }: PropRewardProps) {
                     onChange={updateReward}
                 />
 
-                <FavoriteIcon
-                    color="success"
+                <AddIcon
+                    color="primary"
                     fontSize="large"
                 />
             </div>

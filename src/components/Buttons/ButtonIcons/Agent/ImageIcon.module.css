@@ -1,0 +1,35 @@
+.icon {
+    overflow: visible;
+}
+
+.outer,
+.innerRim,
+.frame,
+.sun,
+.mountains,
+.horizon,
+.corner {
+    transition:
+        fill .2s ease,
+        stroke .2s ease,
+        stroke-opacity .2s ease,
+        opacity .2s ease,
+        filter .2s ease;
+}
+
+.icon:hover .outer {
+    stroke: #FFFFFF;
+    stroke-opacity: .75;
+}
+
+.icon:hover .frame {
+    fill: #6F95A3;
+    stroke: #FFFFFF;
+    filter: drop-shadow(0 0 4px rgba(234, 246, 250, .45));
+}
+
+.outer {
+    transition:
+        stroke 180ms ease,
+        stroke-opacity 180ms ease;
+}

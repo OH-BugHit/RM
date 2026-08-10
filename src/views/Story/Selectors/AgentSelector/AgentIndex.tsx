@@ -2,19 +2,16 @@ import style from '../style.module.css';
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
 import Separator from '../../../../components/Separator/Separator';
-import { useAtom, useSetAtom, useStore } from 'jotai';
-import { ActiveAgentAtom, ImportedAgentImgAtom } from '../../../../atoms/state';
+import { useAtom, useAtomValue, useStore } from 'jotai';
+import { ActiveAgentAtom } from '../../../../atoms/state';
 import AgentSelector from './AgentSelector';
 import ObservationSelector from './ObservationSelector';
 import { StoryProgressAtom } from '../../../../atoms/uiState';
-import ImportDialog from '../../../../components/ImportDialog/ImportDialog';
-import { preprocessImageWScale } from '../../../../utils/import';
 
 export default function AgentIndex() {
     const { t } = useTranslation();
     const [storyProgress, setStoryProgress] = useAtom(StoryProgressAtom);
-    const [selectedAgent, setActiveAgent] = useAtom(ActiveAgentAtom);
-    const setImportedImg = useSetAtom(ImportedAgentImgAtom);
+    const selectedAgent = useAtomValue(ActiveAgentAtom);
     const store = useStore();
 
     useEffect(() => {
@@ -57,17 +54,7 @@ export default function AgentIndex() {
             <div className={style.selectorContainer}>
                 <h1>{t('createMenu.agent.title')}</h1>
                 <em>{t('createMenu.agent.titleDesc')}</em>
-                <ImportDialog
-                    preprocess={preprocessImageWScale}
-                    onSelect={(image) => {
-                        setActiveAgent((old) => ({
-                            ...old,
-                            type: 'created',
-                            img: image,
-                        }));
-                        setImportedImg(image);
-                    }}
-                />
+
                 <Separator />
                 <AgentSelector />
                 {storyProgress.agent.img && (

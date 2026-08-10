@@ -1,0 +1,131 @@
+@value bgSubdued1, textDark, primary, secondary, workspaceBg, textDark from "@genai-fi/base/css/colours.module.css";
+
+.wizard {
+    width: 800px;
+    height: 1000px;
+    padding: 24px;
+    background: rgba(255, 234, 214, 0.26);
+    color: textDark;
+    position: relative;
+    box-sizing: border-box;
+    align-content: center;
+}
+
+.wizardClosed {
+    composes: wizard;
+    background: white;
+    border: 6px solid white;
+    box-sizing: border-box;
+}
+
+.plainwizard {
+    composes: wizard;
+    background: none;
+    border: none;
+}
+
+.plainwizardClosed {
+    composes: plainwizard;
+    border: none;
+}
+
+.wizard h2 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 1rem;
+}
+
+.wizardInner {
+    width: calc(100% - 24px);
+    height: calc(100% - 24px);
+    margin: 0 auto;
+    overflow: hidden;
+    background: white;
+    border-radius: 2.2rem 2.2rem 1.2rem 1.2rem;
+}
+
+.wizardStartPage span {
+    font-size: 0.8rem;
+}
+
+.wizardPage {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+.wizardControls {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0.5rem;
+    padding: 1rem;
+    align-items: center;
+    animation-name: fadein;
+    animation-duration: 0.4s;
+    animation-iteration-count: 1;
+}
+
+.wizardControlsLeft {
+    justify-self: start;
+}
+
+.wizardControlsCenter {
+    justify-self: center;
+}
+
+.wizardControlsRight {
+    justify-self: end;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.wizardLabelContainer {
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    background: white;
+    gap: 0.2rem;
+    box-shadow: 0 0 5px #aaa;
+}
+
+.wizardLabelDisabled {
+    composes: wizardLabelContainer;
+    opacity: 0.6;
+}
+
+.wizardLabel {
+    font-size: 1rem;
+    color: black;
+}
+
+.wizardLabelSelect {
+    composes: wizardLabel;
+    font-weight: bold;
+}
+
+.wizardLabelDesc {
+    font-size: 0.8rem;
+}
+
+.wizardLabelGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.tabBar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}

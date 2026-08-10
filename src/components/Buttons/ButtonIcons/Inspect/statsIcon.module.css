@@ -1,0 +1,105 @@
+.icon {
+    display: block;
+    overflow: visible;
+}
+
+.innerRim {
+    transition:
+        stroke-opacity 180ms ease,
+        stroke-width 180ms ease,
+        filter 180ms ease;
+}
+
+.grid path {
+    fill: none;
+    stroke: #f0dfff;
+    stroke-opacity: 0.16;
+    stroke-width: 2;
+
+    transition:
+        stroke-opacity 180ms ease,
+        stroke-width 180ms ease;
+}
+
+.axes path {
+    fill: none;
+    stroke: #f0dfff;
+    stroke-opacity: 0.7;
+    stroke-width: 3;
+    stroke-linecap: round;
+
+    transition:
+        stroke-opacity 180ms ease,
+        stroke-width 180ms ease,
+        filter 180ms ease;
+}
+
+.graphShadow {
+    fill: none;
+    stroke: #291334;
+    stroke-width: 10;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    transition:
+        stroke-width 180ms ease,
+        filter 180ms ease;
+}
+
+.graph {
+    fill: none;
+    stroke: url(#stats-line);
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    transition:
+        stroke-width 180ms ease,
+        filter 180ms ease;
+}
+
+.points circle {
+    fill: #f0dfff;
+    stroke: #5b2875;
+    stroke-width: 3;
+
+    transition:
+        r 180ms ease,
+        filter 180ms ease;
+}
+
+.icon:hover .innerRim {
+    stroke-opacity: 0.65;
+    stroke-width: 3;
+    filter: drop-shadow(0 0 4px #d9a7ea);
+}
+
+.icon:hover .grid path {
+    stroke-opacity: 0.32;
+    stroke-width: 2.5;
+}
+
+.icon:hover .axes path {
+    stroke-opacity: 1;
+    stroke-width: 3.5;
+    filter: drop-shadow(0 0 3px #d9a7ea);
+}
+
+.icon:hover .graphShadow {
+    stroke-width: 12;
+    filter: drop-shadow(0 0 4px #5b2875);
+}
+
+.icon:hover .graph {
+    stroke-width: 7;
+    filter: drop-shadow(0 0 5px #d9a7ea);
+}
+
+.icon:hover .points circle {
+    filter: drop-shadow(0 0 4px #f0dfff);
+}
+
+.icon:hover .outerRim {
+    stroke: #FFFFFF;
+    stroke-opacity: .75;
+}

@@ -4,7 +4,7 @@
     flex-direction: column;
     top: 40px;
     right: 1rem;
-    z-index: 100;
+    z-index: 5;
     pointer-events: auto;
     height: 100%;
     width: 90px;
@@ -22,7 +22,7 @@
 
 .button {
     right: 0;
-    z-index: 100;
+    z-index: 5;
     pointer-events: auto;
 }
 
@@ -46,7 +46,7 @@
     flex-direction: column;
     align-items: center;
     gap: .5rem;
-    z-index: 100;
+    z-index: 5;
 }
 
 .list {
@@ -97,7 +97,7 @@
     justify-content: center;
     gap: 4%;
 
-    z-index: 100;
+    z-index: 5;
     pointer-events: none;
 }
 
@@ -109,7 +109,7 @@
     max-height: 75vh;
     width: max-content;
     align-content: flex-end;
-    z-index: 100;
+    z-index: 5;
     pointer-events: none;
     overflow: visible;
     align-items: self-end;
@@ -126,5 +126,5 @@
     inset: 0;
     background: rgba(255, 255, 255, 0.48);
     transform-origin: bottom center;
-    z-index: 9999999999;
+    z-index: 9;
 }

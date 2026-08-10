@@ -1,24 +1,49 @@
 import style from '../style.module.css';
 import SelectorItem from '../SelectorItem';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { ActiveAgentAtom, ImportedAgentImgAtom } from '../../../../atoms/state';
-import { ActiveViewAtom } from '../../../../atoms/uiState';
+import { ActiveViewAtom, StoryProgressAtom } from '../../../../atoms/uiState';
 
 import { defaultAgents } from '../../../../utils/defaults';
 import { useTranslation } from 'react-i18next';
+import ImportDialog from '../../../../components/ImportDialog/ImportDialog';
+import { preprocessImageWScale } from '../../../../utils/import';
+import { useEffect } from 'react';
 
 export default function AgentSelector() {
     const { t } = useTranslation('', { keyPrefix: 'createMenu.agent' });
     const setActiveAgent = useSetAtom(ActiveAgentAtom);
     const setActiveView = useSetAtom(ActiveViewAtom);
     const [selectedAgent, setSelectedAgent] = useAtom(ActiveAgentAtom);
-    const importedImg = useAtomValue(ImportedAgentImgAtom);
+    const [importedImg, setImportedImg] = useAtom(ImportedAgentImgAtom);
+    const setStoryProgress = useSetAtom(StoryProgressAtom);
+
+    useEffect(() => {
+        if (selectedAgent.img) {
+            setStoryProgress((old) => {
+                return {
+                    ...old,
+                    agent: { ...old.agent, img: true },
+                };
+            });
+        }
+    }, [setStoryProgress, selectedAgent]);
 
     return (
         <div className={style.selectorContainer}>
+            <ImportDialog
+                preprocess={preprocessImageWScale}
+                onSelect={(image) => {
+                    setActiveAgent((old) => ({
+                        ...old,
+                        type: 'created',
+                        img: image,
+                    }));
+                    setImportedImg(image);
+                }}
+            />
             <div className={style.textSection}>
-                <h3>{t('imgTitle')}</h3>
-                <em>{t('imgDesc')}</em>
+                <h2>{t('imgTitle')}</h2>
             </div>
             <ul className={style.selectorItemContainer}>
                 <SelectorItem

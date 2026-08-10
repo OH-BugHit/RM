@@ -82,7 +82,7 @@ export default function Progress() {
             <b>{t(`progress.title.total`)}</b>
             <PercentageBar
                 colour="blue"
-                value={(phase / 43) * 100}
+                value={(phase / 42) * 100}
                 style={{ borderRadius: '0.5rem', marginBottom: '0.5rem' }}
             />
         </motion.div>

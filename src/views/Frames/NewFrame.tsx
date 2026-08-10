@@ -3,6 +3,7 @@ import { AnimatePresence, motion, Variants } from 'framer-motion';
 
 interface FrameProps {
     children: React.ReactNode;
+    title?: string;
     minWidth?: number | string;
     minHeight?: number | string;
     maxWidth?: number | string;
@@ -12,7 +13,7 @@ interface FrameProps {
     overlayLeft?: React.ReactNode;
     overlayRight?: React.ReactNode;
     overlayRightTop?: React.ReactNode;
-    variant?: 'game' | 'tutorial';
+    variant?: 'game' | 'tutorial' | 'blob';
     position?: Pick<React.CSSProperties, 'top' | 'right' | 'bottom' | 'left'>;
     centerX?: number;
     centerY?: number;
@@ -44,6 +45,7 @@ const minimizeVariants: Variants = {
 
 export function NewFrame({
     children,
+    title,
     visible = true,
     minWidth,
     minHeight,
@@ -64,7 +66,7 @@ export function NewFrame({
         minHeight,
         maxWidth,
         maxHeight,
-
+        background: 'rgb(245, 255, 253)',
         ...(position && {
             position: 'absolute',
             ...position,
@@ -75,17 +77,21 @@ export function NewFrame({
         <AnimatePresence mode="popLayout">
             {visible && (
                 <motion.div
-                    className={`${style.frame} ${variant === 'tutorial' ? style.tutorial : ''}`}
-                    style={{
-                        ...styleProps,
-                        ...position,
-                    }}
+                    className={`${style.frame} ${variant === 'tutorial' ? style.tutorial : variant === 'blob' ? style.blob : ''}`}
+                    style={
+                        variant !== 'blob'
+                            ? {
+                                  ...styleProps,
+                                  ...position,
+                              }
+                            : { ...position }
+                    }
                     initial={{
-                        height: 0,
+                        scale: 0.95,
                         opacity: 0,
                     }}
                     animate={{
-                        height: '',
+                        scale: 1,
                         opacity: 1,
 
                         top: position?.top,
@@ -98,7 +104,6 @@ export function NewFrame({
                     }}
                     exit={{
                         overflow: 'hidden',
-                        height: 0,
                         opacity: 0,
                     }}
                     transition={{
@@ -106,9 +111,22 @@ export function NewFrame({
                         ease: 'easeInOut',
                     }}
                 >
-                    {overlayRight && !minimize && <div className={style.overlayRight}>{overlayRight}</div>}
-                    {overlayLeft && !minimize && <div className={style.overlayLeft}>{overlayLeft}</div>}
-                    {overlayRightTop && <div className={style.overlayRightTop}>{overlayRightTop}</div>}
+                    {overlayRight && !minimize && (
+                        <div className={`${style.overlayRight} ${variant === 'blob' ? style.blobOverlayRight : ''}`}>
+                            {overlayRight}
+                        </div>
+                    )}
+                    {overlayLeft && !minimize && (
+                        <div className={`${style.overlayLeft} ${variant === 'blob' ? style.blobOverlayLeft : ''}`}>
+                            {overlayLeft}
+                        </div>
+                    )}
+                    {overlayRightTop && (
+                        <div className={`${style.overlayRightTop} ${minimize ? style.minRT : ''}`}>
+                            {overlayRightTop}
+                        </div>
+                    )}
+                    {minimize && <h4 className={style.minTitle}>{title}</h4>}
                     <motion.div
                         className={style.content}
                         variants={minimizeVariants}

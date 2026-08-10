@@ -9,6 +9,8 @@ import {
     ControlEnablerAtom,
     ObsViewTypeAtom,
     LodStateAtom,
+    AgentCAtom,
+    BuildCAtom,
 } from '../../atoms/uiState';
 import { useEffect } from 'react';
 import { GameControlAtom } from '../../atoms/state';
@@ -18,7 +20,7 @@ export default function StoryProgress() {
     const [step, setStep] = useAtom(StoryStepAtom);
     const setHud = useSetAtom(HUDvisAtom);
     const setTextContent = useSetAtom(StatsContentAtom);
-    const progress = useAtomValue(StoryProgressAtom);
+    const [progress, setProgress] = useAtom(StoryProgressAtom);
     const setVisibleTiles = useSetAtom(TileVisibilityAtom);
     const setUIHelper = useSetAtom(UiHelpAtom);
     const setControls = useSetAtom(ControlEnablerAtom);
@@ -26,51 +28,45 @@ export default function StoryProgress() {
     const obsViewType = useAtomValue(ObsViewTypeAtom);
     const gameData = useAtomValue(EpisodicDataAtom);
     const setLod = useSetAtom(LodStateAtom);
+    const setAgentCluster = useSetAtom(AgentCAtom);
+    const setBuildCluster = useSetAtom(BuildCAtom);
+    //const setInspecCluster = useSetAtom(InspectCAtom);
+    //const setRewardCluster = useSetAtom(RewardCAtom) progress.design.tools
 
     useEffect(() => {
-        if (step > 26) return;
+        if (step > 22) return;
         if (gameData?.triggered && gameData.triggered > 10) {
-            setStep(27);
-            return;
-        }
-        if (progress.hud.agentView.steps && controlState.isRunning) {
-            setStep(26);
-            return;
-        }
-        if (step > 23) return;
-        if (obsViewType === 'agent') {
-            setStep(24);
-            return;
-        }
-        if (progress.hud.agentView.steps) {
             setStep(23);
             return;
         }
-        if (step > 20) return;
-        if (controlState.isRunning) {
-            setStep(21);
+        if (progress.hud.agentView.steps && controlState.isRunning) {
+            setStep(22);
+            return;
+        }
+        if (step > 19) return;
+        if (obsViewType === 'agent') {
+            setStep(20);
+            return;
+        }
+        if (progress.hud.agentView.steps) {
+            setStep(19);
+            return;
+        }
+        if (progress.hud.agentView.opened) {
+            setStep(18);
             return;
         }
         if (step > 16) return;
-        if (progress.settings.closed) {
+        if (controlState.isRunning) {
             setStep(17);
             return;
         }
+        if (step > 11) return;
         if (progress.environment.name) {
-            setStep(16);
-            return;
-        }
-        if (progress.settings.opened) {
-            setStep(15);
-            return;
-        }
-        if (step > 12) return;
-        if (progress.rewards.opened) {
-            setStep(13);
-            return;
-        }
-        if (progress.design.closed) {
             setStep(12);
+            return;
+        }
+        if (step > 10) {
             return;
         }
         if (progress.environment.goalSet) {
@@ -98,23 +94,17 @@ export default function StoryProgress() {
             return;
         }
 
-        if (progress.design.opened) {
-            setStep(6);
-            return;
-        }
-
-        if (progress.agent.closed) {
-            setStep(5);
+        if (step > 3) {
             return;
         }
 
         if (progress.agent.obsShape) {
-            setStep(4); // Step 3 was the agent name and is removed
+            setStep(4);
             return;
         }
 
         if (progress.agent.img) {
-            setStep(2);
+            setStep(3);
             return;
         }
     }, [progress, setStep, step, controlState, obsViewType, gameData]);
@@ -131,23 +121,33 @@ export default function StoryProgress() {
                 });
                 break;
             }
-            case 1: {
+            case 2: {
                 setTextContent({ mode: 'text', phase: step });
+                setHud((old) => {
+                    return {
+                        ...old,
+                        agentCluster: true,
+                        agent: {
+                            img: true,
+                            prm: false,
+                            obs: false,
+                        },
+                    };
+                });
                 setUIHelper((old) => {
                     return {
                         ...old,
+                        agent: {
+                            img: true,
+                            prm: false,
+                            obs: false,
+                        },
                         textArrow: false,
-                        sideOpener: 'agent',
-                        hideSideOpener: false,
-                        devMenu: true,
                     };
                 });
                 break;
             }
-            case 2: {
-                setHud((old) => {
-                    return { ...old, agent: true };
-                });
+            case 3: {
                 setVisibleTiles((old) => {
                     return {
                         ...old,
@@ -155,29 +155,62 @@ export default function StoryProgress() {
                         outside: true,
                     };
                 });
+                setHud((old) => {
+                    return {
+                        ...old,
+                        agentCluster: true,
+                        agent: {
+                            img: true,
+                            prm: false,
+                            obs: true,
+                        },
+                    };
+                });
+                setUIHelper((old) => {
+                    return {
+                        ...old,
+                        agent: {
+                            img: false,
+                            prm: false,
+                            obs: true,
+                        },
+                    };
+                });
                 break;
             }
             case 4: {
+                setTextContent({ mode: 'textNext', phase: step });
                 setUIHelper((old) => {
                     return {
                         ...old,
-                        creativeClose: true,
+                        agent: {
+                            img: false,
+                            prm: false,
+                            obs: false,
+                        },
                     };
                 });
                 break;
             }
+
             case 5: {
-                setUIHelper((old) => {
-                    return {
-                        ...old,
-                        creativeClose: false,
-                        designMenu: true,
-                        sideOpener: 'design',
-                    };
-                });
+                setAgentCluster({ obs: false, img: false, prm: false });
                 break;
             }
+
             case 6: {
+                setTextContent({ mode: 'text', phase: step });
+                setHud((old) => {
+                    return {
+                        ...old,
+                        buildCluster: true,
+                        build: {
+                            create: true,
+                            tools: false,
+                            settings: false,
+                        },
+                    };
+                });
                 setUIHelper((old) => {
                     return {
                         ...old,
@@ -190,6 +223,16 @@ export default function StoryProgress() {
                 break;
             }
             case 7: {
+                setHud((old) => {
+                    return {
+                        ...old,
+                        build: {
+                            create: true,
+                            tools: true,
+                            settings: false,
+                        },
+                    };
+                });
                 setVisibleTiles((old) => {
                     return {
                         ...old,
@@ -219,6 +262,23 @@ export default function StoryProgress() {
                 break;
             }
             case 10: {
+                setBuildCluster((old) => {
+                    return {
+                        ...old,
+                        create: false,
+                    };
+                });
+                setHud((old) => {
+                    return {
+                        ...old,
+                        buildCluster: true,
+                        build: {
+                            create: true,
+                            tools: true,
+                            settings: false,
+                        },
+                    };
+                });
                 setUIHelper((old) => {
                     return {
                         ...old,
@@ -226,14 +286,31 @@ export default function StoryProgress() {
                         createTile: false,
                     };
                 });
+                setProgress((old) => {
+                    return {
+                        ...old,
+                        design: old.design,
+                        tools: true,
+                    };
+                });
                 setTextContent({ mode: 'text', phase: step });
                 break;
             }
             case 11: {
+                setHud((old) => {
+                    return {
+                        ...old,
+                        buildCluster: true,
+                        build: {
+                            create: true,
+                            tools: true,
+                            settings: true,
+                        },
+                    };
+                });
                 setUIHelper((old) => {
                     return {
                         ...old,
-                        sideOpener: 'reward',
                         designMenu: false,
                         createTile: false,
                     };
@@ -241,7 +318,17 @@ export default function StoryProgress() {
                 setTextContent({ mode: 'text', phase: step });
                 break;
             }
+            case 12: {
+                setTextContent({ mode: 'textNext', phase: step });
+                break;
+            }
             case 13: {
+                setHud((old) => {
+                    return {
+                        ...old,
+                        rewardCluster: true,
+                    };
+                });
                 setUIHelper((old) => {
                     return {
                         ...old,
@@ -252,36 +339,36 @@ export default function StoryProgress() {
                 break;
             }
             case 14: {
+                setHud((old) => {
+                    return {
+                        ...old,
+                        reward: {
+                            time: true,
+                            step: true,
+                            props: true,
+                        },
+                    };
+                });
                 setUIHelper((old) => {
                     return {
                         ...old,
                         sideOpener: 'settings',
                     };
                 });
-                setTextContent({ mode: 'text', phase: step });
+                setTextContent({ mode: 'textNext', phase: step });
                 break;
             }
-            case 16: {
+            case 15: {
                 setHud((old) => {
                     return {
                         ...old,
                         envTitle: true,
                     };
                 });
-                setUIHelper((old) => {
-                    return {
-                        ...old,
-                        creativeClose: true,
-                    };
-                });
-                break;
-            }
-            case 17: {
                 setTextContent({ mode: 'textNext', phase: step });
-                setControls({ play: true, ff: false, step: false, inspect: false });
                 break;
             }
-            case 20: {
+            case 16: {
                 setTextContent({ mode: 'text', phase: step });
                 setHud((old) => {
                     return {
@@ -289,13 +376,24 @@ export default function StoryProgress() {
                         controls: true,
                     };
                 });
+                setControls({ play: true, ff: false, step: false, inspect: false });
                 break;
             }
-            case 21: {
-                setTextContent({ mode: 'textNext', phase: step });
+            case 17: {
+                setHud((old) => {
+                    return {
+                        ...old,
+                        inspectCluster: true,
+                        inspect: {
+                            agentVision: true,
+                            charts: false,
+                            qMap: false,
+                        },
+                    };
+                });
                 break;
             }
-            case 22: {
+            case 18: {
                 setTextContent({ mode: 'text', phase: step });
                 setHud((old) => {
                     return {
@@ -312,16 +410,24 @@ export default function StoryProgress() {
                 setControls({ play: false, ff: false, step: true, inspect: false });
                 break;
             }
-            case 24: {
+            case 19: {
+                setTextContent({ mode: 'text', phase: step });
+                break;
+            }
+            case 20: {
                 setTextContent({ mode: 'textNext', phase: step });
                 break;
             }
-            case 25: {
+            case 21: {
                 setTextContent({ mode: 'text', phase: step });
                 setControls({ play: true, ff: true, step: true, inspect: false });
                 break;
             }
-            case 27: {
+            case 22: {
+                setTextContent({ mode: 'text', phase: step });
+                break;
+            }
+            case 23: {
                 setGameState((old) => {
                     return {
                         ...old,
@@ -332,14 +438,18 @@ export default function StoryProgress() {
                 setTextContent({ mode: 'textNext', phase: step });
                 break;
             }
-            case 29: {
+            case 25: {
+                setLod(2);
                 setHud((old) => {
                     return {
                         ...old,
-                        qTable: true,
+                        inspect: {
+                            agentVision: true,
+                            charts: false,
+                            qMap: true,
+                        },
                     };
                 });
-                setLod(2);
                 setControls({ play: false, ff: false, step: false, inspect: false });
                 setTextContent({ mode: 'textNext', phase: step });
                 break;
@@ -359,9 +469,10 @@ export default function StoryProgress() {
                 setHud((old) => {
                     return {
                         ...old,
-                        epsilon: true,
-                        gamma: true,
-                        alpha: true,
+                        agent: {
+                            ...old.agent,
+                            prm: true,
+                        },
                     };
                 });
                 break;
@@ -383,13 +494,35 @@ export default function StoryProgress() {
                         progress: false,
                     };
                 });
+                setHud((old) => {
+                    return {
+                        ...old,
+                        inspect: {
+                            agentVision: true,
+                            charts: true,
+                            qMap: true,
+                        },
+                    };
+                });
                 setControls({ play: true, ff: true, step: true, inspect: true });
                 break;
             }
             default:
                 return;
         }
-    }, [step, setControls, setHud, setTextContent, setVisibleTiles, setUIHelper, setGameState, setLod]);
+    }, [
+        step,
+        setBuildCluster,
+        setAgentCluster,
+        setProgress,
+        setControls,
+        setHud,
+        setTextContent,
+        setVisibleTiles,
+        setUIHelper,
+        setGameState,
+        setLod,
+    ]);
 
     return null;
 }

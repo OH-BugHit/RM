@@ -1,0 +1,85 @@
+.typeOption {
+    display: flex;
+    width: 80%;
+    min-height: 90px;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 1.5rem;
+    overflow: auto;
+    background: rgba(211, 203, 109, 0.241);
+}
+
+.buttonTitle {
+    margin-left: 1rem;
+    align-self: center;
+    width: 20%;
+}
+
+.buttonContent {
+    width: 70%;
+    height: 100%;
+    padding-left: 2rem;
+    text-align: start;
+}
+
+.enabled:hover,
+.activeType:hover {
+    scale: 1.05;
+    filter: brightness(1.1);
+    border-color: primary;
+}
+
+.types,
+.activeType {
+    position: relative;
+    overflow: hidden;
+    appearance: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 8px 14px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition:
+        background 120ms ease,
+        border-color 120ms ease,
+        color 120ms ease;
+}
+
+.activeType {
+    border-color: rgb(26, 220, 23);
+    background: rgba(86, 226, 47, 0.188);
+    color: primary;
+    font-weight: 600;
+}
+
+.disabled {
+    background:
+        linear-gradient(rgba(188, 188, 188, 0.381), rgba(188, 188, 188, 0.381)),
+        white;
+}
+
+.types.gloss::before {
+    content: "";
+    position: absolute;
+    inset: -50%;
+
+    width: 40%;
+    left: -50%;
+
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.5),
+            transparent);
+
+    transform: rotate(25deg);
+    animation: shine 1.5s linear infinite;
+}
+
+@keyframes shine {
+    from {
+        left: -50%;
+    }
+
+    to {
+        left: 150%;
+    }
+}

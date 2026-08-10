@@ -1,0 +1,119 @@
+.filterSvg {
+    position: absolute;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.wrapper {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 0;
+    height: 0;
+
+    pointer-events: auto;
+    z-index: 1;
+}
+
+.gooey {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 0;
+    height: 0;
+
+    pointer-events: none;
+
+    filter: url('#gooey');
+
+    z-index: 0;
+}
+
+.circleMovingWrapper {
+    position: absolute;
+
+    left: var(--origin-x);
+    top: var(--origin-y);
+
+    width: 0;
+    height: 0;
+}
+
+.circleOrigin,
+.circleMoving {
+    position: absolute;
+    opacity: 1;
+    border-radius: 50%;
+    left: var(--origin-x);
+    top: var(--origin-y);
+    width: var(--circle-size);
+    height: var(--circle-size);
+    z-index: 0;
+}
+
+.agent .circleOrigin,
+.agent .circleMoving {
+    background:
+        radial-gradient(circle at 32% 25%,
+            #FFFFFF 0%,
+            #D8E7ED 22%,
+            #8EA7B3 55%,
+            #405762 100%);
+}
+
+.reward .circleOrigin,
+.reward .circleMoving {
+    background:
+        radial-gradient(circle at 65% 22%,
+            #fff8d6 0%,
+            #d6955d 40%,
+            #83562e 80%,
+            #6e4418 100%);
+}
+
+.inspect .circleOrigin,
+.inspect .circleMoving {
+    background:
+        radial-gradient(circle at 32% 25%,
+            #e9d0ff 0%,
+            #b46bd1 25%,
+            #713390 60%,
+            #512667 100%);
+}
+
+.build .circleOrigin,
+.build .circleMoving {
+    box-shadow: #405762 20px;
+    background:
+        radial-gradient(circle at 32% 25%,
+            #FFD6D0 0%,
+            #D94A4A 25%,
+            #7A2929 60%,
+            #351212 100%);
+}
+
+.content {
+    position: absolute;
+
+    left: var(--target-x);
+    top: var(--target-y);
+    opacity: 0;
+
+    width: var(--content-width);
+    height: var(--content-height);
+
+    transform: translate(-50%, -50%);
+
+
+    pointer-events: auto;
+    z-index: 2;
+    overflow: visible;
+
+    justify-content: flex-end;
+    align-items: center;
+}

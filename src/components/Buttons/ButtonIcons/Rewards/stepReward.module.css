@@ -1,0 +1,67 @@
+.icon {
+    display: block;
+    overflow: visible;
+    cursor: pointer;
+}
+
+/* Triangle */
+
+.play {
+    fill: url(#gold);
+    stroke: #8C5D14;
+    stroke-width: 3;
+    stroke-linejoin: round;
+    transition:
+        fill 180ms ease,
+        filter 180ms ease;
+}
+
+.playHighlight {
+    fill: none;
+    stroke: #FFF7D5;
+    stroke-width: 3;
+    stroke-linecap: round;
+    opacity: .45;
+    transition:
+        opacity 180ms ease,
+        stroke 180ms ease;
+}
+
+/* Stop bar */
+
+.bar {
+    fill: url(#silver);
+    stroke: #617B88;
+    stroke-width: 3;
+    transition:
+        fill 180ms ease,
+        filter 180ms ease;
+}
+
+/* Hover */
+.innerRing {
+    stroke-opacity: 1;
+    transition:
+        stroke 180ms ease,
+        stroke-opacity 180ms ease;
+}
+
+.icon:hover .innerRing {
+    stroke: #FFFFFF;
+    stroke-opacity: .75;
+}
+
+.icon:hover .play {
+    fill: url(#goldHover);
+    filter: drop-shadow(0 0 2px rgba(255, 228, 120, .6)) brightness(1.1);
+}
+
+.icon:hover .playHighlight {
+    opacity: .9;
+    stroke: #FFFFFF;
+}
+
+.icon:hover .bar {
+    fill: url(#silverHover);
+    filter: drop-shadow(0 0 2px rgba(220, 245, 255, .55))brightness(1.1);
+}

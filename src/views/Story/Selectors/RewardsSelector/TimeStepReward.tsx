@@ -1,6 +1,6 @@
 import style from './style.module.css';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import HeartBrokenIcon from '@mui/icons-material/HeartBroken';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
 import RewardControl from '../../../Controls/RewardControl';
 import { useAtom } from 'jotai';
 import { EnvSettingsAtom } from '../../../../atoms/gameState';
@@ -24,10 +24,10 @@ export default function TimeStepReward() {
     };
 
     return (
-        <div className={style.rewardTuneRow}>
+        <div className={style.selectorContainer}>
             <h3>{t(`common.cell.timeStep`)}</h3>
-            <div className={style.rewardRow}>
-                <HeartBrokenIcon
+            <div className={style.rowContent}>
+                <RemoveIcon
                     color="error"
                     fontSize="large"
                 />
@@ -40,7 +40,7 @@ export default function TimeStepReward() {
                     onChange={updateReward}
                 />
 
-                <FavoriteIcon
+                <AddIcon
                     color="success"
                     fontSize="large"
                 />
