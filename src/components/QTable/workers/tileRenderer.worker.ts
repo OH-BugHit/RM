@@ -31,7 +31,7 @@ self.onmessage = (e: MessageEvent<WorkerRequest>) => {
 
         case 'renderTile': {
             const canvas = new OffscreenCanvas(msg.tileSize, msg.tileSize);
-            const ctx = canvas.getContext('2d');
+            const ctx = canvas.getContext('2d'); //TODO: Maybe add canvas cache and reuse canvases!
             if (!ctx) return;
 
             renderTile({

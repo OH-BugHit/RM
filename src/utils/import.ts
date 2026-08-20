@@ -3,7 +3,7 @@ import { CellSave, LoadedGame, Manifest, SavePreview, TileDefinitionSave } from 
 import { TilePropsAtom } from '../atoms/uiState';
 import { EnvSettingsAtom, InnerFillCellAtom, WorldGridRenderAtom } from '../atoms/gameState';
 import { Store } from 'jotai/vanilla/store';
-import { defaultCell, defaultEnvSettings } from './defaults';
+import { defaultCell } from './defaults';
 import { ActiveAgentAtom, ActiveEnvironmentAtom, AgentSettingsAtom } from '../atoms/state';
 import { SAVE_VERSION } from './export';
 import { Cell, CellType, TileDefinition } from '../types';
@@ -45,7 +45,7 @@ export async function loadSavePreview(file: File): Promise<SavePreview> {
     };
 }
 
-export function applyLoadedGame(store: Store, loadedGame: LoadedGame) {
+export function applyLoadedGame(store: Store, loadedGame: LoadedGame, loadAgent: boolean = false) {
     store.set(TilePropsAtom, loadedGame.tools.tileDefinitions.map(fromSavedTile));
 
     store.set(
@@ -54,7 +54,6 @@ export function applyLoadedGame(store: Store, loadedGame: LoadedGame) {
     );
 
     store.set(EnvSettingsAtom, {
-        ...defaultEnvSettings,
         generic: loadedGame.game.envSettings.generic,
     });
 
@@ -67,7 +66,10 @@ export function applyLoadedGame(store: Store, loadedGame: LoadedGame) {
 
     store.set(AgentSettingsAtom, loadedGame.agent.settings);
 
-    store.set(ActiveAgentAtom, loadedGame.agent.activeAgent);
+    if (loadAgent) {
+        store.set(ActiveAgentAtom, loadedGame.agent.activeAgent);
+        // implement load Q-table and that here?
+    }
 }
 
 async function readJson<T>(zip: JSZip, path: string): Promise<T> {

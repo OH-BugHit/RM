@@ -61,29 +61,29 @@
     background:
         radial-gradient(circle at 32% 25%,
             #FFFFFF 0%,
-            #D8E7ED 22%,
-            #8EA7B3 55%,
-            #405762 100%);
+            #B7EFEC 22%,
+            #87b8bb 55%,
+            #189b95 100%);
 }
 
 .reward .circleOrigin,
 .reward .circleMoving {
     background:
         radial-gradient(circle at 65% 22%,
-            #fff8d6 0%,
-            #d6955d 40%,
-            #83562e 80%,
-            #6e4418 100%);
+            #f9e8bd 0%,
+            #d89568 40%,
+            #925d35 80%,
+            #70451f 100%);
 }
 
 .inspect .circleOrigin,
 .inspect .circleMoving {
     background:
         radial-gradient(circle at 32% 25%,
-            #e9d0ff 0%,
-            #b46bd1 25%,
-            #713390 60%,
-            #512667 100%);
+            #E6D9F0 0%,
+            #A77BCA 25%,
+            #654586 60%,
+            #2E1B3F 100%);
 }
 
 .build .circleOrigin,
@@ -91,10 +91,10 @@
     box-shadow: #405762 20px;
     background:
         radial-gradient(circle at 32% 25%,
-            #FFD6D0 0%,
-            #D94A4A 25%,
-            #7A2929 60%,
-            #351212 100%);
+            #FFD6DC 0%,
+            #E04F66 25%,
+            #8A2F40 60%,
+            #3A121C 100%);
 }
 
 .content {

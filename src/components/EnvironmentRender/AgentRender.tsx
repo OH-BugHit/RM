@@ -19,18 +19,24 @@ export default function AgentRender({ env }: AgentRenderInterface) {
 
     useEffect(() => {}, [trigger]);
 
+    if (agent.img === '') return;
+
     return (
         <motion.div
             style={{
                 position: 'absolute',
                 zIndex: 20,
             }}
-            transition={{
-                type: 'tween',
-                duration: 0.2,
-                ease: 'easeInOut',
-                delay: 0,
-            }}
+            transition={
+                trigger.mode === 'normal'
+                    ? {
+                          type: 'tween',
+                          duration: 0.2,
+                          ease: 'easeInOut',
+                          delay: 0,
+                      }
+                    : {}
+            }
             animate={{
                 x: env.position.x * 40,
                 y: env.position.y * 40,

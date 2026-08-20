@@ -14,9 +14,10 @@ export default function AgentClusterParent() {
     const setB = useSetAtom(BuildCAtom);
     const setI = useSetAtom(InspectCAtom);
     const setR = useSetAtom(RewardCAtom);
+    const size = 160;
 
     const handleClick = () => {
-        if (clusters.agent) setA({ prm: false, img: false, obs: false });
+        if (clusters.agent) setA({ prm: false, img: false, obs: false, trash: true });
         setB({ tools: false, create: false, settings: false });
         setI({ qMap: false, charts: false, agentVision: false });
         setR({ time: false, step: false, props: false });
@@ -31,43 +32,45 @@ export default function AgentClusterParent() {
         });
     };
     return (
-        <Button
-            className={style.agentImg}
-            onClick={() => handleClick()}
-        >
-            {vis.agent && (
-                <>
-                    {agent.img ? (
-                        <>
-                            <img
-                                src={agent.img}
-                                style={{ marginTop: '16px' }}
-                                height={140}
-                            />
-                            <div style={{ position: 'absolute' }}>
-                                {clusters.agent && (
-                                    <CloseIcon
-                                        size={140}
-                                        type="dark"
-                                    />
-                                )}
-                            </div>
-                        </>
-                    ) : (
-                        <>
-                            <AgentIcon size={160} />
-                            <div style={{ position: 'absolute' }}>
-                                {clusters.agent && (
-                                    <CloseIcon
-                                        size={140}
-                                        type="dark"
-                                    />
-                                )}
-                            </div>
-                        </>
-                    )}
-                </>
-            )}
-        </Button>
+        <div className={style.clusterParent}>
+            <Button
+                onClick={() => handleClick()}
+                style={{ width: size, height: size }}
+            >
+                {vis.agent && (
+                    <>
+                        {agent.img ? (
+                            <>
+                                <img
+                                    src={agent.img}
+                                    style={{ marginTop: '16px' }}
+                                    height={size - 20}
+                                />
+                                <div style={{ position: 'absolute' }}>
+                                    {clusters.agent && (
+                                        <CloseIcon
+                                            size={size - 20}
+                                            type="dark"
+                                        />
+                                    )}
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <AgentIcon size={size} />
+                                <div style={{ position: 'absolute' }}>
+                                    {clusters.agent && (
+                                        <CloseIcon
+                                            size={size - 20}
+                                            type="dark"
+                                        />
+                                    )}
+                                </div>
+                            </>
+                        )}
+                    </>
+                )}
+            </Button>
+        </div>
     );
 }

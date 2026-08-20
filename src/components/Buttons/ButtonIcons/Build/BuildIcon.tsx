@@ -1,3 +1,5 @@
+import { CSSProperties } from '@mui/material';
+
 interface InvestigateProps {
     size?: number;
     title?: string;
@@ -10,6 +12,13 @@ export default function BuildIcon({ size = 220, title = 'BUILD' }: InvestigatePr
             height={size}
             viewBox="0 0 220 220"
             xmlns="http://www.w3.org/2000/svg"
+            style={
+                {
+                    scale: 1.15,
+                    display: 'block',
+                    overflow: 'visible',
+                } as CSSProperties
+            }
         >
             <defs>
                 <radialGradient
@@ -19,19 +28,19 @@ export default function BuildIcon({ size = 220, title = 'BUILD' }: InvestigatePr
                 >
                     <stop
                         offset="0%"
-                        stopColor="#FFD6D0"
+                        stopColor="#FFD6DC"
                     />
                     <stop
                         offset="22%"
-                        stopColor="#D94A4A"
+                        stopColor="#E04F66"
                     />
                     <stop
                         offset="55%"
-                        stopColor="#7A2929"
+                        stopColor="#8A2F40"
                     />
                     <stop
                         offset="100%"
-                        stopColor="#351212"
+                        stopColor="#3A121C"
                     />
                 </radialGradient>
 

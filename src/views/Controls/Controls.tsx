@@ -1,36 +1,57 @@
 import style from './style.module.css';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { ActiveEnvironmentAtom, GameControlAtom } from '../../atoms/state';
+import { GameControlAtom } from '../../atoms/state';
 import GameButton from '../../components/Buttons/GameButton/GameButton';
-import { ControlEnablerAtom, InspectAtom, LodStateAtom, StoryProgressAtom } from '../../atoms/uiState';
+import { ControlEnablerAtom, HUDvisAtom, InspectAtom, LodStateAtom, StoryProgressAtom } from '../../atoms/uiState';
 import PlayIcon from '../../components/Buttons/ButtonIcons/ControlIcons/PlayIcon';
 import PauseIcon from '../../components/Buttons/ButtonIcons/ControlIcons/PauseIcon';
 import StepIcon from '../../components/Buttons/ButtonIcons/ControlIcons/StepIcon';
 import FastForwardIcon from '../../components/Buttons/ButtonIcons/ControlIcons/FastForwardIcon';
 import InspectIcon from '../../components/Buttons/ButtonIcons/ControlIcons/InspectIcon';
+import { TestAgentAtom } from '../../atoms/gameState';
 let stepsTaken = 0;
 
 function Controls() {
     const [controls, setControls] = useAtom(GameControlAtom);
     const setLod = useSetAtom(LodStateAtom);
     const enable = useAtomValue(ControlEnablerAtom);
+    const hudVis = useAtomValue(HUDvisAtom);
     const setStoryProgress = useSetAtom(StoryProgressAtom);
     const setInspect = useSetAtom(InspectAtom);
-    const env = useAtomValue(ActiveEnvironmentAtom);
+    const test = useAtomValue(TestAgentAtom);
 
+    const storyFF = () => {
+        setStoryProgress((old) => {
+            return {
+                ...old,
+                controls: {
+                    ...old.controls,
+                    ff: true,
+                },
+            };
+        });
+    };
+    const storyPlay = () => {
+        setStoryProgress((old) => {
+            return {
+                ...old,
+                controls: {
+                    ...old.controls,
+                    play: true,
+                },
+            };
+        });
+    };
     const storySteps = () => {
-        if (stepsTaken < 8) {
+        if (stepsTaken < 6) {
             stepsTaken++;
         } else {
             setStoryProgress((old) => {
                 return {
                     ...old,
-                    hud: {
-                        ...old.hud,
-                        agentView: {
-                            ...old.hud.agentView,
-                            steps: true,
-                        },
+                    controls: {
+                        ...old.controls,
+                        step: true,
                     },
                 };
             });
@@ -42,7 +63,7 @@ function Controls() {
             <div className={style.controlsContainer}>
                 <GameButton
                     title={controls.isRunning ? 'Pause' : 'Play'}
-                    disabled={!enable?.play}
+                    disabled={!hudVis.controls.play || !enable?.play || test === 'isRunning' || test === 'passed'}
                     variant="text"
                     onClick={() => {
                         setLod(2);
@@ -57,14 +78,14 @@ function Controls() {
                 >
                     <PauseIcon
                         active={!controls.isRunning}
-                        disabled={!enable?.play}
+                        disabled={!hudVis.controls.play || !enable?.play || test === 'isRunning' || test === 'passed'}
                     />
                 </GameButton>
                 <GameButton
                     title="One step"
                     color="success"
                     variant="text"
-                    disabled={!enable?.step}
+                    disabled={!hudVis.controls.step || !enable?.step || test === 'isRunning' || test === 'passed'}
                     onClick={() => {
                         setLod(2);
                         setControls((old) => {
@@ -78,14 +99,17 @@ function Controls() {
                         storySteps();
                     }}
                 >
-                    <StepIcon disabled={!enable?.step} />
+                    <StepIcon
+                        disabled={!hudVis.controls.step || !enable?.step || test === 'isRunning' || test === 'passed'}
+                    />
                 </GameButton>
                 <GameButton
                     title={controls.isRunning ? 'Pause' : 'Play'}
-                    disabled={!enable?.play}
+                    disabled={!hudVis.controls.play || !enable?.play || test === 'isRunning' || test === 'passed'}
                     variant="text"
                     color="success"
                     onClick={() => {
+                        storyPlay();
                         setLod(2);
                         setControls((old) => {
                             return {
@@ -98,15 +122,16 @@ function Controls() {
                 >
                     <PlayIcon
                         active={controls.isRunning}
-                        disabled={!enable?.play}
+                        disabled={!hudVis.controls.play || !enable?.play || test === 'isRunning' || test === 'passed'}
                     />
                 </GameButton>
                 <GameButton
                     title="Fast forward"
                     variant="text"
                     color="success"
-                    disabled={!enable?.ff}
+                    disabled={!hudVis.controls.ff || !enable?.ff || test === 'isRunning' || test === 'passed'}
                     onClick={() => {
+                        storyFF();
                         setLod(1);
                         setControls((old) => {
                             return {
@@ -119,11 +144,11 @@ function Controls() {
                 >
                     <FastForwardIcon
                         active={controls.isFast}
-                        disabled={!enable?.ff}
+                        disabled={!hudVis.controls.ff || !enable?.ff || test === 'isRunning' || test === 'passed'}
                     />
                 </GameButton>
 
-                {env.type === 'created' && (
+                {hudVis.controls.inspect && (
                     <GameButton
                         title="Inspect"
                         color="info"
@@ -141,7 +166,7 @@ function Controls() {
                             setInspect({ vis: true, step: 0 });
                         }}
                     >
-                        <InspectIcon disabled={!enable?.inspect} />
+                        <InspectIcon disabled={!enable?.inspect || test === 'isRunning' || test === 'passed'} />
                     </GameButton>
                 )}
             </div>

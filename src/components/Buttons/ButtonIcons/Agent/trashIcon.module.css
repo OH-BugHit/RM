@@ -1,0 +1,38 @@
+.icon {
+    overflow: visible;
+    cursor: pointer;
+}
+
+.outer,
+.innerRim,
+.trashHighlight,
+.outer,
+.background {
+    transition:
+        fill .2s ease,
+        stroke .2s ease,
+        stroke-opacity .2s ease,
+        opacity .2s ease,
+        filter .2s ease;
+}
+
+.icon:hover .innerRim {
+    stroke: #FFFFFF;
+    stroke-opacity: .75;
+}
+
+.icon:hover .outer {
+    stroke: rgba(183, 22, 22, 0.128);
+    fill: rgba(183, 22, 22, 0.128);
+    stroke-opacity: .75;
+}
+
+.outer {
+    transition:
+        stroke 180ms ease,
+        stroke-opacity 180ms ease;
+}
+
+.icon:hover .trashHighlight {
+    stroke: #FFFFFF;
+}

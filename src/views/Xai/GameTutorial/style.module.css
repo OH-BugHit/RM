@@ -1,15 +1,42 @@
 .textContainer {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     min-height: 70px;
     margin-top: 0.5rem;
 }
 
+.narrowContainer {
+    flex-direction: column;
+    width: 400px;
+    max-width: 20vw;
+    margin-left: -2.7rem;
+    margin-right: -2.7rem;
+    margin-bottom: -1rem;
+}
+
+.wideContainer {
+    flex-direction: row;
+    width: 550px;
+    max-width: 40vw;
+}
+
+.unactive {
+    color: rgba(0, 0, 0, 0.356);
+}
+
+.completed {
+    text-decoration: line-through;
+}
+
 .textContent {
     display: flex;
-    flex-direction: row;
+    flex-direction: inherit;
     justify-content: space-evenly;
+}
+
+.nextLevelButton {
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 .buttonGroup {
@@ -41,6 +68,8 @@
 .progressContent {
     text-align: start;
     white-space: nowrap;
+    width: 100%;
+    max-width: 220px;
 }
 
 .progressContent ul {

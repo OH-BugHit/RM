@@ -45,11 +45,19 @@ export default function ImageIcon({ size = 256 }: ImageIconProps) {
                 >
                     <stop
                         offset="0%"
-                        stopColor="#4E6D79"
+                        stopColor="#FFFFFF"
+                    />
+                    <stop
+                        offset="22%"
+                        stopColor="#B7EFEC"
+                    />
+                    <stop
+                        offset="55%"
+                        stopColor="#8EA7B3"
                     />
                     <stop
                         offset="100%"
-                        stopColor="#273842"
+                        stopColor="#0B7771"
                     />
                 </radialGradient>
             </defs>

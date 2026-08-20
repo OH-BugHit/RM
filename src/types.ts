@@ -1,3 +1,6 @@
+import { TaskGroup } from './utils/progress';
+import { LoadedGame, UiControls } from './utils/types';
+
 export enum NeighbourEntity {
     Empty = 0,
     Wall = 1,
@@ -21,6 +24,35 @@ export interface WorldErrors {
     roomSizeX?: 'missing';
     roomSizeY?: 'missing';
 }
+
+export type Task = {
+    taskName: string;
+    task: string;
+    completed: boolean;
+};
+
+export type TeacherControl = {
+    wait: boolean; // Wait for teacher to activate
+};
+
+export type FireworkPulse = {
+    highScore: boolean;
+    bestScore: boolean;
+};
+
+export type AgentTest = 'isRunning' | 'passed' | 'no' | 'available';
+
+export type Level = {
+    level: LoadedGame;
+    levelTasks?: TaskGroup[];
+    levelText?: {
+        modes?: TextMode[];
+        textKey?: string;
+        layouts?: Record<number, TutorialLayout>;
+    };
+    uiControls?: UiControlsField[][];
+    hudSettings?: HUDvisibilityField[][]; // Available tools / clusters
+};
 
 export type Side = 'top' | 'bottom' | 'right' | 'left';
 
@@ -69,6 +101,14 @@ export type StoryProgress = {
         opened: boolean;
         closed: boolean;
     };
+    gamePlay: {
+        goal: boolean;
+        lockProgress: boolean;
+        noTrapsCollected: boolean;
+        treasureCollected: boolean;
+        bigTreasureCollected: boolean;
+        newHighScore: boolean;
+    };
     rewards: {
         opened: boolean;
         closed: boolean;
@@ -77,18 +117,28 @@ export type StoryProgress = {
         opened: boolean;
         closed: boolean;
     };
-    hud: {
-        agentView: {
-            steps: boolean;
-            opened: boolean;
-        };
+    agentView: {
+        steps: boolean;
+        opened: boolean;
+    };
+    controls: {
+        step: boolean;
+        play: boolean;
+        ff: boolean;
+        inspect: boolean;
     };
 };
 
-export type StatsContent = {
-    mode: 'stats' | 'text' | 'textNext' | 'inspect';
-    phase: number;
+export type TutorialLayout = {
+    position: Pick<React.CSSProperties, 'top' | 'right' | 'bottom' | 'left'>;
+    centerX?: number;
+    centerY?: number;
+    variant?: 'wide' | 'narrow';
 };
+
+export type LevelText = { mode: TextMode; textKey: string };
+
+export type TextMode = 'stats' | 'text' | 'textNext' | 'inspect' | 'hidden';
 
 export type TopBar = {
     traps: number;
@@ -144,6 +194,7 @@ export type AgentCluster = {
     img: boolean;
     obs: boolean;
     prm: boolean;
+    trash: boolean;
 };
 
 export type InspectCluster = {
@@ -161,8 +212,18 @@ export type HUDvisibility = {
     qTable: boolean;
     cableLeft: boolean;
     cableRight: boolean;
-    envTitle: boolean;
-    controls: boolean;
+    gameBar: boolean;
+    gameBarContent: {
+        picked: boolean;
+        score: boolean;
+    };
+    controlBar: boolean;
+    controls: {
+        ff: boolean;
+        play: boolean;
+        inspect: boolean;
+        step: boolean;
+    };
     alpha: boolean;
     gamma: boolean;
     epsilon: boolean;
@@ -177,6 +238,13 @@ export type HUDvisibility = {
     reward: RewardCluster;
     agent: AgentCluster;
 };
+
+export type HUDvisibilityField = NestedKeyOf<HUDvisibility>;
+export type UiControlsField = NestedKeyOf<UiControls>;
+
+export type NestedKeyOf<T> = {
+    [K in keyof T & string]: T[K] extends object ? `${K}.${keyof T[K] & string}` : K;
+}[keyof T & string];
 
 export type EdgeType = RoomType | 'lockedDoor' | 'newEdge';
 export type RoomType = 'spawnArea' | 'lockedRoom' | 'openRoom';
@@ -269,6 +337,10 @@ export type EpisodicData = {
     wins: number;
     losses: number;
     fullEpisodeReward: number;
+};
+
+export type TestWinData = {
+    beatsScore: number;
 };
 
 export type TimeStepData = {
@@ -413,10 +485,6 @@ export type SoundSettings = {
 };
 
 export type EnvSettings = {
-    potsAndBurglar: {
-        env: RoboDogEnv;
-        reward: RoboDogRewards;
-    };
     generic: {
         env: GenericEnv;
         reward: GenericReward;

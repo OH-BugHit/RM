@@ -23,7 +23,7 @@ export default function AgentIcon({ size = 220, title = 'AGENT' }: InvestigatePr
                     />
                     <stop
                         offset="22%"
-                        stopColor="#D8E7ED"
+                        stopColor="#B7EFEC"
                     />
                     <stop
                         offset="55%"
@@ -31,7 +31,7 @@ export default function AgentIcon({ size = 220, title = 'AGENT' }: InvestigatePr
                     />
                     <stop
                         offset="100%"
-                        stopColor="#405762"
+                        stopColor="#0B7771"
                     />
                 </radialGradient>
 

@@ -1,23 +1,76 @@
 import style from './style.module.css';
 import { PercentageBar } from '@genai-fi/base';
-import { StoryProgressField, TASK_GROUPS, TaskGroup } from '../../../utils/progress';
+import { TaskGroup } from '../../../utils/progress';
 import { StoryProgress } from '../../../types';
 import { useTranslation } from 'react-i18next';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import { useAtomValue } from 'jotai';
-import { StoryProgressAtom, StoryStepAtom } from '../../../atoms/uiState';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { StoryProgressAtom, TextStepAtom } from '../../../atoms/uiState';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import { StoryProgressField } from '../../../utils/types';
+import { TestAgentAtom } from '../../../atoms/gameState';
 
-export default function Progress() {
+interface ProgressProps {
+    tasks: TaskGroup[];
+}
+
+export default function Progress({ tasks }: ProgressProps) {
     const { t } = useTranslation();
     const progress = useAtomValue(StoryProgressAtom);
-    const phase = useAtomValue(StoryStepAtom);
+    const [step, setStep] = useAtom(TextStepAtom);
+    const setTest = useSetAtom(TestAgentAtom);
+    const progressReadyRef = useRef<boolean>(false);
 
     const getFieldValue = (progress: StoryProgress, field: StoryProgressField): boolean => {
         const [section, key] = field.split('.') as [keyof StoryProgress, string];
 
         return (progress[section] as Record<string, boolean>)[key];
     };
+
+    // Build the current state of every task.
+    const taskStates = tasks.flatMap((group) =>
+        group.tasks.map((task) => ({
+            ...task,
+            completed: getFieldValue(progress, task.field),
+        }))
+    );
+
+    const totalTasks = taskStates.length;
+    const completedTasks = taskStates.filter((task) => task.completed).length;
+    const totalProgress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+
+    if (totalProgress === 100 && !progressReadyRef.current) {
+        progressReadyRef.current = true;
+        setTest('available');
+    }
+
+    useEffect(() => {
+        progressReadyRef.current = false;
+    }, [step]);
+
+    const steppedTasks = useRef(new Set<string>());
+
+    useEffect(() => {
+        let stepsToAdd = 0;
+
+        for (const task of taskStates) {
+            if (!task.takeStep || !task.completed) {
+                continue;
+            }
+
+            if (steppedTasks.current.has(task.id)) {
+                continue;
+            }
+
+            steppedTasks.current.add(task.id);
+            stepsToAdd++;
+        }
+
+        if (stepsToAdd > 0) {
+            setStep((currentStep) => currentStep + stepsToAdd);
+        }
+    }, [taskStates, setStep]);
 
     const isGroupVisible = (group: TaskGroup, phase: number): boolean => {
         return phase >= group.visibleFrom && (group.visibleTo === undefined || phase < group.visibleTo);
@@ -26,7 +79,7 @@ export default function Progress() {
     return (
         <motion.div className={style.progressContent}>
             <AnimatePresence mode="popLayout">
-                {TASK_GROUPS.filter((group) => isGroupVisible(group, phase)).map((group) => (
+                {tasks.map((group) => (
                     <motion.section
                         key={group.id}
                         layout
@@ -41,13 +94,22 @@ export default function Progress() {
                             },
                         }}
                     >
-                        <h4>{t(`${group.title}`)}</h4>
-                        <ul style={{ listStyle: 'none', paddingLeft: 0 }}>
+                        <h4 className={`${isGroupVisible(group, step) ? '' : style.unactive} `}>{t(group.title)}</h4>
+
+                        <ul
+                            key={group.id}
+                            style={{
+                                listStyle: 'none',
+                            }}
+                        >
                             {group.tasks.map((task) => {
                                 const completed = getFieldValue(progress, task.field);
 
                                 return (
-                                    <li key={task.id}>
+                                    <li
+                                        key={task.id}
+                                        className={`${isGroupVisible(group, step) ? '' : style.unactive} ${completed ? style.completed : ''}`}
+                                    >
                                         <TaskAltIcon
                                             fontSize="small"
                                             color="success"
@@ -62,28 +124,16 @@ export default function Progress() {
                                 );
                             })}
                         </ul>
-                        {group.tasks.length > 0 && (
-                            <>
-                                <b>{t(`progress.title.current`)}</b>
-                                <PercentageBar
-                                    colour="green"
-                                    value={
-                                        (group.tasks.filter((task) => getFieldValue(progress, task.field)).length /
-                                            group.tasks.length) *
-                                        100
-                                    }
-                                    style={{ borderRadius: '0.5rem' }}
-                                />
-                            </>
-                        )}
                     </motion.section>
                 ))}
-            </AnimatePresence>{' '}
-            <b>{t(`progress.title.total`)}</b>
+
+                {tasks.length > 0 && <b>{t('progress.title.level')}</b>}
+            </AnimatePresence>
+
             <PercentageBar
-                colour="blue"
-                value={(phase / 42) * 100}
-                style={{ borderRadius: '0.5rem', marginBottom: '0.5rem' }}
+                colour="green"
+                value={totalProgress}
+                style={{ borderRadius: '0.5rem' }}
             />
         </motion.div>
     );

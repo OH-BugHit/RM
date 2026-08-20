@@ -10,7 +10,7 @@ import BrushIcon from '@mui/icons-material/Brush';
 import { JSX, useState } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
-import { DesignOpenAtom, CurrentTileToolAtom, StoryStepAtom, UiHelpAtom, SetupVisibleAtom } from '../../atoms/uiState';
+import { DesignOpenAtom, CurrentTileToolAtom, TextStepAtom, UiHelpAtom, SetupVisibleAtom } from '../../atoms/uiState';
 import { SidePanelButton, SidePanelContent } from './SidePanelButtons/SidePanelButton';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -31,7 +31,7 @@ export function SidePanelOpener() {
     const setSelectedTool = useSetAtom(CurrentTileToolAtom);
     const setDesignOpen = useSetAtom(DesignOpenAtom);
     const helperArrow = useAtomValue(UiHelpAtom);
-    const currentStep = useAtomValue(StoryStepAtom);
+    const currentStep = useAtomValue(TextStepAtom);
 
     if (uiHelp.hideSideOpener) return null;
 

@@ -1,13 +1,9 @@
-.agentImg {
+.clusterParent {
     border-radius: 50%;
     position: absolute;
-    inset: 18px;
+    inset: 20px;
     width: 160px;
     height: 160px;
     overflow: hidden;
     background-color: rgba(254, 255, 255, 0.448);
-}
-
-.icon {
-    border-radius: 50%;
 }

@@ -1,10 +1,12 @@
 import { useAtomValue } from 'jotai';
-import { HUDvisAtom } from '../../../atoms/uiState';
+import { HUDvisAtom } from '../../../../atoms/uiState';
+import { CSSProperties } from '@mui/material';
 
 interface RewardProps {
     title: string;
+    size?: number;
 }
-export default function Reward({ title }: RewardProps) {
+export default function Reward({ title, size = 220 }: RewardProps) {
     const vis = useAtomValue(HUDvisAtom);
     const fontSize = title.length <= 3 ? 52 : title.length <= 5 ? 44 : title.length <= 7 ? 30 : 24;
 
@@ -12,9 +14,16 @@ export default function Reward({ title }: RewardProps) {
         <>
             {vis.reward && (
                 <svg
-                    width={220}
-                    height={220}
+                    width={size}
+                    height={size}
                     viewBox="0 0 256 256"
+                    style={
+                        {
+                            scale: 1.15,
+                            display: 'block',
+                            overflow: 'visible',
+                        } as CSSProperties
+                    }
                 >
                     <defs>
                         <linearGradient
@@ -26,19 +35,19 @@ export default function Reward({ title }: RewardProps) {
                         >
                             <stop
                                 offset="0%"
-                                stop-color="#873f35"
+                                stopColor="#873f35"
                             />
                             <stop
                                 offset="40%"
-                                stop-color="#df9575"
+                                stopColor="#df9575"
                             />
                             <stop
                                 offset="75%"
-                                stop-color="#d4a855"
+                                stopColor="#d4a855"
                             />
                             <stop
                                 offset="100%"
-                                stop-color="#fce1a5"
+                                stopColor="#fce1a5"
                             />
                         </linearGradient>
 
@@ -49,11 +58,19 @@ export default function Reward({ title }: RewardProps) {
                         >
                             <stop
                                 offset="0%"
-                                stopColor="#ce8443"
+                                stopColor="#FFE2B8"
+                            />
+                            <stop
+                                offset="22%"
+                                stopColor="#FD9D32"
+                            />
+                            <stop
+                                offset="55%"
+                                stopColor="#B86418"
                             />
                             <stop
                                 offset="100%"
-                                stopColor="#382d08"
+                                stopColor="#4A2108"
                             />
                         </radialGradient>
 
@@ -66,11 +83,11 @@ export default function Reward({ title }: RewardProps) {
                         >
                             <stop
                                 offset="0%"
-                                stop-color="#E6B327"
+                                stopColor="#E6B327"
                             />
                             <stop
                                 offset="100%"
-                                stop-color="#FFF4BE"
+                                stopColor="#FFF4BE"
                             />
                         </linearGradient>
                     </defs>
@@ -81,7 +98,7 @@ export default function Reward({ title }: RewardProps) {
                         r="88"
                         fill="url(#panel)"
                         stroke="url(#rewardMetal)"
-                        stroke-width="12"
+                        strokeWidth="12"
                     />
 
                     <circle
@@ -90,8 +107,8 @@ export default function Reward({ title }: RewardProps) {
                         r="77"
                         fill="none"
                         stroke="#F4FBFD"
-                        stroke-opacity=".30"
-                        stroke-width="2"
+                        strokeOpacity=".30"
+                        strokeWidth="2"
                     />
 
                     <g fill="#FFF7CF">

@@ -80,20 +80,12 @@
         opacity 220ms ease;
 }
 
-
-/* ================================================= */
-/* HOVER */
-/* ================================================= */
-
 .icon:hover {
     transform: scale(1.025);
 
     filter:
         drop-shadow(0 0 5px rgba(233, 208, 255, .3)) drop-shadow(0 0 14px rgba(180, 107, 209, .3));
 }
-
-
-/* Button */
 
 .icon:hover .button {
     filter: brightness(1.06);
@@ -103,18 +95,12 @@
     opacity: .65;
 }
 
-
-/* Inner rim */
-
 .icon:hover .rim {
     stroke-opacity: .65;
 
     filter:
         drop-shadow(0 0 4px rgba(233, 208, 255, .55));
 }
-
-
-/* Grid */
 
 .icon:hover .backgroundGrid {
     opacity: 1;
@@ -136,7 +122,6 @@
     stroke-opacity: .9;
 }
 
-/* Magnifier */
 
 .icon:hover .magnifier {
     transform: translate(-4px, 4px) scale(0.95);

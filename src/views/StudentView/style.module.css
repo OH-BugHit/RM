@@ -1,0 +1,24 @@
+.game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 340px;
+    height: 100%;
+}
+
+.containerBox {
+    flex-grow: 1;
+    overflow: auto;
+    height: 100%;
+}
+
+.gameView {
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    background-image: var(--background-image);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}

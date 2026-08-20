@@ -23,19 +23,19 @@ export default function MapIcon({ size = 140, ...props }: MapIconProps) {
                 >
                     <stop
                         offset="0%"
-                        stopColor="#E9D0FF"
+                        stopColor="#E6D9F0"
                     />
                     <stop
-                        offset="25%"
-                        stopColor="#B46BD1"
+                        offset="22%"
+                        stopColor="#A77BCA"
                     />
                     <stop
-                        offset="60%"
-                        stopColor="#713390"
+                        offset="55%"
+                        stopColor="#654586"
                     />
                     <stop
                         offset="100%"
-                        stopColor="#512667"
+                        stopColor="#2E1B3F"
                     />
                 </radialGradient>
 

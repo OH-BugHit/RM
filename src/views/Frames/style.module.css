@@ -119,6 +119,14 @@
     overflow: hidden;
 }
 
+.contentUnder {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 100%;
+    z-index: 4;
+}
+
 .minRT {
     border-bottom: none;
     border-radius: 0;

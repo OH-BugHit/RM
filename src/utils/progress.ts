@@ -1,10 +1,10 @@
-import { StoryProgress } from '../types';
+import { StoryProgressField } from './types';
 
 export interface Task {
     id: string;
     text: string;
-    // StoryProgress value for this task to be set completed
-    field: StoryProgressField;
+    takeStep?: boolean; // Take story step after completion?
+    field: StoryProgressField; // StoryProgress value for this task to be set completed
 }
 
 export interface TaskGroup {
@@ -14,14 +14,6 @@ export interface TaskGroup {
     visibleTo?: number;
     tasks: Task[];
 }
-
-export type StoryProgressField = NestedKeyOf<StoryProgress>;
-
-// Union of nested keys
-type NestedKeyOf<T> = {
-    [K in keyof T & string]: T[K] extends object ? `${K}.${keyof T[K] & string}` : K;
-}[keyof T & string];
-
 export const TASK_GROUPS: TaskGroup[] = [
     {
         id: 'agent',
@@ -118,7 +110,7 @@ export const TASK_GROUPS: TaskGroup[] = [
             {
                 id: 'controls-steps',
                 text: 'story.tasks.hud.obs_controls.step',
-                field: 'hud.agentView',
+                field: 'agentView.opened',
             },
             {
                 id: 'obs-agent',

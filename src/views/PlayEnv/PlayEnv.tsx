@@ -9,19 +9,19 @@ import {
     ControlEnablerAtom,
     HUDvisAtom,
     StoryProgressAtom,
-    StoryStepAtom,
+    TextStepAtom,
     TileVisibilityAtom,
     UiHelpAtom,
 } from '../../atoms/uiState';
 import { applyLoadedGame, readSavedFile } from '../../utils/import';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
-import { playControls, playHudyVis, playStoryProgress, playUIHelp, playVisibleTiles } from '../../utils/defaults';
+import { playControls, playHudVis, playStoryProgress, playUIHelp, playVisibleTiles } from '../../utils/defaults';
 import { ActiveEnvironmentAtom } from '../../atoms/state';
 
 export default function PlayEnv() {
     const { t } = useTranslation();
     const setActiveView = useSetAtom(ActiveViewAtom);
-    const setStep = useSetAtom(StoryStepAtom);
+    const setStep = useSetAtom(TextStepAtom);
     const setHud = useSetAtom(HUDvisAtom);
     const setStory = useSetAtom(StoryProgressAtom);
     const setTileVis = useSetAtom(TileVisibilityAtom);
@@ -34,7 +34,7 @@ export default function PlayEnv() {
         const loaded = await readSavedFile(file);
         applyLoadedGame(store, loaded);
         setStep(99);
-        setHud(playHudyVis);
+        setHud(playHudVis);
         setStory(playStoryProgress);
         setTileVis(playVisibleTiles);
         setControls(playControls);
@@ -75,6 +75,17 @@ export default function PlayEnv() {
                         id="modify"
                         image="images/environments/potsAndBurglar.png"
                         url="/import"
+                        onClick={() => {
+                            setEnv((old) => {
+                                return { ...old, type: 'modify' };
+                            });
+                            setUiHelp({ ...playUIHelp, mode: 'modify' });
+                        }}
+                    />
+                    <Phase
+                        id="create"
+                        image="images/environments/potsAndBurglar.png"
+                        url="/build"
                         onClick={() => {
                             setEnv((old) => {
                                 return { ...old, type: 'modify' };

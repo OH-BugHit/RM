@@ -1,7 +1,7 @@
 import style from './style.module.css';
 import L from 'leaflet';
 import { useAtom, useSetAtom } from 'jotai';
-import { ControlEnablerAtom, InspectAtom, StoryStepAtom } from '../../../atoms/uiState';
+import { ControlEnablerAtom, InspectAtom, TextStepAtom } from '../../../atoms/uiState';
 import TypewriterText from '../../../components/Typewriter/TypeWriterText';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@genai-fi/base';
@@ -22,7 +22,7 @@ interface InspectTextProps {
 export default function InspectText({ mapRef, world, focusFrameRef, layerRef, agentRef }: InspectTextProps) {
     const { t } = useTranslation();
     const [inspect, setInspect] = useAtom(InspectAtom);
-    const setStep = useSetAtom(StoryStepAtom);
+    const setStep = useSetAtom(TextStepAtom);
     const setControls = useSetAtom(ControlEnablerAtom);
     const setGame = useSetAtom(GameControlAtom);
     useEffect(() => {

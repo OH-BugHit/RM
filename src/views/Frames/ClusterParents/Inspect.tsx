@@ -11,9 +11,10 @@ export default function InspectClusteParent() {
     const setB = useSetAtom(BuildCAtom);
     const setI = useSetAtom(InspectCAtom);
     const setR = useSetAtom(RewardCAtom);
+    const size = 160;
 
     const handleClick = () => {
-        setA({ prm: false, img: false, obs: false });
+        setA({ prm: false, img: false, obs: false, trash: true });
         setB({ tools: false, create: false, settings: false });
         if (clusters.inspect) setI({ qMap: false, charts: false, agentVision: false });
         setR({ time: false, step: false, props: false });
@@ -29,24 +30,26 @@ export default function InspectClusteParent() {
     };
 
     return (
-        <Button
-            className={style.icon}
-            onClick={() => handleClick()}
-        >
-            <>
-                <InspectClusterIcon
-                    size={220}
-                    title="INSPECT"
-                />
-                <div style={{ position: 'absolute' }}>
-                    {clusters.inspect && (
-                        <CloseIcon
-                            size={140}
-                            type="dark"
-                        />
-                    )}
-                </div>
-            </>
-        </Button>
+        <div className={style.clusterParent}>
+            <Button
+                onClick={() => handleClick()}
+                style={{ width: size, height: size }}
+            >
+                <>
+                    <InspectClusterIcon
+                        size={size}
+                        title="INSPECT"
+                    />
+                    <div style={{ position: 'absolute' }}>
+                        {clusters.inspect && (
+                            <CloseIcon
+                                size={size - 20}
+                                type="dark"
+                            />
+                        )}
+                    </div>
+                </>
+            </Button>
+        </div>
     );
 }

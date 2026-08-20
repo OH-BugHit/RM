@@ -203,6 +203,99 @@
         "6": "This was the previous state. Click on marker to see how it was updated.",
         "7": "Click Inspect again at any point of the game to run these 8 steps again."
     },
+    "levels": {
+        "1": {
+            "tasks": {
+                "p1": {
+                    "title": "Design agent",
+                    "task": {
+                        "1": "Select image"
+                    }
+                },
+                "p2": {
+                    "title": "Controls",
+                    "task": {
+                        "1": "Play 8 steps",
+                        "2": "Play",
+                        "3": "Fast forward"
+                    }
+                }
+            },
+            "text": {
+                "1": "Hi, and welcome to Reward Machine!",
+                "2": "In this level, the goal is the treasure chest.",
+                "3": "First, you will design your agent and learn how to play the game.",
+                "4": "Your tasks are shown on the left. Complete them all, and \"Test\" button will appear. Your agent then has to succesfully complete the level without interference.",
+                "5": "First, choose how your agent looks. Open the \"Agent\" menu and change its appearance.",
+                "6": "Clock up there shows how many moves the agent has left. The agent itself does not know how much time is left. The agent must reach the goal before time run out.",
+                "7": "Now let's start the game. You can play one step at a time.",
+                "8": "Or let the agent play continuously.",
+                "9": "You can also let the agent play at unlimited speed. This helps it learn quickly!",
+                "10": "Use Fast Forward to speed up learning.",
+                "11": "Great! Fast Forward helps the agent learn quickly. In later levels, you will get to change what the agent learns and see how it learns.",
+                "12": "All tasks are complete! Click \"Test Agent\" in the progress panel. To pass the level, the agent must reach the goal 5 times."
+            },
+            "nextLevelInfo": "The next level will introduce you to the concept of rewards. The agent learns from the rewards it receives while playing and remembers which actions were rewarded the most in different situations.",
+            "postMessage": "In this level, you learned how the game works. You taught your agent to reach the goal successfully! In reinforcement learning, an agent learns by playing and interacting with the game.",
+            "preMessage": "In reinforcement learning, an agent learns by playing and interacting with the game. Your goal is to teach your agent how to play. First, complete the tasks to set up the game and help your agent learn. Then, test your agent to see if it has learned to complete the level."
+        },
+        "2": {
+            "tasks": {
+                "p1": {
+                    "title": "Reach goal",
+                    "task": {
+                        "1": "Reach goal"
+                    }
+                },
+                "p2": {
+                    "title": "Perfect round",
+                    "task": {
+                        "1": "Avoid mushrooms",
+                        "2": "Collect all coins",
+                        "3": "Collect money bag",
+                        "4": "New highscore!"
+                    }
+                }
+            },
+            "text": {
+                "1": "First, let's recap. Reach the goal. Again, the treasure chest is the goal.",
+                "2": "That was easy! But from now on, you need also teach the agent to collect score on the way.",
+                "3": "You can see your score next to the clock. Your objective is to beat the high score!",
+                "4": "For that, you need to teach the agent to avoid the mushrooms and other traps...",
+                "5": "...and collect the small and big treasures!",
+                "6": "Now, tune the rewards so the agent avoids mushrooms and collects treasures while still reaching the goal in time.",
+                "7": "You can set the reward for when the agent runs out of time before reaching the goal.",
+                "8": "And you can set the rewards for reaching different items.",
+                "9": "Complete all tasks and test your agent to complete the level!"
+            },
+            "nextLevelInfo": "Agent already learnt a lot. But how much is enough? The agent must try new things to learn new things but also it has to settle for something. Next level will introduce you to exploration vs exploitation dilemma.",
+            "postMessage": "In this level, you learned that the agent receives rewards from the environment in different situations.",
+            "preMessage": "In this level, your goal is to tune the rewards for treasures and traps so that the agent avoids traps, collects treasures, and reaches the goal in time. Remember, the agent always tries to maximize its reward. It does not know the actual goal or the tasks."
+        },
+        "3": {
+            "tasks": {
+                "p1": {
+                    "title": "Explore and Exploit!",
+                    "task": {
+                        "1": "New highscore!"
+                    }
+                }
+            },
+            "text": {
+                "1": "Again, your agent needs to reach to the goal. This time there is three possible goals to choose. Agent should also receive at least one point to beat the level.",
+                "2": "The agent should explore more and not exploit its' best knowledge of the level so much.",
+                "3": "This problem is called exploration-explotation dilemma.",
+                "4": "Luckily for us, there is a parameter that we can tune to overcome this issue!",
+                "5": "In this game it is called \"Curiosity\".",
+                "6": "This parameter tunes how often agent selects random action on instead of best action it knows.",
+                "7": "Usually 0.1 (10% propability!) is enough, but in this level you may need keep it higher for at least some time that your agent explores enough.",
+                "8": "Good luck! You can reset agents memory from trash button near agent menu. BTW: For test phase the Curiosity is set to 0 and it follows the best learned policy."
+            },
+            "nextLevelInfo": "At the next level we take a glimpse how agent actually observes the environment. We also take a look to how it stores its' learned.",
+            "postMessage": "This level tought you about exploration vs exploitation dilemma: The agent can not know what is the ultimate reward, but it has to stop looking at some point.",
+            "preMessage": "In this level you hit to the exploration-explotation dilemma: Should the agent try more things to learn more or exploit already feasible policy."
+        }
+    },
     "playEnv": {
         "load": {
             "title": "Play or modify ready game"
@@ -211,6 +304,7 @@
     "progress": {
         "title": {
             "current": "Current progression",
+            "level": "Level progress",
             "total": "Tutorial progression"
         },
         "help": { "toolsDisabled": "Progress tutorial to use or modify your tools" }
@@ -347,7 +441,7 @@
     "topBar": {
         "score": {
             "gained": "Score",
-            "top": "Best Score",
+            "top": "Your Best",
             "toBeat": "Score to Beat"
         }
     },

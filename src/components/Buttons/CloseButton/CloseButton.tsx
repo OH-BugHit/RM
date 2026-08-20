@@ -17,6 +17,7 @@ export default function CloseButton({ target }: CloseButtonProps) {
                         img: false,
                         obs: false,
                         prm: false,
+                        trash: true,
                     },
                 };
             });

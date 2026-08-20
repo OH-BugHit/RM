@@ -28,7 +28,7 @@ export function getBuildButtons(windowSize?: { width: number; height: number }):
             content: <DesignWizard active />,
             size: { h: Math.min(1000, h - VIEWPORT_GAP), w: 800 },
             target: {
-                x: -(w / 2) + w * 0.08,
+                x: -(w / 2) + 116,
                 y: -(h * 0.8) / 2,
             },
         },

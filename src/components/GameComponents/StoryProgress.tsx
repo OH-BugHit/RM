@@ -1,9 +1,9 @@
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
     HUDvisAtom,
-    StatsContentAtom,
+    TextHelpAtom,
     StoryProgressAtom,
-    StoryStepAtom,
+    TextStepAtom,
     UiHelpAtom,
     TileVisibilityAtom,
     ControlEnablerAtom,
@@ -18,9 +18,9 @@ import { GameControlAtom } from '../../atoms/state';
 import { EpisodicDataAtom } from '../../atoms/gameState';
 
 export default function StoryProgress() {
-    const [step, setStep] = useAtom(StoryStepAtom);
+    const [step, setStep] = useAtom(TextStepAtom);
     const setHud = useSetAtom(HUDvisAtom);
-    const setTextContent = useSetAtom(StatsContentAtom);
+    const setTextContent = useSetAtom(TextHelpAtom);
     const [progress, setProgress] = useAtom(StoryProgressAtom);
     const setVisibleTiles = useSetAtom(TileVisibilityAtom);
     const setUIHelper = useSetAtom(UiHelpAtom);
@@ -40,7 +40,7 @@ export default function StoryProgress() {
             setStep(23);
             return;
         }
-        if (progress.hud.agentView.steps && controlState.isRunning) {
+        if (progress.agentView.steps && controlState.isRunning) {
             setStep(22);
             return;
         }
@@ -49,11 +49,11 @@ export default function StoryProgress() {
             setStep(20);
             return;
         }
-        if (progress.hud.agentView.steps) {
+        if (progress.agentView.steps) {
             setStep(19);
             return;
         }
-        if (progress.hud.agentView.opened) {
+        if (progress.agentView.opened) {
             setStep(18);
             return;
         }
@@ -112,18 +112,18 @@ export default function StoryProgress() {
 
     useEffect(() => {
         setTextContent((old) => {
-            return { mode: old.mode, phase: step };
+            return { mode: old.mode, textKey: `${step}` };
         });
         switch (step) {
             case 0: {
-                setTextContent({ mode: 'textNext', phase: step });
+                setTextContent({ mode: 'textNext', textKey: `${step}` });
                 setHud((old) => {
                     return { ...old, text: true, progress: true };
                 });
                 break;
             }
             case 2: {
-                setTextContent({ mode: 'text', phase: step });
+                setTextContent({ mode: 'text', textKey: `${step}` });
                 setHud((old) => {
                     return {
                         ...old,
@@ -132,6 +132,7 @@ export default function StoryProgress() {
                             img: true,
                             prm: false,
                             obs: false,
+                            trash: true,
                         },
                     };
                 });
@@ -164,6 +165,7 @@ export default function StoryProgress() {
                             img: true,
                             prm: false,
                             obs: true,
+                            trash: true,
                         },
                     };
                 });
@@ -180,7 +182,7 @@ export default function StoryProgress() {
                 break;
             }
             case 4: {
-                setTextContent({ mode: 'textNext', phase: step });
+                setTextContent({ mode: 'textNext', textKey: `${step}` });
                 setUIHelper((old) => {
                     return {
                         ...old,
@@ -195,7 +197,7 @@ export default function StoryProgress() {
             }
 
             case 5: {
-                setAgentCluster({ obs: false, img: false, prm: false });
+                setAgentCluster({ obs: false, img: false, prm: false, trash: true });
                 setHud((old) => {
                     return {
                         ...old,
@@ -205,7 +207,7 @@ export default function StoryProgress() {
             }
 
             case 6: {
-                setTextContent({ mode: 'text', phase: step });
+                setTextContent({ mode: 'text', textKey: `${step}` });
                 setHud((old) => {
                     return {
                         ...old,
@@ -264,7 +266,7 @@ export default function StoryProgress() {
                         createTile: false,
                     };
                 });
-                setTextContent({ mode: 'textNext', phase: step });
+                setTextContent({ mode: 'textNext', textKey: `${step}` });
                 break;
             }
             case 10: {
@@ -299,7 +301,7 @@ export default function StoryProgress() {
                         tools: true,
                     };
                 });
-                setTextContent({ mode: 'text', phase: step });
+                setTextContent({ mode: 'text', textKey: `${step}` });
                 break;
             }
             case 11: {
@@ -321,11 +323,11 @@ export default function StoryProgress() {
                         createTile: false,
                     };
                 });
-                setTextContent({ mode: 'text', phase: step });
+                setTextContent({ mode: 'text', textKey: `${step}` });
                 break;
             }
             case 12: {
-                setTextContent({ mode: 'textNext', phase: step });
+                setTextContent({ mode: 'textNext', textKey: `${step}` });
                 break;
             }
             case 13: {
@@ -341,7 +343,7 @@ export default function StoryProgress() {
                         sideOpener: undefined,
                     };
                 });
-                setTextContent({ mode: 'textNext', phase: step });
+                setTextContent({ mode: 'textNext', textKey: `${step}` });
                 break;
             }
             case 14: {
@@ -361,25 +363,25 @@ export default function StoryProgress() {
                         sideOpener: 'settings',
                     };
                 });
-                setTextContent({ mode: 'textNext', phase: step });
+                setTextContent({ mode: 'textNext', textKey: `${step}` });
                 break;
             }
             case 15: {
                 setHud((old) => {
                     return {
                         ...old,
-                        envTitle: true,
+                        gameBar: true,
                     };
                 });
-                setTextContent({ mode: 'textNext', phase: step });
+                setTextContent({ mode: 'textNext', textKey: `${step}` });
                 break;
             }
             case 16: {
-                setTextContent({ mode: 'text', phase: step });
+                setTextContent({ mode: 'text', textKey: `${step}` });
                 setHud((old) => {
                     return {
                         ...old,
-                        controls: true,
+                        controlBar: true,
                     };
                 });
                 setControls({ play: true, ff: false, step: false, inspect: false });
@@ -400,7 +402,7 @@ export default function StoryProgress() {
                 break;
             }
             case 18: {
-                setTextContent({ mode: 'text', phase: step });
+                setTextContent({ mode: 'text', textKey: `${step}` });
                 setHud((old) => {
                     return {
                         ...old,
@@ -417,20 +419,20 @@ export default function StoryProgress() {
                 break;
             }
             case 19: {
-                setTextContent({ mode: 'text', phase: step });
+                setTextContent({ mode: 'text', textKey: `${step}` });
                 break;
             }
             case 20: {
-                setTextContent({ mode: 'textNext', phase: step });
+                setTextContent({ mode: 'textNext', textKey: `${step}` });
                 break;
             }
             case 21: {
-                setTextContent({ mode: 'text', phase: step });
+                setTextContent({ mode: 'text', textKey: `${step}` });
                 setControls({ play: true, ff: true, step: true, inspect: false });
                 break;
             }
             case 22: {
-                setTextContent({ mode: 'text', phase: step });
+                setTextContent({ mode: 'text', textKey: `${step}` });
                 break;
             }
             case 23: {
@@ -441,7 +443,7 @@ export default function StoryProgress() {
                         isRunning: false,
                     };
                 });
-                setTextContent({ mode: 'textNext', phase: step });
+                setTextContent({ mode: 'textNext', textKey: `${step}` });
                 break;
             }
             case 25: {
@@ -462,21 +464,21 @@ export default function StoryProgress() {
                     };
                 });
                 setControls({ play: false, ff: false, step: false, inspect: false });
-                setTextContent({ mode: 'textNext', phase: step });
+                setTextContent({ mode: 'textNext', textKey: `${step}` });
                 break;
             }
             case 27: {
-                setTextContent({ mode: 'text', phase: step });
-                setTextContent({ mode: 'text', phase: step });
+                setTextContent({ mode: 'text', textKey: `${step}` });
+                setTextContent({ mode: 'text', textKey: `${step}` });
                 setControls({ play: false, ff: false, step: false, inspect: true });
                 break;
             }
             case 32: {
-                setTextContent({ mode: 'inspect', phase: step });
+                setTextContent({ mode: 'inspect', textKey: `${step}` });
                 break;
             }
             case 34: {
-                setTextContent({ mode: 'textNext', phase: step });
+                setTextContent({ mode: 'textNext', textKey: `${step}` });
                 setHud((old) => {
                     return {
                         ...old,
@@ -498,6 +500,7 @@ export default function StoryProgress() {
                             prm: true,
                             obs: true,
                             img: true,
+                            trash: true,
                         },
                         text: false,
                         progress: false,

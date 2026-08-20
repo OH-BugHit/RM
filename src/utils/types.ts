@@ -1,4 +1,16 @@
-import { Agent, AgentProps, Cell, CellType, EnvSettings } from '../types';
+import {
+    Agent,
+    AgentCluster,
+    AgentProps,
+    BuildCluster,
+    Cell,
+    CellType,
+    EnvSettings,
+    InspectCluster,
+    NestedKeyOf,
+    RewardCluster,
+    StoryProgress,
+} from '../types';
 
 export type SavePreview = {
     manifest: Manifest;
@@ -7,8 +19,10 @@ export type SavePreview = {
 
 export type Manifest = {
     gameName: string;
+    highScore?: number;
     saveVersion: number;
     createdAt: string;
+    levelIndex?: number;
 };
 export type TileDefinitionSave = {
     id: string;
@@ -25,8 +39,11 @@ export type CellSave = {
     image: string;
 };
 
-export type EnvSettingsSave = {
-    generic: EnvSettings['generic'];
+export type UiControls = {
+    agentC: AgentCluster;
+    buildC: BuildCluster;
+    inspectC: InspectCluster;
+    rewardC: RewardCluster;
 };
 
 export type LoadedGame = {
@@ -36,10 +53,11 @@ export type LoadedGame = {
     };
     game: {
         world: CellSave[][];
-        envSettings: EnvSettingsSave;
+        envSettings: EnvSettings;
     };
     agent: {
         settings: AgentProps;
         activeAgent: Agent;
     };
 };
+export type StoryProgressField = NestedKeyOf<StoryProgress>;

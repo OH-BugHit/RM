@@ -11,9 +11,10 @@ export default function BuildClusteParent() {
     const setB = useSetAtom(BuildCAtom);
     const setI = useSetAtom(InspectCAtom);
     const setR = useSetAtom(RewardCAtom);
+    const size = 160;
 
     const handleClick = () => {
-        setA({ prm: false, img: false, obs: false });
+        setA({ prm: false, img: false, obs: false, trash: true });
         if (clusters.build) setB({ tools: false, create: false, settings: false });
         setI({ qMap: false, charts: false, agentVision: false });
         setR({ time: false, step: false, props: false });
@@ -28,24 +29,26 @@ export default function BuildClusteParent() {
         });
     };
     return (
-        <Button
-            className={style.icon}
-            onClick={() => handleClick()}
-        >
-            <>
-                <BuildIcon
-                    size={220}
-                    title="BUILD"
-                />
-                <div style={{ position: 'absolute' }}>
-                    {clusters.build && (
-                        <CloseIcon
-                            size={140}
-                            type="dark"
-                        />
-                    )}
-                </div>
-            </>
-        </Button>
+        <div className={style.clusterParent}>
+            <Button
+                onClick={() => handleClick()}
+                style={{ width: size, height: size }}
+            >
+                <>
+                    <BuildIcon
+                        size={size}
+                        title="BUILD"
+                    />
+                    <div style={{ position: 'absolute' }}>
+                        {clusters.build && (
+                            <CloseIcon
+                                size={size - 20}
+                                type="dark"
+                            />
+                        )}
+                    </div>
+                </>
+            </Button>
+        </div>
     );
 }

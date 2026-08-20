@@ -7,17 +7,11 @@ import SchoolIcon from '@mui/icons-material/School';
 import { TextField, ThemeProvider } from '@mui/material';
 import LinkButton from '../../components/Buttons/LinkButton/LinkButton';
 import Phase from './Phase';
-import { ActiveAgentAtom, ActiveEnvironmentAtom } from '../../atoms/state';
-import { useSetAtom } from 'jotai';
-import { EnvironmentTypes } from '../../types';
-import { getAgentImage } from '../../components/GameComponents/agentProps';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 export default function Frontpage() {
     const { t } = useTranslation();
-    const setEnvironment = useSetAtom(ActiveEnvironmentAtom);
-    const setAgent = useSetAtom(ActiveAgentAtom);
     const [inputCode, setInputCode] = useState<string>('');
     const navigate = useNavigate();
 
@@ -27,37 +21,6 @@ export default function Frontpage() {
 
     const toTeacher = () => {
         navigate('/library/');
-    };
-
-    const setPremade = (type: EnvironmentTypes) => {
-        switch (type) {
-            case 'potsAndBurglar': {
-                setEnvironment({
-                    name: 'Home',
-                    type: 'potsAndBurglar',
-                });
-                setAgent({
-                    img: getAgentImage({ type: 'robodog' }),
-                    name: 'Robo-Dog',
-                    type: 'robodog',
-                    observationShape: 'small',
-                });
-                break;
-            }
-            case 'created': {
-                setEnvironment({
-                    name: '',
-                    type: 'created',
-                });
-                setAgent({
-                    img: undefined,
-                    name: '',
-                    type: 'unset',
-                    observationShape: 'unset',
-                });
-                break;
-            }
-        }
     };
 
     const logoSize = Math.min(192, window.innerWidth * 0.3);
@@ -126,8 +89,7 @@ export default function Frontpage() {
                         <Phase
                             id="yourWorld"
                             image="images/environments/potsAndBurglar.png"
-                            url="/play"
-                            onClick={() => setPremade('created')}
+                            url="/student"
                         />
                         <Phase
                             id="import"

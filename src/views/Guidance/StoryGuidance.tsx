@@ -5,11 +5,11 @@ import { useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SubView, ViewEnum } from '../../types';
-import { StoryStepAtom } from '../../atoms/uiState';
+import { TextStepAtom } from '../../atoms/uiState';
 
 export default function StoryGuidance() {
     const { t } = useTranslation();
-    const [currentSelected, setCurrentSelected] = useAtom(StoryStepAtom);
+    const [currentSelected, setCurrentSelected] = useAtom(TextStepAtom);
     const stepRefs = useRef<Record<number, HTMLLIElement | null>>({});
     const containerRef = useRef<HTMLDivElement | null>(null);
     const navigate = useNavigate();

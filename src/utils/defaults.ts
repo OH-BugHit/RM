@@ -12,7 +12,9 @@ import {
     PropImages,
     RewardCluster,
     StoryProgress,
+    TeacherControl,
     TimeStepData,
+    TutorialLayout,
     UiHelp,
     WorldGeneratorProps,
 } from '../types';
@@ -56,14 +58,14 @@ export const CELL_TYPE_COLORS: Record<CellType, string> = {
 const defaultImg = {
     n1: '/images/assets/cleanWhiteStone.png',
     p0: '/images/assets/cleanWhiteStone.png',
-    p1: '/images/assets/wall1.png',
+    p1: '/images/assets/wall.png',
     p2: '/images/assets/trap2_260.png',
     p3: 'images/assets/key1.png',
     p4: 'images/assets/door1.png',
     p5: 'images/assets/doorLocked1_260.png',
     p6: '/images/assets/smallTreasure_260.png',
     p7: '/images/assets/bigTreasure_260.png',
-    p8: '/images/assets/wall1.png',
+    p8: '/images/assets/wall.png',
     specialAction1: '/images/assets/hau.png',
     burglar1: 'none',
     burglar2: 'none',
@@ -90,199 +92,7 @@ export const defaultImages = {
     loaded: <PropImages>{ defaultImg },
 };
 
-export const rewardConfigs = {
-    potsAndBurglar: [
-        {
-            key: 'spookedBurglarReward',
-            label: 'Burglar spooked by bark',
-            min: -20,
-            max: 20,
-            step: 1,
-            defaultValue: 10,
-            type: 'number',
-        },
-        {
-            key: 'brokePotReward',
-            label: 'RoboDog broke furniture',
-            min: -20,
-            max: 20,
-            step: 1,
-            defaultValue: -2,
-            type: 'number',
-        },
-        {
-            key: 'barkSuccessReward',
-            label: 'Burglar spooked by noise',
-            min: -20,
-            max: 20,
-            step: 1,
-            defaultValue: 10,
-            type: 'number',
-        },
-        {
-            key: 'barkFailReward',
-            label: 'RoboDog Barks',
-            min: -20,
-            max: 20,
-            step: 1,
-            defaultValue: -1,
-            type: 'number',
-        },
-        {
-            key: 'burglarWonReward',
-            label: 'Burglar wins',
-            min: -20,
-            max: 20,
-            step: 1,
-            defaultValue: -10,
-            type: 'number',
-        },
-    ],
-    generic: [
-        {
-            key: 'stepReward',
-            label: 'Step reward',
-            min: -5,
-            max: 5,
-            step: 1,
-            defaultValue: 1,
-            type: 'number',
-        },
-        {
-            key: 'reward1',
-            label: 'Reward 1',
-            min: -20,
-            max: 20,
-            step: 1,
-            defaultValue: 5,
-            type: 'number',
-        },
-        {
-            key: 'reward2',
-            label: 'Reward 2',
-            min: -20,
-            max: 20,
-            step: 1,
-            defaultValue: 5,
-            type: 'number',
-        },
-        {
-            key: 'reward3',
-            label: 'Reward 3',
-            min: -20,
-            max: 20,
-            step: 1,
-            defaultValue: 5,
-            type: 'number',
-        },
-        {
-            key: 'reward4',
-            label: 'Reward 4',
-            min: -20,
-            max: 20,
-            step: 1,
-            defaultValue: 5,
-            type: 'number',
-        },
-        {
-            key: 'reward5',
-            label: 'Reward 5',
-            min: -20,
-            max: 20,
-            step: 1,
-            defaultValue: 5,
-            type: 'number',
-        },
-        {
-            key: 'reward6',
-            label: 'Reward 6',
-            min: -20,
-            max: 20,
-            step: 1,
-            defaultValue: 5,
-            type: 'number',
-        },
-        {
-            key: 'abilitySuccessReward',
-            label: 'Ability success',
-            min: -20,
-            max: 20,
-            step: 1,
-            defaultValue: 10,
-            type: 'number',
-        },
-        {
-            key: 'abilityFailureReward',
-            label: 'Ability failure',
-            min: -20,
-            max: 20,
-            step: 1,
-            defaultValue: -5,
-            type: 'number',
-        },
-        {
-            key: 'trap1',
-            label: 'Trap penalty',
-            min: -20,
-            max: 0,
-            step: 1,
-            defaultValue: -10,
-            type: 'number',
-        },
-        {
-            key: 'win',
-            label: 'Win reward',
-            min: 0,
-            max: 50,
-            step: 1,
-            defaultValue: 20,
-            type: 'number',
-        },
-        {
-            key: 'lose',
-            label: 'Lose penalty',
-            min: -50,
-            max: 0,
-            step: 1,
-            defaultValue: -20,
-            type: 'number',
-        },
-        {
-            key: 'killed',
-            label: 'Killed penalty',
-            min: -100,
-            max: 0,
-            step: 1,
-            defaultValue: -50,
-            type: 'number',
-        },
-        {
-            key: 'trapLethal',
-            label: 'Trap is lethal',
-            type: 'boolean',
-            defaultValue: false,
-        },
-    ],
-};
-
 export const defaultEnvSettings: EnvSettings = {
-    potsAndBurglar: {
-        env: {
-            gridSize: 10,
-            maxTurns: 20,
-            numberOfPots: 10,
-            potReloadDelay: 20,
-            breakPotSpooksBurglar: false,
-        },
-        reward: {
-            spookedBurglarReward: 10,
-            brokePotReward: -15,
-            barkSuccessReward: 10,
-            barkFailReward: -3,
-            burglarWonReward: -10,
-            rewardStep: 0,
-        },
-    },
     generic: {
         env: {
             maxTurns: 35,
@@ -325,6 +135,204 @@ export const defaultTimeStepData: TimeStepData = {
     lastAction: Actions.stay,
 };
 
+export const oldTutorial: Record<number, TutorialLayout> = {
+    0: {
+        position: { top: '50%', left: '50%' },
+        centerX: -50,
+        centerY: -50,
+    },
+    1: {
+        position: { top: '50%', left: '50%' },
+        centerX: -50,
+        centerY: -50,
+    },
+    2: {
+        position: { top: '50%', left: '50%' },
+        centerX: -50,
+        centerY: -50,
+    },
+    3: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 0,
+    },
+    4: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 0,
+    },
+    5: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 0,
+    },
+    6: {
+        position: { top: '100%', left: '50%' },
+        centerX: -50,
+        centerY: -110,
+    },
+    7: {
+        position: { top: '100%', left: '50%' },
+        centerX: -50,
+        centerY: -110,
+    },
+    8: {
+        position: { top: '0%', left: '100%' },
+        centerX: -110,
+        centerY: 0,
+    },
+    9: {
+        position: { top: '100%', left: '50%' },
+        centerX: -50,
+        centerY: -110,
+    },
+    10: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 10,
+    },
+    11: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 10,
+    },
+    12: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 10,
+    },
+    13: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 10,
+    },
+    14: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 10,
+    },
+    15: {
+        position: { top: '20%', left: '50%' },
+        centerX: -50,
+        centerY: 10,
+    },
+    16: {
+        position: { top: '80%', left: '50%' },
+        centerX: -50,
+        centerY: -110,
+    },
+    17: {
+        position: { top: '70%', left: '0%' },
+        centerX: 0,
+        centerY: -100,
+    },
+    18: {
+        position: { top: '70%', left: '0%' },
+        centerX: 0,
+        centerY: -100,
+    },
+    19: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 0,
+    },
+    20: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 0,
+    },
+    21: {
+        position: { top: '80%', left: '20%' },
+        centerX: 0,
+        centerY: -100,
+    },
+    22: {
+        position: { top: '84%', left: '50%' },
+        centerX: -50,
+        centerY: -100,
+    },
+    23: {
+        position: { top: '84%', left: '50%' },
+        centerX: -50,
+        centerY: -100,
+    },
+    24: {
+        position: { top: '80%', left: '20%' },
+        centerX: 0,
+        centerY: -100,
+    },
+    25: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 0,
+    },
+    26: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 0,
+    },
+    27: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 0,
+    },
+    28: {
+        position: { top: '80%', left: '20%' },
+        centerX: 0,
+        centerY: -100,
+    },
+    29: {
+        position: { top: '50%', left: '50%' },
+        centerX: -50,
+        centerY: 0,
+    },
+    30: {
+        position: { top: '50%', left: '50%' },
+        centerX: -50,
+        centerY: 0,
+    },
+    31: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 0,
+    },
+    32: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 0,
+    },
+    33: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 0,
+    },
+    34: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 0,
+    },
+    35: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 0,
+    },
+    36: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 0,
+    },
+    37: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 0,
+    },
+    38: {
+        position: { top: '0%', left: '50%' },
+        centerX: -50,
+        centerY: 0,
+    },
+};
+
 export const defaultVisibleTiles = {
     agent: false,
     observation: false,
@@ -340,7 +348,22 @@ export const defaultVisibleTiles = {
     outside: false,
 };
 
-export const defaultStoryProgress: StoryProgress = {
+export const visibleTilesTrue = {
+    agent: true,
+    observation: true,
+    spawn: true,
+    empty: true,
+    wall: true,
+    trigger: true,
+    key: true,
+    door: true,
+    lockedDoor: true,
+    treasure: true,
+    treasureBig: true,
+    outside: true,
+};
+
+export const falseStoryProgress: StoryProgress = {
     agent: {
         opened: false,
         name: false,
@@ -364,6 +387,14 @@ export const defaultStoryProgress: StoryProgress = {
         goalSet: false,
         closed: false,
     },
+    gamePlay: {
+        bigTreasureCollected: false,
+        goal: false,
+        noTrapsCollected: false,
+        treasureCollected: false,
+        newHighScore: false,
+        lockProgress: false,
+    },
     rewards: {
         opened: false,
         closed: false,
@@ -372,11 +403,15 @@ export const defaultStoryProgress: StoryProgress = {
         opened: false,
         closed: false,
     },
-    hud: {
-        agentView: {
-            steps: false,
-            opened: false,
-        },
+    agentView: {
+        steps: false,
+        opened: false,
+    },
+    controls: {
+        step: false,
+        play: false,
+        ff: false,
+        inspect: false,
     },
 };
 
@@ -394,8 +429,18 @@ export const defaultHUDvis: HUDvisibility = {
     qTable: false,
     cableLeft: false,
     cableRight: false,
-    envTitle: false,
-    controls: false,
+    gameBar: false,
+    gameBarContent: {
+        picked: true,
+        score: true,
+    },
+    controlBar: false,
+    controls: {
+        ff: true,
+        play: true,
+        inspect: true,
+        step: true,
+    },
     alpha: false,
     gamma: false,
     epsilon: false,
@@ -413,6 +458,7 @@ export const defaultHUDvis: HUDvisibility = {
         img: false,
         obs: false,
         prm: false,
+        trash: false,
     },
     build: {
         create: false,
@@ -450,6 +496,14 @@ export const playStoryProgress: StoryProgress = {
         goalSet: true,
         closed: true,
     },
+    gamePlay: {
+        bigTreasureCollected: false,
+        goal: false,
+        noTrapsCollected: false,
+        treasureCollected: false,
+        newHighScore: false,
+        lockProgress: false,
+    },
     rewards: {
         opened: true,
         closed: true,
@@ -458,23 +512,37 @@ export const playStoryProgress: StoryProgress = {
         opened: true,
         closed: true,
     },
-    hud: {
-        agentView: {
-            steps: true,
-            opened: false,
-        },
+    agentView: {
+        steps: true,
+        opened: false,
+    },
+    controls: {
+        step: true,
+        play: true,
+        ff: true,
+        inspect: true,
     },
 };
 
-export const playHudyVis: HUDvisibility = {
+export const playHudVis: HUDvisibility = {
     text: false,
     charts: true,
     agentVision: false,
     qTable: false,
     cableLeft: false,
     cableRight: false,
-    envTitle: true,
-    controls: true,
+    gameBar: true,
+    controlBar: true,
+    gameBarContent: {
+        picked: true,
+        score: true,
+    },
+    controls: {
+        ff: true,
+        play: true,
+        inspect: true,
+        step: true,
+    },
     alpha: false,
     gamma: true,
     epsilon: true,
@@ -492,11 +560,112 @@ export const playHudyVis: HUDvisibility = {
         img: true,
         obs: true,
         prm: true,
+        trash: true,
     },
     build: {
         create: false,
         tools: false,
         settings: false,
+    },
+    inspect: {
+        charts: true,
+        agentVision: true,
+        qMap: true,
+    },
+};
+
+export const hudVisFalse: HUDvisibility = {
+    text: false,
+    charts: false,
+    agentVision: false,
+    qTable: false,
+    cableLeft: false,
+    cableRight: false,
+    gameBar: false,
+    controlBar: false,
+    gameBarContent: {
+        picked: false,
+        score: false,
+    },
+    controls: {
+        ff: false,
+        play: false,
+        inspect: false,
+        step: false,
+    },
+    alpha: false,
+    gamma: false,
+    epsilon: false,
+    progress: false,
+    buildCluster: false,
+    inspectCluster: false,
+    rewardCluster: false,
+    agentCluster: false,
+    reward: {
+        step: false,
+        time: false,
+        props: false,
+    },
+    agent: {
+        img: false,
+        obs: false,
+        prm: false,
+        trash: false,
+    },
+    build: {
+        create: false,
+        tools: false,
+        settings: false,
+    },
+    inspect: {
+        charts: false,
+        agentVision: false,
+        qMap: false,
+    },
+};
+
+export const hudVisBuild: HUDvisibility = {
+    text: false,
+    charts: true,
+    agentVision: true,
+    qTable: true,
+    cableLeft: true,
+    cableRight: true,
+    gameBar: true,
+    controlBar: true,
+    gameBarContent: {
+        picked: true,
+        score: true,
+    },
+    controls: {
+        ff: true,
+        play: true,
+        inspect: false,
+        step: true,
+    },
+    alpha: true,
+    gamma: true,
+    epsilon: true,
+    progress: false,
+    buildCluster: true,
+    inspectCluster: true,
+    rewardCluster: true,
+    agentCluster: true,
+    reward: {
+        step: true,
+        time: true,
+        props: true,
+    },
+    agent: {
+        img: true,
+        obs: true,
+        prm: true,
+        trash: true,
+    },
+    build: {
+        create: true,
+        tools: true,
+        settings: true,
     },
     inspect: {
         charts: true,
@@ -542,6 +711,7 @@ export const defAgentContent: AgentCluster = {
     img: false,
     obs: false,
     prm: false,
+    trash: false,
 };
 
 export const defBuildContent: BuildCluster = {
@@ -591,7 +761,7 @@ const W: Cell = {
     type: CellType.Solid,
     reloadTime: 0,
     timer: 0,
-    image: 'images/assets/wall1.png',
+    image: 'images/assets/wall.png',
 };
 
 export const defaultCell: Cell = {
@@ -615,6 +785,10 @@ export const defaultWorldGrid: Cell[][] = [
     [W, S, S, S, S, S, S, S, S, S, S, W],
     [W, W, W, W, W, W, W, W, W, W, W, W],
 ];
+
+export const testTeacherControls: TeacherControl = {
+    wait: false,
+};
 
 export const defaultSprites: Record<number, string> = {
     [-1]: '/images/assets/cleanWhiteStone.png', // Spawn

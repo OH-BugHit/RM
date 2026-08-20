@@ -75,19 +75,19 @@ export default function DesignIcon({ size = 140 }: ToolsIconProps) {
                 >
                     <stop
                         offset="0%"
-                        stopColor="#FFD6D0"
+                        stopColor="#FFD6DC"
                     />
                     <stop
-                        offset="25%"
-                        stopColor="#D8756E"
+                        offset="22%"
+                        stopColor="#E04F66"
                     />
                     <stop
-                        offset="60%"
-                        stopColor="#8E3434"
+                        offset="55%"
+                        stopColor="#8A2F40"
                     />
                     <stop
                         offset="100%"
-                        stopColor="#351212"
+                        stopColor="#3A121C"
                     />
                 </radialGradient>
 

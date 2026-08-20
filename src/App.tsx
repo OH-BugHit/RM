@@ -8,7 +8,7 @@ function App() {
     return (
         <Suspense
             fallback={
-                <div>
+                <div style={{ minHeight: '100dvh', display: 'flex', alignItems: 'center', justifyContent: ' center' }}>
                     loading...
                     <Spinner />
                 </div>

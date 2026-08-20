@@ -12,16 +12,16 @@ export default function TopBar({ hideStuff }: EnvironmentProps) {
     const hudVis = useAtomValue(HUDvisAtom);
     return (
         <>
-            {hudVis.envTitle && !hideStuff && (
+            {hudVis.gameBar && !hideStuff && (
                 <div className={style.topBar}>
                     <div className={style.infoBar}>
-                        <div className={style.left}>
+                        <div className={`${style.left} ${hudVis.gameBarContent.picked ? '' : style.hidden}`}>
                             <ItemProgress />
                         </div>
 
                         <div className={style.spacer} />
 
-                        <div className={style.right}>
+                        <div className={`${style.right} ${hudVis.gameBarContent.score ? '' : style.hidden}`}>
                             <Score />
                         </div>
                     </div>

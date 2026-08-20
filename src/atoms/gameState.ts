@@ -1,9 +1,13 @@
 import { atom } from 'jotai';
 import {
+    AgentTest,
     Cell,
     EnvSettings,
     EpisodicData,
+    FireworkPulse,
     GenericObservation,
+    Level,
+    TestWinData,
     ObservationShape,
     StateData,
     TimeStepData,
@@ -11,6 +15,7 @@ import {
 import { getDefaultObservation } from '../components/GameComponents/agentProps';
 import { ChartState } from '../components/Charts/rewardStreamEngine';
 import { defaultCell, defaultEnvSettings } from '../utils/defaults';
+import { level1 } from '../utils/levels/level1/leveldata';
 
 export const SmallObsAtom = atom<GenericObservation>(getDefaultObservation('small'));
 export const LargeObsAtom = atom<GenericObservation>(getDefaultObservation('large'));
@@ -18,6 +23,7 @@ export const FacingAtom = atom<1 | 0 | -1>(1);
 export const TimeStepDataAtom = atom<TimeStepData>();
 export const EpisodicDataAtom = atom<EpisodicData>();
 export const StateDataAtom = atom<StateData>({ previous: '', current: '' }); // Used by AgentVision to show current state
+export const TestWinAtom = atom<TestWinData>({ beatsScore: 0 });
 
 export const SelectedObsShapeAtom = atom<ObservationShape>('unset');
 
@@ -36,3 +42,13 @@ export const RewardsPulseAtom = atom<boolean>(true);
 export const MoveQmapAtom = atom<boolean>(true);
 
 export const StepsLeftAtom = atom<number>(0);
+
+export const LevelConfAtom = atom<Level | undefined>(level1);
+
+/**
+ * If test phase active
+ */
+export const TestAgentAtom = atom<AgentTest>('no');
+
+// Set true to activate. Disarms itself
+export const FireWorksPulseAtom = atom<FireworkPulse>({ highScore: false, bestScore: false });

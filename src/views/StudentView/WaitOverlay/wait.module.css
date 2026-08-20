@@ -1,0 +1,28 @@
+.waitContent {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    max-width: 400px;
+    height: fit-content;
+    align-items: center;
+    gap: 2rem;
+    padding: 6rem;
+    border-radius: 3.2rem 3.2rem 3.2rem 3.2rem;
+    background:
+        radial-gradient(circle at 30% 26%,
+            #dbe7f3 0%,
+            #5585b7 40%,
+            #3b5f87 80%,
+            #1e3249 100%);
+    isolation: isolate;
+}
+
+.waitContent::before {
+    content: "";
+    position: absolute;
+    inset: 2.2rem 2rem 2.2rem 2rem;
+    background: white;
+    border-radius: 2.2rem 2.2rem 2.2rem 2.2rem;
+    z-index: -1;
+}

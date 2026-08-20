@@ -13,8 +13,10 @@ interface FrameProps {
     overlayLeft?: React.ReactNode;
     overlayRight?: React.ReactNode;
     overlayRightTop?: React.ReactNode;
+    contentUnder?: React.ReactNode;
     variant?: 'game' | 'tutorial' | 'blob';
     position?: Pick<React.CSSProperties, 'top' | 'right' | 'bottom' | 'left'>;
+    zIndex?: number;
     centerX?: number;
     centerY?: number;
     minimize?: boolean;
@@ -55,8 +57,10 @@ export function NewFrame({
     overlayLeft,
     overlayRight,
     overlayRightTop,
+    contentUnder,
     variant = 'game',
     position,
+    zIndex = 2,
     centerX,
     centerY,
     minimize = false,
@@ -66,6 +70,7 @@ export function NewFrame({
         minHeight,
         maxWidth,
         maxHeight,
+        zIndex,
         background: 'rgb(245, 255, 253)',
         ...(position && {
             position: 'absolute',
@@ -84,7 +89,7 @@ export function NewFrame({
                                   ...styleProps,
                                   ...position,
                               }
-                            : { ...position }
+                            : { position: 'absolute', ...position, zIndex: zIndex }
                     }
                     initial={{
                         scale: 0.95,
@@ -125,6 +130,9 @@ export function NewFrame({
                         <div className={`${style.overlayRightTop} ${minimize ? style.minRT : ''}`}>
                             {overlayRightTop}
                         </div>
+                    )}
+                    {contentUnder && (
+                        <div className={`${style.contentUnder} ${minimize ? style.minRT : ''}`}>{contentUnder}</div>
                     )}
                     {minimize && <h4 className={style.minTitle}>{title}</h4>}
                     <motion.div

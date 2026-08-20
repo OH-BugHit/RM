@@ -5,7 +5,7 @@ import QTable from './NewQTable/QTable';
 import TableControls from './NewQTable/TableControls';
 import { Cable } from '../Frames/CableFrame/Cable';
 import { useAtomValue } from 'jotai';
-import { HideHudAtom, HUDvisAtom, InspectCAtom } from '../../atoms/uiState';
+import { HideHudAtom, HUDvisAtom, InspectCAtom, TaskAtom } from '../../atoms/uiState';
 import { NewFrame } from '../Frames/NewFrame';
 import { WorldStore } from '../../components/QTable/utils';
 import { CustomGridLayer } from './NewQTable/TileTable/TileTable';
@@ -20,6 +20,9 @@ import AgentClusterParent from '../Frames/ClusterParents/Agent';
 import BuildClusteParent from '../Frames/ClusterParents/Build';
 import RewardClusteParent from '../Frames/ClusterParents/Reward';
 import InspectClusteParent from '../Frames/ClusterParents/Inspect';
+import { FireworksEffect } from '../../components/Fireworks/FireworksEffect';
+import WinScreen from '../StudentView/WinScreen/WinScreen';
+import TestProgress from '../../components/AgentTest/TestProgress';
 
 interface XaiProps {
     agentRef: React.RefObject<QLearningAgent | undefined>;
@@ -32,12 +35,16 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
     const hideHud = useAtomValue(HideHudAtom);
     const hudVis = useAtomValue(HUDvisAtom);
     const inspectC = useAtomValue(InspectCAtom);
+
+    const tasks = useAtomValue(TaskAtom);
     const focusFrameRef = useRef<FocusOverlay | undefined>(undefined);
 
     return (
         <div style={{ zIndex: 0 }}>
+            <FireworksEffect />
+            <WinScreen />
             <TutorialFrame
-                textVis={hudVis.text}
+                visible={hudVis.text}
                 world={lWorld}
                 mapRef={mapRef}
                 layerRef={layerRef}
@@ -102,12 +109,16 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
             </ClusterContainer>
 
             <FrameContainer position="left">
-                {hudVis.progress && (
+                {hudVis.progress && tasks.length > 0 && (
                     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
                         <Cable variant="vertical" />
-                        <NewFrame variant="tutorial">
-                            <Progress />
+                        <NewFrame
+                            variant="tutorial"
+                            contentUnder={<TestProgress target={3} />}
+                        >
+                            <Progress tasks={tasks} />
                         </NewFrame>
+
                         <Cable variant="vertical" />
                     </div>
                 )}
@@ -152,7 +163,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                 </NewFrame>
             </FrameContainer>
             <FrameContainer position="bottom-center">
-                <NewFrame visible={hudVis.controls && !hideHud}>
+                <NewFrame visible={hudVis.controlBar && !hideHud}>
                     <Controls />
                 </NewFrame>
             </FrameContainer>

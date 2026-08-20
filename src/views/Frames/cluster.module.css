@@ -1,12 +1,29 @@
 .agentFrame {
     display: inline-block;
-    position: relative;
+    position: absolute;
     box-sizing: border-box;
     border-radius: 42px;
     border: 1px solid #123;
     box-shadow: 0 4px 16px rgba(5, 5, 5, 0.5);
     padding: 1.2rem;
     margin: 12px
+}
+
+.clusterSideButton {
+    position: absolute;
+    overflow: hidden;
+    border-radius: 50%;
+    right: -20px;
+    top: -16px;
+}
+
+.actionButton {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    padding: 0;
+    box-sizing: border-box;
+    border-radius: 50%;
 }
 
 .agentWrapper,
@@ -31,13 +48,10 @@
     width: 64px;
     height: 64px;
     border-radius: 50%;
+    transform: translate(-50%, -50%);
     z-index: 2;
 }
 
-.actionPop {
-    animation: action-pop 0.25s ease-out;
-    animation-delay: 0.1s;
-}
 
 @keyframes action-pop {
     0% {

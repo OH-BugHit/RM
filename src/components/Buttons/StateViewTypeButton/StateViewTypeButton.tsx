@@ -1,5 +1,5 @@
 import { useAtom, useAtomValue } from 'jotai';
-import { ObsViewTypeAtom, QmapViewTypeAtom, StoryStepAtom } from '../../../atoms/uiState';
+import { ObsViewTypeAtom, QmapViewTypeAtom, TextStepAtom } from '../../../atoms/uiState';
 import GameButton from '../GameButton/GameButton';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
@@ -11,7 +11,7 @@ interface StateViewTypeProps {
 export default function StateViewTypeButton({ screen, disabled = false }: StateViewTypeProps) {
     const atom = screen === 'observation' ? ObsViewTypeAtom : QmapViewTypeAtom;
     const [viewType, setStateViewType] = useAtom(atom);
-    const storyDisable = useAtomValue(StoryStepAtom);
+    const storyDisable = useAtomValue(TextStepAtom);
 
     return (
         <GameButton

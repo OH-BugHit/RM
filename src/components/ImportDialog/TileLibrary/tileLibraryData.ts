@@ -56,7 +56,7 @@ export const TILE_LIBRARY: TileLibrarySection[] = [
         items: [
             {
                 id: 'wall-1',
-                label: 'Stone wall',
+                label: 'Bush wall',
                 image: 'images/assets/bush_240.png',
                 category: 'walls',
             },

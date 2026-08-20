@@ -4,8 +4,6 @@
     cursor: pointer;
 }
 
-/* Main panel */
-
 .panel {
     transition:
         filter 180ms ease,
@@ -13,23 +11,17 @@
     transform-origin: 110px 110px;
 }
 
-/* Inner rim */
-
 .rim {
     transition:
         stroke-opacity 180ms ease,
         stroke-width 180ms ease;
 }
 
-/* Small data points */
-
 .dataPoints {
     transition:
         opacity 180ms ease,
         filter 180ms ease;
 }
-
-/* Hover */
 
 .icon:hover .panel {
     filter: brightness(1.12);

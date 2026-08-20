@@ -27,15 +27,19 @@ export default function InspectClusterIcon({ size = 220, title = 'INSPECT' }: In
                 >
                     <stop
                         offset="0%"
-                        stopColor="#9B59B6"
+                        stopColor="#E6D9F0"
+                    />
+                    <stop
+                        offset="22%"
+                        stopColor="#A77BCA"
                     />
                     <stop
                         offset="55%"
-                        stopColor="#5B2875"
+                        stopColor="#654586"
                     />
                     <stop
                         offset="100%"
-                        stopColor="#291334"
+                        stopColor="#2E1B3F"
                     />
                 </radialGradient>
 

@@ -1,0 +1,49 @@
+.icon {
+    display: block;
+    overflow: visible;
+    cursor: pointer;
+
+    transition:
+        transform 220ms ease,
+        filter 220ms ease;
+}
+
+.rim {
+    transition:
+        stroke-opacity 220ms ease,
+        filter 220ms ease;
+}
+
+
+
+/* HOVER */
+
+.icon:hover {
+    transform: scale(1.025);
+    filter:
+        drop-shadow(0 0 5px rgba(255, 214, 208, 0.35)) drop-shadow(0 0 14px rgba(217, 74, 74, 0.25));
+}
+
+.icon:hover .rim {
+    stroke-opacity: 0.65;
+    filter:
+        drop-shadow(0 0 4px rgba(255, 220, 215, 0.45));
+}
+
+.icon:hover .outerRim {
+    stroke: #FFFFFF;
+    stroke-opacity: .75;
+}
+
+.disabled {
+    filter: grayscale(100%) brightness(1);
+    cursor: not-allowed
+}
+
+.icon:active {
+    transform: scale(0.8);
+}
+
+.pressed {
+    transform: scale(0.9);
+}

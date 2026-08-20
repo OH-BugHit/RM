@@ -1,10 +1,10 @@
 import { Store } from 'jotai/vanilla/store';
 import JSZip from 'jszip';
-import { TilePropsAtom } from '../atoms/uiState';
-import { Cell, TileDefinition } from '../types';
+import { TilePropsAtom, TopbarAtom } from '../atoms/uiState';
+import { Cell, EnvSettings, TileDefinition } from '../types';
 import { EnvSettingsAtom, WorldGridRenderAtom } from '../atoms/gameState';
 import { ActiveAgentAtom, ActiveEnvironmentAtom, AgentSettingsAtom } from '../atoms/state';
-import { CellSave, EnvSettingsSave, Manifest, TileDefinitionSave } from './types';
+import { CellSave, Manifest, TileDefinitionSave } from './types';
 export const SAVE_VERSION = 1;
 
 function createManifest(store: Store): Manifest {
@@ -12,6 +12,7 @@ function createManifest(store: Store): Manifest {
         gameName: store.get(ActiveEnvironmentAtom).name,
         saveVersion: SAVE_VERSION,
         createdAt: new Date().toISOString(),
+        highScore: store.get(TopbarAtom).topScore,
     };
 }
 
@@ -42,7 +43,7 @@ function saveTools(zip: JSZip, store: Store) {
 }
 
 function saveSettings(zip: JSZip, store: Store) {
-    const envSettings: EnvSettingsSave = {
+    const envSettings: EnvSettings = {
         generic: store.get(EnvSettingsAtom).generic,
     };
 

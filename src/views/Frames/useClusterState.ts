@@ -101,12 +101,9 @@ export function useClusterOpenState(type: ClusterType) {
                 setStoryProgress((old) => {
                     return {
                         ...old,
-                        hud: {
-                            ...old.hud,
-                            agentView: {
-                                ...old.hud.agentView,
-                                opened: true,
-                            },
+                        agentView: {
+                            ...old.agentView,
+                            opened: true,
                         },
                     };
                 });
