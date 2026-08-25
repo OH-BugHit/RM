@@ -1,0 +1,108 @@
+@value primary, secondary from "@genai-fi/base/css/colours.module.css";
+
+.previewSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    width: 100%;
+    height: 100%;
+
+    box-sizing: border-box;
+    padding: 0.5rem;
+    gap: 0.3rem;
+}
+
+.previewSection h3 {
+    flex: 0 0 auto;
+
+    width: 100%;
+    margin: 0;
+
+    font-family: 'Tektur';
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: rgb(0, 36, 9);
+
+    text-align: center;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.previewSection img {
+    display: block;
+
+    width: auto;
+    height: auto;
+
+    max-width: 100%;
+    max-height: 100%;
+
+    object-fit: contain;
+}
+
+.score {
+    flex: 0 0 auto;
+    font-size: 0.9rem;
+}
+
+.emptyPreview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.level {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    border-radius: 1rem;
+    box-sizing: border-box;
+}
+
+.selected {
+    background: #fff6a6;
+    scale: 1;
+}
+
+.levelsContainer {
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+.stageInformation {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2rem;
+    width: 40%;
+}
+
+.stageInformation p {
+    width: 90%;
+    max-width: 700px;
+    font-size: 1.7rem
+}
+
+.levelsCards {
+    width: 60%;
+    max-height: 80%;
+    overflow: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-radius: 2rem;
+    gap: 3rem;
+    padding: 1rem 2rem 1rem 2rem;
+}

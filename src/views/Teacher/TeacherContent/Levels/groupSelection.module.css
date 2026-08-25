@@ -1,0 +1,75 @@
+.levelGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background: linear-gradient(45deg,
+            #6b6b6b7c,
+            rgba(235, 255, 243, 0.422));
+
+    filter: grayscale(1);
+    border-radius: 2rem !important;
+    text-align: center;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.479);
+
+    width: 280px;
+    height: 280px;
+
+    padding: 0;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.levelGroup h2 {
+    flex: 0 0 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    margin: 0;
+
+    color: black;
+    font-family: 'Tektur';
+    font-weight: bold;
+    font-size: 1.8rem;
+}
+
+.levels {
+    flex: 1;
+    min-height: 0;
+
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+.active {
+    filter: none;
+    background: linear-gradient(45deg,
+            #19b1a77c,
+            rgba(235, 255, 243, 0.422));
+}
+
+.selected {
+    border: 8px solid #1988b1 !important;
+    box-shadow:
+        0 0 0 3px rgba(25, 177, 167, 0.2),
+        0 4px 15px rgba(0, 0, 0, 0.35);
+
+    scale: 1;
+}
+
+.levelGroup:hover {
+    scale: 1;
+}
+
+.levelGroup:active {
+    scale: 0.97;
+}

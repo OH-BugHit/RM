@@ -69,8 +69,9 @@ function saveAgent(zip: JSZip, store: Store) {
     folder?.file('activeAgent.json', JSON.stringify(store.get(ActiveAgentAtom), null, 2));
 }
 
-export async function createSave(store: Store): Promise<Blob> {
+export async function createSave(store: Store): Promise<{ name: string; blob: Promise<Blob> }> {
     const zip = new JSZip();
+    const name = store.get(ActiveEnvironmentAtom).name;
 
     zip.file('manifest.json', JSON.stringify(createManifest(store), null, 2));
 
@@ -79,11 +80,14 @@ export async function createSave(store: Store): Promise<Blob> {
     saveSettings(zip, store);
     saveAgent(zip, store);
 
-    return zip.generateAsync({
-        type: 'blob',
-        compression: 'DEFLATE',
-        compressionOptions: {
-            level: 9,
-        },
-    });
+    return {
+        name: name,
+        blob: zip.generateAsync({
+            type: 'blob',
+            compression: 'DEFLATE',
+            compressionOptions: {
+                level: 9,
+            },
+        }),
+    };
 }

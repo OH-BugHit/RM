@@ -95,79 +95,79 @@ export const level3Grid: CellSave[][] = [
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
     ],
     [
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/bush_240.png',
+            image: '/images/assets/bush_240.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/bush_240.png',
+            image: '/images/assets/bush_240.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/bush_240.png',
+            image: '/images/assets/bush_240.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 7,
@@ -187,39 +187,39 @@ export const level3Grid: CellSave[][] = [
         {
             type: 2,
             emoji: '',
-            image: 'images/assets/bigTreasure_260.png',
+            image: '/images/assets/bigTreasure_260.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
     ],
     [
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/bush_240.png',
+            image: '/images/assets/bush_240.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 7,
@@ -244,34 +244,34 @@ export const level3Grid: CellSave[][] = [
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
     ],
     [
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 7,
@@ -296,34 +296,34 @@ export const level3Grid: CellSave[][] = [
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
     ],
     [
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 7,
@@ -348,66 +348,66 @@ export const level3Grid: CellSave[][] = [
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
     ],
     [
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
     ],
     [
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 7,
@@ -417,32 +417,32 @@ export const level3Grid: CellSave[][] = [
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 9,
@@ -452,44 +452,44 @@ export const level3Grid: CellSave[][] = [
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
     ],
     [
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 2,
             emoji: '',
-            image: 'images/assets/bigTreasure_260.png',
+            image: '/images/assets/bigTreasure_260.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 9,
@@ -504,66 +504,66 @@ export const level3Grid: CellSave[][] = [
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
     ],
     [
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/bush_240.png',
+            image: '/images/assets/bush_240.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/bush_240.png',
+            image: '/images/assets/bush_240.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/bush_240.png',
+            image: '/images/assets/bush_240.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/bush_240.png',
+            image: '/images/assets/bush_240.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
     ],
     [
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 9,
@@ -573,49 +573,49 @@ export const level3Grid: CellSave[][] = [
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: -1,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 2,
             emoji: '',
-            image: 'images/assets/bigTreasure_260.png',
+            image: '/images/assets/bigTreasure_260.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/bush_240.png',
+            image: '/images/assets/bush_240.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
     ],
     [
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 9,
@@ -630,7 +630,7 @@ export const level3Grid: CellSave[][] = [
         {
             type: 0,
             emoji: '',
-            image: 'images/assets/cleanWhiteStone.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 9,
@@ -640,79 +640,79 @@ export const level3Grid: CellSave[][] = [
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/bush_240.png',
+            image: '/images/assets/bush_240.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/bush_240.png',
+            image: '/images/assets/bush_240.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/bush_240.png',
+            image: '/images/assets/bush_240.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/bush_240.png',
+            image: '/images/assets/bush_240.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
     ],
     [
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 1,
             emoji: '',
-            image: 'images/assets/wall.png',
+            image: '/images/assets/wall.png',
         },
     ],
 ];

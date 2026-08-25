@@ -11,7 +11,6 @@ export default function AgentVision({ agentRef }: AgentVisionProps) {
 
     return (
         <>
-            asdasd
             <h3 style={{ margin: '0.5rem', justifySelf: 'center' }}>Agent's Observation</h3>
             {agentRef.current && (
                 <ObservationCanvas

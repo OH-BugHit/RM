@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import style from './style.module.css';
 import { QLearningAgent } from '../../components/agents/rlAgentQ';
-import { Actions, GameEnvironmentInfo, GenericObservation, StateData } from '../../types';
+import { Actions, Cell, GameEnvironmentInfo, GenericObservation, StateData } from '../../types';
 import { AnimatePresence } from 'framer-motion';
 import { Bridge } from '../../components/Charts/ChartBridge';
 import HUD from '../Xai/HUD';
@@ -9,11 +9,18 @@ import { WorldStore } from '../../components/QTable/utils';
 import { CustomGridLayer } from '../Xai/NewQTable/TileTable/TileTable';
 import RewardMachine from '../Environments/RewardMachine/RewardMachine';
 import { defaultWorldGrid, hudVisBuild, visibleTilesTrue } from '../../utils/defaults';
-import { useSetAtom } from 'jotai';
+import { useSetAtom, useStore } from 'jotai';
 import { ControlEnablerAtom, HUDvisAtom, TileVisibilityAtom } from '../../atoms/uiState';
+import { WorldGridRenderAtom } from '../../atoms/gameState';
+import { createSave } from '../../utils/export';
+import { LevelData } from '../../utils/types';
+import { usernameAtom } from '../../atoms/state';
 
-// React component
-export default function BuildView() {
+interface BuildViewProps {
+    doSendEnvironment?: ((data: LevelData) => void) | undefined;
+}
+
+export default function BuildView({ doSendEnvironment = undefined }: BuildViewProps) {
     const setHudVis = useSetAtom(HUDvisAtom);
     const setTileVis = useSetAtom(TileVisibilityAtom);
     const setControls = useSetAtom(ControlEnablerAtom);
@@ -26,6 +33,8 @@ export default function BuildView() {
     const mapRef = useRef<L.Map | null>(null);
     const layerRef = useRef<CustomGridLayer | null>(null);
     const currentStateRef = useRef<StateData>({ previous: '', current: '' });
+    const envStateRef = useRef<Cell[][] | undefined>(undefined);
+    const store = useStore();
 
     const config = { image: '/images/background/backgroundSVGanimate.svg' };
 
@@ -34,6 +43,35 @@ export default function BuildView() {
         setTileVis(visibleTilesTrue);
         setControls({ play: true, step: true, ff: true, inspect: false });
     }, [setHudVis, setTileVis, setControls]);
+
+    useEffect(() => {
+        let cancelled = false;
+
+        const checkEnvironment = async () => {
+            while (!cancelled) {
+                await new Promise((resolve) => setTimeout(resolve, 10_000));
+                if (cancelled) return;
+                const currentEnv = store.get(WorldGridRenderAtom);
+                if (currentEnv === envStateRef.current) {
+                    continue;
+                }
+                envStateRef.current = currentEnv;
+
+                // Create ZIP file to send
+                const { blob } = await createSave(store);
+                if (cancelled) return;
+                const zipBlob = await blob;
+                if (cancelled) return;
+
+                doSendEnvironment?.({ file: zipBlob, studentId: store.get(usernameAtom) });
+            }
+        };
+        checkEnvironment();
+
+        return () => {
+            cancelled = true;
+        };
+    }, [store, doSendEnvironment]);
 
     return (
         <>

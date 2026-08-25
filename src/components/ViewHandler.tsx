@@ -2,7 +2,7 @@ import { useSetAtom } from 'jotai';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ActiveViewAtom } from '../atoms/uiState';
+import { ActiveViewAtom, MenuOpenAtom } from '../atoms/uiState';
 import { Overlay, SubView, MainView, ViewEnum } from '../types';
 
 function ViewHandler() {
@@ -10,46 +10,49 @@ function ViewHandler() {
     const [searchParams] = useSearchParams();
     const setView = useSetAtom(ActiveViewAtom);
     const navigate = useNavigate();
+    const setMenuOpen = useSetAtom(MenuOpenAtom);
 
     const view = searchParams.get(ViewEnum.MainView) as MainView | null;
     const subView = searchParams.get(ViewEnum.Subview) as SubView | null;
-    const overlay = (searchParams.get(ViewEnum.Overlay) ?? 'none') as Overlay | null;
+    const overlay = (searchParams.get(ViewEnum.Overlay) ?? 'none') as Overlay;
+
+    useEffect(() => {
+        if (!view) {
+            console.warn('Missing URL parameter: view, redirecting to frontpage');
+
+            navigate('/', { replace: true });
+            return;
+        }
+
+        setView({
+            main: view,
+            sub: subView,
+            overlay,
+        });
+    }, [view, subView, overlay, setView, navigate]);
 
     useEffect(() => {
         switch (view) {
-            case 'frontpage': {
+            case 'frontpage':
                 document.title = `${t('common.title')}`;
                 break;
-            }
-            case 'tutorial': {
-                document.title = `${t('common.tutorial')}`;
+            default:
+                document.title = t('common.title');
                 break;
-            }
-            case 'story': {
-                document.title = `${t('common.title')} - ${t('common.story')}`;
-                break;
-            }
-            case 'start': {
-                document.title = `${t('common.title')}`;
-                break;
-            }
-            case 'game': {
-                document.title = `${t('common.title')} - ${t('common.game')}`;
-                break;
-            }
-            default: {
-                document.title = `${t('common.title')}`;
-            }
         }
     }, [view, t]);
 
-    if (!view) {
-        console.warn('Missing URL parameters: view, redirecting to frontpage');
-        navigate('/', { replace: true });
-        return null;
-    }
+    useEffect(() => {
+        switch (overlay) {
+            case 'menu':
+                setMenuOpen(true);
+                break;
+            default:
+                setMenuOpen(false);
+                break;
+        }
+    }, [overlay, setMenuOpen]);
 
-    setView({ main: view, sub: subView, overlay: overlay });
     return null;
 }
 

@@ -60,4 +60,10 @@ export type LoadedGame = {
         activeAgent: Agent;
     };
 };
+
+export type LevelData = {
+    file: Blob;
+    studentId: string;
+};
+
 export type StoryProgressField = NestedKeyOf<StoryProgress>;

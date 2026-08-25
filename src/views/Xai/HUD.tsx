@@ -139,10 +139,11 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                     visible={hudVis.cableLeft && !hideHud}
                 />
             </FrameContainer>
-            <FrameContainer position="top-left">
+            <div style={{ position: 'absolute', top: '0px', left: '0px', zIndex: 1000 }}>
                 <NewFrame
                     visible={inspectC.qMap && !hideHud}
                     variant="blob"
+                    position={{ top: '0px', left: '0px' }}
                     overlayRight={
                         <TableControls
                             lWorld={lWorld}
@@ -161,7 +162,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                         focusFrameRef={focusFrameRef}
                     />
                 </NewFrame>
-            </FrameContainer>
+            </div>
             <FrameContainer position="bottom-center">
                 <NewFrame visible={hudVis.controlBar && !hideHud}>
                     <Controls />

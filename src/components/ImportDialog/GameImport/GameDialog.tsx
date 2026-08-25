@@ -9,6 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ActiveViewAtom } from '../../../atoms/uiState';
 import { renderWorldPreview } from '../../EnvironmentRender/renderWorldPreview';
 import { loadSavePreview } from '../../../utils/import';
+import LevelPreview from '../LevelPreview/LevelPreview';
 
 interface ImportDialogProps {
     onImport: (file: File) => Promise<void>;
@@ -99,21 +100,10 @@ function GameDialog({ onImport }: ImportDialogProps) {
             <DialogContent>
                 <div className={style.selectModelMessage}>
                     <div className={style.columnItem}>{t('import.messages.selectGame')}</div>
-                    <div className={style.previewSection}>
-                        {selectedPreview ? (
-                            <>
-                                <h2>{selectedGameName}</h2>
-                                <img
-                                    src={selectedPreview}
-                                    alt="preview"
-                                    width={256}
-                                    height={256}
-                                />
-                            </>
-                        ) : (
-                            <div className={style.emptyPreview}>No selection</div>
-                        )}
-                    </div>
+                    <LevelPreview
+                        gameName={selectedGameName}
+                        preview={selectedPreview}
+                    />
 
                     <div className={style.uploadSection}>
                         <input

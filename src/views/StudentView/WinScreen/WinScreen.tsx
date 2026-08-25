@@ -3,29 +3,21 @@ import style from './win.module.css';
 import { LevelConfAtom, TestAgentAtom } from '../../../atoms/gameState';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@genai-fi/base';
-import { level2 } from '../../../utils/levels/level2/leveldata';
 import { NewFrame } from '../../Frames/NewFrame';
 import Separator from '../../../components/Separator/Separator';
-import { level3 } from '../../../utils/levels/level3/leveldata';
+import { useViewNavigation } from '../../../hooks/useViewNavigation';
 
 export default function WinScreen() {
     const { t } = useTranslation();
-    const [level, setLevel] = useAtom(LevelConfAtom);
+    const [level] = useAtom(LevelConfAtom);
     const vis = useAtomValue(TestAgentAtom);
+    const { goToView } = useViewNavigation();
 
     const onNextLevel = () => {
-        switch (level?.level.manifest.levelIndex) {
-            case 1: {
-                setLevel(level2);
-                break;
-            }
-            case 2: {
-                setLevel(level3);
-                break;
-            }
-            default:
-                console.log('No next level');
-        }
+        goToView({
+            main: 'levels',
+            sub: null,
+        });
     };
 
     if (vis !== 'passed') {
@@ -52,7 +44,7 @@ export default function WinScreen() {
                     onClick={onNextLevel}
                     variant="contained"
                 >
-                    Next level
+                    Level selection
                 </Button>
             </div>
         </NewFrame>

@@ -9,6 +9,7 @@ import LinkButton from '../../components/Buttons/LinkButton/LinkButton';
 import Phase from './Phase';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import SinglePlayerIcon from '../../components/Buttons/ButtonIcons/OtherIcons/SinglePlayerIcon';
 
 export default function Frontpage() {
     const { t } = useTranslation();
@@ -16,11 +17,11 @@ export default function Frontpage() {
     const navigate = useNavigate();
 
     const toStudent = () => {
-        navigate(`/student/${inputCode}/main`);
+        navigate(`/student/${inputCode}/main?view=join`);
     };
 
     const toTeacher = () => {
-        navigate('/library/');
+        navigate(`/teacher/?view=users&overlay=share`);
     };
 
     const logoSize = Math.min(192, window.innerWidth * 0.3);
@@ -87,19 +88,9 @@ export default function Frontpage() {
                     <div className={style.intro}>{t('app.goPhase')}</div>
                     <div className={style.cards}>
                         <Phase
+                            icon={<SinglePlayerIcon size={128} />}
                             id="yourWorld"
-                            image="images/environments/potsAndBurglar.png"
-                            url="/student"
-                        />
-                        <Phase
-                            id="import"
-                            image="images/environments/potsAndBurglar.png"
-                            url="/import"
-                        />
-                        <Phase
-                            id="recap"
-                            image="images/environments/potsAndBurglar.png"
-                            url="/start?view=tutorial"
+                            url="/student/single/main?view=main&overlay=menu"
                         />
                     </div>
                 </div>

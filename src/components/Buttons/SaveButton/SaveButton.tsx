@@ -17,8 +17,8 @@ function SaveButton({ showText, disabled = false }: Props) {
     const store = useStore();
 
     async function downloadResults() {
-        const blob = await createSave(store);
-        saveAs(blob, 'save.genai');
+        const { name, blob } = await createSave(store);
+        saveAs(await blob, `${name}.genai`);
     }
 
     return (

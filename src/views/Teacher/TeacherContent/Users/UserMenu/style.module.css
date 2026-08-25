@@ -1,0 +1,18 @@
+.menuLogo {
+    color: white;
+    min-height: 48px;
+    font-weight: bold;
+    padding-right: 0.5rem;
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+}
+
+.selectTerm {
+    padding: 4px;
+    margin: 1rem;
+    min-width: 200px;
+    width: 100dvw;
+    max-width: 50dvw;
+    max-height: 600px;
+}

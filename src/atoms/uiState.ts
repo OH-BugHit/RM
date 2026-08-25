@@ -82,3 +82,5 @@ export const AgentCAtom = atom<AgentCluster>(defAgentContent);
 export const RewardCAtom = atom<RewardCluster>(defRewardContent);
 
 export const ClusterOpenAtom = atom<Clusters>({ agent: false, inspect: false, reward: false, build: false });
+
+export const MenuOpenAtom = atom<boolean>(false);

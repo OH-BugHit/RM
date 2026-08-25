@@ -5,7 +5,7 @@ import { WorldStore } from '../../../components/QTable/utils';
 import { Actions, GameEnvironmentInfo, GenericObservation, StateData } from '../../../types';
 import RewardMachine from '../../Environments/RewardMachine/RewardMachine';
 import { EpisodicDataAtom, LevelConfAtom, TestAgentAtom } from '../../../atoms/gameState';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
     ControlEnablerAtom,
     HUDvisAtom,
@@ -52,6 +52,7 @@ export default function GameContent({
     const setProgress = useSetAtom(StoryProgressAtom);
     const setTopBar = useSetAtom(TopbarAtom);
     const setEpisodicData = useSetAtom(EpisodicDataAtom);
+    const nameRef = useRef<string>('');
     const [mode, setMode] = useState<Mode>('loading'); // Waiting for level
     const store = useStore();
 
@@ -74,6 +75,7 @@ export default function GameContent({
                 };
             });
             setProgress(falseStoryProgress);
+            nameRef.current = level.level.manifest.gameName;
         }
     }, [level, store, setHudVis, setTopBar, setEpisodicData, setProgress, setTilevis, setTasks, setControls, setTest]);
 
@@ -96,6 +98,7 @@ export default function GameContent({
                 <UIcontrolBridge />
                 <GameProgressBridge />
                 <RewardMachine
+                    nameRef={nameRef}
                     agentRef={agentRef}
                     obsRef={obsRef}
                     actionRef={actionRef}

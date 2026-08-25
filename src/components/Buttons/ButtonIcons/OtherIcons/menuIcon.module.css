@@ -1,0 +1,107 @@
+.menuButtonContainer {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 999999;
+}
+
+.menuButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    margin: 0;
+
+    border: 0;
+    background: transparent;
+
+    cursor: pointer;
+
+    color: #9af8ff;
+
+    transition:
+        transform 150ms ease,
+        filter 200ms ease;
+}
+
+.menuIcon {
+    display: block;
+    overflow: visible;
+}
+
+/* Circle */
+
+.circle {
+    fill: #172541;
+    stroke: #6eeaff;
+    stroke-width: 8;
+
+    transform-origin: center;
+
+    transition:
+        fill 200ms ease,
+        stroke 200ms ease,
+        transform 250ms ease;
+}
+
+/* Menu lines */
+
+.line {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 12;
+    stroke-linecap: round;
+
+    transform-box: fill-box;
+    transform-origin: center;
+
+    transition:
+        transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 180ms ease,
+        stroke 150ms ease;
+}
+
+/* Hover */
+
+.menuButton:hover {
+    color: #ffffff;
+    filter: drop-shadow(0 0 7px rgba(154, 248, 255, 0.45));
+}
+
+.menuButton:hover .circle {
+    fill: #1c2d50;
+    stroke: #8df5ff;
+}
+
+/* Press */
+
+.menuButton:active {
+    transform: scale(0.9);
+}
+
+.menuButton:active .circle {
+    stroke: #b8fbff;
+}
+
+/* Open state */
+
+.isOpen .circle {
+    fill: #1d3157;
+    stroke: #8df5ff;
+
+    transform: scale(1.03);
+}
+
+.isOpen .lineTop {
+    transform: translateY(32px) rotate(45deg);
+}
+
+.isOpen .lineMiddle {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.isOpen .lineBottom {
+    transform: translateY(-32px) rotate(-45deg);
+}

@@ -1,0 +1,151 @@
+.studentContainer {
+    width: 100dvw;
+    height: 100dvh;
+    background-image: url('/images/background/backgroundSVGanimate.svg');
+    background-size: cover;
+    background-position: center;
+}
+
+.student {
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+    width: 100%;
+    height: 100%;
+    align-self: center;
+    overflow: auto;
+    background: rgb(34, 33, 38);
+    align-items: center;
+    max-width: 1400px;
+}
+
+.studentTipContainer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 3.5rem;
+}
+
+.term {
+    color: white
+}
+
+.gameContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1rem;
+    height: 100%;
+    width: 100%;
+    gap: 0.5rem;
+    overflow: auto;
+}
+
+.interfaceContainer {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 64px;
+}
+
+.landscape {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+}
+
+.portrait {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 66px;
+    justify-content: space-evenly;
+}
+
+.inputContainer {
+    width: 100%;
+}
+
+.gameLowerStuff {
+    align-content: center;
+}
+
+.galleryContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
+}
+
+.resultButton {
+    display: flex;
+}
+
+.imageWrapper {
+    position: relative;
+    display: inline-block
+}
+
+.imageWrapper img {
+    display: block;
+}
+
+.resultButtonLandscape {
+    padding: 0.4rem 1rem;
+    min-width: 140px;
+    border-radius: 24px;
+    cursor: pointer;
+    box-shadow:
+        inset 0 8px 16px rgba(255, 255, 255, 0.3),
+        0 4px 8px rgba(0, 0, 0, 0.3);
+    font-size: 1.2rem;
+    font-weight: bold;
+    white-space: nowrap;
+    background-color: rgb(0, 47, 59);
+    color: rgb(255, 255, 255);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.buttonText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -58%);
+    color: white;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.waiting {
+    color: white;
+    margin: 2rem;
+}
+
+@media (min-height: 700px) {
+    .gameContainer {
+        gap: 1rem
+    }
+
+    .inputContainer {
+        margin-top: 1.5rem;
+    }
+
+    .resultButton {
+        padding: 1rem 2rem;
+        min-height: 50px;
+    }
+}
+
+
+@media (min-height: 800px) {
+    .gameContainer {
+        gap: 1.5rem
+    }
+
+    .inputContainer {
+        margin-top: 2rem;
+    }
+}

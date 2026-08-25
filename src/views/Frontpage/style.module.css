@@ -108,13 +108,6 @@
     flex-wrap: wrap;
 }
 
-.icon {
-    position: absolute;
-    top: 64px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-}
 
 .selectGroup {
     padding: 0 0.5rem;
@@ -151,6 +144,22 @@
     min-height: 230px;
     min-width: 200px;
     max-height: 500px;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+
+.step h2 {
+    padding: 0;
+    margin: 0;
+}
+
+.step:hover {
+    filter: brightness(1.1);
 }
 
 @media (max-width: 600px) {

@@ -56,7 +56,7 @@ export default function Recap() {
 
     return (
         <main className={style.content}>
-            <h2>{t('tutorial.recap.title')}</h2>
+            <h1>{t('tutorial.recap.title')}</h1>
             <div
                 className={style.content}
                 ref={scrollRef}

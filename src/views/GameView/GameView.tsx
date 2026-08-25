@@ -2,18 +2,18 @@ import { useMemo, useRef } from 'react';
 import style from './style.module.css';
 import { QLearningAgent } from '../../components/agents/rlAgentQ';
 import { Actions, GameEnvironmentInfo, GenericObservation, StateData } from '../../types';
-import { useAtomValue } from 'jotai';
-import { ActiveEnvironmentAtom } from '../../atoms/state';
+import { useStore } from 'jotai';
 import { AnimatePresence } from 'framer-motion';
 import { Bridge } from '../../components/Charts/ChartBridge';
-import StoryGame from '../Environments/StoryGame/StoryGame';
 import HUD from '../Xai/HUD';
 import { WorldStore } from '../../components/QTable/utils';
 import { CustomGridLayer } from '../Xai/NewQTable/TileTable/TileTable';
+import RewardMachine from '../Environments/RewardMachine/RewardMachine';
+import { defaultWorldGrid } from '../../utils/defaults';
+import { WorldGridRenderAtom } from '../../atoms/gameState';
 
 // React component
 function GameView() {
-    const environment = useAtomValue(ActiveEnvironmentAtom);
     const agentRef = useRef<QLearningAgent>(undefined);
     const lWorld = useMemo(() => new WorldStore(agentRef), []);
     const obsRef = useRef<GenericObservation>(undefined);
@@ -23,6 +23,7 @@ function GameView() {
     const mapRef = useRef<L.Map | null>(null);
     const layerRef = useRef<CustomGridLayer | null>(null);
     const currentStateRef = useRef<StateData>({ previous: '', current: '' });
+    const store = useStore();
 
     const config = { image: '/images/background/backgroundSVGanimate.svg' };
 
@@ -45,8 +46,8 @@ function GameView() {
                         currentStateRef={currentStateRef}
                     />
                     <div className={style.game}>
-                        <StoryGame
-                            mode={environment.type}
+                        <RewardMachine
+                            grid={store.get(WorldGridRenderAtom) ?? defaultWorldGrid}
                             agentRef={agentRef}
                             obsRef={obsRef}
                             actionRef={actionRef}

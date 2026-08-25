@@ -7,16 +7,16 @@ interface AgentImageProps {
 export const getAgentImage = ({ type, atomState }: AgentImageProps): string => {
     switch (type) {
         case 'robodog': {
-            return 'images/agents/robo_dog.png';
+            return '/images/agents/robo_dog.png';
         }
         case 'adventurer': {
-            return 'images/agents/adventurerRobo2.png';
+            return '/images/agents/adventurerRobo2.png';
         }
         case 'created': {
             return atomState ?? '';
         }
         default: {
-            return 'images/agents/adventurer.png';
+            return '/images/agents/adventurer.png';
         }
     }
 };

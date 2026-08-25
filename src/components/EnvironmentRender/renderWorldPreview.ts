@@ -1,4 +1,5 @@
 import { Cell } from '../../types';
+import { CellSave } from '../../utils/types';
 
 const CELL_SIZE = 40;
 const BACKGROUND = 'rgba(255,255,255,0.5)';
@@ -22,7 +23,7 @@ async function loadImage(src: string): Promise<HTMLImageElement> {
     return image;
 }
 
-export async function renderWorldPreview(world: Cell[][]): Promise<HTMLCanvasElement> {
+export async function renderWorldPreview(world: Cell[][] | CellSave[][]): Promise<HTMLCanvasElement> {
     const rows = world.length;
     const cols = Math.max(...world.map((row) => row.length), 0);
 

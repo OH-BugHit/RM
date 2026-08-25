@@ -7,7 +7,7 @@ export const testTileDef: TileDefinitionSave[] = [
         reloadTime: -1,
         timer: 0,
         emoji: '',
-        image: 'images/assets/wall.png',
+        image: '/images/assets/wall.png',
         isCoreTile: true,
     },
     {
@@ -16,7 +16,7 @@ export const testTileDef: TileDefinitionSave[] = [
         reloadTime: -1,
         timer: 0,
         emoji: '',
-        image: 'images/assets/cleanWhiteStone.png',
+        image: '/images/assets/cleanWhiteStone.png',
         isCoreTile: true,
     },
     {
@@ -25,7 +25,7 @@ export const testTileDef: TileDefinitionSave[] = [
         reloadTime: -1,
         timer: 0,
         emoji: '',
-        image: 'images/assets/bigTreasure_260.png',
+        image: '/images/assets/bigTreasure_260.png',
         isCoreTile: true,
     },
     {
@@ -34,7 +34,7 @@ export const testTileDef: TileDefinitionSave[] = [
         reloadTime: -1,
         timer: 0,
         emoji: '',
-        image: 'images/assets/smallTreasure_260.png',
+        image: '/images/assets/smallTreasure_260.png',
         isCoreTile: false,
     },
     {
@@ -52,7 +52,7 @@ export const testTileDef: TileDefinitionSave[] = [
         reloadTime: -1,
         timer: 0,
         emoji: '',
-        image: 'images/assets/bush_240.png',
+        image: '/images/assets/bush_240.png',
         isCoreTile: false,
     },
     {
@@ -61,7 +61,7 @@ export const testTileDef: TileDefinitionSave[] = [
         reloadTime: -1,
         timer: 0,
         emoji: '',
-        image: 'images/assets/cleanWhiteStone.png',
+        image: '/images/assets/cleanWhiteStone.png',
         isCoreTile: false,
     },
     {

@@ -1,0 +1,36 @@
+.previewSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 120px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.02);
+    padding: 12px;
+}
+
+.previewSection h2 {
+    font-family: 'Tektur';
+    font-weight: bold;
+    font-size: 2rem;
+    margin: 0 0 1rem 0;
+}
+
+.previewSection img {
+    object-fit: contain;
+    image-rendering: pixelated;
+    border-radius: 8px;
+}
+
+.emptyPreview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 96px;
+    height: 96px;
+    border-radius: 8px;
+    color: rgba(0, 0, 0, 0.55);
+    font-size: 13px;
+    background: rgba(0, 0, 0, 0.04);
+}

@@ -138,6 +138,21 @@
             "titleDesc": "Tune general settings for your game"
         }
     },
+    "enterUsername": {
+        "actions": {
+            "enterUser": "Enter"
+        },
+        "labels": { "enterUsername": "Enter Username" },
+        "messages": {
+            "usernameError": {
+                "missing": "A username is required",
+                "long": "The username is too long (Max 15 characters)",
+                "short": "The username must be 3 or more characters",
+                "taken": "The username is already taken",
+                "takenFree": "The username is already taken. If you are trying to reconnect, press button below \"Enter\""
+            }
+        }
+    },
     "frontpage": {
         "actions": {
             "createNew": "Teacher - Create new",
@@ -174,10 +189,12 @@
     },
     "import": {
         "actions": {
+            "createNew": "Create new",
             "loadGame": "Load game",
             "loadingImage": "loading",
             "openFileExplorer": "Select game file from your files",
             "openImageFileExplorer": "Select image from your files",
+            "playLoaded": "Play loaded game",
             "setImage": "Accept selected"
         },
         "messages": {
@@ -263,7 +280,7 @@
                 "3": "You can see your score next to the clock. Your objective is to beat the high score!",
                 "4": "For that, you need to teach the agent to avoid the mushrooms and other traps...",
                 "5": "...and collect the small and big treasures!",
-                "6": "Now, tune the rewards so the agent avoids mushrooms and collects treasures while still reaching the goal in time.",
+                "6": "Next, tune the rewards so the agent avoids mushrooms and collects treasures while still reaching the goal in time.",
                 "7": "You can set the reward for when the agent runs out of time before reaching the goal.",
                 "8": "And you can set the rewards for reaching different items.",
                 "9": "Complete all tasks and test your agent to complete the level!"
@@ -313,12 +330,29 @@
         "title": "Rewards"
     },
     "sidePanel": {
+        "actions": {
+            "disableApp": "Pause Game",
+            "enableApp": "Continue Game",
+            "connectUsers": "Connect Users"
+        },
         "buttons": {
             "agent": "Agent menu",
             "props": "Design menu",
             "world": "Environment editor",
             "reward": "Reward shaping",
             "settings": "Game settings"
+        },
+        "teacher": {
+            "1": { "title": "Connect" },
+            "2": { "title": "Levels" },
+            "3": { "title": "Prepare Tournament" },
+            "4": { "title": "Start Tournament" },
+            "5": { "title": "Recap" }
+        },
+        "labels": {
+            "exit": "Quit session (All data is removed)",
+            "exitShort": "Quit session",
+            "settings": "Settings"
         }
     },
     "stats": {
@@ -438,6 +472,29 @@
             "37": "That's it! To start the tutorial again, go to the homepage and refresh your browser. Click Next to start playing."
         }
     },
+    "teacher": {
+        "messages": {
+            "connection": "Or go to the address below and enter the code",
+            "goTo": "To join: navigate to address",
+            "onePerson": "{{count}} person has joined.",
+            "orGoStraight": "Or go straight to the address:",
+            "manyPeople": "{{count}} people have joined.",
+            "waitingPeople": "Waiting for people..."
+        },
+        "titles": {
+            "connectUsers": "Connect Users"
+        },
+        "levels": {
+            "stageInfo": {
+                "basic": "In reinforcement learning, an agent learns by playing and interacting with the game. Your goal is to teach your agent how to play. First, complete the tasks to set up the game and help your agent learn. Then, test your agent to see if it has learned to complete the level.",
+                "bonus": "infoa",
+                "exploreExploit": "infoa",
+                "learning": "infoa",
+                "observation": "infoa",
+                "rewards": "infoa"
+            }
+        }
+    },
     "topBar": {
         "score": {
             "gained": "Score",
@@ -447,7 +504,7 @@
     },
     "tutorial": {
         "actions": {
-            "goStory": "Go to play!",
+            "goStory": "Return to homepage",
             "quiz": "Mini quiz",
             "recap": "Recap concepts",
             "replayTutorial": "Replay tutorial"

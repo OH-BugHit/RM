@@ -1,0 +1,9 @@
+.studentContainer {
+    width: 100dvw;
+    height: 100dvh;
+    background-image: url('/images/background/backgroundSVGanimate.svg');
+    background-size: cover;
+    background-position: center;
+    justify-items: center;
+    align-content: center;
+}

@@ -8,20 +8,18 @@
     padding: 1rem 0;
     box-sizing: border-box;
     position: relative;
-    background-image: url('/images/frames/cable2.svg');
+    background-image: url('/images/frames/backgroundSVGanimate.svg');
     background-size: cover;
     background-position: center;
     width: 100vw;
     height: 100vh;
 }
 
-.cards {
+.import {
     display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    max-width: 1200px;
+    flex-direction: row;
 }
+
 
 @media only screen and (max-width: 600px) {
     .siteContainer {

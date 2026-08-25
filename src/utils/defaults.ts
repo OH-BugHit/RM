@@ -736,17 +736,17 @@ export const defaultAgents = {
     robodog: {
         name: 'Robo Dog',
         type: 'robodog',
-        img: 'images/agents/robo_dog.png',
+        img: '/images/agents/robo_dog.png',
     },
     adventurer: {
         name: 'Adventurer',
         type: 'adventurer',
-        img: 'images/agents/adventurerRobo2.png',
+        img: '/images/agents/adventurerRobo2.png',
     },
     created: {
         name: '',
         type: 'created',
-        img: 'images/agents/ownAgent.png',
+        img: '/images/agents/ownAgent.png',
     },
 } as const;
 
@@ -754,21 +754,21 @@ const S: Cell = {
     type: CellType.Spawn,
     reloadTime: 0,
     timer: 0,
-    image: 'images/assets/cleanWhiteStone.png',
+    image: '/images/assets/cleanWhiteStone.png',
 };
 
 const W: Cell = {
     type: CellType.Solid,
     reloadTime: 0,
     timer: 0,
-    image: 'images/assets/wall.png',
+    image: '/images/assets/wall.png',
 };
 
 export const defaultCell: Cell = {
     type: CellType.Spawn,
     reloadTime: 0,
     timer: 0,
-    image: 'images/assets/smallTreasure_260.png',
+    image: '/images/assets/smallTreasure_260.png',
 };
 
 export const defaultWorldGrid: Cell[][] = [

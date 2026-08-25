@@ -1,0 +1,145 @@
+.container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow: hidden;
+
+    background-image: url('/images/background/backgroundSVGanimate.svg');
+    background-size: cover;
+    background-position: center;
+}
+
+.container h1 {
+    flex-shrink: 0;
+}
+
+.worldNavigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 0.75rem;
+    margin: 0.5rem 0 1.5rem;
+
+    flex-shrink: 0;
+}
+
+.worldButton {
+    padding: 0.4rem 0.8rem;
+
+    border: none;
+    border-radius: 0.5rem;
+
+    background: transparent;
+
+    font: inherit;
+    cursor: pointer;
+
+    opacity: 0.5;
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.worldButton:hover:not(:disabled) {
+    opacity: 0.8;
+    transform: translateY(-1px);
+}
+
+.worldButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.activeWorld {
+    opacity: 1;
+    font-weight: 700;
+}
+
+.carousel {
+    position: relative;
+
+    width: min(1100px, 100%);
+    flex: 1;
+    min-height: 0;
+
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.worldCard {
+    position: absolute;
+
+    width: min(520px, 60%);
+
+    max-height: calc(100% - 2rem);
+
+    display: flex;
+    justify-content: center;
+
+    transform-origin: center center;
+
+    will-change: transform, opacity;
+
+    transition:
+        filter 0.3s ease,
+        opacity 0.3s ease;
+
+    cursor: pointer;
+}
+
+.centerCard {
+    cursor: default;
+}
+
+.sideCard {
+    filter: brightness(0.8);
+}
+
+.carousel+button {
+    flex-shrink: 0;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 900px) {
+    .worldNavigation {
+        gap: 0.4rem;
+    }
+
+    .worldButton {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .worldCard {
+        width: 65%;
+    }
+}
+
+@media (max-width: 600px) {
+    .worldNavigation {
+        max-width: 100%;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 0 1rem;
+    }
+
+    .worldCard {
+        width: 75%;
+    }
+
+    .carousel {
+        width: 100%;
+    }
+}

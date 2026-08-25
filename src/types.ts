@@ -416,11 +416,20 @@ export type Offset = { dx: number; dy: number };
 export type View = {
     main?: MainView;
     sub?: SubView;
-    overlay?: Overlay;
+    overlay?: Overlay | TeacherDialogs;
 };
-export type MainView = 'frontpage' | 'story' | 'game' | 'start' | 'tutorial' | null;
-export type SubView = 'agent' | 'environment' | 'rewards' | 'interaction' | null;
-export type Overlay = 'import' | null;
+export type SinglePlayViews = 'ownLevels' | 'play' | 'build';
+export type StudentViews = 'join' | 'main' | GamePhase | SinglePlayViews;
+export type LevelGroup = {
+    groupName: string;
+    levels: Level[];
+    groupType: GroupType;
+};
+export type GroupType = 'basic' | 'rewards' | 'exploreExploit' | 'observation' | 'learning' | 'bonus';
+
+export type MainView = 'frontpage' | TeacherViews | StudentViews;
+export type SubView = 'playLevel' | 'agent' | 'environment' | 'rewards' | 'interaction' | null;
+export type Overlay = 'import' | 'share' | 'paused' | 'menu' | null;
 
 export type GenericObservation = {
     neighbours: CellType[];
@@ -451,14 +460,6 @@ export type AgentProps = {
     learning: boolean;
 };
 
-export type RoboDogEnv = {
-    gridSize: number;
-    maxTurns: number;
-    numberOfPots: number;
-    potReloadDelay: number;
-    breakPotSpooksBurglar: boolean;
-};
-
 export type GenericEnv = {
     maxTurns: number; // Maximum number of steps in episode
     numberOfItemsToGet: number; // How many spesific Cells needs to be found for episode to terminate
@@ -479,6 +480,108 @@ export type GenericReward = {
     rLoseByTimeEnds: number;
     winByCount: number; // Reward for episode end on enough items collected
 };
+
+// Teacher's Types starts
+export type TeacherViews = 'users' | GamePhase;
+
+export type TeacherDialogs = 'share' | 'settings';
+
+export type UserInfo = {
+    username: string;
+    connectionId: string;
+};
+
+export type UserItemData = {
+    username: string;
+    profilePicture: string | null;
+};
+
+export type Username = {
+    username: string;
+};
+
+export type MessageData = {
+    message: string;
+    reload: boolean;
+    action: 'bouncer'; // bouncer handles kicking students, resetResults handles resetting result for term
+    recipient?: Username;
+};
+
+export type Settings = {
+    limitScoreboard?: {
+        limit: number;
+        showAll: boolean;
+    };
+    userGridSettings: {
+        userGridAutoGrow: boolean;
+        userGridMaxColumns: number;
+    };
+};
+
+/**
+ * Maps a student ID to their scores (K = student ID, V = StudentScores)
+ */
+export type StudentData = { students: Map<string, StudentScores> };
+
+/**
+ * Maps a student ID to their created level (K = student ID, V = level)
+ */
+export type StudentGames = { students: Map<string, LoadedGame> };
+
+/**
+ * Maps a classifying term to a score (K = levelName, V = Score)
+ */
+export type StudentScores = {
+    data: Map<string, StudentScore>;
+};
+
+export type StudentScore = {
+    score?: number;
+};
+
+export type RewardConfig = {
+    pause: boolean;
+    phase: GamePhase | undefined;
+};
+
+export type GamePhase = 'levels' | 'tournamentBuild' | 'tournamentPlay' | 'recap';
+
+export type RegisterData = {
+    username: string;
+    profilePicture: string | null;
+};
+
+export type ScoreData = {
+    studentId: string;
+    levelName: string;
+    score: number | 'delete';
+};
+
+/**
+ * Contains top scores for all terms
+ * K = term, V = TopResult
+ */
+export type TopThreeResults = {
+    scores: Map<string, TopThree>;
+};
+
+// contains top score for single term
+export type TopThree = {
+    bestScore: Result | null;
+    secondScore: Result | null;
+    thirdScore: Result | null;
+};
+export type Result = {
+    score: number;
+    studentId: string;
+};
+
+export type Bouncer = {
+    message: string;
+    reload: boolean;
+};
+
+// Teacher's types ends
 
 export type SoundSettings = {
     volume: number; // 0..1

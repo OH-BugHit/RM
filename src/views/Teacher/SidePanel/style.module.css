@@ -1,0 +1,116 @@
+@value primary, secondary, bgColourful1, textDark from "@genai-fi/base/css/colours.module.css";
+
+.container {
+    background: #0f909557;
+    background-image: url('/images/background/sidePanel.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    min-height: 100vh;
+    max-height: 100vh;
+    min-width: max-content;
+    color: rgb(0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: space-evenly;
+    font-size: 0.6rem;
+    z-index: 11;
+    overflow-y: auto;
+    filter:
+        drop-shadow(0 0 3px rgba(0, 0, 0, .6));
+}
+
+.forceText {
+    color: white;
+}
+
+.guidanceTitle {
+    font-size: 0.8rem;
+}
+
+.actionContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0.1rem;
+    gap: 2rem;
+    min-height: 80px;
+}
+
+.stepsContainer {
+    overflow: auto;
+    scrollbar-color: rgb(22, 27, 35) rgb(106, 123, 128);
+    margin-bottom: 0.3rem;
+}
+
+@media (min-height: 700px) {
+    .container {
+        font-size: 0.7rem;
+    }
+
+    .guidanceTitle {
+        font-size: 1.0rem;
+    }
+
+    .actionContainer {
+        margin-top: 0.2rem;
+    }
+}
+
+@media (min-height: 950px) {
+    .container {
+        font-size: 0.8rem;
+    }
+
+    .guidanceTitle {
+        font-size: 1.2rem;
+    }
+
+    .actionContainer {
+        margin-top: 1.2rem;
+    }
+}
+
+@media (min-height: 1200px) {
+    .container {
+        font-size: 1.2rem;
+    }
+
+    .guidanceTitle {
+        font-size: 1.6rem;
+    }
+}
+
+
+.container :global .MuiMenuItem-root {
+    font-size: 1.2em;
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    padding-left: 1.5em;
+    padding-right: 1.5rem;
+}
+
+.advanced {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    color: textDark;
+    z-index: 12;
+}
+
+.actionContainer :global .MuiIconButton-root {
+    background: white;
+    font-size: 2em;
+    padding: 0.5em;
+    box-shadow: 0 0 15px #666;
+}
+
+.actionContainer :global .MuiIconButton-root:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.actionContainer :global .MuiSvgIcon-root {
+    font-size: 2em;
+}

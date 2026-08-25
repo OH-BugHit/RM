@@ -5,7 +5,13 @@ import WorldComponent from '../../World/WorldComponent';
 import style from './style.module.css';
 import { getLargeOffset, getDefaultObservation, smallOffset } from '../../../components/GameComponents/agentProps';
 import { useAtomValue, useSetAtom, useStore } from 'jotai';
-import { AgentSettingsAtom, GameControlAtom, ResetUiPulseAtom, UpdateWorldPulseAtom } from '../../../atoms/state';
+import {
+    AgentSettingsAtom,
+    GameControlAtom,
+    ResetUiPulseAtom,
+    studentResultsAtom,
+    UpdateWorldPulseAtom,
+} from '../../../atoms/state';
 import { motion } from 'framer-motion';
 import {
     ChartAtom,
@@ -47,6 +53,7 @@ interface GenericWorldProps {
     lWorld: WorldStore;
     currentStateRef: React.RefObject<StateData>;
     grid: Cell[][];
+    nameRef?: React.RefObject<string> | undefined;
 }
 
 function RewardMachine({
@@ -58,6 +65,7 @@ function RewardMachine({
     infoRef,
     currentStateRef,
     grid,
+    nameRef = undefined,
 }: GenericWorldProps) {
     const store = useStore();
     const worldGrid = useRef(grid);
@@ -71,6 +79,7 @@ function RewardMachine({
     const setTopBar = useSetAtom(TopbarAtom);
     const setFireworks = useSetAtom(FireWorksPulseAtom);
     const setTestWin = useSetAtom(TestWinAtom);
+    const setStudentScore = useSetAtom(studentResultsAtom);
 
     //TODO: Testaa tarvitaanko tää. Tää nimittäin varmaan päivittää sen gridin. Eli tee muutos et jokin muu päivittää
     useEffect(() => {
@@ -300,19 +309,42 @@ function RewardMachine({
                     lossesRef.current++;
                     win = false;
                 }
-                setTopBar((old) => {
+                const currentScore = store.get(TopbarAtom).score;
+                if (win) {
+                    const name = nameRef?.current;
+                    if (name) {
+                        const oldSavedScore = store.get(studentResultsAtom).data.get(name)?.score;
+
+                        if (oldSavedScore === undefined || oldSavedScore < currentScore) {
+                            setStudentScore((currentStudent) => {
+                                const data = new Map(currentStudent.data);
+
+                                data.set(name, {
+                                    score: currentScore,
+                                });
+
+                                return {
+                                    ...currentStudent,
+                                    data,
+                                };
+                            });
+                        }
+                    }
+                }
+                setTopBar((current) => {
+                    // update scores first
                     // Top bar logic, if score is higher than toBeat, then set highscore and bestscore fireworks. If score is higher than toBeat, then increment beatsScore
-                    let topScore = old.topScore;
-                    if (old.score > old.toBeat || old.toBeat === -1) {
+                    let topScore = current.topScore;
+                    if (current.score > current.toBeat || current.toBeat === -1) {
                         setTestWin((old) => {
                             return {
                                 ...old,
                                 beatsScore: old.beatsScore + 1,
                             };
                         });
-                        if (topScore < old.score && win) {
-                            topScore = old.score;
-                            if (topScore > old.toBeat) {
+                        if (topScore < current.score && win) {
+                            topScore = current.score;
+                            if (topScore > current.toBeat) {
                                 setFireworks({ highScore: true, bestScore: true });
                             } else {
                                 setFireworks({ highScore: true, bestScore: false });
@@ -320,7 +352,7 @@ function RewardMachine({
                         }
                     }
                     return {
-                        ...old,
+                        ...current,
                         traps: 0,
                         treasures: 0,
                         bigTreasures: 0,
@@ -352,6 +384,8 @@ function RewardMachine({
         setLastState,
         setStepsLeft,
         setTopBar,
+        setStudentScore,
+        nameRef,
         currentStateRef,
         actionRef,
         obsRef,

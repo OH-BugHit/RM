@@ -1,0 +1,36 @@
+import style from './single.module.css';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { useEffect } from 'react';
+import { OpenLevelGroupsAtom } from '../../../atoms/state';
+import { ActiveViewAtom } from '../../../atoms/uiState';
+import Levels from '../Levels/Levels';
+import MainMenu from '../Student/MainMenu/MainView';
+import ViewHandler from '../../../components/ViewHandler';
+import { allGroups } from '../../../utils/levels/levelGroups';
+import MenuButton from '../../../components/Buttons/ButtonIcons/OtherIcons/MenuIcon';
+import Tutorial from '../../Tutorial/Tutorial';
+import PlayEnv from '../../PlayEnv/PlayEnv';
+import BuildView from '../../BuildView/BuildView';
+import GameView from '../../GameView/GameView';
+
+export default function SinglePlayer() {
+    const view = useAtomValue(ActiveViewAtom);
+    const setOpenGroups = useSetAtom(OpenLevelGroupsAtom);
+
+    useEffect(() => {
+        setOpenGroups(allGroups);
+    }, [setOpenGroups]);
+
+    return (
+        <div className={style.studentContainer}>
+            <MenuButton />
+            <ViewHandler />
+            {view.overlay === 'menu' && <MainMenu />}
+            {view.main === 'recap' && <Tutorial />}
+            {view.main === 'ownLevels' && <PlayEnv />}
+            {view.main === 'build' && <BuildView />}
+            {view.main === 'play' && <GameView />}
+            {view.main === 'levels' && <Levels view={view.sub} />}
+        </div>
+    );
+}

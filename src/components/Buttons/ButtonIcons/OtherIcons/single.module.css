@@ -1,0 +1,55 @@
+.icon {
+    display: block;
+    cursor: pointer;
+    overflow: visible;
+
+    transform-origin: center;
+    transition:
+        transform 250ms ease-out,
+        filter 250ms ease-out;
+}
+
+.circle,
+.innerRing,
+.player,
+.indicator {
+    transition:
+        transform 200ms ease,
+        opacity 200ms ease,
+        stroke 200ms ease,
+        fill 200ms ease,
+}
+
+/* Hover */
+
+.icon:hover {
+    transform: scale(1.025);
+    filter: drop-shadow(0 0 8px rgba(110, 234, 255, 0.45));
+}
+
+.icon:hover .circle {
+    stroke: #9af8ff;
+}
+
+.icon:hover .innerRing {
+    stroke: #5275a8;
+}
+
+.icon:hover .player {
+    transform: translateY(-2px);
+}
+
+/* Click / press */
+
+.icon:active {
+    transform: scale(0.9);
+    filter: drop-shadow(0 0 14px rgba(110, 234, 255, 0.8));
+}
+
+.icon:active .circle {
+    stroke: #ffffff;
+}
+
+.icon:active .player {
+    transform: translateY(1px);
+}

@@ -32,6 +32,7 @@ export default function getInspectButtons(
     props: InspectButtonProps,
     windowSize?: { width: number; height: number }
 ): ButtonShape[] {
+    const w = windowSize?.width ?? (typeof window !== 'undefined' ? window.innerWidth : 920);
     const h = windowSize?.height ?? (typeof window !== 'undefined' ? window.innerHeight : 768);
 
     return [
@@ -40,8 +41,8 @@ export default function getInspectButtons(
             angle: 0,
             icon: <MapIcon size={140} />,
             content: <></>,
-            size: { h: 570, w: 650 },
-            target: { x: 210, y: -h + h * 0.08 + 8 + 285 },
+            size: { h: h * 0.32 + 150, w: w * 0.05 + 534 },
+            target: { x: 205, y: -h + h * 0.18 + 8 + 150 },
         },
         {
             id: 'agentVision',
@@ -57,7 +58,7 @@ export default function getInspectButtons(
                 </NewFrame>
             ),
             size: { h: 360, w: 320 },
-            target: { x: 450, y: -h + h * 0.24 },
+            target: { x: 190, y: -356 },
         },
         {
             id: 'charts',
