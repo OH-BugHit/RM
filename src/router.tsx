@@ -24,10 +24,6 @@ const routes = createRoutesFromElements(
             lazy={() => import('./views/PlayEnv/PlayEnv').then((mod) => ({ element: <mod.default /> }))}
         />
         <Route
-            path="/play"
-            lazy={() => import('./views/GameView/GameView').then((mod) => ({ element: <mod.default /> }))}
-        />
-        <Route
             path="/student"
             lazy={() => import('./views/StudentView/StudentView').then((mod) => ({ element: <mod.default /> }))}
         />

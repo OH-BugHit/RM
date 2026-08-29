@@ -6,7 +6,7 @@ import { Store } from 'jotai/vanilla/store';
 import { defaultCell } from './defaults';
 import { ActiveAgentAtom, ActiveEnvironmentAtom, AgentSettingsAtom } from '../atoms/state';
 import { SAVE_VERSION } from './export';
-import { Cell, CellType, TileDefinition } from '../types';
+import { AgentUpdate, Cell, CellType, TileDefinition } from '../types';
 
 function restoreImage(image: string, emoji: string): string {
     return emoji ? emojiToDataUrl(emoji) : image;
@@ -109,6 +109,12 @@ export async function readSavedFile(file: File): Promise<LoadedGame> {
             activeAgent: await readJson(zip, 'Agent/activeAgent.json'),
         },
     };
+}
+
+export async function readSavedAgentFile(file: File): Promise<AgentUpdate> {
+    const zip = await JSZip.loadAsync(file);
+    const agent = await readJson<AgentUpdate>(zip, 'Agent/activeAgent.json');
+    return agent;
 }
 
 /**

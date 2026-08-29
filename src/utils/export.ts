@@ -1,10 +1,11 @@
 import { Store } from 'jotai/vanilla/store';
 import JSZip from 'jszip';
 import { TilePropsAtom, TopbarAtom } from '../atoms/uiState';
-import { Cell, EnvSettings, TileDefinition } from '../types';
+import { AgentUpdate, Cell, EnvSettings, TileDefinition } from '../types';
 import { EnvSettingsAtom, WorldGridRenderAtom } from '../atoms/gameState';
 import { ActiveAgentAtom, ActiveEnvironmentAtom, AgentSettingsAtom } from '../atoms/state';
 import { CellSave, Manifest, TileDefinitionSave } from './types';
+import { QLearningAgent } from '../components/agents/rlAgentQ';
 export const SAVE_VERSION = 1;
 
 function createManifest(store: Store): Manifest {
@@ -67,6 +68,28 @@ function saveAgent(zip: JSZip, store: Store) {
     folder?.file('settings.json', JSON.stringify(store.get(AgentSettingsAtom), null, 2));
 
     folder?.file('activeAgent.json', JSON.stringify(store.get(ActiveAgentAtom), null, 2));
+}
+
+export async function createSaveAgent(agent: QLearningAgent, store: Store): Promise<Blob> {
+    const zip = new JSZip();
+    const folder = zip.folder('Agent');
+    const atomAgent = store.get(ActiveAgentAtom);
+    const saveAgent: AgentUpdate = {
+        Q: agent.Q,
+        observationShape: atomAgent.observationShape,
+        img: atomAgent.img,
+        rewards: store.get(EnvSettingsAtom).generic.reward,
+    };
+
+    folder?.file('activeAgent.json', JSON.stringify(saveAgent, null, 2));
+
+    return zip.generateAsync({
+        type: 'blob',
+        compression: 'DEFLATE',
+        compressionOptions: {
+            level: 9,
+        },
+    });
 }
 
 export async function createSave(store: Store): Promise<{ name: string; blob: Promise<Blob> }> {

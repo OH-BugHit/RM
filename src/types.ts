@@ -1,3 +1,4 @@
+import { QPolicyAgent } from './components/agents/policyQagent';
 import { TaskGroup } from './utils/progress';
 import { LoadedGame, UiControls } from './utils/types';
 
@@ -201,6 +202,18 @@ export type InspectCluster = {
     qMap: boolean;
     agentVision: boolean;
     charts: boolean;
+};
+
+/**
+ * Data sent from a
+ */
+export type TournamentAgents = { data: Map<string, AgentUpdate> };
+
+export type AgentUpdate = {
+    Q: Record<string, number[]>;
+    observationShape: ObservationShape;
+    img: string | undefined;
+    rewards: GenericReward;
 };
 
 export type ClusterType = 'agent' | 'reward' | 'inspect' | 'build';
@@ -508,11 +521,12 @@ export type MessageData = {
 };
 
 export type Settings = {
-    limitScoreboard?: {
+    limitScoreboard: {
         limit: number;
         showAll: boolean;
     };
     userGridSettings: {
+        userGridShowCrowns: boolean;
         userGridAutoGrow: boolean;
         userGridMaxColumns: number;
     };
@@ -528,8 +542,15 @@ export type StudentData = { students: Map<string, StudentScores> };
  */
 export type StudentGames = { students: Map<string, LoadedGame> };
 
+export type StudentGameBlobs = { students: Map<string, Blob> };
+
 /**
- * Maps a classifying term to a score (K = levelName, V = Score)
+ * Map k: studentId, v: Students agent
+ */
+export type StudentAgents = { data: Map<string, QPolicyAgent> };
+
+/**
+ * Maps a level to a score (K = levelName, V = Score)
  */
 export type StudentScores = {
     data: Map<string, StudentScore>;
@@ -554,7 +575,7 @@ export type RegisterData = {
 export type ScoreData = {
     studentId: string;
     levelName: string;
-    score: number | 'delete';
+    score: number;
 };
 
 /**

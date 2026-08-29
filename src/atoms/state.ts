@@ -12,15 +12,18 @@ import {
     Settings,
     SoundSettings,
     StudentData,
+    StudentGameBlobs,
     StudentGames,
     StudentScores,
     TeacherControl,
     TopThreeResults,
+    TournamentAgents,
     UserInfo,
     UserItemData,
     Username,
 } from '../types';
 import { defaultAgentSettings, defaultControls, defaultAudioSettings, testTeacherControls } from '../utils/defaults';
+import { LoadedGame } from '../utils/types';
 
 export const sessionCodeAtom = atom<string>('');
 /**
@@ -53,6 +56,7 @@ export const profilePicturesAtom = atom<Map<string, string>>(new Map());
 export const settingAtom = atom<Settings>({
     limitScoreboard: { limit: 2, showAll: false },
     userGridSettings: {
+        userGridShowCrowns: true,
         userGridAutoGrow: true,
         userGridMaxColumns: 6,
     },
@@ -78,6 +82,9 @@ export const studentDataAtom = atom<StudentData>({ students: new Map() });
  */
 export const studentGamesAtom = atom<StudentGames>({ students: new Map() });
 
+export const studentGameZipsAtom = atom<StudentGameBlobs>({ students: new Map() });
+
+export const tournamentAgentUpdatesAtom = atom<TournamentAgents>({ data: new Map() });
 /**
  * Contains configuration of the game
  * Teacher can send new configuration by modifying this atom
@@ -133,6 +140,9 @@ export const gamePhaseAtom = atom<number>(1);
 
 export const OpenLevelGroupsAtom = atom<Set<GroupType>>(new Set<GroupType>());
 
+export const TournamentFileAtom = atom<Blob | null>(null);
+
+export const TournamentGameAtom = atom<LoadedGame | null>(null);
 //
 // ^^^^
 // New stuff

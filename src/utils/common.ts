@@ -1,4 +1,6 @@
+import { renderWorldPreview } from '../components/EnvironmentRender/renderWorldPreview';
 import { Actions } from '../types';
+import { LoadedGame } from './types';
 
 export const stringifyAction = (action: Actions | null) => {
     switch (action) {
@@ -42,4 +44,9 @@ export const displayReward = ({ value, show = true }: DisplayRewardProps) => {
     if (value > 0) return value;
     if (value < 0) return value;
     return;
+};
+
+export const createPreview = async (game: LoadedGame) => {
+    const canvas = await renderWorldPreview(game.game.world);
+    return canvas.toDataURL();
 };

@@ -1,6 +1,6 @@
 import style from './single.module.css';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { OpenLevelGroupsAtom } from '../../../atoms/state';
 import { ActiveViewAtom } from '../../../atoms/uiState';
 import Levels from '../Levels/Levels';
@@ -12,10 +12,12 @@ import Tutorial from '../../Tutorial/Tutorial';
 import PlayEnv from '../../PlayEnv/PlayEnv';
 import BuildView from '../../BuildView/BuildView';
 import GameView from '../../GameView/GameView';
+import { QLearningAgent } from '../../../components/agents/rlAgentQ';
 
 export default function SinglePlayer() {
     const view = useAtomValue(ActiveViewAtom);
     const setOpenGroups = useSetAtom(OpenLevelGroupsAtom);
+    const agentRef = useRef<QLearningAgent>(undefined);
 
     useEffect(() => {
         setOpenGroups(allGroups);
@@ -29,7 +31,7 @@ export default function SinglePlayer() {
             {view.main === 'recap' && <Tutorial />}
             {view.main === 'ownLevels' && <PlayEnv />}
             {view.main === 'build' && <BuildView />}
-            {view.main === 'play' && <GameView />}
+            {view.main === 'play' && <GameView agentRef={agentRef} />}
             {view.main === 'levels' && <Levels view={view.sub} />}
         </div>
     );

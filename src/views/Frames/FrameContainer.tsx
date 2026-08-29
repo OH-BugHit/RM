@@ -40,7 +40,7 @@ const positions: Record<FrameContainerProps['position'], React.CSSProperties> = 
         justifyContent: 'center',
         zIndex: '0',
     },
-    free: { zIndex: '9', borderRadius: '3rem' },
+    free: { zIndex: '9', borderRadius: '3rem', transform: 'translateX(-50%)' },
 };
 
 export default function FrameContainer({

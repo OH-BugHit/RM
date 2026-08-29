@@ -12,3 +12,68 @@
   align-items: center;
   justify-content: center;
 }
+
+:root {
+  /*Text*/
+  --text-dark: #444;
+  --text-light: #f7f9f5;
+
+  /*Background*/
+  --bg-colorful1: #078092;
+  --bg-colorful2: #fd9d32;
+  --bg-colorful3: #e04f66;
+  --bg-subdued1: #e8f0fe;
+  --bg-subdued2: #fecb8b;
+  --bg-subdued3: #ff9499;
+  --bg-dark: #5f7377;
+  --bg-dark2: #444;
+  --bg-dark3: #555;
+  --bg-light: #dee4e8;
+  --bg-workspace: #dfe5e8;
+  --bg-error: #ffcbcb;
+  --bg-ok: #a2e4b8;
+
+  /*main color palette*/
+  --primary: #008297;
+  --primary-light: #00C2E0;
+  --primary-hover: rgba(0, 130, 151, 0.04);
+  --secondary: rgb(174, 37, 174);
+  --secondary-light: #E996E9;
+  --success: #4caf50;
+  --info: #75a4e2;
+  --error: #f44336;
+  --success-light: #81c784;
+  --info-light: #a4bfe2;
+  --error-light: #ED9C9C;
+
+  /*Games*/
+  --light-element: #b3d7d8;
+  --dark-element: #213c3f;
+  --darker-element: #222222;
+  --bg-blue: #5585b7;
+  --button-hover: #385e66;
+
+
+  /*Borders*/
+  --border-grey: #ddd;
+  --border-green: #19b1a8;
+
+  /*Extra colors*/
+  --blue: #42a5f5;
+  --orange: #ff8f00;
+  --green: #4caf50;
+  --purple: #9c27b0;
+  --teal: #00bcd4;
+  --darker-red: #e53935;
+  --darker-yellow: #fbc02d;
+  --khaki: #7cb342;
+
+  --grey: #97999b;
+  --lighter-red: #e04f66;
+  --lighter-orange: #fd9d32;
+  --lighter-yellow: #fad630;
+  --lighter-purple: #a77bca;
+  --royal-blue: #2e6df5;
+  --blue-green: #19b1a8;
+  --mustard: #c2a251;
+}

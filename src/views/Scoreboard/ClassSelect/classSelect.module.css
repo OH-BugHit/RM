@@ -1,0 +1,75 @@
+@value secondary from "@genai-fi/base/css/colours.module.css";
+
+.classSelect {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    gap: 1.5rem;
+    height: 100%;
+    width: max-content;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-top: 1rem;
+    overflow: hidden;
+}
+
+.termItem {
+    margin: 0 0.3rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    /*background-color: rgba(50, 121, 208, 0.278);*/
+    background: linear-gradient(45deg, rgba(127, 126, 187, 0.677), rgba(19, 62, 123, 0.38));
+    border-radius: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    padding: 0rem 2rem 0rem 2rem;
+    cursor: pointer;
+    border: none;
+    color: black;
+    font-family: 'Andika', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 0.9rem;
+    font-size: 1.17em;
+}
+
+.selectedTermItem {
+    composes: termItem;
+    background: linear-gradient(45deg, rgba(45, 236, 239, 0.309), rgba(24, 249, 253, 0.519));
+}
+
+.termItem:hover {
+    /*transform: scale(1.1, 1.1);*/
+    box-shadow: 0 0 8px rgba(45, 236, 239, 0.309);
+    ;
+}
+
+.termItem:focus {
+    /*transform: scale(1.1, 1.1);*/
+    box-shadow: 0 0 8px rgba(45, 236, 239, 0.309);
+    ;
+}
+
+.classNameText {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    color: white;
+    font-size: large;
+}
+
+@media (max-width: 1200px) {
+    h1 {
+        font-size: xx-large;
+    }
+
+    .classNameText {
+        font-size: medium;
+    }
+}

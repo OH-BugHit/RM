@@ -4,7 +4,7 @@ import { ActiveViewAtom } from '../../../atoms/uiState';
 import UserGrid from './Users/UserGrid/UserGrid';
 import React from 'react';
 import Levels from './Levels/Levels';
-import Tournament from './Tournament/Tournament';
+import Tournament from './Tournament/Play/Tournament';
 import Tutorial from '../../Tutorial/Tutorial';
 import BuildTournament from './Tournament/Build/BuildTournament';
 
@@ -34,7 +34,6 @@ function TeacherContent() {
                 )}
                 {activeView.main === 'tournamentPlay' && (
                     <>
-                        <h1>Tournament</h1>
                         <Tournament />
                     </>
                 )}

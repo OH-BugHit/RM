@@ -10,6 +10,8 @@ import Levels from '../Levels/Levels';
 import MainMenu from './MainMenu/MainView';
 import MenuButton from '../../../components/Buttons/ButtonIcons/OtherIcons/MenuIcon';
 import BuildView from '../../BuildView/BuildView';
+import StudentTournamentWrapper from './Tournament/StudentTournamentWrapper';
+import ScoreBridge from './ScoreBridge';
 
 interface StudentProps {
     serverCode?: string;
@@ -25,6 +27,7 @@ export default function Student({ serverCode }: StudentProps) {
     const [showError, setShowError] = useState(false);
     const config = useAtomValue(configAtom);
     const view = useAtomValue(ActiveViewAtom);
+    const envStateRef = useRef<string | null>(null);
 
     useLeaveWarning(blockRef); // Blocks unintended leaving (refreshing)
 
@@ -53,13 +56,18 @@ export default function Student({ serverCode }: StudentProps) {
 
     return (
         <div className={style.studentContainer}>
+            <ScoreBridge />
             <MenuButton />
             <MessageDisplay open={showError} />
             {view.main === 'main' && <MainMenu />}
             {config.phase === 'levels' && view.main === 'levels' && <Levels view={view.sub} />}
             {config.phase === 'tournamentBuild' && view.main === 'tournamentBuild' && (
-                <BuildView doSendEnvironment={doSendEnvironment} />
+                <BuildView
+                    doSendEnvironment={doSendEnvironment}
+                    envStateRef={envStateRef}
+                />
             )}
+            {config.phase === 'tournamentPlay' && view.main === 'tournamentPlay' && <StudentTournamentWrapper />}
         </div>
     );
 }

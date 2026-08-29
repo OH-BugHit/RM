@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { RefObject, useEffect, useMemo, useRef } from 'react';
 import style from './style.module.css';
 import { QLearningAgent } from '../../components/agents/rlAgentQ';
-import { Actions, Cell, GameEnvironmentInfo, GenericObservation, StateData } from '../../types';
+import { Actions, GameEnvironmentInfo, GenericObservation, StateData } from '../../types';
 import { AnimatePresence } from 'framer-motion';
 import { Bridge } from '../../components/Charts/ChartBridge';
 import HUD from '../Xai/HUD';
@@ -18,9 +18,10 @@ import { usernameAtom } from '../../atoms/state';
 
 interface BuildViewProps {
     doSendEnvironment?: ((data: LevelData) => void) | undefined;
+    envStateRef?: RefObject<string | null>;
 }
 
-export default function BuildView({ doSendEnvironment = undefined }: BuildViewProps) {
+export default function BuildView({ doSendEnvironment = undefined, envStateRef = undefined }: BuildViewProps) {
     const setHudVis = useSetAtom(HUDvisAtom);
     const setTileVis = useSetAtom(TileVisibilityAtom);
     const setControls = useSetAtom(ControlEnablerAtom);
@@ -33,10 +34,17 @@ export default function BuildView({ doSendEnvironment = undefined }: BuildViewPr
     const mapRef = useRef<L.Map | null>(null);
     const layerRef = useRef<CustomGridLayer | null>(null);
     const currentStateRef = useRef<StateData>({ previous: '', current: '' });
-    const envStateRef = useRef<Cell[][] | undefined>(undefined);
+    const setWorld = useSetAtom(WorldGridRenderAtom);
+
     const store = useStore();
 
     const config = { image: '/images/background/backgroundSVGanimate.svg' };
+
+    useEffect(() => {
+        if (envStateRef && envStateRef?.current !== null) {
+            setWorld(JSON.parse(envStateRef?.current));
+        }
+    });
 
     useEffect(() => {
         setHudVis(hudVisBuild);
@@ -46,32 +54,34 @@ export default function BuildView({ doSendEnvironment = undefined }: BuildViewPr
 
     useEffect(() => {
         let cancelled = false;
+        if (doSendEnvironment && envStateRef) {
+            const checkEnvironment = async () => {
+                while (!cancelled) {
+                    await new Promise((resolve) => setTimeout(resolve, 1_000));
+                    if (cancelled) return;
+                    const currentEnv = store.get(WorldGridRenderAtom);
+                    const currentState = JSON.stringify(currentEnv);
+                    if (currentState === envStateRef.current) {
+                        continue;
+                    }
+                    envStateRef.current = currentState;
 
-        const checkEnvironment = async () => {
-            while (!cancelled) {
-                await new Promise((resolve) => setTimeout(resolve, 10_000));
-                if (cancelled) return;
-                const currentEnv = store.get(WorldGridRenderAtom);
-                if (currentEnv === envStateRef.current) {
-                    continue;
+                    // Create ZIP file to send
+                    const { blob } = await createSave(store);
+                    if (cancelled) return;
+                    const zipBlob = await blob;
+                    if (cancelled) return;
+
+                    doSendEnvironment?.({ file: zipBlob, studentId: store.get(usernameAtom) });
                 }
-                envStateRef.current = currentEnv;
-
-                // Create ZIP file to send
-                const { blob } = await createSave(store);
-                if (cancelled) return;
-                const zipBlob = await blob;
-                if (cancelled) return;
-
-                doSendEnvironment?.({ file: zipBlob, studentId: store.get(usernameAtom) });
-            }
-        };
-        checkEnvironment();
+            };
+            checkEnvironment();
+        }
 
         return () => {
             cancelled = true;
         };
-    }, [store, doSendEnvironment]);
+    }, [store, doSendEnvironment, envStateRef]);
 
     return (
         <>

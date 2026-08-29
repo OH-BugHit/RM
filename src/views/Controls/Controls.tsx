@@ -125,28 +125,30 @@ function Controls() {
                         disabled={!hudVis.controls.play || !enable?.play || test === 'isRunning' || test === 'passed'}
                     />
                 </GameButton>
-                <GameButton
-                    title="Fast forward"
-                    variant="text"
-                    color="success"
-                    disabled={!hudVis.controls.ff || !enable?.ff || test === 'isRunning' || test === 'passed'}
-                    onClick={() => {
-                        storyFF();
-                        setLod(1);
-                        setControls((old) => {
-                            return {
-                                ...old,
-                                isRunning: true,
-                                isFast: true,
-                            };
-                        });
-                    }}
-                >
-                    <FastForwardIcon
-                        active={controls.isFast}
+                {hudVis.controls.ff && (
+                    <GameButton
+                        title="Fast forward"
+                        variant="text"
+                        color="success"
                         disabled={!hudVis.controls.ff || !enable?.ff || test === 'isRunning' || test === 'passed'}
-                    />
-                </GameButton>
+                        onClick={() => {
+                            storyFF();
+                            setLod(1);
+                            setControls((old) => {
+                                return {
+                                    ...old,
+                                    isRunning: true,
+                                    isFast: true,
+                                };
+                            });
+                        }}
+                    >
+                        <FastForwardIcon
+                            active={controls.isFast}
+                            disabled={!hudVis.controls.ff || !enable?.ff || test === 'isRunning' || test === 'passed'}
+                        />
+                    </GameButton>
+                )}
 
                 {hudVis.controls.inspect && (
                     <GameButton

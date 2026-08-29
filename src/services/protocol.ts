@@ -1,6 +1,6 @@
 import { BuiltinEvent, PeerEvent } from '@genai-fi/base';
 import { GroupType, Level, RegisterData, RewardConfig, ScoreData, Username } from '../types';
-import { LevelData } from '../utils/types';
+import { AgentData, LevelData } from '../utils/types';
 
 export interface ConfigurationEvent extends PeerEvent {
     event: 'eter:config';
@@ -65,7 +65,13 @@ export interface EnvironmentTransferEvent extends PeerEvent {
     data: LevelData;
 }
 
+export interface AgentTransferEvent extends PeerEvent {
+    event: 'agentTransfer';
+    data: AgentData;
+}
+
 export type EventProtocol =
+    | AgentTransferEvent
     | EnvironmentTransferEvent
     | LevelGroupEvent
     | BuiltinEvent

@@ -66,4 +66,9 @@ export type LevelData = {
     studentId: string;
 };
 
+export type AgentData = {
+    studentId: string;
+    file: Blob;
+};
+
 export type StoryProgressField = NestedKeyOf<StoryProgress>;

@@ -1,0 +1,150 @@
+.leaderboardPlace {
+    display: flex;
+    flex-direction: row;
+    padding: 2rem 2rem 2rem 2rem;
+    scale: 1.1;
+    border-radius: 2rem 0 0 2rem;
+    background-color: rgb(62, 84, 255);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    backdrop-filter: blur(10px);
+    font-weight: bolder;
+    font-size: xx-large;
+    color: #ffda35;
+    font-family: 'Tektur';
+    height: -webkit-fill-available
+}
+
+.infoData {
+    font-size: xx-large;
+    align-content: center;
+}
+
+.scoreRow {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.studentInfo {
+    display: flex;
+    flex-direction: row;
+    border-radius: 50% 0 0 50%;
+    min-height: 64px;
+    padding-right: 2rem;
+    background: linear-gradient(45deg, rgba(53, 99, 251, 0.178), rgba(31, 212, 225, 0));
+    gap: 1.5rem;
+    color: white;
+}
+
+.avatarWrapper {
+    position: relative;
+    display: inline-block;
+    width: fit-content;
+}
+
+.crownImg {
+    position: absolute;
+    top: -80px;
+    left: -80px;
+    z-index: 2;
+    pointer-events: none;
+    transform: rotate(-35deg);
+}
+
+.allPics {
+    display: flex;
+    max-width: 50%;
+    flex-shrink: 1;
+    margin-right: 0.5rem;
+    align-items: center;
+    overflow-x: auto;
+    gap: 0.5rem;
+    white-space: nowrap;
+    scrollbar-color: rgb(94, 148, 136) lightblue;
+}
+
+.score {
+    display: flex;
+    flex-direction: row;
+    padding: 2rem 2rem 2rem 2rem;
+    height: 100%;
+    scale: 1.1;
+    border-radius: 0 2rem 2rem 0;
+    background-color: rgb(255, 238, 82);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: 'Tektur';
+    height: -webkit-fill-available
+}
+
+/**/
+.viewPhotoButton {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    margin-right: 1rem;
+    text-align: center;
+    border-radius: 1rem 1rem 1rem 1rem;
+    padding: 0.3rem;
+}
+
+.visWrapper {
+    position: relative;
+    display: inline-block;
+    width: fit-content;
+    margin-right: 0.2rem;
+}
+
+.visButton {
+    position: absolute;
+    top: -16px;
+    right: 2px;
+    cursor: pointer;
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    height: fit-content;
+}
+
+.image {
+    border-radius: 1rem;
+}
+
+@container board (width < 900px) {
+    .infoData {
+        font-size: x-large;
+    }
+}
+
+@container board (width < 700px) {
+    .leaderboardPlace {
+        padding: 1.2rem 1.2rem 1.2rem 1.2rem;
+        ;
+    }
+
+    .score {
+        padding: 1rem 1rem 1rem 1rem;
+        ;
+    }
+
+    .allPics {
+        display: none;
+    }
+
+    .viewPhotoButton {
+        display: none;
+    }
+
+    .visButton {
+        display: none;
+    }
+
+    .infoData {
+        font-size: medium;
+    }
+}

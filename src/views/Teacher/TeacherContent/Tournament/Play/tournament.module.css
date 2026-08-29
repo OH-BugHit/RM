@@ -1,0 +1,60 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.title {
+    flex: 0 0 auto;
+    padding-top: 1rem;
+}
+
+.content {
+    flex: 1;
+    min-height: 0;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 1rem 2rem 0 0;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.leaderboard {
+    flex: 4;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.environment {
+    flex: 6;
+    overflow: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    padding-left: 1rem;
+
+    border-radius: 2rem;
+    gap: 3rem;
+
+    box-sizing: border-box;
+}
+
+.buttons {
+    flex: 0 0 auto;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    gap: 2rem;
+    padding: 1rem;
+}

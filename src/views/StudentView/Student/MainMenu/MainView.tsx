@@ -28,12 +28,12 @@ export default function MainMenu() {
                     onSelect={() => onSelect('levels')}
                 />
                 <MenuItem
-                    title="Your levels"
-                    onSelect={() => onSelect('ownLevels')}
-                />
-                <MenuItem
                     title="Recap"
                     onSelect={() => onSelect('recap')}
+                />
+                <MenuItem
+                    title="Create"
+                    onSelect={() => onSelect('ownLevels')}
                 />
                 <MenuItem
                     title="Settings"

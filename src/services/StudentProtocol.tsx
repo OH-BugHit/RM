@@ -9,18 +9,20 @@ import {
     profilePictureAtom,
     studentBouncerAtom,
     takenUsernamesAtom,
+    TournamentFileAtom,
     usernameAtom,
 } from '../atoms/state';
 import { usePeerData, usePeerSender, usePeerStatus } from '@genai-fi/base/hooks/peer';
 
 import { RegisterData, ScoreData } from '../types';
 import { LevelConfAtom } from '../atoms/gameState';
-import { LevelData } from '../utils/types';
+import { AgentData, LevelData } from '../utils/types';
 
 interface ProtocolContextType {
     doSendScore?: (data: ScoreData) => void; // Send Image + heatmap image
     doRegister?: (data: RegisterData) => void; // Send username and profilepicture
     doSendEnvironment?: (data: LevelData) => void; // Send environment and game settings
+    doSendAgent?: (data: AgentData) => void;
 }
 
 const ProtocolContext = createContext<ProtocolContextType>({});
@@ -37,11 +39,11 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
     const setBouncer = useSetAtom(studentBouncerAtom);
     const setProfilePicture = useSetAtom(profilePictureAtom);
     const setGroup = useSetAtom(OpenLevelGroupsAtom);
+    const setTournamentFile = useSetAtom(TournamentFileAtom);
     const ownUsername = useAtomValue(usernameAtom);
     // conn: Connection<EventProtocol>
 
     usePeerData(async (data: EventProtocol, conn: Connection<EventProtocol>) => {
-        console.log(data);
         if (data.event === 'eter:join') {
             // Send
         }
@@ -68,6 +70,8 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
         } else if (data.event === 'eter:levelGroup') {
             // Sends level group information to the teacher.
             setGroup(new Set(data.data));
+        } else if (data.event === 'eter:envTransfer') {
+            setTournamentFile(data.data.file);
         }
     });
     const [hasBeenReady, setHasBeenReady] = useState(false);
@@ -109,12 +113,22 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
         [send]
     );
 
+    const doSendAgent = useCallback(
+        (agentData: AgentData) => {
+            if (send) {
+                send({ event: 'agentTransfer', data: agentData });
+            }
+        },
+        [send]
+    );
+
     return (
         <ProtocolContext.Provider
             value={{
                 doSendScore,
                 doRegister,
                 doSendEnvironment,
+                doSendAgent,
             }}
         >
             {hasBeenReady && children}

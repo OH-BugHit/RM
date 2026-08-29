@@ -1,12 +1,13 @@
 import { ObservationShape, Position } from '../../types';
 
 interface SightProps {
-    agentPos: Position;
+    agentPos: Position | undefined;
     x: number;
     y: number;
     obsShape: ObservationShape;
 }
 export const getOnSight = ({ agentPos, x, y, obsShape }: SightProps): boolean => {
+    if (!agentPos) return false;
     switch (obsShape) {
         case 'large': {
             const dx = Math.abs(agentPos.x - x);
@@ -22,6 +23,7 @@ export const getOnSight = ({ agentPos, x, y, obsShape }: SightProps): boolean =>
 };
 
 export const getOnSightOrOnSpot = ({ agentPos, x, y, obsShape: obsShape }: SightProps): boolean => {
+    if (!agentPos) return false;
     switch (obsShape) {
         case 'large': {
             const dx = Math.abs(agentPos.x - x);

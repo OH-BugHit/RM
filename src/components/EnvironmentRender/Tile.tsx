@@ -10,13 +10,21 @@ import { InnerFillCellAtom, RewardsPulseAtom } from '../../atoms/gameState';
 interface TileProps {
     cell: Cell;
     tileSize?: number;
-    agentLocation: Position;
+    agentLocation?: Position;
+    agentLocations?: Position[];
     cellLocation: Position;
-    onSight?: boolean;
     worldWidth: number;
     worldHeight: number;
 }
-export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation, worldHeight, worldWidth }: TileProps) {
+export default function Tile({
+    cell,
+    tileSize = 40,
+    agentLocation,
+    agentLocations = undefined,
+    cellLocation,
+    worldHeight,
+    worldWidth,
+}: TileProps) {
     const agent = useAtomValue(ActiveAgentAtom);
     const visibleTiles = useAtomValue(TileVisibilityAtom);
     const propTool = useAtomValue(CurrentTileToolAtom);
@@ -45,8 +53,19 @@ export default function Tile({ cell, tileSize = 40, agentLocation, cellLocation,
 
     const getCell = () => {
         const base = getCellImage(cell);
+        let location = false;
 
-        if (cellLocation.y !== agentLocation.y || cellLocation.x !== agentLocation.x) return base;
+        if (agentLocations) {
+            for (let i = 0; i < agentLocations.length; i++) {
+                if (agentLocations[i].x === cellLocation.x && agentLocations[i].y === cellLocation.y) location = true;
+            }
+        }
+
+        if (agentLocation) {
+            if (cellLocation.y === agentLocation.y && cellLocation.x === agentLocation.x) location = true;
+        }
+
+        if (!location) return base;
 
         return (
             <img

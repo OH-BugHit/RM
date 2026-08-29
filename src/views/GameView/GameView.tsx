@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { RefObject, useMemo, useRef } from 'react';
 import style from './style.module.css';
 import { QLearningAgent } from '../../components/agents/rlAgentQ';
 import { Actions, GameEnvironmentInfo, GenericObservation, StateData } from '../../types';
@@ -12,9 +12,12 @@ import RewardMachine from '../Environments/RewardMachine/RewardMachine';
 import { defaultWorldGrid } from '../../utils/defaults';
 import { WorldGridRenderAtom } from '../../atoms/gameState';
 
-// React component
-function GameView() {
-    const agentRef = useRef<QLearningAgent>(undefined);
+interface GameViewProps {
+    nameRef?: RefObject<string>;
+    agentRef: React.RefObject<QLearningAgent | undefined>;
+}
+
+function GameView({ agentRef, nameRef = undefined }: GameViewProps) {
     const lWorld = useMemo(() => new WorldStore(agentRef), []);
     const obsRef = useRef<GenericObservation>(undefined);
     const actionRef = useRef<Actions>(undefined);
@@ -55,6 +58,7 @@ function GameView() {
                             infoRef={infoRef}
                             lWorld={lWorld}
                             currentStateRef={currentStateRef}
+                            nameRef={nameRef}
                         />
                     </div>
                 </div>

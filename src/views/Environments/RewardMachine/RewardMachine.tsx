@@ -311,15 +311,15 @@ function RewardMachine({
                 }
                 const currentScore = store.get(TopbarAtom).score;
                 if (win) {
-                    const name = nameRef?.current;
-                    if (name) {
-                        const oldSavedScore = store.get(studentResultsAtom).data.get(name)?.score;
+                    const levelName = nameRef?.current;
+                    if (levelName && levelName !== '') {
+                        const oldSavedScore = store.get(studentResultsAtom).data.get(levelName)?.score;
 
                         if (oldSavedScore === undefined || oldSavedScore < currentScore) {
                             setStudentScore((currentStudent) => {
                                 const data = new Map(currentStudent.data);
 
-                                data.set(name, {
+                                data.set(levelName, {
                                     score: currentScore,
                                 });
 

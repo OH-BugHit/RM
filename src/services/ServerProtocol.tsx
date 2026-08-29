@@ -12,13 +12,16 @@ import {
     profilePicturesAtom,
     studentDataAtom,
     studentGamesAtom,
+    studentGameZipsAtom,
     takenUsernamesAtom,
     topScoresAtom,
+    tournamentAgentUpdatesAtom,
+    TournamentFileAtom,
     usersAtom,
 } from '../atoms/state';
-import { RewardConfig, StudentGames } from '../types';
+import { RewardConfig, StudentGameBlobs, StudentGames, TournamentAgents } from '../types';
 import { updateTopScores } from './utils';
-import { readSavedFile } from '../utils/import';
+import { readSavedAgentFile, readSavedFile } from '../utils/import';
 
 export default function ServerProtocol() {
     const [users, setUsers] = useAtom(usersAtom);
@@ -30,7 +33,10 @@ export default function ServerProtocol() {
     const levelObject = useAtomValue(levelDataAtom);
     const messageData = useAtomValue(messageTransferAtom);
     const openGroups = useAtomValue(OpenLevelGroupsAtom);
+    const tournamentLevelFile = useAtomValue(TournamentFileAtom);
     const setStudentGames = useSetAtom(studentGamesAtom);
+    const setStudentGameBlobs = useSetAtom(studentGameZipsAtom);
+    const setTournamentAgentUpdates = useSetAtom(tournamentAgentUpdatesAtom);
 
     // CLOSE HANDLER: whenever a Connection is closed (either via 'eter:close' or network drop),
     // remove that user from your usersAtom.
@@ -41,6 +47,7 @@ export default function ServerProtocol() {
     });
 
     usePeerData(async (data: EventProtocol, conn: Connection<EventProtocol>) => {
+        console.log('received', data);
         if (data.event === 'eter:alive') {
             const userExists = users.some((u) => u.username === data.user.username);
             if (!userExists && data.user.username) {
@@ -140,7 +147,7 @@ export default function ServerProtocol() {
                     data: levelObject,
                 });
             } else {
-                console.warn('Modelfile not found when requested by student');
+                console.warn('Level not found when requested by student');
             }
         } else if (data.event === 'eter:score') {
             // On new image from student. This also usually means new score.
@@ -225,6 +232,22 @@ export default function ServerProtocol() {
                 newMap.set(id, loaded);
                 return { students: newMap };
             });
+
+            setStudentGameBlobs((prev: StudentGameBlobs) => {
+                const id = data.data.studentId;
+                const newMap = new Map(prev.students);
+                newMap.set(id, data.data.file);
+                return { students: newMap };
+            });
+        } else if (data.event === 'agentTransfer') {
+            const file = new File([data.data.file], 'agent.genai', { type: 'application/zip' });
+            const loaded = await readSavedAgentFile(file);
+            setTournamentAgentUpdates((prev: TournamentAgents) => {
+                const id = data.data.studentId;
+                const newMap = new Map(prev.data);
+                newMap.set(id, loaded);
+                return { data: newMap };
+            });
         }
     });
 
@@ -245,6 +268,12 @@ export default function ServerProtocol() {
     useEffect(() => {
         if (send) send({ event: 'eter:levelGroup', data: [...openGroups] });
     });
+
+    useEffect(() => {
+        if (tournamentLevelFile) {
+            if (send) send({ event: 'eter:envTransfer', data: { studentId: '', file: tournamentLevelFile } });
+        }
+    }, [tournamentLevelFile, send]);
 
     return (
         <ConnectionStatus

@@ -1,14 +1,14 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import style from './levelSelect.module.css';
 import { Level } from '../../../../types';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { LevelConfAtom } from '../../../../atoms/gameState';
-import { useLocation, useNavigate } from 'react-router-dom';
 import LevelGroup from './LevelGroup';
 import { Button } from '@genai-fi/base';
 import { levelGroups } from '../../../../utils/levels/levelGroups';
 import { OpenLevelGroupsAtom } from '../../../../atoms/state';
 import { motion } from 'framer-motion';
+import { useViewNavigation } from '../../../../hooks/useViewNavigation';
 
 type CardPosition = 'left' | 'center' | 'right';
 
@@ -36,14 +36,10 @@ const cardVariants = {
 export default function LevelSelect() {
     const [selectedLevel, setSelectedLevel] = useState<Level | null>(null);
     const [activeIndex, setActiveIndex] = useState(0);
+    const { goToView } = useViewNavigation();
 
     const setLevel = useSetAtom(LevelConfAtom);
     const openGroupTypes = useAtomValue(OpenLevelGroupsAtom);
-
-    const navigate = useNavigate();
-    const location = useLocation();
-
-    const params = useMemo(() => new URLSearchParams(location.search), [location.search]);
 
     // Vain avoimet maailmat osallistuvat carousel-navigointiin.
     const openGroups = levelGroups.filter((group) => openGroupTypes.has(group.groupType));
@@ -66,10 +62,7 @@ export default function LevelSelect() {
 
         setLevel(selectedLevel);
 
-        params.set('sub', 'playLevel');
-        params.set('overlay', 'none');
-
-        navigate(`${location.pathname}?${params.toString()}`, { replace: false });
+        goToView({ sub: 'playLevel', overlay: null });
     };
 
     const getVisibleGroups = () => {

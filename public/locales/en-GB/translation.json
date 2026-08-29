@@ -67,10 +67,10 @@
             "3": "Key",
             "4": "Door",
             "5": "Locked Door",
-            "6": "Treasure",
-            "7": "Big Treasure",
+            "6": "Score +1",
+            "7": "Score +2",
             "8": "Outside",
-            "9": "Trap",
+            "9": "Score -1",
             "timeStep": "Reward for each step",
             "timeUp": "Reward if time ends"
         },
@@ -90,7 +90,7 @@
         "agent": {
             "giveName": "Give your agent an epic name:",
             "giveNameDesc": "You can call me...",
-            "imgTitle": "Select your agent",
+            "imgTitle": "Choose your avatar",
             "imgDesc": "Change agent's appereance",
             "nameInputLabel": "Name your agent",
             "obsShapeTitle": "Select observation shape",
@@ -104,7 +104,7 @@
             "createNew": "Create new tile",
             "goal": "Select episode ending tile",
             "makeBeautifullTitle": "Make it beautiful!",
-            "makeBeautifullTitleDesc": "Now you can make your world more interesting by adding additional props. Maybe consider adding few \"treasures\", \"big treasures\" and \"traps\", that will give different rewards for the agent when reached.",
+            "makeBeautifullTitleDesc": "Now you can make your world more interesting by adding additional props. Maybe consider adding few \"Score +1\", \"Score +2\" and \"Score -1\", that will give different rewards for the agent when reached.",
             "makeWorkTitle": "Make it work!",
             "makeWorkTitleDesc": "In reinforcement learning it is usually required to have starting place and ending condition. This game also requires walls around the environment. Start by selecting how those look in your environment.",
             "ps": "You can alter all selections throughtout the whole game so feel free to come back here later.",
@@ -313,6 +313,30 @@
             "preMessage": "In this level you hit to the exploration-explotation dilemma: Should the agent try more things to learn more or exploit already feasible policy."
         }
     },
+    "messageDisplay": {
+        "title": {
+            "userGrid": {
+                "messages": {
+                    "kick": "Warning",
+                    "remove": "Caution"
+                }
+            },
+            "usernameTaken": "Username taken"
+        },
+        "reload": {
+            "true": "Browser will reload shortly",
+            "false": "Session will continue shortly"
+        },
+        "message": {
+            "userGrid": {
+                "messages": {
+                    "kick": "You have been removed from the game. You can rejoin. Please ask your teacher for more details.",
+                    "remove": "You have been removed from the game. Your profile and progress has been removed. Please ask your teacher for more details."
+                }
+            },
+            "usernameTaken": "Username was taken, try again after reload..."
+        }
+    },
     "playEnv": {
         "load": {
             "title": "Play or modify ready game"
@@ -328,6 +352,21 @@
     },
     "reward": {
         "title": "Rewards"
+    },
+    "scoreboard": {
+        "actions": {
+            "open": {
+                "image": "Open image"
+            }
+        },
+        "labels": {
+            "forAll": "Standings",
+            "forClass": "Standings for",
+            "leaderboard": "Leaderboard",
+            "resultPictures": "Result Pictures",
+            "scores": "Scores",
+            "standings": "Standings"
+        }
     },
     "sidePanel": {
         "actions": {
@@ -467,7 +506,7 @@
             "32": "Here are the Curiosity and Foresight settings mentioned in the Inspect view. You can change how the agent learns by adjusting them.",
             "33": "You don't need to fully understand the formula or how each change affects learning. You can also just try different settings and see what happens.",
             "34": "Just a few more things! This is the last part of the game. Here you can see how the agent's learning is progressing.",
-            "35": "You gain score by collecting treasures, big treasures, and traps. Score only counts for episodes that end at the goal. If time runs out, your score is 0.",
+            "35": "You obtain score by collecting Score +1, Score +2 and lose it if agent encounters Score -1. Score only counts for episodes that end at the goal. If time runs out, your score is 0.",
             "36": "Score is completely different from rewards. Your score is used to show how well you did and to let you compete with other players.",
             "37": "That's it! To start the tutorial again, go to the homepage and refresh your browser. Click Next to start playing."
         }
@@ -610,8 +649,8 @@
                 "0": "Floor with no spawning. The agent can move on these tiles, but it will not start here.",
                 "1": "Solid tiles block movement. They can be walls, trees, or anything else that blocks the way.",
                 "2": "Goal. The agent needs to reach the goal to finish the round and count the score.",
-                "6": "Treasure gives one point when the agent reaches it.",
-                "7": "Big treasure gives 2 points when the agent reaches it.",
+                "6": "Score +1 gives one point when the agent reaches it.",
+                "7": "Score +2 gives 2 points when the agent reaches it.",
                 "9": "Reaching this tile costs one point."
             }
         }

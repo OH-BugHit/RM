@@ -1,7 +1,7 @@
 import { GenericObservation } from '../../types';
 
 export function serializeObservation(obs: GenericObservation): string {
-    return `${obs.neighbours.map((n) => String(n)).join(',')}-${obs.POIdirection}`;
+    return `${obs.neighbours.map((n) => String(n)).join(',')}-${obs.POIdirection ? obs.POIdirection : 4}`;
 }
 
 export function parseObservationState(state: string): { neighbours: string[]; POIdirection: string } {

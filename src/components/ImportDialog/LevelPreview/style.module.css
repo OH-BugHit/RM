@@ -8,6 +8,7 @@
     border-radius: 12px;
     background: rgba(0, 0, 0, 0.02);
     padding: 12px;
+    width: min-content;
 }
 
 .previewSection h2 {
