@@ -8,7 +8,7 @@ import {
     level1Tasks,
     level1TextModes,
     level1uiControls,
-} from './level1';
+} from './blevel1';
 import { testTileDef } from '../../testLevel/tileDefinitions';
 import { LoadedGame } from '../../types';
 
@@ -30,7 +30,7 @@ const level1Data: LoadedGame = {
     },
 };
 
-export const level1: Level = {
+export const basicsLevel1: Level = {
     level: level1Data,
     levelTasks: level1Tasks,
     hudSettings: level1HudConfig,

@@ -250,6 +250,9 @@ export type HUDvisibility = {
     inspect: InspectCluster;
     reward: RewardCluster;
     agent: AgentCluster;
+    options: {
+        autoPlay: boolean;
+    };
 };
 
 export type HUDvisibilityField = NestedKeyOf<HUDvisibility>;

@@ -15,7 +15,7 @@ import {
 import { getDefaultObservation } from '../components/GameComponents/agentProps';
 import { ChartState } from '../components/Charts/rewardStreamEngine';
 import { defaultCell, defaultEnvSettings } from '../utils/defaults';
-import { level1 } from '../utils/levels/level1/leveldata';
+import { basicsLevel1 } from '../utils/levels/1basics/leveldata';
 
 export const SmallObsAtom = atom<GenericObservation>(getDefaultObservation('small'));
 export const LargeObsAtom = atom<GenericObservation>(getDefaultObservation('large'));
@@ -43,7 +43,7 @@ export const MoveQmapAtom = atom<boolean>(true);
 
 export const StepsLeftAtom = atom<number>(0);
 
-export const LevelConfAtom = atom<Level | undefined>(level1);
+export const LevelConfAtom = atom<Level | undefined>(basicsLevel1);
 
 /**
  * If test phase active

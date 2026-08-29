@@ -100,5 +100,8 @@ export const buildHudVisibility = (config: HUDvisibilityField[]): HUDvisibility 
             prm: fields.has('agent.prm'),
             trash: fields.has('agent.trash'),
         },
+        options: {
+            autoPlay: fields.has('options.autoPlay'),
+        },
     };
 };

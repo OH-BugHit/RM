@@ -470,6 +470,9 @@ export const defaultHUDvis: HUDvisibility = {
         agentVision: false,
         qMap: false,
     },
+    options: {
+        autoPlay: false,
+    },
 };
 
 export const playStoryProgress: StoryProgress = {
@@ -572,6 +575,9 @@ export const playHudVis: HUDvisibility = {
         agentVision: true,
         qMap: true,
     },
+    options: {
+        autoPlay: false,
+    },
 };
 
 export const hudVisFalse: HUDvisibility = {
@@ -622,6 +628,9 @@ export const hudVisFalse: HUDvisibility = {
         agentVision: false,
         qMap: false,
     },
+    options: {
+        autoPlay: false,
+    },
 };
 
 export const hudVisBuild: HUDvisibility = {
@@ -671,6 +680,9 @@ export const hudVisBuild: HUDvisibility = {
         charts: true,
         agentVision: true,
         qMap: true,
+    },
+    options: {
+        autoPlay: false,
     },
 };
 

@@ -10,10 +10,10 @@ import {
     level2Tasks,
     level2TextModes,
     level2uiControls,
-} from './level2';
+} from './rlevel1';
 
 const level2Data: LoadedGame = {
-    manifest: { gameName: 'Rewards', highScore: 4, saveVersion: 1, createdAt: '123', levelIndex: 2 },
+    manifest: { gameName: 'Rewards 1', highScore: 4, saveVersion: 1, createdAt: '123', levelIndex: 2 },
     tools: { tileDefinitions: testTileDef },
     game: {
         world: level2Grid,
@@ -30,7 +30,7 @@ const level2Data: LoadedGame = {
     },
 };
 
-export const level2: Level = {
+export const rewardsLevel1: Level = {
     level: level2Data,
     levelTasks: level2Tasks,
     hudSettings: level2HudConfig,

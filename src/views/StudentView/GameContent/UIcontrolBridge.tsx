@@ -12,6 +12,7 @@ import {
     TextStepAtom,
 } from '../../../atoms/uiState';
 import { playHudVis } from '../../../utils/defaults';
+import { GameControlAtom } from '../../../atoms/state';
 
 export default function UIcontrolBridge() {
     const level = useAtomValue(LevelConfAtom);
@@ -22,20 +23,28 @@ export default function UIcontrolBridge() {
     const setBuildC = useSetAtom(BuildCAtom);
     const setRewardC = useSetAtom(RewardCAtom);
     const setClusters = useSetAtom(ClusterOpenAtom);
+    const setGameState = useSetAtom(GameControlAtom);
 
     useEffect(() => {
         const hudConf = level?.hudSettings;
+        if (step === 1 && hudConf?.some((group) => group.includes('options.autoPlay'))) {
+            setGameState((old) => {
+                return {
+                    ...old,
+                    isRunning: true,
+                };
+            });
+        }
 
         if (hudConf?.length) {
             const currentStep = Math.min(step, hudConf.length - 1);
 
             const fields = hudConf.slice(0, currentStep + 1).flat();
-
             setHudVis(buildHudVisibility(fields));
         } else {
             setHudVis(playHudVis);
         }
-    }, [step, setHudVis, level]);
+    }, [step, setHudVis, setGameState, level]);
 
     useEffect(() => {
         const UiConf = level?.uiControls;
