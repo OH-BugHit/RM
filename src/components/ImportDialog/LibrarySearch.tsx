@@ -68,6 +68,7 @@ export default function LibrarySearch({ onSelectTile, onSelectEmoji }: LibrarySe
             <TextField
                 className={style.searchInput}
                 fullWidth
+                autoFocus
                 size="small"
                 placeholder="Search..."
                 value={search}

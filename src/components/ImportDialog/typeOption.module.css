@@ -1,7 +1,7 @@
 .typeOption {
     display: flex;
     width: 80%;
-    min-height: 90px;
+    min-height: 86px;
     flex-direction: row;
     align-items: center;
     border-radius: 1.5rem;

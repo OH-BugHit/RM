@@ -8,7 +8,7 @@ import SlideShow from '../../SlideShow/SlideShow';
 import Stepper from '../../SlideShow/Stepper';
 import TypeOptions from './TypeOptions';
 import TileOptions from './TileOptions';
-import { BASIC_CELL_TYPE_OPTIONS, CellType, TileDefinition, TileLibraryItem } from '../../../types';
+import { BASIC_CELL_TYPE_OPTIONS, Cell, CellType, TileDefinition, TileLibraryItem } from '../../../types';
 import { CurrentTileToolAtom, StoryProgressAtom, TilePropsAtom } from '../../../atoms/uiState';
 import { InnerFillCellAtom, WorldGridRenderAtom } from '../../../atoms/gameState';
 import { EmojiItem } from '../EmojiLibrary/emojiLibraryData';
@@ -25,7 +25,7 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
     const [loading, setLoading] = useState(false);
 
     const [selectedTile, setSelectedTool] = useAtom(CurrentTileToolAtom);
-    const [selectedType, setSelectedType] = useState<CellType | null>(selectedTile?.type ?? null);
+    const [selectedType, setSelectedType] = useState<CellType | 'background' | null>(selectedTile?.type ?? null);
     const [selectedLibraryTile, setSelectedLibraryTile] = useState<TileLibraryItem | null>(null);
     const [selectedEmoji, setSelectedEmoji] = useState<EmojiItem | null>(null);
     const [selectedPreview, setSelectedPreview] = useState<string | null>(selectedTile?.image ?? null);
@@ -153,7 +153,6 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                                 },
                             }));
 
-                            setInnerFill(tile);
                             setWorldGrid((old) => {
                                 if (!old) return old;
                                 return old.map((row) =>
@@ -174,7 +173,7 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
             }
             setTiles((old) => [...old, tile]);
         },
-        [setInnerFill, setStoryProgress, setTiles, setWorldGrid, tiles.length]
+        [setStoryProgress, setTiles, setWorldGrid, tiles.length]
     );
 
     const handleAccept = useCallback(async () => {
@@ -190,35 +189,61 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                     selectedTile.emoji = selectedEmoji.emoji;
                 }
                 if (selectedType === null) return;
+                if (selectedType === 'background') {
+                    console.error('Error on handle accept');
+                    return;
+                }
                 selectedTile.type = selectedType;
                 onSelect(selectedTile, false);
             } else {
                 if (selectedType === null) return;
-                const newTile: TileDefinition = {
-                    id: crypto.randomUUID(),
-                    type: selectedType,
-                    image: '',
-                    emoji: '',
-                    isCoreTile: false,
-                    reloadTime: -1,
-                    timer: 0,
-                };
+                if (selectedType === 'background') {
+                    const innerFill: Cell = { type: CellType.Spawn, reloadTime: 0, timer: 0, image: '', emoji: '' };
+                    if (selectedLibraryTile) {
+                        innerFill.image = selectedLibraryTile.image;
+                    }
 
-                if (selectedLibraryTile) {
-                    newTile.image = selectedLibraryTile.image;
-                }
+                    if (selectedEmoji && selectedPreview) {
+                        innerFill.image = selectedPreview;
+                        innerFill.emoji = selectedEmoji.emoji;
+                    }
+                    setInnerFill(innerFill);
+                } else {
+                    const newTile: TileDefinition = {
+                        id: crypto.randomUUID(),
+                        type: selectedType,
+                        image: '',
+                        emoji: '',
+                        isCoreTile: false,
+                        reloadTime: -1,
+                        timer: 0,
+                    };
 
-                if (selectedEmoji && selectedPreview) {
-                    newTile.image = selectedPreview;
-                    newTile.emoji = selectedEmoji.emoji;
+                    if (selectedLibraryTile) {
+                        newTile.image = selectedLibraryTile.image;
+                    }
+
+                    if (selectedEmoji && selectedPreview) {
+                        newTile.image = selectedPreview;
+                        newTile.emoji = selectedEmoji.emoji;
+                    }
+                    onSelect(newTile, true);
                 }
-                onSelect(newTile, true);
             }
             resetSelection();
         } finally {
             setLoading(false);
         }
-    }, [onSelect, resetSelection, selectedEmoji, selectedLibraryTile, selectedPreview, selectedTile, selectedType]);
+    }, [
+        onSelect,
+        resetSelection,
+        setInnerFill,
+        selectedEmoji,
+        selectedLibraryTile,
+        selectedPreview,
+        selectedTile,
+        selectedType,
+    ]);
 
     const handleDelete = useCallback(() => {
         if (!selectedTile || selectedTile.isCoreTile) return;

@@ -10,7 +10,7 @@ import LibrarySearch from '../LibrarySearch';
 
 interface TileOptionsProps {
     selectedTile?: TileDefinition;
-    selectedType: CellType | null;
+    selectedType: CellType | 'background' | null;
     selectedPreview: string | null;
     selectedLibraryTile: TileLibraryItem | null;
     selectedEmoji: EmojiItem | null;
@@ -37,14 +37,25 @@ export default function TileOptions({
     const { t } = useTranslation();
 
     return (
-        <div className={style.wrapper}>
-            <div className={style.wizardContainer}>
-                <h1 className={style.title}>{t('import.titles.tileType')}</h1>
-                <DialogContent>
-                    <div className={style.selectModelMessage}>
-                        <div className={style.descText}>
-                            <p>{t('import.messages.selectTile')}</p>
-                            <div>
+        <div className={style.wizardContainer}>
+            <div className={style.titleRow}>
+                <div className={style.stripes}></div>
+                <h1 className={style.title}>
+                    {selectedType !== 'background' ? t('import.titles.tileType') : t('import.titles.background')}
+                </h1>
+                <div className={style.stripes}></div>
+            </div>
+
+            <DialogContent>
+                <div className={style.selectModelMessage}>
+                    <div className={style.descText}>
+                        <p>
+                            {selectedType !== 'background'
+                                ? t('import.messages.selectTile')
+                                : t('import.messages.selectBackground')}
+                        </p>
+                        <div>
+                            {selectedType !== 'background' && (
                                 <Trans
                                     i18nKey="common.selected"
                                     values={{
@@ -54,65 +65,65 @@ export default function TileOptions({
                                         Type: <b />,
                                     }}
                                 />
-                            </div>
-                        </div>
-                        <div className={style.previewSection}>
-                            {selectedPreview ? (
-                                <img
-                                    src={selectedPreview}
-                                    alt="preview"
-                                    width={96}
-                                    height={96}
-                                />
-                            ) : (
-                                <div className={style.emptyPreview}>No selection</div>
                             )}
                         </div>
                     </div>
-                    <LibrarySearch
-                        onSelectTile={onSelectTile}
-                        onSelectEmoji={onSelectEmoji}
-                    />
-                    <div className={style.tabBar}>
-                        <button
-                            type="button"
-                            className={tab === 'library' ? style.activeTab : style.tab}
-                            onClick={() => onTabChange('library')}
-                        >
-                            {t('wizard.tabs.library')}
-                        </button>
-                        <button
-                            type="button"
-                            className={tab === 'emoji' ? style.activeTab : style.tab}
-                            onClick={() => onTabChange('emoji')}
-                        >
-                            {t('wizard.tabs.emojis')}
-                        </button>
+                    <div className={style.previewSection}>
+                        {selectedPreview ? (
+                            <img
+                                src={selectedPreview}
+                                alt="preview"
+                                width={96}
+                                height={96}
+                            />
+                        ) : (
+                            <div className={style.emptyPreview}>No selection</div>
+                        )}
                     </div>
-                    {tab === 'library' && (
-                        <TileLibrary
-                            onSelect={onSelectTile}
-                            selectedTileId={selectedLibraryTile?.id}
-                        />
-                    )}
-                    {tab === 'emoji' && (
-                        <EmojiLibrary
-                            onSelect={onSelectEmoji}
-                            selectedEmoji={selectedEmoji?.emoji}
-                        />
-                    )}
-                </DialogContent>
-                <div className={`${style.buttonGroupTile} ${style.buttonGroup}`}>
-                    {!selectedTile?.isCoreTile && selectedTile && (
-                        <IconButton
-                            onClick={onDelete}
-                            size="large"
-                            color="error"
-                        >
-                            <DeleteIcon fontSize="large" />
-                        </IconButton>
-                    )}
                 </div>
+                <LibrarySearch
+                    onSelectTile={onSelectTile}
+                    onSelectEmoji={onSelectEmoji}
+                />
+                <div className={style.tabBar}>
+                    <button
+                        type="button"
+                        className={tab === 'library' ? style.activeTab : style.tab}
+                        onClick={() => onTabChange('library')}
+                    >
+                        {t('wizard.tabs.library')}
+                    </button>
+                    <button
+                        type="button"
+                        className={tab === 'emoji' ? style.activeTab : style.tab}
+                        onClick={() => onTabChange('emoji')}
+                    >
+                        {t('wizard.tabs.emojis')}
+                    </button>
+                </div>
+                {tab === 'library' && (
+                    <TileLibrary
+                        onSelect={onSelectTile}
+                        selectedTileId={selectedLibraryTile?.id}
+                    />
+                )}
+                {tab === 'emoji' && (
+                    <EmojiLibrary
+                        onSelect={onSelectEmoji}
+                        selectedEmoji={selectedEmoji?.emoji}
+                    />
+                )}
+            </DialogContent>
+            <div className={`${style.buttonGroupTile} ${style.buttonGroup}`}>
+                {!selectedTile?.isCoreTile && selectedTile && (
+                    <IconButton
+                        onClick={onDelete}
+                        size="large"
+                        color="error"
+                    >
+                        <DeleteIcon fontSize="large" />
+                    </IconButton>
+                )}
             </div>
         </div>
     );

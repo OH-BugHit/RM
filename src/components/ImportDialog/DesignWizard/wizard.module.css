@@ -4,11 +4,11 @@
     width: 800px;
     height: 1000px;
     padding: 24px;
-    background: rgba(255, 234, 214, 0.26);
     color: textDark;
     position: relative;
     box-sizing: border-box;
     align-content: center;
+    border-radius: 3rem;
 }
 
 .wizardClosed {

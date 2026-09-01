@@ -23,6 +23,7 @@ import InspectClusteParent from '../Frames/ClusterParents/Inspect';
 import { FireworksEffect } from '../../components/Fireworks/FireworksEffect';
 import WinScreen from '../StudentView/WinScreen/WinScreen';
 import TestProgress from '../../components/AgentTest/TestProgress';
+import BackgroundWizard from '../../components/Buttons/ChangeBackground/BackgroundWizard';
 
 interface XaiProps {
     agentRef: React.RefObject<QLearningAgent | undefined>;
@@ -41,6 +42,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
 
     return (
         <div style={{ zIndex: 0 }}>
+            <BackgroundWizard />
             <FireworksEffect />
             <WinScreen />
             <TutorialFrame

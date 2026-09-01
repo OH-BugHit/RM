@@ -131,7 +131,7 @@ export default function GameSettings() {
                         message={t('createMenu.settings.nameDesc')}
                     >
                         <h3>{t('createMenu.settings.nameTitle')}</h3>
-                    </Help>
+                    </Help>{' '}
                     <br />
                     <TextField
                         label={t('createMenu.settings.nameInputLabel')}

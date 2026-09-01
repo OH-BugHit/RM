@@ -65,70 +65,132 @@ export default function Tile({
             if (cellLocation.y === agentLocation.y && cellLocation.x === agentLocation.x) location = true;
         }
 
-        if (!location) return base;
+        if (location) {
+            return (
+                <div className={style.tileOverlay}>
+                    {base}
 
-        return (
-            <img
-                src={`${cell.image}`}
-                alt="Agent location background"
-                width={tileSize}
-                height={tileSize}
-                style={{
-                    opacity: visibleTiles.agent ? 0.4 : 0,
-                    transition: 'opacity 60ms ease',
-                    transitionDelay: '120ms',
-                }}
-            />
-        );
+                    <img
+                        src={`${cell.image}`}
+                        alt="Agent location background"
+                        width={tileSize}
+                        height={tileSize}
+                        className={`${style.tileLayer} ${style.tileForeground}`}
+                        style={{
+                            opacity: visibleTiles.agent ? 0.4 : 0,
+                            transition: 'opacity 60ms ease',
+                            transitionDelay: '120ms',
+                        }}
+                    />
+                </div>
+            );
+        }
+        return base;
     };
 
     const getCellImage = (cell: Cell) => {
         switch (cell.type) {
             case CellType.Spawn: {
                 return (
-                    <img
-                        src={`${cell.image}`}
-                        width={tileSize}
-                        height={tileSize}
-                        alt="Floor"
-                        style={{
-                            opacity: visibleTiles.spawn ? 0.8 : 0,
-                        }}
-                    />
+                    <div
+                        className={style.tileOverlay}
+                        style={{ width: tileSize, height: tileSize }}
+                    >
+                        <img
+                            src={fillerTile.image}
+                            alt="Background"
+                            className={`${style.tileLayer} ${style.tileBackground}`}
+                            style={{
+                                opacity: 0.7,
+                            }}
+                        />
+                        <img
+                            src={`${cell.image}`}
+                            width={tileSize}
+                            height={tileSize}
+                            className={`${style.tileLayer} ${style.tileForeground}`}
+                            alt="Floor"
+                            style={{
+                                opacity: visibleTiles.spawn ? 0.8 : 0,
+                            }}
+                        />
+                    </div>
                 );
             }
             case CellType.Trap: {
                 return (
-                    <img
-                        src={`${cell.image}`}
-                        width={tileSize}
-                        height={tileSize}
-                        alt="Trap"
-                        style={{
-                            opacity: visibleTiles.spawn ? (cell.timer === 0 ? 0.8 : 0.4) : 0,
-                        }}
-                    />
+                    <div
+                        className={style.tileOverlay}
+                        style={{ width: tileSize, height: tileSize }}
+                    >
+                        <img
+                            src={fillerTile.image}
+                            alt="Background"
+                            className={`${style.tileLayer} ${style.tileBackground}`}
+                            style={{
+                                opacity: 0.7,
+                            }}
+                        />
+                        <img
+                            src={`${cell.image}`}
+                            width={tileSize}
+                            className={`${style.tileLayer} ${style.tileForeground}`}
+                            height={tileSize}
+                            alt="Trap"
+                            style={{
+                                opacity: visibleTiles.spawn ? (cell.timer === 0 ? 0.8 : 0.4) : 0,
+                            }}
+                        />
+                    </div>
                 );
             }
             case CellType.Empty: {
                 return (
-                    <img
-                        src={`${cell.image}`}
-                        width={tileSize}
-                        height={tileSize}
-                        alt="Floor"
-                    />
+                    <div
+                        className={style.tileOverlay}
+                        style={{ width: tileSize, height: tileSize }}
+                    >
+                        <img
+                            src={fillerTile.image}
+                            alt="Background"
+                            className={`${style.tileLayer} ${style.tileBackground}`}
+                            style={{
+                                opacity: 0.7,
+                            }}
+                        />
+                        <img
+                            src={`${cell.image}`}
+                            width={tileSize}
+                            height={tileSize}
+                            className={`${style.tileLayer} ${style.tileForeground}`}
+                            alt="Floor"
+                        />
+                    </div>
                 );
             }
             case CellType.Solid: {
                 return (
-                    <img
-                        src={`${cell.image}`}
-                        width={tileSize}
-                        height={tileSize}
-                        alt="Wall"
-                        style={{ opacity: visibleTiles.wall ? 1 : 0 }}
-                    />
+                    <div
+                        className={style.tileOverlay}
+                        style={{ width: tileSize, height: tileSize }}
+                    >
+                        <img
+                            src={fillerTile.image}
+                            alt="Background"
+                            className={`${style.tileLayer} ${style.tileBackground}`}
+                            style={{
+                                opacity: 0.7,
+                            }}
+                        />
+                        <img
+                            src={`${cell.image}`}
+                            width={tileSize}
+                            height={tileSize}
+                            className={`${style.tileLayer} ${style.tileForeground}`}
+                            alt="Wall"
+                            style={{ opacity: visibleTiles.wall ? 1 : 0 }}
+                        />
+                    </div>
                 );
             }
             case CellType.Trigger: {
@@ -142,7 +204,7 @@ export default function Tile({
                             alt="Background"
                             className={`${style.tileLayer} ${style.tileBackground}`}
                             style={{
-                                opacity: 0.4,
+                                opacity: 0.7,
                             }}
                         />
                         <img
@@ -184,7 +246,7 @@ export default function Tile({
                             alt="Background"
                             className={`${style.tileLayer} ${style.tileBackground}`}
                             style={{
-                                opacity: 0.4,
+                                opacity: 0.7,
                             }}
                         />
                         <img
@@ -209,7 +271,7 @@ export default function Tile({
                             alt="Background"
                             className={`${style.tileLayer} ${style.tileBackground}`}
                             style={{
-                                opacity: 0.4,
+                                opacity: 0.7,
                             }}
                         />
                         <img
@@ -232,7 +294,7 @@ export default function Tile({
                             alt="Background"
                             className={`${style.tileLayer} ${style.tileBackground}`}
                             style={{
-                                opacity: 0.4,
+                                opacity: 0.7,
                             }}
                         />
                         <img

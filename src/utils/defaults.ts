@@ -755,6 +755,16 @@ export const defaultAgents = {
         type: 'adventurer',
         img: '/images/agents/adventurerRobo2.png',
     },
+    roboMover: {
+        name: 'Robo-Mover',
+        type: 'mover',
+        img: '/images/agents/robo_mover.png',
+    },
+    roboHoover: {
+        name: 'Robo-Hoover',
+        type: 'mover',
+        img: '/images/agents/robo_hoover.png',
+    },
     created: {
         name: '',
         type: 'created',
@@ -780,7 +790,7 @@ export const defaultCell: Cell = {
     type: CellType.Spawn,
     reloadTime: 0,
     timer: 0,
-    image: '/images/assets/smallTreasure_260.png',
+    image: '/images/assets/grass.png',
 };
 
 export const defaultWorldGrid: Cell[][] = [

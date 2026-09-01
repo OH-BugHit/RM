@@ -69,6 +69,50 @@ export default function AgentSelector() {
                     selected={selectedAgent.type === 'robodog'}
                 />
                 <SelectorItem
+                    title="Robo-Hoover"
+                    img={defaultAgents.roboHoover.img}
+                    onClick={() => {
+                        setSelectedAgent((old) => {
+                            return {
+                                ...old,
+                                img: defaultAgents.roboHoover.img,
+                                type: 'hoover',
+                            };
+                        });
+                        setActiveAgent((old) => {
+                            return {
+                                ...old,
+                                type: 'hoover',
+                                img: defaultAgents.roboHoover.img,
+                                name: selectedAgent.name,
+                            };
+                        });
+                    }}
+                    selected={selectedAgent.type === 'robodog'}
+                />
+                <SelectorItem
+                    title="Robo-Mover"
+                    img={defaultAgents.roboMover.img}
+                    onClick={() => {
+                        setSelectedAgent((old) => {
+                            return {
+                                ...old,
+                                img: defaultAgents.roboMover.img,
+                                type: 'mover',
+                            };
+                        });
+                        setActiveAgent((old) => {
+                            return {
+                                ...old,
+                                type: 'mover',
+                                img: defaultAgents.roboMover.img,
+                                name: selectedAgent.name,
+                            };
+                        });
+                    }}
+                    selected={selectedAgent.type === 'robodog'}
+                />
+                <SelectorItem
                     title="Adventurer"
                     img={defaultAgents.adventurer.img}
                     onClick={() => {

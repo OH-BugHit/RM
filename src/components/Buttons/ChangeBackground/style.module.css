@@ -1,0 +1,100 @@
+.wizardControls {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0.5rem;
+    padding: 1rem;
+    align-items: center;
+    animation-name: fadein;
+    animation-duration: 0.4s;
+    animation-iteration-count: 1;
+}
+
+.wizardControlsLeft {
+    justify-self: start;
+}
+
+.wizardControlsCenter {
+    justify-self: center;
+}
+
+.wizardControlsRight {
+    display: flex;
+    flex-direction: row;
+    justify-self: end;
+    gap: 1rem;
+    white-space: nowrap;
+    overflow: auto;
+    color: #444;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    padding: 0 1rem 0 1rem;
+}
+
+.changeButton img {
+    border-radius: 0.5rem;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    align-content: center;
+    justify-content: space-between;
+    color: white;
+    text-align: start;
+    font-size: 1.2rem
+}
+
+.changeButton {
+    width: 100%;
+    gap: 1rem;
+}
+
+.changeButton h2 {
+    color: white;
+}
+
+.current {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    gap: 0;
+    color: white;
+}
+
+.wizard {
+    width: 700px;
+    height: 900px;
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    border-radius: 3rem;
+    z-index: 12;
+}
+
+.wizard::before {
+    content: "";
+    position: absolute;
+    inset: -3rem;
+    background: radial-gradient(circle at 32% 25%, #FFD6DC 0%, #E04F66 25%, #8A2F40 60%, #3A121C 100%);
+    border-radius: 6rem;
+    z-index: -2;
+}
+
+.wizard::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgb(254, 254, 254);
+    border-radius: 3rem;
+    z-index: -1;
+}

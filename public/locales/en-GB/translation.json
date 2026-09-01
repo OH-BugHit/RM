@@ -75,6 +75,7 @@
             "timeUp": "Reward if time ends"
         },
         "close": "Close",
+        "current": "Current",
         "next": "Go next!",
         "okay": "Okay!",
         "or": "or",
@@ -199,15 +200,18 @@
         },
         "messages": {
             "selectAgent": "Upload your own image.",
+            "selectBackground": "Select background used for transparent tiles such as grass or dust.",
             "selectGame": "Upload game file",
             "selectTile": "Choose a image from the library tab or select emoji from emoji tab.",
             "selectType": "Select the type of the tile."
         },
         "titles": {
             "agent": "Choose image for agent",
+            "background": "Select background",
             "game": "Import pre-made game",
             "selectedType": "Select pic for <Type>{{type}}</Type> tile",
-            "tileType": "Create tile"
+            "tileType": "Create tile",
+            "changeButton": "Change background"
         }
     },
     "inspect": {
@@ -313,6 +317,36 @@
             "preMessage": "In this level you hit to the exploration-explotation dilemma: Should the agent try more things to learn more or exploit already feasible policy."
         },
         "4": {
+            "tasks": {
+                "p1": {
+                    "title": "Have some foresight",
+                    "task": {
+                        "1": "New highscore!"
+                    }
+                }
+            },
+
+            "text": {
+                "1": "There are two things in this level: 1. the observation and 2. how it values future rewards, also known as \"discounted rewards\".",
+                "2": "Let's start with the observation. The agent can observe the environment. In this game, the agent can only observe part of the whole environment, or as we say in reinforcement learning: \"Partial Observation.\" Well, enough with the technical stuff. Let's have a look...",
+                "3": "This new inspection tool is called \"Agent Vision.\" It allows you to clearly see what the agent actually observes.",
+                "4": "And yeah, the agent actually doesn't see or observe the game. It just receives numbers representing these tiles. Toggle it to see the agent's actual observation with that button in the frame.",
+                "5": "That's that. Now for your task in this level!",
+                "6": "You already know that the agent receives rewards from the environment.",
+                "7": "These rewards help the agent learn. But sometimes, it needs to think about future rewards too, not just the reward it gets right now.",
+                "8": "For example, an action might give a small negative reward now, but lead to a much bigger reward later.",
+                "9": "Your agent playing there might have already learned to just avoid progressing past those mushrooms. The agent needs to learn some foresight. But how?",
+                "10": "Luckily for us, there is a parameter for that too! In this game, it is called \"Foresight.\"",
+                "11": "This parameter controls how much the agent values where an action may lead, even if the immediate reward is low.",
+                "12": "The agent needs to receive at least one point to beat the level.",
+                "13": "Good luck! You might gain some help by tuning the \"Curiosity\" higher at first and then gradually decaying it to a smaller value."
+            },
+
+            "nextLevelInfo": "Next, we dig deeper and see how the learning actually happens!",
+            "postMessage": "This level taught you about observations and how an agent can use foresight to consider future rewards.",
+            "preMessage": "In this level, we will think more about rewards and how the agent learns from them. The agent should consider future rewards, not just immediate ones. Otherwise, it may not learn to choose actions that lead to better rewards later. You will also learn about the agent's observations and see the game from the agent's point of view."
+        },
+        "5": {
             "tasks": {
                 "p1": {
                     "title": "Have some foresight",
@@ -675,6 +709,7 @@
         },
         "tiles": {
             "desc": {
+                "background": "Change background style.",
                 "-1": "Spawn area. The agent can start the game from this tile.",
                 "0": "Floor with no spawning. The agent can move on these tiles, but it will not start here.",
                 "1": "Solid tiles block movement. They can be walls, trees, or anything else that blocks the way.",

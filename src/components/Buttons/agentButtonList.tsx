@@ -22,7 +22,7 @@ export function getAgentButtons(): ButtonShape[] {
             angle: 0,
             icon: <ImageIcon size={140} />,
             content: <AgentSelector />,
-            size: { h: 540, w: 420 },
+            size: { h: 720, w: 420 },
             target: { x: 400, y: 270 },
         },
         {

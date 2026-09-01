@@ -3,6 +3,8 @@ import { CurrentTileToolAtom, DesignOpenAtom, TilePropsAtom } from '../../atoms/
 import ContentContainer from './ContentContainer/ContentContainer';
 import PropToolIcon from '../Story/Selectors/EnvironmentSelector/Prop/PropTool/PropToolIcon';
 import { useEffect } from 'react';
+import ChangeBackground from '../../components/Buttons/ChangeBackground/ChangeBackground';
+import { useViewNavigation } from '../../hooks/useViewNavigation';
 
 interface BuildToolsContentProps {
     open: boolean;
@@ -43,6 +45,7 @@ function getToolTargets(baseTarget: { x: number; y: number }, tileCount: number)
 }
 
 export default function BuildToolsContent({ open, origin, baseTarget }: BuildToolsContentProps) {
+    const { goToView } = useViewNavigation();
     const tiles = useAtomValue(TilePropsAtom);
     const selectedTool = useAtomValue(CurrentTileToolAtom);
     const targets = getToolTargets(baseTarget, tiles.length);
@@ -50,10 +53,13 @@ export default function BuildToolsContent({ open, origin, baseTarget }: BuildToo
 
     useEffect(() => {
         setDesignOpen(true);
+        if (!open) {
+            goToView({ overlay: null });
+        }
         return () => {
             setDesignOpen(false);
         };
-    }, [setDesignOpen]);
+    }, [setDesignOpen, goToView, open]);
 
     if (!open) return null;
 
@@ -77,6 +83,19 @@ export default function BuildToolsContent({ open, origin, baseTarget }: BuildToo
                     />
                 </ContentContainer>
             ))}
+            <ContentContainer
+                key={'background'}
+                unmountOnClose={true}
+                open={open}
+                origin={origin}
+                target={{ x: -500, y: 0 }}
+                delay={200}
+                contentWidth={350}
+                contentHeight={110}
+                background="build"
+            >
+                <ChangeBackground />
+            </ContentContainer>
         </>
     );
 }

@@ -1,43 +1,36 @@
 @value primary, secondary textDark from "@genai-fi/base/css/colours.module.css";
 
-.title {
-    position: relative;
-    padding-bottom: 8px;
+.titleRow {
+    display: flex;
     background: rgb(255, 242, 144);
-    border-top-left-radius: 2.4rem;
-    border-top-right-radius: 2.4rem;
+    border-radius: 2.4rem 2.4rem 0 0;
+    align-items: stretch;
     overflow: hidden;
-    font-size: 2.5rem;
+    width: 100%;
 }
 
-.title::before,
-.title::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 25%;
+.title {
+    flex: 0 0 auto;
+    padding: 0 2rem 8px;
+    background: rgb(255, 242, 144);
+    font-size: 2.5rem;
+    position: relative;
+    min-width: 40%;
+}
+
+.stripes {
+    flex: 1;
     background: repeating-linear-gradient(-45deg,
             #000000a1 0,
             #000000e8 24px,
             transparent 24px,
             transparent 48px);
-    pointer-events: none;
-}
-
-.title::before {
-    left: 0;
-}
-
-.title::after {
-    right: 0;
 }
 
 .selectModelMessage {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    margin-bottom: 16px;
 }
 
 .columnItem,

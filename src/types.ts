@@ -445,7 +445,7 @@ export type GroupType = 'basic' | 'rewards' | 'exploreExploit' | 'observation' |
 
 export type MainView = 'frontpage' | TeacherViews | StudentViews;
 export type SubView = 'playLevel' | 'agent' | 'environment' | 'rewards' | 'interaction' | null;
-export type Overlay = 'import' | 'share' | 'paused' | 'menu' | null;
+export type Overlay = 'import' | 'share' | 'paused' | 'menu' | 'backgroundDialog' | null;
 
 export type GenericObservation = {
     neighbours: CellType[];
@@ -655,4 +655,4 @@ export type GameEnvironment = {
 
 export type ObservationShape = 'small' | 'large' | 'unset';
 export type EnvironmentTypes = 'potsAndBurglar' | 'created' | 'loaded' | 'modify' | undefined;
-export type AgentType = 'robodog' | 'hoover' | 'adventurer' | 'created' | 'unset';
+export type AgentType = 'robodog' | 'hoover' | 'mover' | 'adventurer' | 'created' | 'unset';

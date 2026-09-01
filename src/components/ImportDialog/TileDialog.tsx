@@ -19,6 +19,8 @@ interface ImportDialogProps {
     onSelect: (tile: TileDefinition, newTile: boolean) => void;
 }
 
+// NOT IN USE?
+
 function TileDialog({ onSelect }: ImportDialogProps) {
     const { t } = useTranslation();
     const [loading, setLoading] = useState(false);
@@ -172,7 +174,9 @@ function TileDialog({ onSelect }: ImportDialogProps) {
                             type={type}
                             selected={selectedType}
                             disabled={!allowedTypes.has(type)}
-                            onSelect={(type: CellType) => setSelectedType(type)}
+                            onSelect={(type: CellType | 'background') => {
+                                if (type !== 'background') setSelectedType(type);
+                            }}
                             hint={hint.has(type)}
                         />
                     ))}
