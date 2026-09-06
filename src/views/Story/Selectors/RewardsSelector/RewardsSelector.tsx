@@ -5,9 +5,11 @@ import { StoryProgressAtom, TilePropsAtom } from '../../../../atoms/uiState';
 import PropRewardItem from './PropRewardItem';
 import { CellType, TileDefinition } from '../../../../types';
 import { useEffect } from 'react';
+import { useGameScale } from '../../../../context/GameScale/useGameScale';
 
 export default function RewardsSelector() {
     const { t } = useTranslation('', { keyPrefix: 'createMenu.rewards' });
+    const { s } = useGameScale();
     const setStoryProgress = useSetAtom(StoryProgressAtom);
     const tiles = useAtomValue(TilePropsAtom);
     const store = useStore();
@@ -38,9 +40,15 @@ export default function RewardsSelector() {
     );
 
     return (
-        <div className={style.selectorContainer}>
+        <div
+            className={style.selectorContainer}
+            style={{ gap: `${s(1.2)}rem` }}
+        >
             <h3>{t('title')}</h3>
-            <div className={style.columnContent}>
+            <div
+                className={style.columnContent}
+                style={{ gap: `${s(1.2)}rem` }}
+            >
                 {groups.map((tiles) => (
                     <PropRewardItem
                         key={tiles[0].type}

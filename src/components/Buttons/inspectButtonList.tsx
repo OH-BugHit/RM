@@ -1,4 +1,4 @@
-import { InspectButtons } from '../../types';
+import { InspectButtons, Target } from '../../types';
 import AgentVision from '../../views/Xai/AgentVision/AgentVision';
 import { RewardChart } from '../Charts/RewardChart';
 import StatsIcon from './ButtonIcons/Inspect/StatsIcon';
@@ -25,53 +25,77 @@ type ButtonShape = {
     icon: React.ReactNode;
     content?: React.ReactNode;
     size: { h: number; w: number };
-    target: { x: number; y: number };
+    target: Target;
 };
+
+const DESIGN_HEIGHT = 1080;
+const DESIGN_WIDTH = 1960;
 
 export default function getInspectButtons(
     props: InspectButtonProps,
-    windowSize?: { width: number; height: number }
+    scale: number = 1,
+    scaleWidth: number = 1
 ): ButtonShape[] {
-    const w = windowSize?.width ?? (typeof window !== 'undefined' ? window.innerWidth : 920);
-    const h = windowSize?.height ?? (typeof window !== 'undefined' ? window.innerHeight : 768);
+    const h = DESIGN_HEIGHT * scale;
+    const w = DESIGN_WIDTH * scaleWidth;
 
     return [
         {
             id: 'qMap',
             angle: 0,
-            icon: <MapIcon size={140} />,
+            icon: <MapIcon size={140 * scale} />,
             content: <></>,
-            size: { h: h * 0.32 + 150, w: w * 0.05 + 534 },
-            target: { x: 205, y: -h + h * 0.18 + 8 + 150 },
+            size: {
+                h: h * 0.32 + 150 * scale,
+                w: w * 0.05 + 534 * scale,
+            },
+            target: {
+                type: 'screen',
+                position: 'top-left',
+            },
         },
         {
             id: 'agentVision',
             angle: 50,
-            icon: <InspectObsIcon size={140} />,
+            icon: <InspectObsIcon size={140 * scale} />,
             content: (
                 <NewFrame
                     centerX={-4}
                     variant="blob"
-                    overlayLeft={<StateViewTypeButton screen={'observation'} />}
+                    overlayLeft={<StateViewTypeButton screen="observation" />}
                 >
                     <AgentVision {...props} />
                 </NewFrame>
             ),
-            size: { h: 360, w: 320 },
-            target: { x: 190, y: -356 },
+            size: {
+                h: 360 * scale,
+                w: 320 * scale,
+            },
+            target: {
+                type: 'cluster',
+                x: 190 * scale,
+                y: -356 * scale,
+            },
         },
         {
             id: 'charts',
             angle: 100,
-            icon: <StatsIcon size={140} />,
+            icon: <StatsIcon size={140 * scale} />,
             content: (
                 <RewardChart
-                    width={580}
-                    height={360}
+                    width={580 * scale}
+                    height={360 * scale}
                 />
             ),
-            size: { h: 540, w: 550 },
-            target: { x: 210, y: -490 },
+            size: {
+                h: 540 * scale,
+                w: 550 * scale,
+            },
+            target: {
+                type: 'cluster',
+                x: 210 * scale,
+                y: -490 * scale,
+            },
         },
     ];
 }

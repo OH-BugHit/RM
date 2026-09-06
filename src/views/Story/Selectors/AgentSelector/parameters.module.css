@@ -1,0 +1,22 @@
+.selectorContainer {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+}
+
+.selectorContainer h2 {
+    padding: 0;
+}
+
+.parameters {
+    display: flex;
+    flex-direction: row;
+}
+
+.divider {
+    position: relative;
+}

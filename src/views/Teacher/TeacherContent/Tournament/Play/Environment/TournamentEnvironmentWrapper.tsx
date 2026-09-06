@@ -5,7 +5,6 @@ import { QPolicyAgent } from '../../../../../../components/agents/policyQagent';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { TournamentGameAtom } from '../../../../../../atoms/state';
 import AgentBridge from './AgentBridge';
-import FrameContainer from '../../../../../Frames/FrameContainer';
 import Controls from '../../../../../Controls/Controls';
 import { ControlEnablerAtom, HUDvisAtom, TileVisibilityAtom } from '../../../../../../atoms/uiState';
 import { visibleTilesTrue } from '../../../../../../utils/defaults';
@@ -39,17 +38,15 @@ export default function TournamentEnvironmentWrapper() {
 
     return (
         <div className={style.environmentWrap}>
+            <h1>{game.manifest.gameName}</h1>
             <AgentBridge agentsRef={agentsRef} />
-            <FrameContainer
-                position="free"
-                free={{ bottom: '12px', left: '50%' }}
-            >
-                <Controls />
-            </FrameContainer>
-            <TournamentEnvironment
-                agentsRef={agentsRef}
-                grid={game.game.world}
-            />
+            <div className={style.env}>
+                <TournamentEnvironment
+                    agentsRef={agentsRef}
+                    grid={game.game.world}
+                />
+            </div>
+            <Controls />
         </div>
     );
 }

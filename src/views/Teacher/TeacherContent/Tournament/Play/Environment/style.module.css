@@ -2,20 +2,30 @@
     display: flex;
     position: relative;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     width: 100%;
     height: 100%;
-    gap: 1rem;
     margin-left: 1rem;
     margin-right: 1rem;
-    background: linear-gradient(45deg, rgba(251, 132, 53, 0.178), rgba(152, 215, 43, 0.372));
+    background: linear-gradient(45deg, #feca8b24, rgba(248, 234, 126, 0.092));
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     border-radius: 1.5rem;
+    padding-top: 0.6rem;
+}
+
+.environmentWrap h1 {
+    font-family: "Tektur";
+    margin: 0;
 }
 
 .worldContainer {
     position: relative;
     overflow: auto;
-    padding: 1rem;
     overflow: visible;
+}
+
+.env {
+    display: flex;
+    height: 100%;
+    align-items: center;
 }

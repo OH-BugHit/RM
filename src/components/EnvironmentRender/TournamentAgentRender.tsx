@@ -7,9 +7,10 @@ import { tournamentAgentUpdatesAtom } from '../../atoms/state';
 
 interface AgentRenderInterface {
     agentsRef: RefObject<QPolicyAgent[] | undefined>;
+    tileSize?: number;
 }
 
-export default function TournamentAgentRender({ agentsRef }: AgentRenderInterface) {
+export default function TournamentAgentRender({ agentsRef, tileSize = 40 }: AgentRenderInterface) {
     const updates = useAtomValue(tournamentAgentUpdatesAtom);
 
     const agents = agentsRef.current ?? [];
@@ -33,8 +34,8 @@ export default function TournamentAgentRender({ agentsRef }: AgentRenderInterfac
                             delay: 0,
                         }}
                         animate={{
-                            x: agent.position.x * 40,
-                            y: agent.position.y * 40,
+                            x: agent.position.x * tileSize,
+                            y: agent.position.y * tileSize,
                             opacity: 1,
                         }}
                     >
@@ -46,8 +47,8 @@ export default function TournamentAgentRender({ agentsRef }: AgentRenderInterfac
                                 position: 'relative',
                                 top: '16px',
                                 left: '16px',
-                                width: 40,
-                                height: 40,
+                                width: tileSize,
+                                height: tileSize,
                                 display: 'block',
                             }}
                             initial={{ opacity: 0 }}

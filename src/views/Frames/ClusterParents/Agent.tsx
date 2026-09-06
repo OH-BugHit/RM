@@ -5,8 +5,13 @@ import { AgentCAtom, BuildCAtom, ClusterOpenAtom, HUDvisAtom, InspectCAtom, Rewa
 import AgentIcon from '../../../components/Buttons/ButtonIcons/Agent/AgentIcon';
 import { Button } from '@genai-fi/base';
 import CloseIcon from '../../../components/Buttons/ButtonIcons/OtherIcons/CloseIcon';
+import { useGameScale } from '../../../context/GameScale/useGameScale';
+
+const DESIGN_SIZE = 160;
+const CLOSE_SIZE = 140;
 
 export default function AgentClusterParent() {
+    const { s } = useGameScale();
     const agent = useAtomValue(ActiveAgentAtom);
     const vis = useAtomValue(HUDvisAtom);
     const [clusters, setClusters] = useAtom(ClusterOpenAtom);
@@ -14,7 +19,6 @@ export default function AgentClusterParent() {
     const setB = useSetAtom(BuildCAtom);
     const setI = useSetAtom(InspectCAtom);
     const setR = useSetAtom(RewardCAtom);
-    const size = 160;
 
     const handleClick = () => {
         if (clusters.agent) setA({ prm: false, img: false, obs: false, trash: true });
@@ -32,10 +36,13 @@ export default function AgentClusterParent() {
         });
     };
     return (
-        <div className={style.clusterParent}>
+        <div
+            className={style.clusterParent}
+            style={{ inset: `${s(40)}px` }}
+        >
             <Button
                 onClick={() => handleClick()}
-                style={{ width: size, height: size }}
+                style={{ width: s(DESIGN_SIZE), height: s(DESIGN_SIZE) }}
             >
                 {vis.agent && (
                     <>
@@ -44,12 +51,12 @@ export default function AgentClusterParent() {
                                 <img
                                     src={agent.img}
                                     style={{ marginTop: '16px' }}
-                                    height={size - 20}
+                                    height={s(CLOSE_SIZE)}
                                 />
                                 <div style={{ position: 'absolute' }}>
                                     {clusters.agent && (
                                         <CloseIcon
-                                            size={size - 20}
+                                            size={s(CLOSE_SIZE)}
                                             type="dark"
                                         />
                                     )}
@@ -57,11 +64,11 @@ export default function AgentClusterParent() {
                             </>
                         ) : (
                             <>
-                                <AgentIcon size={size} />
+                                <AgentIcon size={s(DESIGN_SIZE)} />
                                 <div style={{ position: 'absolute' }}>
                                     {clusters.agent && (
                                         <CloseIcon
-                                            size={size - 20}
+                                            size={s(CLOSE_SIZE)}
                                             type="dark"
                                         />
                                     )}

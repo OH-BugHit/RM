@@ -4,6 +4,8 @@ import { TextField } from '@mui/material';
 import { TileLibraryItem } from '../../types';
 import { EMOJI_LIBRARY, EmojiItem } from './EmojiLibrary/emojiLibraryData';
 import { TILE_LIBRARY } from './TileLibrary/tileLibraryData';
+import { useGameScale } from '../../context/GameScale/useGameScale';
+import { t } from 'i18next';
 
 interface LibrarySearchProps {
     onSelectTile: (tile: TileLibraryItem) => void;
@@ -28,6 +30,7 @@ type SearchResult =
 
 export default function LibrarySearch({ onSelectTile, onSelectEmoji }: LibrarySearchProps) {
     const [search, setSearch] = useState('');
+    const { s } = useGameScale();
 
     const results = useMemo<SearchResult[]>(() => {
         const q = search.trim().toLowerCase();
@@ -64,7 +67,10 @@ export default function LibrarySearch({ onSelectTile, onSelectEmoji }: LibrarySe
     }, [search]);
 
     return (
-        <div className={style.wrapper}>
+        <div
+            className={style.wrapper}
+            style={{ gap: `${s(12)}px` }}
+        >
             <TextField
                 className={style.searchInput}
                 fullWidth
@@ -78,9 +84,17 @@ export default function LibrarySearch({ onSelectTile, onSelectEmoji }: LibrarySe
             {search && (
                 <div className={style.searchResults}>
                     {results.length === 0 ? (
-                        <div className={style.noResults}>No results</div>
+                        <div
+                            className={style.noResults}
+                            style={{ padding: `${s(16)}px` }}
+                        >
+                            {t('wizard.noResults')}
+                        </div>
                     ) : (
-                        <div className={style.resultGrid}>
+                        <div
+                            className={style.resultGrid}
+                            style={{ gridTemplateColumns: `repeat(auto-fill, minmax(${s(64)}px,1fr))` }}
+                        >
                             {results.map((result) => (
                                 <button
                                     key={`${result.type}-${result.id}`}
@@ -96,11 +110,18 @@ export default function LibrarySearch({ onSelectTile, onSelectEmoji }: LibrarySe
                                     }}
                                 >
                                     {result.type === 'emoji' ? (
-                                        <span className={style.emoji}>{result.emoji}</span>
+                                        <span
+                                            className={style.emoji}
+                                            style={{ fontSize: `${Math.max(22, s(32))}px` }}
+                                        >
+                                            {result.emoji}
+                                        </span>
                                     ) : (
                                         <img
                                             src={result.image}
                                             alt={result.label}
+                                            width={`${s(40)}px`}
+                                            height={`${s(40)}px`}
                                             className={style.tileImage}
                                         />
                                     )}

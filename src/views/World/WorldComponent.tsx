@@ -7,22 +7,17 @@ import { useAtomValue } from 'jotai';
 import { WorldGridRenderAtom } from '../../atoms/gameState';
 import { useEffect } from 'react';
 import { GenericRLEnv } from '../Environments/Generic/environment';
+import { useGameScale } from '../../context/GameScale/useGameScale';
 
 interface worldComponentProps {
     worldGrid: React.RefObject<Cell[][]>;
-    tileSize?: number;
     envRef: React.RefObject<GenericRLEnv | undefined>;
     floatItems: FloatItem[];
     deactivate: (id: number) => void;
 }
 
-export default function WorldComponent({
-    worldGrid,
-    tileSize = 40,
-    floatItems,
-    deactivate,
-    envRef,
-}: worldComponentProps) {
+export default function WorldComponent({ worldGrid, floatItems, deactivate, envRef }: worldComponentProps) {
+    const { s } = useGameScale();
     const worldGridA = useAtomValue(WorldGridRenderAtom);
 
     // world grid fer updater
@@ -40,8 +35,8 @@ export default function WorldComponent({
             className={style.worldContainer}
             style={{
                 display: 'grid',
-                gridTemplateColumns: `repeat(${width}, ${tileSize}px)`,
-                gridTemplateRows: `repeat(${height}, ${tileSize}px)`,
+                gridTemplateColumns: `repeat(${width}, ${s(40)}px)`,
+                gridTemplateRows: `repeat(${height}, ${s(40)}px)`,
             }}
         >
             {worldGridA.map((row, y) =>
@@ -49,7 +44,7 @@ export default function WorldComponent({
                     <div key={`${x}-${y}`}>
                         <Tile
                             cell={cell}
-                            tileSize={tileSize}
+                            tileSize={s(40)}
                             agentLocation={env.position}
                             cellLocation={{ x: x, y: y }}
                             worldHeight={height}

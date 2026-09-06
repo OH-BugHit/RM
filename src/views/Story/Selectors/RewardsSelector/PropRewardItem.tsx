@@ -6,6 +6,7 @@ import RewardControl from '../../../Controls/RewardControl';
 import { useAtom } from 'jotai';
 import { EnvSettingsAtom } from '../../../../atoms/gameState';
 import { useTranslation } from 'react-i18next';
+import { useGameScale } from '../../../../context/GameScale/useGameScale';
 interface PropRewardProps {
     tiles: TileDefinition[];
 }
@@ -26,6 +27,7 @@ const rewardKeyByType: Record<CellType, keyof GenericReward | ''> = {
 
 export default function PropRewardItem({ tiles }: PropRewardProps) {
     const { t } = useTranslation();
+    const { s, scale, scaleWidth } = useGameScale();
     const [envSettings, setEnvSettings] = useAtom(EnvSettingsAtom);
 
     const type = tiles[0].type;
@@ -48,7 +50,13 @@ export default function PropRewardItem({ tiles }: PropRewardProps) {
     };
 
     return (
-        <div className={style.rewardTuneRow}>
+        <div
+            className={style.rewardTuneRow}
+            style={{
+                padding: `${s(0.5)}px 0px ${s(0.5)}px 0px`,
+                border: scale < 0.8 ? '' : '2px solid rgb(238, 238, 238)',
+            }}
+        >
             <h4>{t(`common.cell.${type}`)}</h4>
             <div className={style.reward}>
                 {tiles.map((tile) => (
@@ -59,7 +67,7 @@ export default function PropRewardItem({ tiles }: PropRewardProps) {
                         <img
                             key={tile.id}
                             src={tile.image}
-                            width={48}
+                            width={s(48)}
                         />
                     </div>
                 ))}
@@ -68,7 +76,7 @@ export default function PropRewardItem({ tiles }: PropRewardProps) {
             <div className={style.rewardRow}>
                 <RemoveIcon
                     color="error"
-                    fontSize="large"
+                    fontSize={scaleWidth < 1 ? (scaleWidth < 0.6 ? 'small' : 'medium') : 'large'}
                 />
 
                 <RewardControl
@@ -81,7 +89,7 @@ export default function PropRewardItem({ tiles }: PropRewardProps) {
 
                 <AddIcon
                     color="primary"
-                    fontSize="large"
+                    fontSize={scaleWidth < 1 ? (scaleWidth < 0.6 ? 'small' : 'medium') : 'large'}
                 />
             </div>
         </div>

@@ -1,7 +1,6 @@
 .wrapper {
     display: flex;
     flex-direction: column;
-    gap: 12px;
     min-height: 0;
 }
 
@@ -143,7 +142,6 @@
 }
 
 .emoji {
-    font-size: 32px;
     line-height: 1;
     user-select: none;
     pointer-events: none;
@@ -161,20 +159,16 @@
 
 .resultGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
     gap: 10px;
 }
 
 .tileImage {
-    width: 40px;
-    height: 40px;
     object-fit: contain;
     pointer-events: none;
     user-select: none;
 }
 
 .noResults {
-    padding: 16px;
     text-align: center;
     color: rgba(0, 0, 0, 0.55);
 }

@@ -47,19 +47,19 @@ export default function TrashIcon({ size = 256 }: IconProps) {
                 >
                     <stop
                         offset="0%"
-                        stop-color="#087A74"
+                        stopColor="#087A74"
                     />
                     <stop
                         offset="40%"
-                        stop-color="#19B1A8"
+                        stopColor="#19B1A8"
                     />
                     <stop
                         offset="75%"
-                        stop-color="#B7EFEC"
+                        stopColor="#B7EFEC"
                     />
                     <stop
                         offset="100%"
-                        stop-color="#FFFFFF"
+                        stopColor="#FFFFFF"
                     />
                 </linearGradient>
                 <radialGradient
@@ -93,11 +93,11 @@ export default function TrashIcon({ size = 256 }: IconProps) {
                 >
                     <stop
                         offset="0%"
-                        stop-color="#064D49"
+                        stopColor="#064D49"
                     />
                     <stop
                         offset="100%"
-                        stop-color="#0B7771"
+                        stopColor="#0B7771"
                     />
                 </linearGradient>
 
@@ -169,9 +169,9 @@ export default function TrashIcon({ size = 256 }: IconProps) {
             "
                     fill="url(#trash-metal)"
                     stroke="#D9FFFC"
-                    stroke-opacity=".75"
-                    stroke-width="2.5"
-                    stroke-linejoin="round"
+                    strokeOpacity=".75"
+                    strokeWidth="2.5"
+                    strokeLinejoin="round"
                 />
 
                 {/* Dark lower edge */}
@@ -197,9 +197,9 @@ export default function TrashIcon({ size = 256 }: IconProps) {
                     d="M86 82 L91 155"
                     fill="none"
                     stroke="#FFFFFF"
-                    stroke-opacity=".32"
-                    stroke-width="3"
-                    stroke-linecap="round"
+                    strokeOpacity=".32"
+                    strokeWidth="3"
+                    strokeLinecap="round"
                 />
 
                 <path
@@ -207,9 +207,9 @@ export default function TrashIcon({ size = 256 }: IconProps) {
                     d="M134 82 L129 155"
                     fill="none"
                     stroke="#064D49"
-                    stroke-opacity=".25"
-                    stroke-width="3"
-                    stroke-linecap="round"
+                    strokeOpacity=".25"
+                    strokeWidth="3"
+                    strokeLinecap="round"
                 />
 
                 {/*  Lid */}
@@ -227,9 +227,9 @@ export default function TrashIcon({ size = 256 }: IconProps) {
             "
                     fill="url(#trash-metal)"
                     stroke="#D9FFFC"
-                    stroke-opacity=".8"
-                    stroke-width="2.5"
-                    stroke-linejoin="round"
+                    strokeOpacity=".8"
+                    strokeWidth="2.5"
+                    strokeLinejoin="round"
                 />
 
                 {/*  Lid top */}
@@ -243,8 +243,8 @@ export default function TrashIcon({ size = 256 }: IconProps) {
                     rx="4"
                     fill="url(#trash-metal)"
                     stroke="#D9FFFC"
-                    stroke-opacity=".75"
-                    stroke-width="2"
+                    strokeOpacity=".75"
+                    strokeWidth="2"
                 />
 
                 {/*  Lid highlight */}
@@ -253,9 +253,9 @@ export default function TrashIcon({ size = 256 }: IconProps) {
                     className={style.trashHighlight}
                     d="M72 61 L148 61"
                     stroke="#FFFFFF"
-                    stroke-opacity=".5"
-                    stroke-width="2"
-                    stroke-linecap="round"
+                    strokeOpacity=".5"
+                    strokeWidth="2"
+                    strokeLinecap="round"
                 />
 
                 {/*  Trash lines */}
@@ -265,9 +265,9 @@ export default function TrashIcon({ size = 256 }: IconProps) {
                     d="M91 84 L94 151"
                     fill="none"
                     stroke="#064D49"
-                    stroke-opacity=".45"
-                    stroke-width="4"
-                    stroke-linecap="round"
+                    strokeOpacity=".45"
+                    strokeWidth="4"
+                    strokeLinecap="round"
                 />
 
                 <path
@@ -275,9 +275,9 @@ export default function TrashIcon({ size = 256 }: IconProps) {
                     d="M110 84 L110 151"
                     fill="none"
                     stroke="#064D49"
-                    stroke-opacity=".45"
-                    stroke-width="4"
-                    stroke-linecap="round"
+                    strokeOpacity=".45"
+                    strokeWidth="4"
+                    strokeLinecap="round"
                 />
 
                 <path
@@ -285,9 +285,9 @@ export default function TrashIcon({ size = 256 }: IconProps) {
                     d="M129 84 L126 151"
                     fill="none"
                     stroke="#064D49"
-                    stroke-opacity=".45"
-                    stroke-width="4"
-                    stroke-linecap="round"
+                    strokeOpacity=".45"
+                    strokeWidth="4"
+                    strokeLinecap="round"
                 />
 
                 {/*  Line highlights */}
@@ -296,27 +296,27 @@ export default function TrashIcon({ size = 256 }: IconProps) {
                     d="M92 85 L95 149"
                     fill="none"
                     stroke="#B7EFEC"
-                    stroke-opacity=".45"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
+                    strokeOpacity=".45"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
                 />
 
                 <path
                     d="M111 85 L111 149"
                     fill="none"
                     stroke="#B7EFEC"
-                    stroke-opacity=".45"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
+                    strokeOpacity=".45"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
                 />
 
                 <path
                     d="M128 85 L125 149"
                     fill="none"
                     stroke="#B7EFEC"
-                    stroke-opacity=".45"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
+                    strokeOpacity=".45"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
                 />
             </g>
         </svg>

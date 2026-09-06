@@ -55,7 +55,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
             />
             <ClusterContainer
                 vis={hudVis.agentCluster}
-                position={{ top: '1%', left: '0.8%' }}
+                position={'topLeft'}
                 type="agent"
                 inspectButtonProps={{
                     agentRef,
@@ -69,7 +69,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
             </ClusterContainer>
             <ClusterContainer
                 vis={hudVis.rewardCluster}
-                position={{ top: '1%', right: '0.8%' }}
+                position={'topRight'}
                 type="reward"
                 inspectButtonProps={{
                     agentRef,
@@ -83,7 +83,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
             </ClusterContainer>
             <ClusterContainer
                 vis={hudVis.inspectCluster}
-                position={{ bottom: '0%', left: '0.8%' }}
+                position={'bottomLeft'}
                 type="inspect"
                 inspectButtonProps={{
                     agentRef,
@@ -97,7 +97,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
             </ClusterContainer>
             <ClusterContainer
                 vis={hudVis.buildCluster}
-                position={{ bottom: '0%', right: '0.8%' }}
+                position={'bottomRight'}
                 type="build"
                 inspectButtonProps={{
                     agentRef,
@@ -166,9 +166,7 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                 </NewFrame>
             </div>
             <FrameContainer position="bottom-center">
-                <NewFrame visible={hudVis.controlBar && !hideHud}>
-                    <Controls />
-                </NewFrame>
+                <Controls />
             </FrameContainer>
         </div>
     );

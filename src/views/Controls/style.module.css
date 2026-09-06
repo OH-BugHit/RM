@@ -4,13 +4,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0px 0px 4px rgba(117, 140, 2, 0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 3rem;
+    padding: 0 0.5rem 0 0.5rem;
 }
 
 .controlsContainer {
     display: flex;
     flex-direction: row;
-    gap: 0.8rem;
-    padding: 12px;
 }
 
 .container {

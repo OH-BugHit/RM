@@ -7,6 +7,7 @@ import RouteIcon from '@mui/icons-material/Route';
 import { useTranslation } from 'react-i18next';
 import Foresight from '../../../../components/AgentTuners/Foresight/Foresight';
 import { Help } from '@genai-fi/base';
+import { useGameScale } from '../../../../context/GameScale/useGameScale';
 
 /**
  * Gamma gauge was:
@@ -32,6 +33,7 @@ linear-gradient(
 
 export default function Gamma() {
     const { t } = useTranslation();
+    const { s, scaleWidth } = useGameScale();
     const [agentSettings, setAgentSettings] = useAtom(AgentSettingsAtom);
     const agent = useAtomValue(ActiveAgentAtom);
     return (
@@ -48,20 +50,48 @@ export default function Gamma() {
                 </span>
             </h3>
             <div className={style.sightWrapper}>
-                <Foresight value={agentSettings.gamma} />
+                <Foresight
+                    value={agentSettings.gamma}
+                    size={s(256)}
+                />
                 {agent.img && (
                     <img
                         className={style.agent}
                         src={agent.img}
-                        width={34}
-                        height={40}
+                        width={s(34)}
+                        height={s(40)}
                     />
                 )}
-                <b className={style.treasure}>+2</b>
-                <b className={style.trap}>-1</b>
-                <b className={style.trap2}>-1</b>
-                <b className={style.trap3}>-5</b>
-                <b className={style.goal}>+10</b>
+                <b
+                    className={style.treasure}
+                    style={{ padding: `${s(2)}px ${s(6)}px ${s(2)}px ${s(6)}px` }}
+                >
+                    +2
+                </b>
+                <b
+                    className={style.trap}
+                    style={{ padding: `${s(2)}px ${s(6)}px ${s(2)}px ${s(6)}px` }}
+                >
+                    -1
+                </b>
+                <b
+                    className={style.trap2}
+                    style={{ padding: `${s(2)}px ${s(6)}px ${s(2)}px ${s(6)}px` }}
+                >
+                    -1
+                </b>
+                <b
+                    className={style.trap3}
+                    style={{ padding: `${s(2)}px ${s(6)}px ${s(2)}px ${s(6)}px` }}
+                >
+                    -5
+                </b>
+                <b
+                    className={style.goal}
+                    style={{ padding: `${s(2)}px ${s(6)}px ${s(2)}px ${s(6)}px` }}
+                >
+                    +10
+                </b>
             </div>
             <div className={style.epsilonSlider}>
                 <Tooltip
@@ -69,7 +99,7 @@ export default function Gamma() {
                     arrow
                 >
                     <span>
-                        <StraightIcon fontSize="large" />
+                        <StraightIcon fontSize={scaleWidth < 1 ? (scaleWidth < 0.6 ? 'small' : 'medium') : 'large'} />
                     </span>
                 </Tooltip>
 
@@ -124,7 +154,7 @@ export default function Gamma() {
                     arrow
                 >
                     <span>
-                        <RouteIcon fontSize="large" />
+                        <RouteIcon fontSize={scaleWidth < 1 ? (scaleWidth < 0.6 ? 'small' : 'medium') : 'large'} />
                     </span>
                 </Tooltip>
             </div>

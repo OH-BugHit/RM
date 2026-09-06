@@ -15,10 +15,32 @@ export default function BuildTournament() {
 
     return (
         <div className={style.content}>
-            <div className={style.buildInformation}>
-                <h2>Tips for building title</h2>
-                <p>Tips here as text</p>
-            </div>
+            <ul className={style.buildInformation}>
+                <li>
+                    <b>Consider a problem</b>
+                    <em>What would you like your agent to learn to do?</em>
+                </li>
+                <li>
+                    <b>Think about the goal</b>
+                    <em>What should the agent try to achieve?</em>
+                </li>
+                <li>
+                    <b>Design the environment</b>
+                    <em>What does the world look like? What can the agent see and do?</em>
+                </li>
+                <li>
+                    <b>Plan the rewards</b>
+                    <em>What should the agent be rewarded for? What should it avoid?</em>
+                </li>
+                <li>
+                    <b>Build your environment</b>
+                    <em>Use the tools to create the world where your agent can learn.</em>
+                </li>
+                <li>
+                    <b>Test your agent</b>
+                    <em>Let the agent learn and see if it can solve the problem.</em>
+                </li>
+            </ul>
             <div className={style.studentLevels}>
                 {Array.from(games.students?.entries() ?? []).map(([studentId, game]) => (
                     <div

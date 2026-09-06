@@ -4,7 +4,7 @@ import ParameterIcon from './ButtonIcons/Agent/ParameterIcon';
 import AgentSelector from '../../views/Story/Selectors/AgentSelector/AgentSelector';
 import ObservationSelector from '../../views/Story/Selectors/AgentSelector/ObservationSelector';
 import Parameters from '../../views/Story/Selectors/AgentSelector/Parameters';
-import { AgentButtons } from '../../types';
+import { AgentButtons, Target } from '../../types';
 
 type ButtonShape = {
     id: AgentButtons;
@@ -12,36 +12,47 @@ type ButtonShape = {
     icon: React.ReactNode;
     content?: React.ReactNode;
     size: { h: number; w: number };
-    target: { x: number; y: number };
+    target: Target;
 };
 
-export function getAgentButtons(): ButtonShape[] {
+export function getAgentButtons(scale: number = 1, scaleWidth: number = 1): ButtonShape[] {
+    console.log(scaleWidth);
     return [
         {
             id: 'img',
             angle: 0,
-            icon: <ImageIcon size={140} />,
+            icon: <ImageIcon size={140 * scale} />,
             content: <AgentSelector />,
-            size: { h: 720, w: 420 },
-            target: { x: 400, y: 270 },
+            size: { h: 720 * scale, w: 520 * scaleWidth },
+            target: {
+                type: 'cluster',
+                x: 140 * scale + 280 * scaleWidth,
+                y: 280 * scale,
+            },
         },
         {
             id: 'obs',
             angle: -50,
-            icon: <ObsIcon size={140} />,
+            icon: <ObsIcon size={140 * scale} />,
             content: <ObservationSelector />,
-            size: { h: 420, w: 570 },
-            target: { x: 420, y: 350 },
+            size: { h: 420 * scale, w: Math.min(570, 570 * scaleWidth) },
+            target: {
+                type: 'cluster',
+                x: Math.min(380, 140 * scale + 280 * scaleWidth),
+                y: 350 * scale,
+            },
         },
         {
             id: 'prm',
             angle: -100,
-            icon: <ParameterIcon size={140} />,
+            icon: <ParameterIcon size={140 * scale} />,
             content: <Parameters />,
-            size: { h: 340, w: 700 },
-            target: { x: 300, y: 380 },
+            size: { h: Math.min(320, 420 * scale), w: Math.min(650, 790 * scaleWidth) },
+            target: {
+                type: 'cluster',
+                x: Math.min(300, 300 * scaleWidth),
+                y: Math.min(360, 400 * scale),
+            },
         },
     ];
 }
-
-export const agentButtons = getAgentButtons();

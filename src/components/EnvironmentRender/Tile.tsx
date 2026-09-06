@@ -71,7 +71,7 @@ export default function Tile({
                     {base}
 
                     <img
-                        src={`${cell.image}`}
+                        src={cell.image !== '' ? cell.image : cell.emoji}
                         alt="Agent location background"
                         width={tileSize}
                         height={tileSize}
@@ -105,7 +105,7 @@ export default function Tile({
                             }}
                         />
                         <img
-                            src={`${cell.image}`}
+                            src={cell.image !== '' ? cell.image : cell.emoji}
                             width={tileSize}
                             height={tileSize}
                             className={`${style.tileLayer} ${style.tileForeground}`}
@@ -132,7 +132,7 @@ export default function Tile({
                             }}
                         />
                         <img
-                            src={`${cell.image}`}
+                            src={`${cell.image ?? cell.emoji}`}
                             width={tileSize}
                             className={`${style.tileLayer} ${style.tileForeground}`}
                             height={tileSize}
@@ -159,7 +159,7 @@ export default function Tile({
                             }}
                         />
                         <img
-                            src={`${cell.image}`}
+                            src={cell.image !== '' ? cell.image : cell.emoji}
                             width={tileSize}
                             height={tileSize}
                             className={`${style.tileLayer} ${style.tileForeground}`}
@@ -183,7 +183,7 @@ export default function Tile({
                             }}
                         />
                         <img
-                            src={`${cell.image}`}
+                            src={cell.image !== '' ? cell.image : cell.emoji}
                             width={tileSize}
                             height={tileSize}
                             className={`${style.tileLayer} ${style.tileForeground}`}
@@ -208,7 +208,7 @@ export default function Tile({
                             }}
                         />
                         <img
-                            src={`${cell.image}`}
+                            src={cell.image !== '' ? cell.image : cell.emoji}
                             className={`${style.tileLayer} ${style.tileForeground}`}
                             alt="Key"
                         />
@@ -275,7 +275,7 @@ export default function Tile({
                             }}
                         />
                         <img
-                            src={cell.image}
+                            src={cell.image !== '' ? cell.image : cell.emoji}
                             alt="Large Treasure"
                             className={`${style.tileLayer} ${style.tileForeground}`}
                             style={{ opacity: cell.timer === 0 ? 1 : 0.2 }}
@@ -298,7 +298,7 @@ export default function Tile({
                             }}
                         />
                         <img
-                            src={cell.image}
+                            src={cell.image !== '' ? cell.image : cell.emoji}
                             alt="Large Treasure"
                             className={`${style.tileLayer} ${style.tileForeground}`}
                             style={{ opacity: cell.timer === 0 ? 1 : 0.2 }}

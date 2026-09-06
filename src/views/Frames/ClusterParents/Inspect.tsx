@@ -4,14 +4,18 @@ import { AgentCAtom, BuildCAtom, ClusterOpenAtom, InspectCAtom, RewardCAtom } fr
 import { Button } from '@genai-fi/base';
 import CloseIcon from '../../../components/Buttons/ButtonIcons/OtherIcons/CloseIcon';
 import InspectClusterIcon from '../../../components/Buttons/ButtonIcons/Inspect/Inspect';
+import { useGameScale } from '../../../context/GameScale/useGameScale';
+
+const DESIGN_SIZE = 160;
+const CLOSE_SIZE = 140;
 
 export default function InspectClusteParent() {
+    const { s } = useGameScale();
     const [clusters, setClusters] = useAtom(ClusterOpenAtom);
     const setA = useSetAtom(AgentCAtom);
     const setB = useSetAtom(BuildCAtom);
     const setI = useSetAtom(InspectCAtom);
     const setR = useSetAtom(RewardCAtom);
-    const size = 160;
 
     const handleClick = () => {
         setA({ prm: false, img: false, obs: false, trash: true });
@@ -30,20 +34,23 @@ export default function InspectClusteParent() {
     };
 
     return (
-        <div className={style.clusterParent}>
+        <div
+            className={style.clusterParent}
+            style={{ inset: `${s(40)}px` }}
+        >
             <Button
                 onClick={() => handleClick()}
-                style={{ width: size, height: size }}
+                style={{ width: s(DESIGN_SIZE), height: s(DESIGN_SIZE) }}
             >
                 <>
                     <InspectClusterIcon
-                        size={size}
+                        size={s(DESIGN_SIZE)}
                         title="INSPECT"
                     />
                     <div style={{ position: 'absolute' }}>
                         {clusters.inspect && (
                             <CloseIcon
-                                size={size - 20}
+                                size={s(CLOSE_SIZE)}
                                 type="dark"
                             />
                         )}

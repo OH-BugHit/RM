@@ -1,7 +1,7 @@
 .container {
     display: flex;
-    width: 100vw;
-    height: 100vh;
+    width: 100dvw;
+    height: 100dvh;
     min-height: 0;
 
     display: flex;
@@ -23,7 +23,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
+    width: 80%;
     gap: 0.75rem;
     margin: 0.5rem 0 1.5rem;
 
@@ -31,13 +31,11 @@
 }
 
 .worldButton {
-    padding: 0.4rem 0.8rem;
-
+    padding: 0.2rem 0.8rem;
     border: none;
     border-radius: 0.5rem;
 
     background: transparent;
-
     font: inherit;
     cursor: pointer;
 
@@ -70,7 +68,6 @@
     flex: 1;
     min-height: 0;
 
-    overflow: hidden;
 
     display: flex;
     align-items: center;
@@ -80,7 +77,8 @@
 .worldCard {
     position: absolute;
 
-    width: min(520px, 60%);
+    width: min(420px, 50%);
+    max-width: 60%;
 
     max-height: calc(100% - 2rem);
 
@@ -110,6 +108,18 @@
     flex-shrink: 0;
     margin-top: 1rem;
     margin-bottom: 2rem;
+}
+
+
+@media (max-height: 500px) {
+    .carousel+button {
+        position: fixed;
+        right: 1rem;
+        bottom: 1rem;
+
+        margin: 0;
+        z-index: 1000;
+    }
 }
 
 @media (max-width: 900px) {

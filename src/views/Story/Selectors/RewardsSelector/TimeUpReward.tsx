@@ -5,9 +5,11 @@ import RewardControl from '../../../Controls/RewardControl';
 import { useAtom } from 'jotai';
 import { EnvSettingsAtom } from '../../../../atoms/gameState';
 import { useTranslation } from 'react-i18next';
+import { useGameScale } from '../../../../context/GameScale/useGameScale';
 
 export default function TimeUpReward() {
     const { t } = useTranslation();
+    const { scaleWidth } = useGameScale();
     const [envSettings, setEnvSettings] = useAtom(EnvSettingsAtom);
 
     const updateReward = (reward: number) => {
@@ -29,7 +31,7 @@ export default function TimeUpReward() {
             <div className={style.rowContent}>
                 <RemoveIcon
                     color="error"
-                    fontSize="large"
+                    fontSize={scaleWidth < 1 ? (scaleWidth < 0.6 ? 'small' : 'medium') : 'large'}
                 />
 
                 <RewardControl
@@ -42,7 +44,7 @@ export default function TimeUpReward() {
 
                 <AddIcon
                     color="success"
-                    fontSize="large"
+                    fontSize={scaleWidth < 1 ? (scaleWidth < 0.6 ? 'small' : 'medium') : 'large'}
                 />
             </div>
         </div>

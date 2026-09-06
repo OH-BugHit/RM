@@ -250,36 +250,15 @@ export default function DrawObservation({
                 continue;
             }
 
-            // special (esim. agent image)
+            // special (esim. agent image) Removed!
             if (config.special?.[i] === 'bark') {
-                if (drawActions) {
-                    cells.push(
-                        <div
-                            key={i}
-                            style={{ position: 'relative', width: tileSize, height: tileSize }}
-                        >
-                            <img
-                                src={images.specialAction1}
-                                width={tileSize}
-                                height={tileSize}
-                                style={{
-                                    position: 'absolute',
-                                    right: '-10px',
-                                    top: '-10px',
-                                    border: '1px solid black',
-                                    background: getQColor(actionValues[config.qMap[i]], minQ, maxQ),
-                                }}
-                            />
-                        </div>
-                    );
-                } else {
-                    cells.push(
-                        <div
-                            key={i}
-                            style={{ width: tileSize, height: tileSize }}
-                        />
-                    );
-                }
+                cells.push(
+                    <div
+                        key={i}
+                        style={{ width: tileSize, height: tileSize }}
+                    />
+                );
+
                 continue;
             }
 
@@ -318,8 +297,8 @@ export default function DrawObservation({
                 envType === 'potsAndBurglar'
                     ? {
                           display: 'grid',
-                          gridTemplateColumns: '20px auto 20px',
-                          gridTemplateRows: '20px auto 20px',
+                          gridTemplateColumns: `${tileSize / 2}px auto ${tileSize / 2}px`,
+                          gridTemplateRows: `${tileSize / 2}px auto ${tileSize / 2}px`,
                           alignItems: 'center',
                           justifyItems: 'center',
                           overflow: 'visible',
@@ -359,7 +338,7 @@ export default function DrawObservation({
             <div
                 style={{
                     display: 'grid',
-                    gridTemplateColumns: `repeat(${config.size}, 40px)`,
+                    gridTemplateColumns: `repeat(${config.size}, ${tileSize}px)`,
                 }}
             >
                 {drawGrid(config)}

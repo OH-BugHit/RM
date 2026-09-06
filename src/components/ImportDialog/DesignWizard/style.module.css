@@ -1,5 +1,16 @@
 @value primary, secondary textDark from "@genai-fi/base/css/colours.module.css";
 
+.typeOptionContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.tileOptionContent {
+    height: 100%;
+    overflow: auto;
+}
+
 .titleRow {
     display: flex;
     background: rgb(255, 242, 144);
@@ -11,9 +22,7 @@
 
 .title {
     flex: 0 0 auto;
-    padding: 0 2rem 8px;
     background: rgb(255, 242, 144);
-    font-size: 2.5rem;
     position: relative;
     min-width: 40%;
 }
@@ -51,7 +60,6 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    min-height: 120px;
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 12px;
     background: rgba(0, 0, 0, 0.02);
@@ -66,8 +74,6 @@
 }
 
 .previewSection img {
-    width: 96px;
-    height: 96px;
     object-fit: contain;
     image-rendering: pixelated;
     border-radius: 8px;
@@ -154,10 +160,11 @@
 .optionContainer {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
     gap: 12px;
     align-items: center;
+    height: 100%;
+    margin-bottom: 3rem;
+    overflow: auto;
 }
 
 .optionContainer>* {

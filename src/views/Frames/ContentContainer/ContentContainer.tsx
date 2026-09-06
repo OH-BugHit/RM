@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import type { CSSProperties, ReactNode } from 'react';
 import styles from './style.module.css';
+import { Target } from '../../../types';
 
 interface Point {
     x: number;
@@ -10,7 +11,7 @@ interface Point {
 interface ContentContainerProps {
     open: boolean;
     origin: Point;
-    target: Point;
+    target: Target;
 
     size?: number;
     delay?: number;
@@ -18,6 +19,12 @@ interface ContentContainerProps {
     contentWidth?: number;
     contentHeight?: number;
     unmountOnClose: boolean;
+    scaleWidth: number;
+    scale: number;
+    clusterPosition: {
+        x: number;
+        y: number;
+    };
 
     background: 'agent' | 'reward' | 'inspect' | 'build';
 
@@ -35,10 +42,13 @@ export default function ContentContainer({
     target,
     size = 140,
     delay,
+    clusterPosition,
     contentWidth = 500,
     contentHeight = 360,
     background,
     unmountOnClose,
+    scaleWidth = 1,
+    scale = 1,
     children,
 }: ContentContainerProps) {
     const circleSize = size * 0.9;
@@ -46,15 +56,31 @@ export default function ContentContainer({
     const originX = origin.x - circleSize / 2;
     const originY = origin.y - circleSize / 2;
 
-    const targetX = target.x - contentWidth / 2;
-    const targetY = target.y - contentHeight / 2;
+    const targetPoint =
+        target.type === 'cluster'
+            ? {
+                  x: target.x,
+                  y: target.y,
+              }
+            : target.position === 'center'
+              ? {
+                    x: (1940 * scaleWidth) / 2 - clusterPosition.x,
+                    y: (1080 * scale + 200) / 2 - clusterPosition.y,
+                }
+              : {
+                    x: contentWidth / 2 - clusterPosition.x - 80,
+                    y: contentHeight / 2 - clusterPosition.y,
+                };
+
+    const targetX = targetPoint.x - contentWidth / 2;
+    const targetY = targetPoint.y - contentHeight / 2;
 
     const style = {
         '--origin-x': `${originX}px`,
         '--origin-y': `${originY}px`,
 
-        '--target-x': `${target.x}px`,
-        '--target-y': `${target.y}px`,
+        '--target-x': `${targetX}px`,
+        '--target-y': `${targetY}px`,
 
         '--circle-size': `${size * 0.9}px`,
         '--content-width': `${contentWidth}px`,

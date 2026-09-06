@@ -40,7 +40,7 @@
     flex-wrap: wrap;
     align-content: flex-start;
     padding-left: 1rem;
-
+    overflow: visible;
     border-radius: 2rem;
     gap: 3rem;
 

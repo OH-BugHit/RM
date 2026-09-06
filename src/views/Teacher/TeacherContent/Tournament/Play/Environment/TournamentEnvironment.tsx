@@ -14,6 +14,7 @@ import TournamentAgentRender from '../../../../../../components/EnvironmentRende
 
 const STEP_INTERVAL = 400; //ms
 const FLOAT_RING_SIZE = 32;
+const TILE_SIZE = 55; // TODO: Calculate max value that fits!
 
 interface GenericWorldProps {
     agentsRef: React.RefObject<QPolicyAgent[] | undefined>;
@@ -132,8 +133,12 @@ function TournamentEnvironment({ agentsRef, grid }: GenericWorldProps) {
                         }}
                     >
                         <div inert>
-                            <TournamentAgentRender agentsRef={agentsRef} />
+                            <TournamentAgentRender
+                                agentsRef={agentsRef}
+                                tileSize={TILE_SIZE}
+                            />
                             <TournamentWorld
+                                tileSize={TILE_SIZE}
                                 worldGrid={worldGrid}
                                 agentsRef={agentsRef}
                                 floatItems={floatItems}

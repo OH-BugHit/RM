@@ -7,6 +7,7 @@ import CasinoIcon from '@mui/icons-material/Casino';
 import { useTranslation } from 'react-i18next';
 import Curiosity from '../../../../components/AgentTuners/Curiosity/Curiosity';
 import { Help } from '@genai-fi/base';
+import { useGameScale } from '../../../../context/GameScale/useGameScale';
 
 /*
 <ExplGauge
@@ -30,12 +31,13 @@ linear-gradient(
 
 export default function Epsilon() {
     const { t } = useTranslation();
+    const { s, scaleWidth } = useGameScale();
     const [agentSettings, setAgentSettings] = useAtom(AgentSettingsAtom);
     const agent = useAtomValue(ActiveAgentAtom);
 
     return (
-        <div>
-            <h3 style={{ position: 'relative', display: 'flex', justifyContent: 'center', left: 10 }}>
+        <div className={style.container}>
+            <h3 style={{ left: `${s(10)}` }}>
                 <span>
                     <Help
                         inplace
@@ -47,18 +49,36 @@ export default function Epsilon() {
                 </span>
             </h3>
             <div className={style.sightWrapper}>
-                <Curiosity value={agentSettings.epsilon} />
+                <Curiosity
+                    value={agentSettings.epsilon}
+                    size={s(256)}
+                />
                 {agent.img && (
                     <img
                         className={style.agent}
                         src={agent.img}
-                        width={34}
-                        height={40}
+                        width={s(34)}
+                        height={s(40)}
                     />
                 )}
-                <b className={style.treasure2}>+2</b>
-                <b className={style.trap}>-5</b>
-                <b className={style.goal}>+10</b>
+                <b
+                    className={style.treasure2}
+                    style={{ padding: `${s(2)}px ${s(6)}px ${s(2)}px ${s(6)}px` }}
+                >
+                    +2
+                </b>
+                <b
+                    className={style.trap}
+                    style={{ padding: `${s(2)}px ${s(6)}px ${s(2)}px ${s(6)}px` }}
+                >
+                    -5
+                </b>
+                <b
+                    className={style.goal}
+                    style={{ padding: `${s(2)}px ${s(6)}px ${s(2)}px ${s(6)}px` }}
+                >
+                    +10
+                </b>
             </div>
             <div className={style.epsilonSlider}>
                 <Tooltip
@@ -66,7 +86,7 @@ export default function Epsilon() {
                     arrow
                 >
                     <span>
-                        <MemoryIcon fontSize="large" />
+                        <MemoryIcon fontSize={scaleWidth < 1 ? (scaleWidth < 0.6 ? 'small' : 'medium') : 'large'} />
                     </span>
                 </Tooltip>
 
@@ -121,7 +141,7 @@ export default function Epsilon() {
                     arrow
                 >
                     <span>
-                        <CasinoIcon fontSize="large" />
+                        <CasinoIcon fontSize={scaleWidth < 1 ? (scaleWidth < 0.6 ? 'small' : 'medium') : 'large'} />
                     </span>
                 </Tooltip>
             </div>

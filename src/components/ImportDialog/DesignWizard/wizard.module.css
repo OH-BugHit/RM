@@ -1,9 +1,6 @@
 @value bgSubdued1, textDark, primary, secondary, workspaceBg, textDark from "@genai-fi/base/css/colours.module.css";
 
 .wizard {
-    width: 800px;
-    height: 1000px;
-    padding: 24px;
     color: textDark;
     position: relative;
     box-sizing: border-box;
@@ -29,16 +26,18 @@
     border: none;
 }
 
+.actionButton {
+    font-size: var(--font-size-p);
+}
+
 .wizard h2 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: bold;
     margin: 0;
     margin-bottom: 1rem;
 }
 
 .wizardInner {
-    width: calc(100% - 24px);
-    height: calc(100% - 24px);
     margin: 0 auto;
     overflow: hidden;
     background: white;
@@ -60,8 +59,6 @@
 .wizardControls {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
-    gap: 0.5rem;
-    padding: 1rem;
     align-items: center;
     animation-name: fadein;
     animation-duration: 0.4s;

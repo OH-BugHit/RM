@@ -13,6 +13,8 @@ import PlayEnv from '../../PlayEnv/PlayEnv';
 import BuildView from '../../BuildView/BuildView';
 import GameView from '../../GameView/GameView';
 import { QLearningAgent } from '../../../components/agents/rlAgentQ';
+import { OrientationPrompt } from '../../../components/Orientation/OrientationPrompt';
+import { GameScaleProvider } from '../../../context/GameScale/GameScaleProvied';
 
 export default function SinglePlayer() {
     const view = useAtomValue(ActiveViewAtom);
@@ -24,15 +26,18 @@ export default function SinglePlayer() {
     }, [setOpenGroups]);
 
     return (
-        <div className={style.studentContainer}>
-            <MenuButton />
-            <ViewHandler />
-            {view.overlay === 'menu' && <MainMenu />}
-            {view.main === 'recap' && <Tutorial />}
-            {view.main === 'ownLevels' && <PlayEnv />}
-            {view.main === 'build' && <BuildView />}
-            {view.main === 'play' && <GameView agentRef={agentRef} />}
-            {view.main === 'levels' && <Levels view={view.sub} />}
-        </div>
+        <GameScaleProvider>
+            <div className={style.studentContainer}>
+                <OrientationPrompt />
+                <MenuButton />
+                <ViewHandler />
+                {view.overlay === 'menu' && <MainMenu />}
+                {view.main === 'recap' && <Tutorial />}
+                {view.main === 'ownLevels' && <PlayEnv />}
+                {view.main === 'build' && <BuildView />}
+                {view.main === 'play' && <GameView agentRef={agentRef} />}
+                {view.main === 'levels' && <Levels view={view.sub} />}
+            </div>
+        </GameScaleProvider>
     );
 }

@@ -7,6 +7,7 @@ import { EmojiItem } from '../EmojiLibrary/emojiLibraryData';
 import TileLibrary from '../TileLibrary/TileLibrary';
 import EmojiLibrary from '../EmojiLibrary/EmojiLibrary';
 import LibrarySearch from '../LibrarySearch';
+import { useGameScale } from '../../../context/GameScale/useGameScale';
 
 interface TileOptionsProps {
     selectedTile?: TileDefinition;
@@ -35,9 +36,10 @@ export default function TileOptions({
     onDelete,
 }: TileOptionsProps) {
     const { t } = useTranslation();
+    const { s, scale } = useGameScale();
 
     return (
-        <div className={style.wizardContainer}>
+        <div>
             <div className={style.titleRow}>
                 <div className={style.stripes}></div>
                 <h1 className={style.title}>
@@ -46,7 +48,7 @@ export default function TileOptions({
                 <div className={style.stripes}></div>
             </div>
 
-            <DialogContent>
+            <DialogContent className={style.tileOptionContent}>
                 <div className={style.selectModelMessage}>
                     <div className={style.descText}>
                         <p>
@@ -68,16 +70,24 @@ export default function TileOptions({
                             )}
                         </div>
                     </div>
-                    <div className={style.previewSection}>
+                    <div
+                        className={style.previewSection}
+                        style={{ minHeight: `${s(120)}px`, padding: `${s(12)}px` }}
+                    >
                         {selectedPreview ? (
                             <img
                                 src={selectedPreview}
                                 alt="preview"
-                                width={96}
-                                height={96}
+                                width={s(96)}
+                                height={s(96)}
                             />
                         ) : (
-                            <div className={style.emptyPreview}>No selection</div>
+                            <div
+                                className={style.emptyPreview}
+                                style={{ width: `${s(96)}px`, height: `${s(96)}px` }}
+                            >
+                                No selection
+                            </div>
                         )}
                     </div>
                 </div>
@@ -85,29 +95,31 @@ export default function TileOptions({
                     onSelectTile={onSelectTile}
                     onSelectEmoji={onSelectEmoji}
                 />
-                <div className={style.tabBar}>
-                    <button
-                        type="button"
-                        className={tab === 'library' ? style.activeTab : style.tab}
-                        onClick={() => onTabChange('library')}
-                    >
-                        {t('wizard.tabs.library')}
-                    </button>
-                    <button
-                        type="button"
-                        className={tab === 'emoji' ? style.activeTab : style.tab}
-                        onClick={() => onTabChange('emoji')}
-                    >
-                        {t('wizard.tabs.emojis')}
-                    </button>
-                </div>
-                {tab === 'library' && (
+                {scale > 0.8 && (
+                    <div className={style.tabBar}>
+                        <button
+                            type="button"
+                            className={tab === 'library' ? style.activeTab : style.tab}
+                            onClick={() => onTabChange('library')}
+                        >
+                            {t('wizard.tabs.library')}
+                        </button>
+                        <button
+                            type="button"
+                            className={tab === 'emoji' ? style.activeTab : style.tab}
+                            onClick={() => onTabChange('emoji')}
+                        >
+                            {t('wizard.tabs.emojis')}
+                        </button>
+                    </div>
+                )}
+                {tab === 'library' && scale > 0.8 && (
                     <TileLibrary
                         onSelect={onSelectTile}
                         selectedTileId={selectedLibraryTile?.id}
                     />
                 )}
-                {tab === 'emoji' && (
+                {tab === 'emoji' && scale > 0.8 && (
                     <EmojiLibrary
                         onSelect={onSelectEmoji}
                         selectedEmoji={selectedEmoji?.emoji}

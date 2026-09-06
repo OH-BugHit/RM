@@ -4,14 +4,18 @@ import BuildIcon from '../../../components/Buttons/ButtonIcons/Build/BuildIcon';
 import { AgentCAtom, BuildCAtom, ClusterOpenAtom, InspectCAtom, RewardCAtom } from '../../../atoms/uiState';
 import { Button } from '@genai-fi/base';
 import CloseIcon from '../../../components/Buttons/ButtonIcons/OtherIcons/CloseIcon';
+import { useGameScale } from '../../../context/GameScale/useGameScale';
+
+const DESIGN_SIZE = 160;
+const CLOSE_SIZE = 140;
 
 export default function BuildClusteParent() {
+    const { s } = useGameScale();
     const [clusters, setClusters] = useAtom(ClusterOpenAtom);
     const setA = useSetAtom(AgentCAtom);
     const setB = useSetAtom(BuildCAtom);
     const setI = useSetAtom(InspectCAtom);
     const setR = useSetAtom(RewardCAtom);
-    const size = 160;
 
     const handleClick = () => {
         setA({ prm: false, img: false, obs: false, trash: true });
@@ -29,20 +33,23 @@ export default function BuildClusteParent() {
         });
     };
     return (
-        <div className={style.clusterParent}>
+        <div
+            className={style.clusterParent}
+            style={{ inset: `${s(40)}px` }}
+        >
             <Button
                 onClick={() => handleClick()}
-                style={{ width: size, height: size }}
+                style={{ width: s(DESIGN_SIZE), height: s(DESIGN_SIZE) }}
             >
                 <>
                     <BuildIcon
-                        size={size}
+                        size={s(DESIGN_SIZE)}
                         title="BUILD"
                     />
                     <div style={{ position: 'absolute' }}>
                         {clusters.build && (
                             <CloseIcon
-                                size={size - 20}
+                                size={s(CLOSE_SIZE)}
                                 type="dark"
                             />
                         )}

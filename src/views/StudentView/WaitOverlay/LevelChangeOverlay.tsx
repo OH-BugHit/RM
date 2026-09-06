@@ -22,13 +22,13 @@ export default function LevelChangeOverlay({ onReady }: WaitOverlayProps) {
         >
             <div className={style.waitContent}>
                 <h1>{level?.level.manifest.gameName}</h1>
-                {t(`${level?.levelText?.textKey}.preMessage`)}
+                <p>{t(`${level?.levelText?.textKey}.preMessage`)}</p>
                 <Button
                     onClick={onReady}
                     variant="contained"
                     sx={{ maxWidth: 'max-content', minWidth: '100px' }}
                 >
-                    Start level
+                    {t('common.actions.startLevel')}
                 </Button>
             </div>
         </NewFrame>

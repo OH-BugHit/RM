@@ -10,10 +10,8 @@
     position: relative;
     flex-direction: column;
     align-items: center;
-
     width: 100%;
-    overflow: visible;
-    gap: 1.2rem;
+    height: 100%;
 }
 
 .rowContent {
@@ -26,19 +24,16 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
     justify-content: flex-start;
     align-items: center;
+    overflow: auto;
 }
 
 .rewardTuneRow {
-    width: 100%;
+    width: 90%;
     justify-items: center;
-    align-items: center;
     border-radius: 1rem;
-    border: 2px solid rgb(238, 238, 238);
     max-width: 500px;
-    padding: 0.5rem 0 0.5rem 0;
     background-color: rgba(244, 211, 128, 0.734);
 }
 

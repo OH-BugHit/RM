@@ -1,0 +1,50 @@
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { GameScaleContext } from './GameScaleContext';
+
+const DESIGN_HEIGHT = 1080;
+const DESIGN_WIDTH = 1940;
+
+const MIN_SCALE = 0.425;
+const MAX_SCALE = 1;
+
+interface GameScaleProviderProps {
+    children: ReactNode;
+}
+
+export function GameScaleProvider({ children }: GameScaleProviderProps) {
+    const [viewport, setViewport] = useState(() => ({
+        width: window.innerWidth,
+        height: window.innerHeight,
+    }));
+
+    useEffect(() => {
+        const handleResize = () => {
+            setViewport({
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const scale = Math.min(Math.max(viewport.height / DESIGN_HEIGHT, MIN_SCALE), MAX_SCALE);
+
+    const scaleWidth = viewport.width / DESIGN_WIDTH;
+
+    const value = useMemo(
+        () => ({
+            scale,
+            scaleWidth,
+            s: (value: number) => value * scale,
+            sw: (value: number) => value * scaleWidth,
+        }),
+        [scale, scaleWidth]
+    );
+
+    return <GameScaleContext.Provider value={value}>{children}</GameScaleContext.Provider>;
+}

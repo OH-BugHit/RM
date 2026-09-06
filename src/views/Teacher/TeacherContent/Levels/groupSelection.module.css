@@ -12,8 +12,10 @@
     text-align: center;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.479);
 
-    width: 280px;
-    height: 280px;
+    width: 42%;
+    aspect-ratio: 1 / 1;
+    max-width: 280px;
+    max-height: 280px;
 
     padding: 0;
     margin-bottom: 1rem;
@@ -22,8 +24,7 @@
 }
 
 .levelGroup h2 {
-    flex: 0 0 55px;
-
+    font-size: clamp(0.4rem, 0.4rem + 1vw, 2rem);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -34,13 +35,11 @@
     color: black;
     font-family: 'Tektur';
     font-weight: bold;
-    font-size: 1.8rem;
 }
 
 .levels {
     flex: 1;
     min-height: 0;
-
     width: 100%;
 
     display: flex;
@@ -48,6 +47,10 @@
     justify-content: center;
 
     overflow: hidden;
+}
+
+.levels h3 {
+    font-size: clamp(0.1rem, 0rem + 1vw, 3rem);
 }
 
 .active {

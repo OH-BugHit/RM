@@ -58,6 +58,9 @@
         "teachingMaterials": "Teaching Materials"
     },
     "common": {
+        "actions": {
+            "startLevel": "Start Level"
+        },
         "cancel": "Cancel",
         "cell": {
             "-1": "Spawn",
@@ -196,7 +199,7 @@
             "openFileExplorer": "Select game file from your files",
             "openImageFileExplorer": "Select image from your files",
             "playLoaded": "Play loaded game",
-            "setImage": "Accept selected"
+            "setImage": "Create"
         },
         "messages": {
             "selectAgent": "Upload your own image.",
@@ -215,9 +218,9 @@
         }
     },
     "inspect": {
-        "0": "This is the current observation. Q-value of action taken in this state will be updated based on the reward received when reaching next state, while considering also how good that state is by its' previous learning.",
-        "1": "These are the Q-values for each action. Click markers to see actual values.",
-        "2": "Agent picks action that has highest Q-value. Inspect what could it be? Agent may also take random action with probability of \"Epsilon\" or as simplified, curiosity in this game.",
+        "0": "This is the current observation. The value of action taken in this state will be updated based on the reward received when reaching next state, while considering also how good that state is by its' previous learning.",
+        "1": "Value of how good each action is is stored in agents memory. Blue dot markers on current observation represent all actions the agent has. Click on blue dots to see actual values for each action.",
+        "2": "Agent picks action that has highest value. Inspect what could it be? Agent may also take random action with probability of tunable curiosity parameter.",
         "3": "This is the reward agent received from the environment: REWARD HERE",
         "4": "And this is the new state the agent has reached. Click markers to see actual values.",
         "5": "Q-value for action that was taken is updated by adjusting it with following formula: adjustment = alpha * (reward + gamma * maxNext - old Q-value) \n Those greek letters are translated in this game following: alpha = Adaptability, gamma = Foresight",
@@ -349,32 +352,34 @@
         "5": {
             "tasks": {
                 "p1": {
-                    "title": "Have some foresight",
+                    "title": "Learning",
                     "task": {
-                        "1": "New highscore!"
+                        "1": "Inspect learning step",
+                        "2": "Learn for 500,000 steps",
+                        "3": "Inspect again"
                     }
                 }
             },
 
             "text": {
-                "1": "There are two things in this level: 1. the observation and 2. how it values future rewards, also known as \"discounted rewards\".",
-                "2": "Let's start with the observation. The agent can observe the environment. In this game, the agent can only observe part of the whole environment, or as we say in reinforcement learning: \"Partial Observation.\" Well, enough with the technical stuff. Let's have a look...",
-                "3": "This new inspection tool is called \"Agent Vision.\" It allows you to clearly see what the agent actually observes.",
-                "4": "And yeah, the agent actually doesn't see or observe the game. It just receives numbers representing these tiles. Toggle it to see the agent's actual observation with that button in the frame.",
-                "5": "That's that. Now for your task in this level!",
-                "6": "You already know that the agent receives rewards from the environment.",
-                "7": "These rewards help the agent learn. But sometimes, it needs to think about future rewards too, not just the reward it gets right now.",
-                "8": "For example, an action might give a small negative reward now, but lead to a much bigger reward later.",
-                "9": "Your agent playing there might have already learned to just avoid progressing past those mushrooms. The agent needs to learn some foresight. But how?",
-                "10": "Luckily for us, there is a parameter for that too! In this game, it is called \"Foresight.\"",
-                "11": "This parameter controls how much the agent values where an action may lead, even if the immediate reward is low.",
-                "12": "The agent needs to receive at least one point to beat the level.",
-                "13": "Good luck! You might gain some help by tuning the \"Curiosity\" higher at first and then gradually decaying it to a smaller value."
+                "1": "Learning levels will be about...",
+                "2": "...learning!",
+                "3": "Now you already know that agent acts in the environment, learns by rewards it receives from there and what reward it is expecting to get later.",
+                "4": "But how it actually does that?",
+                "5": "It stores these rewards and values to its memory!",
+                "6": "It does not store directions like go from here to there, but for each observation it has seen, it stores value for all actions, that how good each action is in this observation.",
+                "7": "That might be a little hard to think about, but luckily for us, there is this Q-map that visualizes it!",
+                "8": "This map might might fell slighty overwhelming at first but let's take step by step.",
+                "9": "This map contains all observations, like you saw at Agent Vision, the agent has observed so far.",
+                "10": "It has same option to show the actual agent observation.",
+                "11": "You can zoom and pan around now and later to see how it has learned the vast amount of possible states.",
+                "12": "Now it's time to take a peek of the actual learning. Click on the \"Inspect\" button!",
+                "14": "."
             },
 
             "nextLevelInfo": "Next, we dig deeper and see how the learning actually happens!",
             "postMessage": "This level taught you about observations and how an agent can use foresight to consider future rewards.",
-            "preMessage": "In this level, we will think more about rewards and how the agent learns from them. The agent should consider future rewards, not just immediate ones. Otherwise, it may not learn to choose actions that lead to better rewards later. You will also learn about the agent's observations and see the game from the agent's point of view."
+            "preMessage": "At this last level you will...."
         }
     },
     "messageDisplay": {
@@ -413,6 +418,24 @@
             "total": "Tutorial progression"
         },
         "help": { "toolsDisabled": "Progress tutorial to use or modify your tools" }
+    },
+    "inspectItem": {
+        "actions": {
+            "0": "Move up",
+            "1": "Move down",
+            "2": "Move left",
+            "3": "Move right",
+            "4": "Special action",
+            "5": "Stay"
+        },
+        "text": {
+            "best": "Best-action contribution",
+            "obs": "Actual string observation",
+            "epsilon": "Current \"Curiosity\"",
+            "probability": "Probability of this action",
+            "random": "Random contribution",
+            "value": "Value of this action"
+        }
     },
     "reward": {
         "title": "Rewards"
@@ -596,13 +619,34 @@
                 "observation": "infoa",
                 "rewards": "infoa"
             }
+        },
+        "tournament": {
+            "build": {
+                "tipsTitle": "Tips",
+                "tipTitle": {
+                    "1": "Consider a problem",
+                    "2": "Think about the goal",
+                    "3": "Design the environment",
+                    "4": "Plan the rewards",
+                    "5": "Build your environment",
+                    "6": "Test your agent"
+                },
+                "tipText": {
+                    "1": "What would you like your agent to learn to do?",
+                    "2": "What should the agent try to achieve?",
+                    "3": "What does the world look like? What can the agent see and do?",
+                    "4": "What should the agent be rewarded for? What should it avoid?",
+                    "5": "Use the tools to create the world where your agent can learn.",
+                    "6": "Let the agent learn and see if it can solve the problem."
+                }
+            }
         }
     },
     "topBar": {
         "score": {
             "gained": "Score",
             "top": "Your Best",
-            "toBeat": "Score to Beat"
+            "toBeat": "To Beat"
         }
     },
     "tutorial": {
@@ -703,6 +747,7 @@
             "back": "Previous",
             "continue": "Continue"
         },
+        "noResults": "No Results",
         "tabs": {
             "library": "Library",
             "emojis": "Emojis"

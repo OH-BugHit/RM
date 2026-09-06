@@ -12,6 +12,8 @@ import EnterUserInfo from './EnterUsername/EnterUsername';
 import Student from './Student';
 import ViewHandler from '../../../components/ViewHandler';
 import ControlHandler from './ControlHandler';
+import { OrientationPrompt } from '../../../components/Orientation/OrientationPrompt';
+import { GameScaleProvider } from '../../../context/GameScale/GameScaleProvied';
 
 export default function StudentWrapper() {
     const { serverCode } = useParams<{ serverCode: string }>();
@@ -29,16 +31,19 @@ export default function StudentWrapper() {
             code={`reward-${MYCODE}`}
             server={`reward-${serverCode}`}
         >
-            <ViewHandler />
-            <ControlHandler />
-            <StudentProtocol>
-                {!ready && (
-                    <>
-                        <EnterUserInfo onReady={() => setReady(true)} />
-                    </>
-                )}
-                {ready && serverCode && <Student serverCode={serverCode} />}
-            </StudentProtocol>
+            <GameScaleProvider>
+                <ViewHandler />
+                <ControlHandler />
+                <OrientationPrompt />
+                <StudentProtocol>
+                    {!ready && (
+                        <>
+                            <EnterUserInfo onReady={() => setReady(true)} />
+                        </>
+                    )}
+                    {ready && serverCode && <Student serverCode={serverCode} />}
+                </StudentProtocol>
+            </GameScaleProvider>
         </Peer>
     );
 }

@@ -3,6 +3,8 @@ import style from './style.module.css';
 import { WorldStore } from '../utils';
 import { getActionPosition } from '../MarkerManager/markerUtils';
 import { ObservationShape } from '../../../types';
+import ActionMarker from './ActionMarker';
+import { createRoot } from 'react-dom/client';
 
 export class InspectMarkerManager {
     private markers: L.Marker[] = [];
@@ -31,11 +33,17 @@ export class InspectMarkerManager {
                 }),
             });
 
-            marker.bindPopup(`
-            <b>Action ${action}</b><br>
-            State: ${stateId}
-            Q-value: ${qValues ? qValues[action] : ''}
-        `);
+            const container = document.createElement('div');
+
+            marker.bindPopup(container);
+
+            createRoot(container).render(
+                <ActionMarker
+                    action={action}
+                    qValues={qValues}
+                    stateId={stateId}
+                />
+            );
 
             marker.addTo(this.map);
             this.markers.push(marker);

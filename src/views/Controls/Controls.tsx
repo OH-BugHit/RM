@@ -9,9 +9,11 @@ import StepIcon from '../../components/Buttons/ButtonIcons/ControlIcons/StepIcon
 import FastForwardIcon from '../../components/Buttons/ButtonIcons/ControlIcons/FastForwardIcon';
 import InspectIcon from '../../components/Buttons/ButtonIcons/ControlIcons/InspectIcon';
 import { TestAgentAtom } from '../../atoms/gameState';
+import { useGameScale } from '../../context/GameScale/useGameScale';
 let stepsTaken = 0;
 
 function Controls() {
+    const { s } = useGameScale();
     const [controls, setControls] = useAtom(GameControlAtom);
     const setLod = useSetAtom(LodStateAtom);
     const enable = useAtomValue(ControlEnablerAtom);
@@ -59,28 +61,14 @@ function Controls() {
     };
 
     return (
-        <div className={style.controlsWrapper}>
-            <div className={style.controlsContainer}>
-                <GameButton
-                    title={controls.isRunning ? 'Pause' : 'Play'}
-                    disabled={!hudVis.controls.play || !enable?.play || test === 'isRunning' || test === 'passed'}
-                    variant="text"
-                    onClick={() => {
-                        setLod(2);
-                        setControls((old) => {
-                            return {
-                                ...old,
-                                isRunning: false,
-                                isFast: false,
-                            };
-                        });
-                    }}
-                >
-                    <PauseIcon
-                        active={!controls.isRunning}
-                        disabled={!hudVis.controls.play || !enable?.play || test === 'isRunning' || test === 'passed'}
-                    />
-                </GameButton>
+        <div
+            className={style.controlsWrapper}
+            style={{ margin: `${s(1)}rem` }}
+        >
+            <div
+                className={style.controlsContainer}
+                style={{ padding: `${s(12)}px`, gap: `${s(0.8)}rem` }}
+            >
                 <GameButton
                     title="One step"
                     color="success"
@@ -100,6 +88,7 @@ function Controls() {
                     }}
                 >
                     <StepIcon
+                        size={s(64)}
                         disabled={!hudVis.controls.step || !enable?.step || test === 'isRunning' || test === 'passed'}
                     />
                 </GameButton>
@@ -107,23 +96,45 @@ function Controls() {
                     title={controls.isRunning ? 'Pause' : 'Play'}
                     disabled={!hudVis.controls.play || !enable?.play || test === 'isRunning' || test === 'passed'}
                     variant="text"
-                    color="success"
+                    color={controls.isRunning ? undefined : 'success'}
                     onClick={() => {
-                        storyPlay();
                         setLod(2);
-                        setControls((old) => {
-                            return {
+
+                        if (controls.isRunning) {
+                            // Pause
+                            setControls((old) => ({
+                                ...old,
+                                isRunning: false,
+                                isFast: false,
+                            }));
+                        } else {
+                            // Play
+                            storyPlay();
+                            setControls((old) => ({
                                 ...old,
                                 isRunning: true,
                                 isFast: false,
-                            };
-                        });
+                            }));
+                        }
                     }}
                 >
-                    <PlayIcon
-                        active={controls.isRunning}
-                        disabled={!hudVis.controls.play || !enable?.play || test === 'isRunning' || test === 'passed'}
-                    />
+                    {controls.isRunning ? (
+                        <PauseIcon
+                            size={s(64)}
+                            active
+                            disabled={
+                                !hudVis.controls.play || !enable?.play || test === 'isRunning' || test === 'passed'
+                            }
+                        />
+                    ) : (
+                        <PlayIcon
+                            size={s(64)}
+                            active={false}
+                            disabled={
+                                !hudVis.controls.play || !enable?.play || test === 'isRunning' || test === 'passed'
+                            }
+                        />
+                    )}
                 </GameButton>
                 {hudVis.controls.ff && (
                     <GameButton
@@ -144,6 +155,7 @@ function Controls() {
                         }}
                     >
                         <FastForwardIcon
+                            size={s(64)}
                             active={controls.isFast}
                             disabled={!hudVis.controls.ff || !enable?.ff || test === 'isRunning' || test === 'passed'}
                         />
@@ -168,7 +180,10 @@ function Controls() {
                             setInspect({ vis: true, step: 0 });
                         }}
                     >
-                        <InspectIcon disabled={!enable?.inspect || test === 'isRunning' || test === 'passed'} />
+                        <InspectIcon
+                            size={s(64)}
+                            disabled={!enable?.inspect || test === 'isRunning' || test === 'passed'}
+                        />
                     </GameButton>
                 )}
             </div>

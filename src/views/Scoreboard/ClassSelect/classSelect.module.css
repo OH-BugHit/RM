@@ -20,7 +20,7 @@
     flex-direction: column;
     text-align: center;
     /*background-color: rgba(50, 121, 208, 0.278);*/
-    background: linear-gradient(45deg, rgba(127, 126, 187, 0.677), rgba(19, 62, 123, 0.38));
+    background: linear-gradient(45deg, var(--bg-subdued3), rgba(19, 62, 123, 0));
     border-radius: 2rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
@@ -36,11 +36,13 @@
 
 .selectedTermItem {
     composes: termItem;
-    background: linear-gradient(45deg, rgba(45, 236, 239, 0.309), rgba(24, 249, 253, 0.519));
+    background: linear-gradient(45deg, var(--bg-colorful3), #2367e613);
+    color: white;
 }
 
 .termItem:hover {
     /*transform: scale(1.1, 1.1);*/
+    background: var(--light-element);
     box-shadow: 0 0 8px rgba(45, 236, 239, 0.309);
     ;
 }
@@ -60,7 +62,7 @@
     margin-inline-end: 0px;
     font-weight: bold;
     unicode-bidi: isolate;
-    color: white;
+    color: var(--text-dark);
     font-size: large;
 }
 

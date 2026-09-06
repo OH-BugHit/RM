@@ -1,55 +1,92 @@
-import { useAtomValue, useSetAtom } from 'jotai';
-import { CurrentTileToolAtom, DesignOpenAtom, TilePropsAtom } from '../../atoms/uiState';
+import { useAtomValue, useSetAtom, useStore } from 'jotai';
+import { CurrentTileToolAtom, DesignOpenAtom, HUDvisAtom, TilePropsAtom } from '../../atoms/uiState';
 import ContentContainer from './ContentContainer/ContentContainer';
 import PropToolIcon from '../Story/Selectors/EnvironmentSelector/Prop/PropTool/PropToolIcon';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import ChangeBackground from '../../components/Buttons/ChangeBackground/ChangeBackground';
 import { useViewNavigation } from '../../hooks/useViewNavigation';
+import { Target } from '../../types';
 
 interface BuildToolsContentProps {
     open: boolean;
+    scale: number;
+    scaleWidth: number;
     origin: {
         x: number;
         y: number;
     };
-    baseTarget: {
+    clusterPosition: {
         x: number;
         y: number;
     };
+    baseTarget: Target;
 }
 
 const TOOL_WIDTH = 120;
 const TOOL_HEIGHT = 120;
 const TOOL_SPACING_X = 44;
 const TOOL_SPACING_Y = 0;
-const VIEWPORT_MARGIN = 300;
+const VIEWPORT_MARGIN = 150;
 
-function getToolTargets(baseTarget: { x: number; y: number }, tileCount: number) {
+function getToolTargets(
+    baseTarget: { x: number; y: number },
+    tileCount: number,
+    toolWidth: number,
+    toolHeight: number
+): Target[] {
     if (tileCount === 0) {
-        return [] as { x: number; y: number }[];
+        return [] as { type: 'cluster'; x: number; y: number }[];
     }
 
     const maxRows = Math.max(
         1,
-        Math.floor((window.innerHeight - VIEWPORT_MARGIN * 2 + TOOL_SPACING_Y) / (TOOL_HEIGHT + TOOL_SPACING_Y))
+        Math.floor((window.innerHeight - VIEWPORT_MARGIN * 2 + TOOL_SPACING_Y) / (toolHeight + TOOL_SPACING_Y))
     );
 
     return Array.from({ length: tileCount }, (_, index) => {
         const column = Math.floor(index / maxRows);
         const row = index % maxRows;
-        const x = baseTarget.x - column * (TOOL_WIDTH + TOOL_SPACING_X);
-        const y = baseTarget.y + row * (TOOL_HEIGHT + TOOL_SPACING_Y);
+        const x = baseTarget.x - column * (toolWidth + TOOL_SPACING_X);
+        const y = baseTarget.y + row * (toolHeight + TOOL_SPACING_Y);
 
-        return { x, y };
+        return { type: 'cluster', x, y };
     });
 }
 
-export default function BuildToolsContent({ open, origin, baseTarget }: BuildToolsContentProps) {
+export default function BuildToolsContent({
+    open,
+    origin,
+    baseTarget,
+    scale,
+    scaleWidth,
+    clusterPosition,
+}: BuildToolsContentProps) {
     const { goToView } = useViewNavigation();
     const tiles = useAtomValue(TilePropsAtom);
     const selectedTool = useAtomValue(CurrentTileToolAtom);
-    const targets = getToolTargets(baseTarget, tiles.length);
     const setDesignOpen = useSetAtom(DesignOpenAtom);
+    const rewardClusterState = useRef<boolean>(false); // Saves the state of reward cluster visibility
+    const store = useStore();
+    const setHudVis = useSetAtom(HUDvisAtom);
+
+    useEffect(() => {
+        if (open) {
+            rewardClusterState.current = store.get(HUDvisAtom).rewardCluster;
+            setHudVis((old) => {
+                return {
+                    ...old,
+                    rewardCluster: false,
+                };
+            });
+        } else {
+            setHudVis((old) => {
+                return {
+                    ...old,
+                    rewardCluster: true,
+                };
+            });
+        }
+    }, [open, setHudVis, store]);
 
     useEffect(() => {
         setDesignOpen(true);
@@ -62,6 +99,10 @@ export default function BuildToolsContent({ open, origin, baseTarget }: BuildToo
     }, [setDesignOpen, goToView, open]);
 
     if (!open) return null;
+    if (baseTarget.type !== 'cluster') return;
+    const xT = baseTarget.x;
+    const yT = baseTarget.y;
+    const targets = getToolTargets({ x: xT, y: yT }, tiles.length, TOOL_WIDTH * scaleWidth, TOOL_HEIGHT * scale);
 
     return (
         <>
@@ -69,16 +110,21 @@ export default function BuildToolsContent({ open, origin, baseTarget }: BuildToo
                 <ContentContainer
                     key={tile.id}
                     unmountOnClose={true}
+                    clusterPosition={clusterPosition}
                     open={open}
                     origin={origin}
-                    target={targets[index] ?? { x: 0, y: 0 }}
+                    target={targets[index] ?? { type: 'cluster', x: 0, y: 0 }}
                     delay={index * 60}
-                    contentWidth={80}
-                    contentHeight={110}
+                    size={scale * 140}
+                    scale={scale}
+                    scaleWidth={scaleWidth}
+                    contentWidth={scaleWidth * 80}
+                    contentHeight={scale * 110}
                     background="build"
                 >
                     <PropToolIcon
                         tile={tile}
+                        size={Math.min(48, 64 * scale)}
                         selected={tile === selectedTool}
                     />
                 </ContentContainer>
@@ -86,12 +132,15 @@ export default function BuildToolsContent({ open, origin, baseTarget }: BuildToo
             <ContentContainer
                 key={'background'}
                 unmountOnClose={true}
+                clusterPosition={clusterPosition}
                 open={open}
                 origin={origin}
-                target={{ x: -500, y: 0 }}
+                target={{ type: 'cluster', x: scaleWidth * -500, y: 0 }}
                 delay={200}
-                contentWidth={350}
-                contentHeight={110}
+                scale={scale}
+                scaleWidth={scaleWidth}
+                contentWidth={scaleWidth * 350}
+                contentHeight={scale * 110}
                 background="build"
             >
                 <ChangeBackground />

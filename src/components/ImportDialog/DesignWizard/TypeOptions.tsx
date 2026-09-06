@@ -3,6 +3,7 @@ import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import TypeOption from '../TypeOption';
 import { BASIC_CELL_TYPE_OPTIONS, CellType } from '../../../types';
+import { useGameScale } from '../../../context/GameScale/useGameScale';
 
 interface TypeOptionsProps {
     selectedType: CellType | 'background' | null;
@@ -13,12 +14,18 @@ interface TypeOptionsProps {
 
 function TypeOptions({ selectedType, onSelectType, allowedTypes, hint }: TypeOptionsProps) {
     const { t } = useTranslation();
+    const { s } = useGameScale();
 
     return (
-        <div>
+        <div className={style.typeOptionContainer}>
             <div className={style.titleRow}>
                 <div className={style.stripes}></div>
-                <h1 className={style.title}>{t('import.titles.tileType')}</h1>
+                <h1
+                    className={style.title}
+                    style={{ padding: `0 ${s(2)}rem ${s(8)}px` }}
+                >
+                    {t('import.titles.tileType')}
+                </h1>
                 <div className={style.stripes}></div>
             </div>
             <div className={style.selectModelMessage}>

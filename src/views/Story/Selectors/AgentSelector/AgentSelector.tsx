@@ -1,4 +1,4 @@
-import style from '../style.module.css';
+import style from './agentSelector.module.css';
 import SelectorItem from '../SelectorItem';
 import { useAtom, useSetAtom } from 'jotai';
 import { ActiveAgentAtom, ImportedAgentImgAtom } from '../../../../atoms/state';
@@ -42,7 +42,7 @@ export default function AgentSelector() {
                     setImportedImg(image);
                 }}
             />
-            <div className={style.textSection}>
+            <div className={style.title}>
                 <h2>{t('imgTitle')}</h2>
             </div>
             <ul className={style.selectorItemContainer}>
@@ -88,7 +88,7 @@ export default function AgentSelector() {
                             };
                         });
                     }}
-                    selected={selectedAgent.type === 'robodog'}
+                    selected={selectedAgent.type === 'hoover'}
                 />
                 <SelectorItem
                     title="Robo-Mover"
@@ -110,7 +110,7 @@ export default function AgentSelector() {
                             };
                         });
                     }}
-                    selected={selectedAgent.type === 'robodog'}
+                    selected={selectedAgent.type === 'mover'}
                 />
                 <SelectorItem
                     title="Adventurer"

@@ -13,6 +13,7 @@ import { CurrentTileToolAtom, StoryProgressAtom, TilePropsAtom } from '../../../
 import { InnerFillCellAtom, WorldGridRenderAtom } from '../../../atoms/gameState';
 import { EmojiItem } from '../EmojiLibrary/emojiLibraryData';
 import { emojiToDataUrl } from '../../../utils/import';
+import { useGameScale } from '../../../context/GameScale/useGameScale';
 
 interface Props {
     active?: boolean;
@@ -21,6 +22,7 @@ interface Props {
 
 export default function DesignWizard({ active, variant = 'styled' }: Props) {
     const { t } = useTranslation();
+    const { s, scaleWidth, scale } = useGameScale();
     const [page, setPage] = useState(0);
     const [loading, setLoading] = useState(false);
 
@@ -254,19 +256,23 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
     const hasSelection = Boolean(selectedLibraryTile || selectedEmoji || selectedTile);
 
     const controls = (
-        <div className={style.wizardControls}>
+        <div
+            className={style.wizardControls}
+            style={{ gap: `${s(0.5)}rem`, padding: `${s(1)}rem` }}
+        >
             <div className={style.wizardControlsLeft}>
                 {page === 1 ? (
                     <LargeButton
                         variant="outlined"
                         color="inherit"
+                        className={style.actionButton}
                         onClick={() => setPage(0)}
                         startIcon={<ArrowBackIosNewIcon />}
                     >
                         {t('wizard.actions.back')}
                     </LargeButton>
                 ) : (
-                    <div style={{ width: 96 }} />
+                    <div style={{ width: Math.min(96, s(96)) }} />
                 )}
             </div>
             <div className={style.wizardControlsCenter}>
@@ -317,9 +323,17 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                       ? style.plainwizardClosed
                       : style.plainwizard
             }
+            style={{
+                width: `${Math.max(Math.min(800, scaleWidth * 800), 500)}px`,
+                height: `${Math.min(1000, s(1000))}px`,
+                padding: `${scale < 0.7 ? 40 : 24}px`,
+            }}
             data-testid="recom-wizard"
         >
-            <div className={style.wizardInner}>
+            <div
+                className={style.wizardInner}
+                style={{ width: `calc(100% - ${scaleWidth * 24}px)`, height: `calc(100% - ${scale * 24}px)` }}
+            >
                 <SlideShow
                     page={page}
                     controls={controls}

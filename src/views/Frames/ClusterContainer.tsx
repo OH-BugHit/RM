@@ -1,12 +1,11 @@
 import { IconButton } from '@mui/material';
 import style from './cluster.module.css';
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import ContentContainer from './ContentContainer/ContentContainer';
-import { agentButtons } from '../../components/Buttons/agentButtonList';
-import { rewardButtons } from '../../components/Buttons/rewardButtonList';
+import { getAgentButtons } from '../../components/Buttons/agentButtonList';
+import { getRewardButtons } from '../../components/Buttons/rewardButtonList';
 import getInspectButtons, { InspectButtonProps } from '../../components/Buttons/inspectButtonList';
 import { getBuildButtons } from '../../components/Buttons/buildButtonList';
-import useWindowSize from '../../hooks/useWindowSize';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { ClusterOpenAtom, HUDvisAtom } from '../../atoms/uiState';
 import { useClusterOpenState } from './useClusterState';
@@ -14,9 +13,10 @@ import BuildToolsContent from './BuildToolsContent';
 import TrashIcon from '../../components/Buttons/ButtonIcons/Agent/TrashIcon';
 import { ResetUiPulseAtom } from '../../atoms/state';
 import { Button } from '@genai-fi/base';
+import { useGameScale } from '../../context/GameScale/useGameScale';
 
 interface FrameContainerProps {
-    position?: Pick<React.CSSProperties, 'top' | 'right' | 'bottom' | 'left'>;
+    position: 'topLeft' | 'topRight' | 'bottomRight' | 'bottomLeft';
     direction?: 'column' | 'row';
     type: 'agent' | 'reward' | 'inspect' | 'build';
     vis?: boolean;
@@ -25,25 +25,50 @@ interface FrameContainerProps {
     inspectButtonProps: InspectButtonProps;
 }
 
-const RADIUS = 160;
-
 export default function ClusterContainer({ position, type, vis, children, inspectButtonProps }: FrameContainerProps) {
+    const { s, scale, scaleWidth } = useGameScale();
     const { openState, handleOpenClick } = useClusterOpenState(type);
     const setResetEnv = useSetAtom(ResetUiPulseAtom);
     const hudVis = useAtomValue(HUDvisAtom);
     const clusterOpen = useAtomValue(ClusterOpenAtom);
-    const windowSize = useWindowSize();
+    const RADIUS = 160;
 
     const buttons =
         type === 'agent'
-            ? agentButtons
+            ? getAgentButtons(scale, scaleWidth)
             : type === 'reward'
-              ? rewardButtons
+              ? getRewardButtons(scale, scaleWidth)
               : type === 'inspect'
-                ? getInspectButtons(inspectButtonProps, windowSize)
-                : getBuildButtons(windowSize);
+                ? getInspectButtons(inspectButtonProps, scale, scaleWidth)
+                : getBuildButtons(scale, scaleWidth);
 
     const buildOpenState = type === 'build' ? (openState as import('../../types').BuildCluster) : undefined;
+
+    const getPosition = (): CSSProperties => {
+        switch (position) {
+            case 'topLeft':
+                return { top: 0, left: 0 };
+            case 'topRight':
+                return { top: 0, right: 0 };
+            case 'bottomLeft':
+                return { bottom: 0, left: 0 };
+            case 'bottomRight':
+                return { bottom: 0, right: 0 };
+        }
+    };
+
+    const getClusterPosition = () => {
+        switch (position) {
+            case 'topLeft':
+                return { x: 0, y: 0 };
+            case 'topRight':
+                return { x: scaleWidth * 1940 - 100, y: 0 };
+            case 'bottomLeft':
+                return { x: 20, y: s(1080) };
+            case 'bottomRight':
+                return { x: scaleWidth * 1940 - 100, y: s(1080) };
+        }
+    };
 
     return (
         <>
@@ -51,10 +76,10 @@ export default function ClusterContainer({ position, type, vis, children, inspec
                 <div
                     className={style.agentWrapper}
                     style={{
-                        ...(position && {
-                            position: 'absolute',
-                            ...position,
-                        }),
+                        position: 'absolute',
+                        ...getPosition(),
+                        width: s(220),
+                        height: s(220),
                         zIndex: 21,
                     }}
                 >
@@ -68,7 +93,7 @@ export default function ClusterContainer({ position, type, vis, children, inspec
                                     title="Reset agent"
                                     onClick={() => setResetEnv((old) => !old)}
                                 >
-                                    <TrashIcon size={80} />
+                                    <TrashIcon size={s(80)} />
                                 </Button>
                             </div>
                         )}
@@ -80,8 +105,8 @@ export default function ClusterContainer({ position, type, vis, children, inspec
                                 const rad = (button.angle * Math.PI) / 180;
 
                                 const origin = {
-                                    x: Math.cos(rad) * RADIUS,
-                                    y: -Math.sin(rad) * RADIUS,
+                                    x: s(Math.cos(rad) * RADIUS),
+                                    y: s(-Math.sin(rad) * RADIUS),
                                 };
 
                                 return (
@@ -91,14 +116,15 @@ export default function ClusterContainer({ position, type, vis, children, inspec
                                                 position: 'absolute',
                                                 left: `calc(50% + ${origin.x}px)`,
                                                 top: `calc(50% + ${origin.y}px)`,
-                                                width: 140,
-                                                height: 140,
+                                                width: s(140),
+                                                height: s(140),
                                                 transform: 'translate(-50%, -50%)',
                                                 zIndex: 21,
                                             }}
                                         >
                                             <IconButton
                                                 className={style.actionButton}
+                                                style={{ width: `${s(140)}px`, height: `${s(140)}px` }}
                                                 onClick={() => handleOpenClick(button.id)}
                                             >
                                                 {button.icon}
@@ -110,19 +136,23 @@ export default function ClusterContainer({ position, type, vis, children, inspec
                                                 open={buildOpenState?.tools ?? false}
                                                 origin={origin}
                                                 baseTarget={button.target}
+                                                clusterPosition={getClusterPosition()}
+                                                scale={scale}
+                                                scaleWidth={scaleWidth}
                                             />
                                         ) : (
                                             <ContentContainer
                                                 open={openState[button.id as keyof typeof openState]}
                                                 unmountOnClose={type === 'inspect' ? false : true}
                                                 origin={origin}
+                                                clusterPosition={getClusterPosition()}
+                                                background={type}
+                                                size={s(140)}
                                                 contentWidth={button.size.w}
                                                 contentHeight={button.size.h}
-                                                background={type}
-                                                target={{
-                                                    x: button.target.x,
-                                                    y: button.target.y,
-                                                }}
+                                                target={button.target}
+                                                scale={scale}
+                                                scaleWidth={scaleWidth}
                                             >
                                                 {button.content}
                                             </ContentContainer>

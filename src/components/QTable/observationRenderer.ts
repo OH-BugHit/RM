@@ -125,7 +125,7 @@ export function renderObservation({
             }
         }
     }
-
+    /*
     if (qValues.length > 5) {
         const img = imgStore.get(11);
 
@@ -143,5 +143,5 @@ export function renderObservation({
 
             ctx.drawImage(img, px + dx, py + dy, cellSize, cellSize);
         }
-    }
+    }*/
 }

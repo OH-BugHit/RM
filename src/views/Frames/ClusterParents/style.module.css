@@ -1,9 +1,8 @@
 .clusterParent {
     border-radius: 50%;
+    height: fit-content;
+    width: fit-content;
     position: absolute;
-    inset: 20px;
-    width: 160px;
-    height: 160px;
     overflow: hidden;
     background-color: rgba(254, 255, 255, 0.448);
 }

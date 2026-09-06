@@ -32,7 +32,7 @@ import {} from 'leaflet';
 import { TaskGroup } from '../utils/progress';
 
 export const SetupVisibleAtom = atom<PanelOptions>({ visible: false, content: undefined });
-export const LodStateAtom = atom<1 | 2>(1);
+export const LodStateAtom = atom<1 | 2>(2);
 /**
  * Contains active view. Dialogs show based on this
  */

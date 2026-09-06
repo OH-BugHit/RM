@@ -35,10 +35,10 @@
     width: 100%;
 }
 
-em {
+.gameSettings em {
     max-width: 80%;
 }
 
-p {
+.gameSettings p {
     max-width: 80%;
 }

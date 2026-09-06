@@ -13,12 +13,23 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    gap: 2rem;
-    width: 40%;
+    width: 32%;
+    gap: 1rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.buildInformation li {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
 }
 
 .studentLevels {
-    width: 60%;
+    width: 68%;
     max-height: 80%;
     overflow: auto;
     display: flex;

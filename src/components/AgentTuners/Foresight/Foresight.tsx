@@ -36,7 +36,7 @@ export default function Foresight({ value, size = 256 }: ForesightProps) {
         <svg
             className={style.icon}
             width={size}
-            height={128}
+            height={size / 2}
             viewBox="0 0 256 128"
         >
             {/* defs */}

@@ -418,6 +418,11 @@ export const EMOJI_LIBRARY: EmojiSection[] = [
         id: 'objects',
         label: 'Objects',
         items: [
+            { emoji: '⚡', label: 'Lightning', category: 'objects' },
+            { emoji: '🔌', label: 'Electric plug', category: 'objects' },
+            { emoji: '🔋', label: 'Battery', category: 'objects' },
+            { emoji: '💡', label: 'Light bulb', category: 'objects' },
+
             { emoji: '🚪', label: 'Door', category: 'objects' },
             { emoji: '💡', label: 'Light bulb', category: 'objects' },
             { emoji: '🔦', label: 'Flashlight', category: 'objects' },

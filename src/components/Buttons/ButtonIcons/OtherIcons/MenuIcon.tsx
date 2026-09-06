@@ -2,12 +2,14 @@ import { useViewNavigation } from '../../../../hooks/useViewNavigation';
 import style from './menuIcon.module.css';
 import { MenuOpenAtom } from '../../../../atoms/uiState';
 import { useAtom } from 'jotai';
+import { useGameScale } from '../../../../context/GameScale/useGameScale';
 
 interface MenuIconProps {
     size?: number;
 }
 
 export default function MenuButton({ size = 64 }: MenuIconProps) {
+    const { s } = useGameScale();
     const { goToView } = useViewNavigation();
     const [isOpen] = useAtom(MenuOpenAtom);
 
@@ -28,8 +30,8 @@ export default function MenuButton({ size = 64 }: MenuIconProps) {
                 <svg
                     className={style.menuIcon}
                     xmlns="http://www.w3.org/2000/svg"
-                    width={size}
-                    height={size}
+                    width={s(size)}
+                    height={s(size)}
                     viewBox="0 0 256 256"
                     aria-hidden="true"
                 >

@@ -656,3 +656,14 @@ export type GameEnvironment = {
 export type ObservationShape = 'small' | 'large' | 'unset';
 export type EnvironmentTypes = 'potsAndBurglar' | 'created' | 'loaded' | 'modify' | undefined;
 export type AgentType = 'robodog' | 'hoover' | 'mover' | 'adventurer' | 'created' | 'unset';
+
+export type Target =
+    | {
+          type: 'cluster';
+          x: number;
+          y: number;
+      }
+    | {
+          type: 'screen';
+          position: 'center' | 'top-left';
+      };

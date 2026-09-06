@@ -6,12 +6,14 @@ import { GenericRLEnv } from '../../views/Environments/Generic/environment';
 import { FacingAtom } from '../../atoms/gameState';
 import { AgentRenderPulseAtom, TileVisibilityAtom } from '../../atoms/uiState';
 import { useEffect } from 'react';
+import { useGameScale } from '../../context/GameScale/useGameScale';
 
 interface AgentRenderInterface {
     env: GenericRLEnv;
 }
 
 export default function AgentRender({ env }: AgentRenderInterface) {
+    const { scale, scaleWidth } = useGameScale();
     const trigger = useAtomValue(AgentRenderPulseAtom);
     const agent = useAtomValue(ActiveAgentAtom);
     const facing = useAtomValue(FacingAtom);
@@ -38,8 +40,8 @@ export default function AgentRender({ env }: AgentRenderInterface) {
                     : {}
             }
             animate={{
-                x: env.position.x * 40,
-                y: env.position.y * 40,
+                x: env.position.x * Math.min(40, scale * 40),
+                y: env.position.y * Math.min(40, scale * 40),
                 opacity: 1,
             }}
         >
@@ -49,10 +51,10 @@ export default function AgentRender({ env }: AgentRenderInterface) {
                 className={`${style.tileLayer} ${style.tileForeground}`}
                 style={{
                     position: 'relative',
-                    top: '16px',
-                    left: '16px',
-                    width: 40,
-                    height: 40,
+                    top: `16px`,
+                    left: `16px`,
+                    width: scaleWidth * 40,
+                    height: scale * 40,
                     display: visibleTiles.agent ? 'block' : 'none',
                 }}
                 initial={{ opacity: 0 }}

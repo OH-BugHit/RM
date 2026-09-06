@@ -1,5 +1,6 @@
 import { Button } from '@genai-fi/base';
 import style from './style.module.css';
+import { useGameScale } from '../../../context/GameScale/useGameScale';
 
 interface SelectorItemProps {
     title: string;
@@ -19,6 +20,7 @@ export default function SelectorItem({
     columnChilds,
     disabled = false,
 }: SelectorItemProps) {
+    const { s } = useGameScale();
     return (
         <li className={style.itemContent}>
             <h3>{title}</h3>
@@ -33,7 +35,7 @@ export default function SelectorItem({
                     {img && (
                         <img
                             src={img}
-                            height={140}
+                            height={s(160)}
                         />
                     )}
                     {children}

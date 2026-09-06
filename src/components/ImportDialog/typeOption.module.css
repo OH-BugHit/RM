@@ -1,16 +1,14 @@
 .typeOption {
     display: flex;
     width: 80%;
-    min-height: 86px;
     flex-direction: row;
     align-items: center;
-    border-radius: 1.5rem;
+    border-radius: 1vw;
     overflow: auto;
     background: rgba(211, 203, 109, 0.241);
 }
 
 .buttonTitle {
-    margin-left: 1rem;
     align-self: center;
     width: 20%;
 }
@@ -18,7 +16,6 @@
 .buttonContent {
     width: 70%;
     height: 100%;
-    padding-left: 2rem;
     text-align: start;
 }
 
@@ -35,8 +32,6 @@
     overflow: hidden;
     appearance: none;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    padding: 8px 14px;
-    font-size: 1.4rem;
     cursor: pointer;
     transition:
         background 120ms ease,

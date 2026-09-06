@@ -1,3 +1,4 @@
+import { useGameScale } from '../../../context/GameScale/useGameScale';
 import { EMOJI_LIBRARY, EmojiItem } from './emojiLibraryData';
 import style from './style.module.css';
 import { useRef, useState } from 'react';
@@ -8,6 +9,7 @@ interface EmojiLibraryProps {
 }
 
 export default function EmojiLibrary({ onSelect, selectedEmoji }: EmojiLibraryProps) {
+    const { s } = useGameScale();
     const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
     const [atBottom, setAtBottom] = useState(false);
 
@@ -62,6 +64,7 @@ export default function EmojiLibrary({ onSelect, selectedEmoji }: EmojiLibraryPr
                                     className={`${style.emojiButton} ${
                                         selectedEmoji === item.emoji ? style.selected : ''
                                     }`}
+                                    style={{ fontSize: `${Math.max(22, s(32))}px` }}
                                     onClick={() => onSelect(item)}
                                     title={item.label}
                                 >

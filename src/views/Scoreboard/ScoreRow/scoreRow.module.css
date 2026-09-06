@@ -4,13 +4,13 @@
     padding: 2rem 2rem 2rem 2rem;
     scale: 1.1;
     border-radius: 2rem 0 0 2rem;
-    background-color: rgb(62, 84, 255);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
     backdrop-filter: blur(10px);
+    background-color: var(--bg-subdued2);
     font-weight: bolder;
     font-size: xx-large;
-    color: #ffda35;
+    color: var(--text-dark);
     font-family: 'Tektur';
     height: -webkit-fill-available
 }
@@ -35,9 +35,9 @@
     border-radius: 50% 0 0 50%;
     min-height: 64px;
     padding-right: 2rem;
-    background: linear-gradient(45deg, rgba(53, 99, 251, 0.178), rgba(31, 212, 225, 0));
+    background: linear-gradient(45deg, rgba(251, 248, 53, 0.105), rgba(31, 167, 225, 0.053));
     gap: 1.5rem;
-    color: white;
+    color: var(--text-dark);
 }
 
 .avatarWrapper {
@@ -64,7 +64,6 @@
     overflow-x: auto;
     gap: 0.5rem;
     white-space: nowrap;
-    scrollbar-color: rgb(94, 148, 136) lightblue;
 }
 
 .score {
@@ -74,7 +73,8 @@
     height: 100%;
     scale: 1.1;
     border-radius: 0 2rem 2rem 0;
-    background-color: rgb(255, 238, 82);
+    background-color: var(--lighter-yellow);
+    color: var(--darker-element);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     font-family: 'Tektur';
     height: -webkit-fill-available

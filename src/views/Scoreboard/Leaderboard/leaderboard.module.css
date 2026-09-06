@@ -8,9 +8,9 @@
     overflow: auto;
     align-items: center;
     flex-direction: column;
-    background: linear-gradient(45deg, rgba(251, 132, 53, 0.178), rgba(152, 215, 43, 0.372));
+    background: linear-gradient(45deg, #feca8b24, rgba(248, 234, 126, 0.092));
     border-radius: 1.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     text-align: center;
     padding-bottom: 2rem;
 }
@@ -26,5 +26,5 @@
     width: 80%;
     max-width: 80%;
     margin-top: 1rem;
-    background: linear-gradient(45deg, rgba(53, 99, 251, 0.677), rgba(31, 212, 225, 0.38));
+    background: linear-gradient(45deg, var(--bg-colorful2), var(--bg-subdued2));
 }

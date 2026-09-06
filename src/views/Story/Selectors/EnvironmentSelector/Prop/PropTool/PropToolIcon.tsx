@@ -12,8 +12,9 @@ interface PropRowProps {
     tile: TileDefinition;
     selected?: boolean;
     disabled?: boolean;
+    size: number;
 }
-export default function PropToolIcon({ tile, selected, disabled = false }: PropRowProps) {
+export default function PropToolIcon({ tile, selected, disabled = false, size }: PropRowProps) {
     const { t } = useTranslation();
     const setSelected = useSetAtom(CurrentTileToolAtom);
     const [showError, setShowError] = useState(false);
@@ -29,7 +30,7 @@ export default function PropToolIcon({ tile, selected, disabled = false }: PropR
     };
     return (
         <div
-            style={{ backgroundColor: CELL_TYPE_COLORS[tile.type] }}
+            style={{ backgroundColor: CELL_TYPE_COLORS[tile.type], height: size * 1.6 }}
             className={`${style.icon} ${selected ? style.selectedIcon : style.notSelectedIcon} ${disabled ? style.disabled : ''}`}
             key={tile.id}
         >
@@ -57,8 +58,8 @@ export default function PropToolIcon({ tile, selected, disabled = false }: PropR
             >
                 <img
                     src={tile.image}
-                    width={64}
-                    height={64}
+                    width={size}
+                    height={size}
                 />
             </Button>
             {selected && <IconButtons />}

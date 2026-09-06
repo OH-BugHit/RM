@@ -7,6 +7,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     padding-bottom: 2rem;
+    overflow: auto;
 }
 
 .selector {
@@ -29,6 +30,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    overflow: auto;
 }
 
 .textSection {
@@ -102,7 +104,6 @@ p {
     background-color: rgb(165, 170, 174);
     align-items: center;
     overflow: visible;
-    height: 100px;
 }
 
 .icon:hover {
