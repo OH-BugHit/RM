@@ -9,6 +9,7 @@ import { Side } from '../../../types';
 import { InnerFillCellAtom, WorldGridRenderAtom } from '../../../atoms/gameState';
 import { resizeGrid } from './resizeUtils';
 import { GenericRLEnv } from '../../../views/Environments/Generic/environment';
+import { useGameScale } from '../../../context/GameScale/useGameScale';
 
 interface Props {
     envRef: React.RefObject<GenericRLEnv | undefined>;
@@ -18,6 +19,7 @@ interface Props {
 
 const VARIANT = 'outlined';
 export default function ResizeButton({ envRef, side, sx }: Props) {
+    const { s } = useGameScale();
     const setAgentTrigger = useSetAtom(AgentRenderPulseAtom);
     const [worldGrid, setWorldGrid] = useAtom(WorldGridRenderAtom);
     const visibility = useAtomValue(BuildCAtom);
@@ -72,6 +74,7 @@ export default function ResizeButton({ envRef, side, sx }: Props) {
                 <Button
                     variant={VARIANT}
                     onClick={() => handleChange(side, false)}
+                    style={{ fontSize: `${s(0.875)}rem` }}
                 >
                     Remove row
                 </Button>
@@ -81,6 +84,7 @@ export default function ResizeButton({ envRef, side, sx }: Props) {
                     variant={VARIANT}
                     onClick={() => handleChange(side, false)}
                     className={style.vertical}
+                    style={{ fontSize: `${s(0.875)}rem`, minWidth: `${s(64)}px` }}
                 >
                     Remove column
                 </Button>
@@ -90,6 +94,7 @@ export default function ResizeButton({ envRef, side, sx }: Props) {
                     variant={VARIANT}
                     onClick={() => handleChange(side, true)}
                     className={style.vertical}
+                    style={{ fontSize: `${s(0.875)}rem`, minWidth: `${s(64)}px` }}
                 >
                     Add column
                 </Button>
@@ -99,6 +104,7 @@ export default function ResizeButton({ envRef, side, sx }: Props) {
                     variant={VARIANT}
                     onClick={() => handleChange(side, false)}
                     className={style.vertical}
+                    style={{ fontSize: `${s(0.875)}rem`, minWidth: `${s(64)}px` }}
                 >
                     Remove column
                 </Button>
@@ -107,6 +113,7 @@ export default function ResizeButton({ envRef, side, sx }: Props) {
                 <Button
                     variant={VARIANT}
                     onClick={() => handleChange(side, true)}
+                    style={{ fontSize: `${s(0.875)}rem` }}
                 >
                     Add row
                 </Button>
@@ -116,6 +123,7 @@ export default function ResizeButton({ envRef, side, sx }: Props) {
                 <Button
                     variant={VARIANT}
                     onClick={() => handleChange(side, false)}
+                    style={{ fontSize: `${s(0.875)}rem` }}
                 >
                     Remove row
                 </Button>

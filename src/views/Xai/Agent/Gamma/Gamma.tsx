@@ -37,12 +37,13 @@ export default function Gamma() {
     const [agentSettings, setAgentSettings] = useAtom(AgentSettingsAtom);
     const agent = useAtomValue(ActiveAgentAtom);
     return (
-        <div>
-            <h3 style={{ position: 'relative', display: 'flex', justifyContent: 'center', left: 10 }}>
+        <div className={style.container}>
+            <h3 style={{ left: `${s(10)}` }}>
                 <span>
                     <Help
                         inplace
                         keepOpen
+                        style={{ padding: `${s(8)}px` }}
                         message={t('help.hud.gamma')}
                     >
                         {t('gauge.title.gamma')}

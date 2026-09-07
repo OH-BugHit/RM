@@ -6,51 +6,52 @@ interface OrientationPromptProps {
     onReady?: () => void;
 }
 
-const SMALL_SCREEN = 800;
+const SMALL_SCREEN = 600;
+
+interface Viewport {
+    width: number;
+    height: number;
+}
 
 export function OrientationPrompt({ onReady }: OrientationPromptProps) {
-    const [isPortrait, setIsPortrait] = useState(window.matchMedia('(orientation: portrait)').matches);
-
-    const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < SMALL_SCREEN);
+    const [viewport, setViewport] = useState<Viewport>(() => ({
+        width: window.innerWidth,
+        height: window.innerHeight,
+    }));
 
     const [isFullscreen, setIsFullscreen] = useState(!!document.fullscreenElement);
 
     useEffect(() => {
-        const orientationQuery = window.matchMedia('(orientation: portrait)');
-
-        const checkState = () => {
-            setIsPortrait(orientationQuery.matches);
-            setIsSmallScreen(window.innerWidth < SMALL_SCREEN);
-            setIsFullscreen(!!document.fullscreenElement);
-        };
-
-        const handleOrientationChange = () => {
-            setIsPortrait(orientationQuery.matches);
-            setIsSmallScreen(window.innerWidth < SMALL_SCREEN);
+        const updateViewport = () => {
+            setViewport({
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
         };
 
         const handleFullscreenChange = () => {
             setIsFullscreen(!!document.fullscreenElement);
+            updateViewport();
         };
 
-        orientationQuery.addEventListener('change', handleOrientationChange);
-
-        window.addEventListener('resize', checkState);
+        window.addEventListener('resize', updateViewport);
         document.addEventListener('fullscreenchange', handleFullscreenChange);
 
-        checkState();
+        updateViewport();
 
         return () => {
-            orientationQuery.removeEventListener('change', handleOrientationChange);
-
-            window.removeEventListener('resize', checkState);
-
+            window.removeEventListener('resize', updateViewport);
             document.removeEventListener('fullscreenchange', handleFullscreenChange);
         };
     }, []);
 
+    const shortSide = Math.min(viewport.width, viewport.height);
+
+    const isSmallScreen = shortSide < SMALL_SCREEN;
+    const isPortrait = viewport.height > viewport.width;
+
     const needsOrientation = isSmallScreen && isPortrait;
-    const needsFullscreen = isSmallScreen && !isFullscreen;
+    const needsFullscreen = isSmallScreen && !isPortrait && !isFullscreen;
 
     const isReady = !needsOrientation && !needsFullscreen;
 
@@ -69,7 +70,6 @@ export function OrientationPrompt({ onReady }: OrientationPromptProps) {
             await document.documentElement.requestFullscreen();
         } catch {
             console.warn('No fullscreen');
-            // No fullscreen
         }
 
         try {

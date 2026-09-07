@@ -7,7 +7,7 @@ import { getRewardButtons } from '../../components/Buttons/rewardButtonList';
 import getInspectButtons, { InspectButtonProps } from '../../components/Buttons/inspectButtonList';
 import { getBuildButtons } from '../../components/Buttons/buildButtonList';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { ClusterOpenAtom, HUDvisAtom } from '../../atoms/uiState';
+import { BuildCAtom, ClusterOpenAtom, HUDvisAtom, RewardCAtom } from '../../atoms/uiState';
 import { useClusterOpenState } from './useClusterState';
 import BuildToolsContent from './BuildToolsContent';
 import TrashIcon from '../../components/Buttons/ButtonIcons/Agent/TrashIcon';
@@ -28,6 +28,8 @@ interface FrameContainerProps {
 export default function ClusterContainer({ position, type, vis, children, inspectButtonProps }: FrameContainerProps) {
     const { s, scale, scaleWidth } = useGameScale();
     const { openState, handleOpenClick } = useClusterOpenState(type);
+    const rewardC = useAtomValue(RewardCAtom);
+    const buildC = useAtomValue(BuildCAtom);
     const setResetEnv = useSetAtom(ResetUiPulseAtom);
     const hudVis = useAtomValue(HUDvisAtom);
     const clusterOpen = useAtomValue(ClusterOpenAtom);
@@ -69,6 +71,9 @@ export default function ClusterContainer({ position, type, vis, children, inspec
                 return { x: scaleWidth * 1940 - 100, y: s(1080) };
         }
     };
+
+    if (type === 'build' && rewardC.props) return;
+    if (type === 'reward' && buildC.tools) return;
 
     return (
         <>

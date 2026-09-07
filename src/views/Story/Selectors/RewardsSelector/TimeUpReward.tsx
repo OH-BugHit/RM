@@ -1,4 +1,4 @@
-import style from './style.module.css';
+import style from './timeup.module.css';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import RewardControl from '../../../Controls/RewardControl';

@@ -1,5 +1,5 @@
 import { useAtomValue, useSetAtom, useStore } from 'jotai';
-import style from './style.module.css';
+import style from './rewards.module.css';
 import { useTranslation } from 'react-i18next';
 import { StoryProgressAtom, TilePropsAtom } from '../../../../atoms/uiState';
 import PropRewardItem from './PropRewardItem';
@@ -40,10 +40,7 @@ export default function RewardsSelector() {
     );
 
     return (
-        <div
-            className={style.selectorContainer}
-            style={{ gap: `${s(1.2)}rem` }}
-        >
+        <div className={style.selectorContainer}>
             <h3>{t('title')}</h3>
             <div
                 className={style.columnContent}

@@ -43,6 +43,7 @@ export default function Epsilon() {
                         inplace
                         keepOpen
                         message={t('help.hud.epsilon')}
+                        style={{ padding: `${s(8)}px` }}
                     >
                         {t('gauge.title.epsilon')}
                     </Help>

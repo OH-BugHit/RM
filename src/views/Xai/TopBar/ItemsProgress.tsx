@@ -2,9 +2,11 @@ import { useAtomValue } from 'jotai';
 import style from './style.module.css';
 import { TopbarAtom } from '../../../atoms/uiState';
 import { useGameScale } from '../../../context/GameScale/useGameScale';
+import { useTranslation } from 'react-i18next';
 
 export default function ItemProgress() {
     const { s } = useGameScale();
+    const { t } = useTranslation();
     const state = useAtomValue(TopbarAtom);
 
     return (
@@ -23,6 +25,10 @@ export default function ItemProgress() {
             <div className={style.itemElement}>
                 <b>+2</b>
                 <b className={style.bigTreasures}>{state.bigTreasures}</b>
+            </div>
+            <div className={style.itemElement}>
+                <b>{t('topBar.score.gained')}</b>
+                <b className={style.gained}>{state.score}</b>
             </div>
         </div>
     );

@@ -12,7 +12,7 @@ export default function Alpha() {
     const [agentSettings, setAgentSettings] = useAtom(AgentSettingsAtom);
     return (
         <div>
-            <h3>{t('gauge.title.alpha')}</h3>
+            <h3 style={{ margin: '0 0 0.2rem 0' }}>{t('gauge.title.alpha')}</h3>
             <ExplGauge
                 value={agentSettings.alpha}
                 green={{ from: 0.05, to: 0.15 }}

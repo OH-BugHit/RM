@@ -23,13 +23,13 @@ export function getRewardButtons(scale: number, scaleWidth: number): ButtonShape
             icon: <StepRewardIcon size={140 * scale} />,
             content: <TimeStepReward />,
             size: {
-                h: 200 * scale,
-                w: 500 * scaleWidth,
+                h: 180 * scale,
+                w: Math.min(500, 500 * scaleWidth),
             },
             target: {
                 type: 'cluster',
-                x: -440 * scaleWidth,
-                y: 135 * scale,
+                x: Math.min(-150, -300 * scaleWidth),
+                y: 130 * scale,
             },
         },
         {
@@ -38,13 +38,13 @@ export function getRewardButtons(scale: number, scaleWidth: number): ButtonShape
             icon: <TimeRewardIcon size={140 * scale} />,
             content: <TimeUpReward />,
             size: {
-                h: 200 * scale,
-                w: 500 * scaleWidth,
+                h: 180 * scale,
+                w: Math.min(500, 500 * scaleWidth),
             },
             target: {
                 type: 'cluster',
-                x: -370 * scaleWidth,
-                y: 250 * scale,
+                x: Math.min(-120, -250 * scaleWidth),
+                y: 220 * scale,
             },
         },
         {
@@ -53,13 +53,13 @@ export function getRewardButtons(scale: number, scaleWidth: number): ButtonShape
             icon: <PropRewardsIcon size={140 * scale} />,
             content: <RewardsSelector />,
             size: {
-                h: 670 * scale,
-                w: 550 * scaleWidth,
+                h: scale < 0.8 ? 1080 * scale * 0.8 * 0.65 : 1080 * scale * 0.67,
+                w: Math.max(200, 400 * scaleWidth),
             },
             target: {
                 type: 'cluster',
-                x: -240 * scaleWidth,
-                y: 520 * scale,
+                x: -180 * scaleWidth,
+                y: scale < 0.8 ? 1080 * scale * 0.9 * 0.5 : 1080 * scale * 0.54,
             },
         },
     ];

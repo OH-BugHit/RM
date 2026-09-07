@@ -4,8 +4,11 @@
     gap: 1rem
 }
 
-h3 {
-    margin: 0 0 0.2rem 0
+.container h3 {
+    position: relative;
+    display: flex;
+    margin-top: 0.8dvh;
+    justify-content: center;
 }
 
 .sightWrapper {

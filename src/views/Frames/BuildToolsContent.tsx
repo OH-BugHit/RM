@@ -1,8 +1,8 @@
-import { useAtomValue, useSetAtom, useStore } from 'jotai';
-import { CurrentTileToolAtom, DesignOpenAtom, HUDvisAtom, TilePropsAtom } from '../../atoms/uiState';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { CurrentTileToolAtom, DesignOpenAtom, TilePropsAtom } from '../../atoms/uiState';
 import ContentContainer from './ContentContainer/ContentContainer';
 import PropToolIcon from '../Story/Selectors/EnvironmentSelector/Prop/PropTool/PropToolIcon';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import ChangeBackground from '../../components/Buttons/ChangeBackground/ChangeBackground';
 import { useViewNavigation } from '../../hooks/useViewNavigation';
 import { Target } from '../../types';
@@ -65,28 +65,6 @@ export default function BuildToolsContent({
     const tiles = useAtomValue(TilePropsAtom);
     const selectedTool = useAtomValue(CurrentTileToolAtom);
     const setDesignOpen = useSetAtom(DesignOpenAtom);
-    const rewardClusterState = useRef<boolean>(false); // Saves the state of reward cluster visibility
-    const store = useStore();
-    const setHudVis = useSetAtom(HUDvisAtom);
-
-    useEffect(() => {
-        if (open) {
-            rewardClusterState.current = store.get(HUDvisAtom).rewardCluster;
-            setHudVis((old) => {
-                return {
-                    ...old,
-                    rewardCluster: false,
-                };
-            });
-        } else {
-            setHudVis((old) => {
-                return {
-                    ...old,
-                    rewardCluster: true,
-                };
-            });
-        }
-    }, [open, setHudVis, store]);
 
     useEffect(() => {
         setDesignOpen(true);

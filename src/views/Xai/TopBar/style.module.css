@@ -17,7 +17,6 @@
     align-items: center;
     justify-content: space-evenly;
     height: min-content;
-    padding: 0.45rem 0rem;
 
 
 }
@@ -52,10 +51,9 @@
 
 .clock {
     background: rgb(102, 84, 68);
-    border-radius: 999px;
+    border-radius: 50%;
     position: absolute;
     left: 50%;
-    top: 50%;
     border: 2px rgb(255, 255, 255) solid;
     transform: translate(-50%, -50%);
     z-index: 2;

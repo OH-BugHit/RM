@@ -45,7 +45,7 @@ export default function ObservationSelector() {
                     selected={activeAgent.observationShape === 'small'}
                     children={
                         <DrawObservation
-                            tileSize={s(40)}
+                            tileSize={Math.min(40, s(40))}
                             state="0101"
                             disabled={false}
                             actionValues={[0.12, -0.5, 0.16, -0.5, -0.46, -0.4]}
@@ -67,7 +67,7 @@ export default function ObservationSelector() {
                     selected={activeAgent.observationShape === 'large'}
                     children={
                         <DrawObservation
-                            tileSize={s(40)}
+                            tileSize={Math.min(40, s(40))}
                             state="10020000201021100222"
                             disabled={false}
                             actionValues={[0.8, -0.47, -0.44, -0.5, -0.42, -0.4]}

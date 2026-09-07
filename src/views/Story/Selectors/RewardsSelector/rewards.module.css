@@ -1,10 +1,5 @@
 @value primary, secondary textDark from "@genai-fi/base/css/colours.module.css";
 
-.selector {
-    display: block;
-    height: 100%;
-}
-
 .selectorContainer {
     display: flex;
     position: relative;
@@ -14,12 +9,6 @@
     height: 100%;
 }
 
-.rowContent {
-    width: 80%;
-    display: flex;
-    flex-direction: row;
-}
-
 .columnContent {
     width: 100%;
     display: flex;
@@ -27,6 +16,8 @@
     justify-content: flex-start;
     align-items: center;
     overflow: auto;
+    margin-bottom: 1rem;
+    border-radius: 2rem;
 }
 
 .rewardTuneRow {

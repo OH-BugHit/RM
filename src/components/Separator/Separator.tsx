@@ -7,8 +7,8 @@ const separator = {
 
 const verticalSeparator = {
     width: '1px',
-    height: '100%',
-    margin: '2rem 0',
+    height: '80%',
+    margin: '1.2rem 0',
     scale: '0.8',
 };
 

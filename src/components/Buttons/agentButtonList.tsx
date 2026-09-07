@@ -47,10 +47,10 @@ export function getAgentButtons(scale: number = 1, scaleWidth: number = 1): Butt
             angle: -100,
             icon: <ParameterIcon size={140 * scale} />,
             content: <Parameters />,
-            size: { h: Math.min(320, 420 * scale), w: Math.min(650, 790 * scaleWidth) },
+            size: { h: Math.min(320, 420 * scale), w: Math.min(600, 900 * scaleWidth) },
             target: {
                 type: 'cluster',
-                x: Math.min(300, 300 * scaleWidth),
+                x: Math.min(300, 330 * scaleWidth),
                 y: Math.min(360, 400 * scale),
             },
         },

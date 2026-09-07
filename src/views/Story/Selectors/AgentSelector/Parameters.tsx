@@ -14,12 +14,12 @@ export default function Parameters() {
 
     return (
         <div className={style.selectorContainer}>
-            <h2 style={{ margin: `${s(20)}px` }}>{t('createMenu.agent.paramTitle')}</h2>
+            <h2>{t('createMenu.agent.paramTitle')}</h2>
             <div className={style.parameters}>
                 {hudVis.epsilon && <Epsilon />}
                 <div
                     className={style.divider}
-                    style={{ top: `${s(-40)}`, paddingLeft: `${s(1)}rem`, paddingRight: `${s(1)}rem` }}
+                    style={{ paddingLeft: `${s(1)}rem`, paddingRight: `${s(1)}rem` }}
                 >
                     {hudVis.epsilon && hudVis.gamma && (
                         <Separator
