@@ -91,35 +91,36 @@ export default function TileOptions({
                         )}
                     </div>
                 </div>
-                <LibrarySearch
-                    onSelectTile={onSelectTile}
-                    onSelectEmoji={onSelectEmoji}
-                />
                 {scale > 0.8 && (
-                    <div className={style.tabBar}>
-                        <button
-                            type="button"
-                            className={tab === 'library' ? style.activeTab : style.tab}
-                            onClick={() => onTabChange('library')}
-                        >
-                            {t('wizard.tabs.library')}
-                        </button>
-                        <button
-                            type="button"
-                            className={tab === 'emoji' ? style.activeTab : style.tab}
-                            onClick={() => onTabChange('emoji')}
-                        >
-                            {t('wizard.tabs.emojis')}
-                        </button>
-                    </div>
+                    <LibrarySearch
+                        onSelectTile={onSelectTile}
+                        onSelectEmoji={onSelectEmoji}
+                    />
                 )}
-                {tab === 'library' && scale > 0.8 && (
+                <div className={style.tabBar}>
+                    <button
+                        type="button"
+                        className={tab === 'library' ? style.activeTab : style.tab}
+                        onClick={() => onTabChange('library')}
+                    >
+                        {t('wizard.tabs.library')}
+                    </button>
+                    <button
+                        type="button"
+                        className={tab === 'emoji' ? style.activeTab : style.tab}
+                        onClick={() => onTabChange('emoji')}
+                    >
+                        {t('wizard.tabs.emojis')}
+                    </button>
+                </div>
+
+                {tab === 'library' && (
                     <TileLibrary
                         onSelect={onSelectTile}
                         selectedTileId={selectedLibraryTile?.id}
                     />
                 )}
-                {tab === 'emoji' && scale > 0.8 && (
+                {tab === 'emoji' && (
                     <EmojiLibrary
                         onSelect={onSelectEmoji}
                         selectedEmoji={selectedEmoji?.emoji}

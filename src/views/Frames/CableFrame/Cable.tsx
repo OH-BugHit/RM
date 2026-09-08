@@ -1,3 +1,4 @@
+import { useGameScale } from '../../../context/GameScale/useGameScale';
 import style from './style.module.css';
 
 type FrameVariant = 'left' | 'center' | 'right' | 'vertical';
@@ -27,6 +28,7 @@ interface FrameProps {
 
 export function Cable({ variant, width = 300, height = 300, backgroundColour, visible = true }: FrameProps) {
     const config = frameConfig[variant];
+    const { s, sw } = useGameScale();
 
     return (
         <div
@@ -37,8 +39,8 @@ export function Cable({ variant, width = 300, height = 300, backgroundColour, vi
                     flexGrow: variant === 'center' || variant === 'vertical' ? 1 : 0,
                     position: 'relative',
                     background: backgroundColour,
-                    height,
-                    width,
+                    height: typeof height === 'number' ? s(height) : height,
+                    width: typeof width === 'number' ? sw(width) : width,
                     ['--frame-image']: `url(${config.image})`,
                 } as React.CSSProperties
             }

@@ -1,4 +1,5 @@
-import style from './style.module.css';
+import { useGameScale } from '../../context/GameScale/useGameScale';
+import style from './newFrame.module.css';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 
 interface FrameProps {
@@ -65,6 +66,7 @@ export function NewFrame({
     centerY,
     minimize = false,
 }: FrameProps) {
+    const { s } = useGameScale();
     const styleProps: React.CSSProperties = {
         minWidth,
         minHeight,
@@ -143,6 +145,7 @@ export function NewFrame({
                             ...(backgroundColour && {
                                 backgroundColor: backgroundColour,
                                 backgroundImage: 'none',
+                                padding: `0rem ${s(1)}rem ${0.5}rem ${1}rem`,
                             }),
                         }}
                     >

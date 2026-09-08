@@ -59,7 +59,7 @@ export default function Student({ serverCode }: StudentProps) {
             <ScoreBridge />
             <MenuButton />
             <MessageDisplay open={showError} />
-            {view.main === 'main' && <MainMenu />}
+            <MainMenu />
             {config.phase === 'levels' && view.main === 'levels' && <Levels view={view.sub} />}
             {config.phase === 'tournamentBuild' && view.main === 'tournamentBuild' && (
                 <BuildView

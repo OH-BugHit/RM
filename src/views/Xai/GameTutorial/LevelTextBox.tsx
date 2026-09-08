@@ -1,4 +1,4 @@
-import style from './style.module.css';
+import style from './levelTextBox.module.css';
 import { useTranslation } from 'react-i18next';
 import { useAtom, useAtomValue } from 'jotai';
 import { TextStepAtom, UiHelpAtom } from '../../../atoms/uiState';
@@ -8,12 +8,14 @@ import TypewriterText from '../../../components/Typewriter/TypeWriterText';
 import NextArrowIcon from '../../../components/Buttons/ButtonIcons/OtherIcons/NextArrowIcon';
 import { useEffect, useState } from 'react';
 import { LevelConfAtom } from '../../../atoms/gameState';
+import { useGameScale } from '../../../context/GameScale/useGameScale';
 
 interface LevelTextBoxProps {
     variant?: 'wide' | 'narrow';
 }
 export default function LevelTextBox({ variant = 'wide' }: LevelTextBoxProps) {
     const { t } = useTranslation();
+    const { s, sw } = useGameScale();
     const [step, setStep] = useAtom(TextStepAtom);
     const uiHelp = useAtomValue(UiHelpAtom);
     const level = useAtomValue(LevelConfAtom);
@@ -25,19 +27,33 @@ export default function LevelTextBox({ variant = 'wide' }: LevelTextBoxProps) {
 
     const mode = level?.levelText?.modes?.[step] ?? 'hidden';
 
+    const styleProps: React.CSSProperties = {
+        marginTop: `${0.5}rem`,
+        minHeight: `${s(70)}px`,
+    };
+
     return (
         <div
             className={`${style.textContainer} ${variant === 'narrow' ? style.narrowContainer : style.wideContainer} `}
+            style={
+                variant === 'narrow'
+                    ? {
+                          ...styleProps,
+                          width: `${s(400)}px`,
+                          maxWidth: `${sw(20)}dvw`,
+                          margin: `0 ${sw(-2.7)}rem ${sw(-1)}rem`,
+                      }
+                    : { ...styleProps, width: `${s(550)}px`, maxWidth: `${sw(40)}dvw` }
+            }
         >
             <div className={style.textContent}>
                 <>
                     {uiHelp.textArrow && (
                         <Arrow
-                            radius={140}
+                            radius={s(140)}
                             angle={270}
                         />
                     )}
-                    {step}
                     <p className={style.storyText}>
                         <TypewriterText
                             onComplete={() => setReady(true)}
@@ -55,7 +71,7 @@ export default function LevelTextBox({ variant = 'wide' }: LevelTextBoxProps) {
                                     setStep((old) => old + 1);
                                 }}
                             >
-                                <NextArrowIcon />
+                                <NextArrowIcon size={s(64)} />
                             </Button>
                         </>
                     )}

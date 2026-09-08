@@ -1,4 +1,4 @@
-import style from './style.module.css';
+import style from './progress.module.css';
 import { PercentageBar } from '@genai-fi/base';
 import { TaskGroup } from '../../../utils/progress';
 import { StoryProgress } from '../../../types';
@@ -10,6 +10,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { StoryProgressField } from '../../../utils/types';
 import { TestAgentAtom } from '../../../atoms/gameState';
+import { useGameScale } from '../../../context/GameScale/useGameScale';
 
 interface ProgressProps {
     tasks: TaskGroup[];
@@ -17,6 +18,7 @@ interface ProgressProps {
 
 export default function Progress({ tasks }: ProgressProps) {
     const { t } = useTranslation();
+    const { s, sw, scale } = useGameScale();
     const progress = useAtomValue(StoryProgressAtom);
     const [step, setStep] = useAtom(TextStepAtom);
     const setTest = useSetAtom(TestAgentAtom);
@@ -77,7 +79,10 @@ export default function Progress({ tasks }: ProgressProps) {
     };
 
     return (
-        <motion.div className={style.progressContent}>
+        <motion.div
+            className={style.progressContent}
+            style={{ maxWidth: `${sw(300)}px` }}
+        >
             <AnimatePresence mode="popLayout">
                 {tasks.map((group) => (
                     <motion.section
@@ -116,10 +121,11 @@ export default function Progress({ tasks }: ProgressProps) {
                                             style={{
                                                 visibility: completed ? 'visible' : 'hidden',
                                                 verticalAlign: 'middle',
-                                                marginRight: 4,
+                                                marginRight: 2,
+                                                scale: Math.max(0.7, scale),
                                             }}
                                         />
-                                        {t(task.text)}
+                                        <p>{t(task.text)}</p>
                                     </li>
                                 );
                             })}
@@ -132,6 +138,7 @@ export default function Progress({ tasks }: ProgressProps) {
 
             <PercentageBar
                 colour="green"
+                thickness={s(30)}
                 value={totalProgress}
                 style={{ borderRadius: '0.5rem' }}
             />

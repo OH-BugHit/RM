@@ -16,15 +16,33 @@ export function useViewNavigation() {
         ({ main, sub, overlay }: ViewState) => {
             const params = new URLSearchParams(location.search);
 
+            const currentMain = params.get(ViewEnum.MainView);
+            const currentSub = params.get(ViewEnum.Subview);
+            const currentOverlay = params.get(ViewEnum.Overlay);
+
+            let onlyOverlayChanged = true;
+
             if (main !== undefined) {
-                params.set(ViewEnum.MainView, main);
+                const newMain = main;
+
+                if (currentMain !== newMain) {
+                    onlyOverlayChanged = false;
+                }
+
+                params.set(ViewEnum.MainView, newMain);
             }
 
             if (sub !== undefined) {
-                if (sub === null) {
+                const newSub = sub;
+
+                if (currentSub !== newSub) {
+                    onlyOverlayChanged = false;
+                }
+
+                if (newSub === null) {
                     params.delete(ViewEnum.Subview);
                 } else {
-                    params.set(ViewEnum.Subview, sub);
+                    params.set(ViewEnum.Subview, newSub);
                 }
             }
 
@@ -36,9 +54,20 @@ export function useViewNavigation() {
                 }
             }
 
-            navigate({
-                search: `?${params.toString()}`,
-            });
+            const newOverlay = params.get(ViewEnum.Overlay);
+
+            if (main === undefined && sub === undefined && overlay !== undefined && currentOverlay === newOverlay) {
+                return;
+            }
+
+            navigate(
+                {
+                    search: `?${params.toString()}`,
+                },
+                {
+                    replace: onlyOverlayChanged,
+                }
+            );
         },
         [navigate, location.search]
     );

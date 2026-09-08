@@ -10,6 +10,12 @@ vi.mock('react-i18next', () => ({
     useTranslation: () => ({ t: (key: string) => key }),
 }));
 
+vi.mock('../../context/GameScale/useGameScale', () => ({
+    useGameScale: () => ({
+        s: (value: number) => value,
+    }),
+}));
+
 vi.mock('../Footer/Footer', () => ({
     default: () => <div data-testid="footer" />,
 }));

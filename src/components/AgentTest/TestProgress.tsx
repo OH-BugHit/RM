@@ -8,12 +8,14 @@ import TestIcon from '../Buttons/ButtonIcons/OtherIcons/TestIcon';
 import { AgentSettingsAtom, GameControlAtom } from '../../atoms/state';
 import { HUDvisAtom } from '../../atoms/uiState';
 import { defaultAgentSettings } from '../../utils/defaults';
+import { useGameScale } from '../../context/GameScale/useGameScale';
 
 interface TestProgressProps {
     target?: number;
 }
 
 export default function TestProgress({ target = 5 }: TestProgressProps) {
+    const { s } = useGameScale();
     const stats = useAtomValue(EpisodicDataAtom);
     const setStepsLeft = useSetAtom(StepsLeftAtom);
     const setGameControls = useSetAtom(GameControlAtom);
@@ -106,6 +108,7 @@ export default function TestProgress({ target = 5 }: TestProgressProps) {
                             onClick={handleTestAgent}
                         >
                             <TestIcon
+                                size={s(220)}
                                 title={'TEST'}
                                 target={target}
                                 current={testWin.beatsScore}

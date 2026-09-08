@@ -31,10 +31,6 @@ export default function GameButton({
             disabled={disabled}
             color={color}
             onClick={onClick}
-            sx={{
-                minWidth: 64,
-                minHeight: 64,
-            }}
         >
             {children}
         </Button>

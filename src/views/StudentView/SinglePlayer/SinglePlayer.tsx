@@ -31,7 +31,7 @@ export default function SinglePlayer() {
                 <OrientationPrompt />
                 <MenuButton />
                 <ViewHandler />
-                {view.overlay === 'menu' && <MainMenu />}
+                <MainMenu />
                 {view.main === 'recap' && <Tutorial />}
                 {view.main === 'ownLevels' && <PlayEnv />}
                 {view.main === 'build' && <BuildView />}

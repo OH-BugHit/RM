@@ -20,12 +20,12 @@ body {
   --color-nReward: rgb(255, 154, 154);
   --color-backReward: rgba(42, 42, 42, 0.608);
   --padding-reward: 4px 6px 4px 6px;
-  --font-size-body: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
-  --font-size-h1: clamp(0.8rem, 0.6rem + 2vw, 2.4rem);
-  --font-size-h2: clamp(0.6rem, 0.5rem + 1.3dvw, 2rem);
-  --font-size-h3: clamp(0.5rem, 0.3rem + 1dvw, 1.8rem);
-  --font-size-h4: clamp(0.5rem, 0.2rem + 1.1dvw, 1.6rem);
-  --font-size-p: clamp(0.4rem, 0.1rem + 1dvw, 1.4rem);
+  --font-size-body: clamp(0.5rem, 0.95rem + 0.2vw, 1.125rem);
+  --font-size-h1: clamp(1rem, 0.8rem + 2vw, 2.4rem);
+  --font-size-h2: clamp(0.9rem, 0.5rem + 1.3dvw, 2rem);
+  --font-size-h3: clamp(0.8rem, 0.3rem + 1dvw, 1.8rem);
+  --font-size-h4: clamp(0.75rem, 0.2rem + 1.1dvw, 1.6rem);
+  --font-size-p: clamp(0.7rem, 0.1rem + 1dvw, 1.4rem);
   --button-height: clamp(32px, 0.1rem + 3dvw, 4rem);
   ;
   scrollbar-width: thick;
@@ -46,6 +46,9 @@ p {
   font-size: var(--font-size-p);
 }
 
+b {
+  font-size: var(--font-size-p);
+}
 
 h1 {
   font-family: 'Sour Gummy', 'Andika';

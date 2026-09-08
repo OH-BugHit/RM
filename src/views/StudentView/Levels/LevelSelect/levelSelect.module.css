@@ -97,11 +97,17 @@
 }
 
 .centerCard {
-    cursor: default;
+    touch-action: pan-y;
+    cursor: grab;
+}
+
+.centerCard:active {
+    cursor: grabbing;
 }
 
 .sideCard {
     filter: brightness(0.8);
+    cursor: pointer;
 }
 
 .carousel+button {

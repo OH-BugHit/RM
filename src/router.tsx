@@ -1,6 +1,6 @@
 import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
-import Frontpage from './views/Frontpage/Frontpage';
 import ErrorComponent from './components/ErrorComponent/Error';
+import FrontpageWrapper from './views/Frontpage/FrontpageWrapper';
 
 const routes = createRoutesFromElements(
     <Route
@@ -9,7 +9,7 @@ const routes = createRoutesFromElements(
     >
         <Route
             index
-            element={<Frontpage />}
+            element={<FrontpageWrapper />}
         />
         <Route
             path="/start"

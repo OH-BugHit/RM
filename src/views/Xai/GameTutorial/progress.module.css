@@ -1,0 +1,19 @@
+.unactive {
+    color: rgba(0, 0, 0, 0.356);
+}
+
+.completed {
+    text-decoration: line-through;
+}
+
+.progressContent {
+    text-align: start;
+    width: max-content;
+    text-wrap: nowrap;
+}
+
+.progressContent ul {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.2dvw;
+}

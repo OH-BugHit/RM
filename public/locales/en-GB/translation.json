@@ -50,6 +50,7 @@
         "github": "Github",
         "goPhase": "Or play singleplayer",
         "phases": {
+            "classroom": "Classroom",
             "import": "Import Environment",
             "potsAndBurglar": "Pots and Burglar",
             "recap": "Recap",

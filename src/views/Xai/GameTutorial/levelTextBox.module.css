@@ -1,0 +1,26 @@
+.textContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.narrowContainer {
+    flex-direction: column;
+}
+
+.wideContainer {
+    flex-direction: row;
+}
+
+.textContent {
+    display: flex;
+    flex-direction: inherit;
+    justify-content: space-evenly;
+}
+
+.storyText {
+    align-self: center;
+    height: 100%;
+    overflow-wrap: normal;
+    white-space: normal;
+    padding-left: 1rem;
+}
