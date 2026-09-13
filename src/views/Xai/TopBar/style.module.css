@@ -6,6 +6,10 @@
     padding: 1rem;
 }
 
+.itemElement b {
+    font-size: var(--font-size-h2)
+}
+
 .topBar {
     position: relative;
     display: flex;

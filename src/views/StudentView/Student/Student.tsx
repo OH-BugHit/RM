@@ -12,6 +12,7 @@ import MenuButton from '../../../components/Buttons/ButtonIcons/OtherIcons/MenuI
 import BuildView from '../../BuildView/BuildView';
 import StudentTournamentWrapper from './Tournament/StudentTournamentWrapper';
 import ScoreBridge from './ScoreBridge';
+import PauseLayer from '../../../components/Pause/PauseLayer';
 
 interface StudentProps {
     serverCode?: string;
@@ -56,6 +57,7 @@ export default function Student({ serverCode }: StudentProps) {
 
     return (
         <div className={style.studentContainer}>
+            <PauseLayer />
             <ScoreBridge />
             <MenuButton />
             <MessageDisplay open={showError} />

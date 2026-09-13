@@ -8,49 +8,6 @@ export type TileLibrarySection = {
 
 export const TILE_LIBRARY: TileLibrarySection[] = [
     {
-        id: 'doors',
-        label: 'Doors',
-        items: [
-            {
-                id: 'door-1',
-                label: 'Stone trap',
-                image: '/images/assets/door1.png',
-                category: 'treasures',
-            },
-            {
-                id: 'door-2',
-                label: 'Wooden trap',
-                image: '/images/assets/doorLocked1_260.png',
-                category: 'treasures',
-            },
-        ],
-    },
-
-    {
-        id: 'objects',
-        label: 'Objects',
-        items: [
-            {
-                id: 'obj-1',
-                label: 'Key',
-                image: '/images/assets/key1.png',
-                category: 'objects',
-            },
-            {
-                id: 'obj-2',
-                label: 'Flower pot',
-                image: '/images/assets/pot_intact.png',
-                category: 'objects',
-            },
-            {
-                id: 'obj-3',
-                label: 'Broken flower pot',
-                image: '/images/assets/pot_broken.png',
-                category: 'objects',
-            },
-        ],
-    },
-    {
         id: 'walls',
         label: 'Walls',
         items: [
@@ -136,6 +93,24 @@ export const TILE_LIBRARY: TileLibrarySection[] = [
                 id: 'treasure-5',
                 label: 'Long grass',
                 image: '/images/assets/grassLong.png',
+                category: 'treasures',
+            },
+            {
+                id: 'obj-1',
+                label: 'Key',
+                image: '/images/assets/key1.png',
+                category: 'treasures',
+            },
+            {
+                id: 'obj-2',
+                label: 'Flower pot',
+                image: '/images/assets/pot_intact.png',
+                category: 'treasures',
+            },
+            {
+                id: 'obj-3',
+                label: 'Broken flower pot',
+                image: '/images/assets/pot_broken.png',
                 category: 'treasures',
             },
         ],

@@ -18,7 +18,7 @@ export default function TypewriterText({ text, speed = 30, startDelay = 0, onCom
     }, [visibleCount, text, onComplete]);
 
     return (
-        <span>
+        <span style={{ whiteSpace: 'pre-line' }}>
             {text.split('').map((char, index) => (
                 <span
                     key={index}

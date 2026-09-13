@@ -9,14 +9,13 @@
     width: 100dvw;
     height: 100dvh;
     gap: 6dvh;
-
+    overflow: auto;
 }
 
 .phases {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 2vw;
 }
 
 @media only screen and (max-width: 600px) {
@@ -26,12 +25,52 @@
     }
 }
 
-.little {
-    font-size: 1.5rem;
-    display: inline-block;
-    vertical-align: top;
-    transform: rotate(-15deg);
-    margin-right: 0.5rem;
+.homeContainer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding-bottom: 30dvh;
+}
+
+.homeContainer li {
+    flex: 0 1 300px;
+    min-width: 200px;
+    min-height: 200px;
+    width: 100%;
+    background: #f4faff;
+    border-radius: 16px;
+    box-shadow: 2px 2px 4px #a4acbb;
+    overflow: hidden;
+    animation: stepIn 420ms ease-out forwards;
+    animation-delay: calc(var(--step-index, 0) * 120ms);
+    transform: translateY(12px);
+    justify-items: start;
+    align-items: start;
+}
+
+.description {
+    display: flex;
+    flex: 1;
+    height: auto;
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+    font-style: italic;
+    font-size: 0.9rem;
+    flex-grow: 1;
+    text-align: start;
+    color: var(--text-dark)
+}
+
+.imageContainer {
+    line-height: 0;
+    border-radius: 16px;
+    width: 100%;
+    overflow: hidden;
 }
 
 .header {
@@ -41,7 +80,6 @@
     padding-top: 4dvh;
     gap: 1rem;
     flex-wrap: wrap;
-    min-width: max-content;
 }
 
 .header h1 {
@@ -49,9 +87,10 @@
     margin-bottom: 1rem;
 }
 
-.header h2 {
-    margin: 0;
-    font-weight: normal;
+.homeContainer h2 {
+    margin: 0.5rem 1rem;
+    font-size: 1.1rem;
+    color: black;
 }
 
 .headerColumn {
@@ -64,7 +103,8 @@
     display: flex;
     gap: 2rem;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: start;
+    width: 300px;
     max-width: 1200px;
 }
 
@@ -117,7 +157,7 @@
 .step {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    width: 100%;
     gap: 0;
 }
 

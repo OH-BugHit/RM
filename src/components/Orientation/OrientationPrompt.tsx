@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@genai-fi/base';
 import style from './orientation.module.css';
+import ScreenRotationIcon from '@mui/icons-material/ScreenRotation';
+import OpenInFullIcon from '@mui/icons-material/OpenInFull';
+import { useTranslation } from 'react-i18next';
 
 interface OrientationPromptProps {
     onReady?: () => void;
@@ -14,6 +17,7 @@ interface Viewport {
 }
 
 export function OrientationPrompt({ onReady }: OrientationPromptProps) {
+    const { t } = useTranslation();
     const [viewport, setViewport] = useState<Viewport>(() => ({
         width: window.innerWidth,
         height: window.innerHeight,
@@ -89,26 +93,33 @@ export function OrientationPrompt({ onReady }: OrientationPromptProps) {
         <div className={style.overlay}>
             <div className={style.content}>
                 {needsOrientation ? (
-                    <>
-                        <div className={style.icon}>↔</div>
+                    <div className={style.column}>
+                        <div className={style.icon}>
+                            <ScreenRotationIcon fontSize="large" />
+                        </div>
 
-                        <h1>Rotate to landscape</h1>
+                        <h1>{t('orientation.rotate')}</h1>
 
-                        <p>Please rotate your device to landscape mode to continue.</p>
-                    </>
+                        <p>{t('orientation.rotateDesc')}</p>
+                    </div>
                 ) : (
                     <>
-                        <div className={style.icon}>⛶</div>
+                        <div className={style.column}>
+                            <div>
+                                <div className={style.icon}>
+                                    <OpenInFullIcon fontSize="large" />
+                                </div>
 
-                        <h1>Enter fullscreen</h1>
+                                <h1>{t('orientation.full')}</h1>
 
-                        <p>Fullscreen mode is required to continue.</p>
-
+                                <p>{t('orientation.fullDesc')}</p>
+                            </div>
+                        </div>
                         <Button
                             onClick={handleFullscreen}
                             variant="contained"
                         >
-                            Enter fullscreen
+                            {t('orientation.full')}
                         </Button>
                     </>
                 )}

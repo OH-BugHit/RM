@@ -19,8 +19,6 @@ interface ContentContainerProps {
     contentWidth?: number;
     contentHeight?: number;
     unmountOnClose: boolean;
-    scaleWidth: number;
-    scale: number;
     clusterPosition: {
         x: number;
         y: number;
@@ -47,8 +45,6 @@ export default function ContentContainer({
     contentHeight = 360,
     background,
     unmountOnClose,
-    scaleWidth = 1,
-    scale = 1,
     children,
 }: ContentContainerProps) {
     const circleSize = size * 0.9;
@@ -56,21 +52,66 @@ export default function ContentContainer({
     const originX = origin.x - circleSize / 2;
     const originY = origin.y - circleSize / 2;
 
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const halfContentWidth = contentWidth / 2;
+    const halfContentHeight = contentHeight / 2;
+    const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+    const clampViewportPoint = (x: number, y: number) => ({
+        x: clamp(x, halfContentWidth, viewportWidth - halfContentWidth),
+        y: clamp(y, halfContentHeight, viewportHeight - halfContentHeight),
+    });
+
+    const viewportTarget =
+        target.type === 'viewport'
+            ? 'position' in target
+                ? target.position === 'center'
+                    ? { x: 50, y: 50 }
+                    : { x: 0, y: 0 }
+                : target
+            : undefined;
+
+    const originTarget =
+        target.type === 'origin'
+            ? {
+                  x:
+                      target.x >= 0
+                          ? clusterPosition.x +
+                            origin.x +
+                            (viewportWidth - clusterPosition.x - origin.x) * (target.x / 100)
+                          : clusterPosition.x + origin.x + (-clusterPosition.x - origin.x) * (-target.x / 100),
+                  y:
+                      target.y >= 0
+                          ? clusterPosition.y +
+                            origin.y +
+                            (viewportHeight - clusterPosition.y - origin.y) * (target.y / 100)
+                          : clusterPosition.y + origin.y + (-clusterPosition.y - origin.y) * (-target.y / 100),
+              }
+            : undefined;
+
     const targetPoint =
         target.type === 'cluster'
-            ? {
-                  x: target.x,
-                  y: target.y,
-              }
-            : target.position === 'center'
-              ? {
-                    x: (1940 * scaleWidth) / 2 - clusterPosition.x,
-                    y: (1080 * scale + 200) / 2 - clusterPosition.y,
-                }
-              : {
-                    x: contentWidth / 2 - clusterPosition.x - 80,
-                    y: contentHeight / 2 - clusterPosition.y,
-                };
+            ? { x: target.x, y: target.y }
+            : target.type === 'origin'
+              ? (() => {
+                    const point = clampViewportPoint(originTarget?.x ?? 0, originTarget?.y ?? 0);
+
+                    return {
+                        x: point.x - clusterPosition.x,
+                        y: point.y - clusterPosition.y,
+                    };
+                })()
+              : (() => {
+                    const point = clampViewportPoint(
+                        (viewportTarget?.x ?? 0) * (viewportWidth / 100),
+                        (viewportTarget?.y ?? 0) * (viewportHeight / 100)
+                    );
+
+                    return {
+                        x: point.x - clusterPosition.x,
+                        y: point.y - clusterPosition.y,
+                    };
+                })();
 
     const targetX = targetPoint.x - contentWidth / 2;
     const targetY = targetPoint.y - contentHeight / 2;
@@ -82,7 +123,7 @@ export default function ContentContainer({
         '--target-x': `${targetX}px`,
         '--target-y': `${targetY}px`,
 
-        '--circle-size': `${size * 0.9}px`,
+        '--circle-size': `${circleSize}px`,
         '--content-width': `${contentWidth}px`,
         '--content-height': `${contentHeight}px`,
     } as CSSProperties;

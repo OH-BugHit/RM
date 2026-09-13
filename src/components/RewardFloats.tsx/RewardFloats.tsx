@@ -38,7 +38,7 @@ export default function RewardFloats({ items, cellSize = 40, visible = true, onC
                         transition={{ duration: 1.2, times: [0, 0.6, 1] }}
                         onAnimationComplete={() => onComplete?.(f.id)}
                     >
-                        {displayReward({ value: f.value })}
+                        <p>{displayReward({ value: f.value })}</p>
                     </motion.div>
                 ) : null
             )}

@@ -8,14 +8,12 @@
     border-radius: 12px;
     background: rgba(0, 0, 0, 0.02);
     padding: 12px;
-    width: min-content;
 }
 
-.previewSection h2 {
+.previewSection h4 {
     font-family: 'Tektur';
     font-weight: bold;
-    font-size: 2rem;
-    margin: 0 0 1rem 0;
+    margin: 0 0 0 0;
 }
 
 .previewSection img {

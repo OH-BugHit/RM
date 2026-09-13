@@ -1,8 +1,9 @@
 .menuButtonContainer {
     position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 999999;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 9;
 }
 
 .menuButton {

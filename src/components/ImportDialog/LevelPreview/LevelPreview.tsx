@@ -33,7 +33,7 @@ function LevelPreview({ gameName, preview, size = 96 }: GamePreviewProps) {
         <div className={style.previewSection}>
             {previewUrl ? (
                 <>
-                    {gameName && <h2>{gameName}</h2>}
+                    {gameName && <h4>{gameName}</h4>}
                     <img
                         src={previewUrl}
                         alt="preview"

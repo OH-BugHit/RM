@@ -60,15 +60,17 @@ export default function ClusterContainer({ position, type, vis, children, inspec
     };
 
     const getClusterPosition = () => {
+        const clusterHalfSize = s(220) / 2;
+
         switch (position) {
             case 'topLeft':
-                return { x: 0, y: 0 };
+                return { x: clusterHalfSize, y: clusterHalfSize };
             case 'topRight':
-                return { x: scaleWidth * 1940 - 100, y: 0 };
+                return { x: window.innerWidth - clusterHalfSize, y: clusterHalfSize };
             case 'bottomLeft':
-                return { x: 20, y: s(1080) };
+                return { x: clusterHalfSize, y: window.innerHeight - clusterHalfSize };
             case 'bottomRight':
-                return { x: scaleWidth * 1940 - 100, y: s(1080) };
+                return { x: window.innerWidth - clusterHalfSize, y: window.innerHeight - clusterHalfSize };
         }
     };
 
@@ -142,8 +144,6 @@ export default function ClusterContainer({ position, type, vis, children, inspec
                                                 origin={origin}
                                                 baseTarget={button.target}
                                                 clusterPosition={getClusterPosition()}
-                                                scale={scale}
-                                                scaleWidth={scaleWidth}
                                             />
                                         ) : (
                                             <ContentContainer
@@ -156,8 +156,6 @@ export default function ClusterContainer({ position, type, vis, children, inspec
                                                 contentWidth={button.size.w}
                                                 contentHeight={button.size.h}
                                                 target={button.target}
-                                                scale={scale}
-                                                scaleWidth={scaleWidth}
                                             >
                                                 {button.content}
                                             </ContentContainer>

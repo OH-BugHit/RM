@@ -424,7 +424,6 @@ export const EMOJI_LIBRARY: EmojiSection[] = [
             { emoji: '💡', label: 'Light bulb', category: 'objects' },
 
             { emoji: '🚪', label: 'Door', category: 'objects' },
-            { emoji: '💡', label: 'Light bulb', category: 'objects' },
             { emoji: '🔦', label: 'Flashlight', category: 'objects' },
             { emoji: '🕯️', label: 'Candle', category: 'objects' },
             { emoji: '🪔', label: 'Diya lamp', category: 'objects' },

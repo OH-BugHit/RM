@@ -2,6 +2,7 @@ import style from './levelGroup.module.css';
 import { Level } from '../../../../types';
 import LevelItem from '../../../Teacher/TeacherContent/Levels/LevelItem';
 import { Button } from '@genai-fi/base';
+import { useGameScale } from '../../../../context/GameScale/useGameScale';
 
 interface LevelGroupProps {
     title: string;
@@ -20,8 +21,12 @@ export default function LevelGroup({
     groupOpen = true,
     interactive = true,
 }: LevelGroupProps) {
+    const { s, sw } = useGameScale();
     return (
-        <div className={`${style.levelGroup} ${groupOpen ? '' : style.disabled}`}>
+        <div
+            className={`${style.levelGroup} ${groupOpen ? '' : style.disabled}`}
+            style={{ width: `${sw(400)}px`, height: `${s(600)}px` }}
+        >
             <h2>{title}</h2>
             <div className={style.levels}>
                 {interactive

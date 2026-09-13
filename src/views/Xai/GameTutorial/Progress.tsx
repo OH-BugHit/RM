@@ -140,7 +140,7 @@ export default function Progress({ tasks }: ProgressProps) {
                 colour="green"
                 thickness={s(30)}
                 value={totalProgress}
-                style={{ borderRadius: '0.5rem' }}
+                style={{ borderRadius: '0.5rem', marginBottom: '0.2rem' }}
             />
         </motion.div>
     );

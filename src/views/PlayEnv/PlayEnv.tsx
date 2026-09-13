@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import style from './style.module.css';
 import GameDialog from '../../components/ImportDialog/GameImport/GameDialog';
+import AddIcon from '@mui/icons-material/Add';
 import SelectorItem from '../Story/Selectors/SelectorItem';
 import { useSetAtom, useStore } from 'jotai';
 import {
@@ -20,8 +21,11 @@ import { useViewNavigation } from '../../hooks/useViewNavigation';
 import { useState } from 'react';
 import { renderWorldPreview } from '../../components/EnvironmentRender/renderWorldPreview';
 import LevelPreview from '../../components/ImportDialog/LevelPreview/LevelPreview';
+import { useGameScale } from '../../context/GameScale/useGameScale';
+import { Button } from '@genai-fi/base';
 
 export default function PlayEnv() {
+    const { s } = useGameScale();
     const { t } = useTranslation();
     const setStep = useSetAtom(TextStepAtom);
     const setHud = useSetAtom(HUDvisAtom);
@@ -67,48 +71,60 @@ export default function PlayEnv() {
                         }}
                         selected={false}
                     >
-                        {
-                            <FileUploadIcon
-                                fontSize="large"
-                                sx={{ width: 128, height: 128 }}
-                            />
-                        }
+                        <FileUploadIcon
+                            fontSize="large"
+                            sx={{ width: s(128), height: s(128) }}
+                        />
                     </SelectorItem>
-                    <SelectorItem
-                        title={t('import.actions.playLoaded')}
-                        disabled={!loaded}
-                        onClick={() => {
-                            setEnv((old) => {
-                                return { ...old, type: 'loaded' };
-                            });
-                            setUiHelp({ ...playUIHelp, mode: 'loaded' });
-                            goToView({
-                                main: 'play',
-                            });
-                        }}
-                    >
+                    <div className={style.cards}>
+                        <SelectorItem
+                            title={t('import.actions.createNew')}
+                            onClick={() => {
+                                setEnv((old) => {
+                                    return { ...old, type: 'modify' };
+                                });
+                                setUiHelp({ ...playUIHelp, mode: 'modify' });
+                                setTileTools([]);
+                                goToView({
+                                    main: 'build',
+                                });
+                            }}
+                        >
+                            <AddIcon
+                                fontSize="large"
+                                sx={{ width: s(128), height: s(128) }}
+                            />
+                        </SelectorItem>
+                    </div>
+                </div>
+                {loaded && (
+                    <>
+                        <h3>{t('import.actions.playLoaded')}</h3>
+
                         <LevelPreview
                             gameName={selectedGameName}
                             preview={selectedPreview}
+                            size={s(96)}
                         />
-                    </SelectorItem>
-                </div>
-                <div className={style.cards}>
-                    <SelectorItem
-                        title={t('import.actions.createNew')}
-                        img={'/images/environments/potsAndBurglar.png'}
-                        onClick={() => {
-                            setEnv((old) => {
-                                return { ...old, type: 'modify' };
-                            });
-                            setUiHelp({ ...playUIHelp, mode: 'modify' });
-                            setTileTools([]);
-                            goToView({
-                                main: 'build',
-                            });
-                        }}
-                    ></SelectorItem>
-                </div>
+                        <div className={style.buttons}>
+                            <Button variant="outlined">Modify</Button>
+                            <Button
+                                variant="contained"
+                                onClick={() => {
+                                    setEnv((old) => {
+                                        return { ...old, type: 'loaded' };
+                                    });
+                                    setUiHelp({ ...playUIHelp, mode: 'loaded' });
+                                    goToView({
+                                        main: 'play',
+                                    });
+                                }}
+                            >
+                                Play
+                            </Button>
+                        </div>
+                    </>
+                )}
             </div>
         </main>
     );

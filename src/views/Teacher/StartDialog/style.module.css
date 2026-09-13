@@ -55,7 +55,6 @@
     gap: 1rem;
 }
 
-
 @media (min-height: 750px) {
     .column {
         h2 {
@@ -63,8 +62,6 @@
         }
     }
 }
-
-
 
 @media (min-height: 1000px) {
     .column {

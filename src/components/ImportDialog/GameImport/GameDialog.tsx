@@ -144,7 +144,7 @@ function GameDialog({ onImport }: ImportDialogProps) {
                             onClick={handleAccept}
                             disabled={!hasSelection || loading}
                         >
-                            {loading ? t('import.actions.loadingImage') : t('import.actions.setImage')}
+                            {loading ? t('import.actions.loadingImage') : t('import.actions.load')}
                         </LargeButton>
                     </div>
                 </div>

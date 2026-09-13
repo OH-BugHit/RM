@@ -326,15 +326,7 @@ export const BASIC_CELL_TYPE_OPTIONS: CellType[] = [
     CellType.Trap,
 ];
 
-export type TileLibraryCategory =
-    | 'walls'
-    | 'floors'
-    | 'nature'
-    | 'objects'
-    | 'doors'
-    | 'hazards'
-    | 'treasures'
-    | 'agents';
+export type TileLibraryCategory = 'walls' | 'floors' | 'nature' | 'hazards' | 'treasures' | 'agents';
 
 export type TileLibraryItem = {
     id: string;
@@ -445,7 +437,7 @@ export type GroupType = 'basic' | 'rewards' | 'exploreExploit' | 'observation' |
 
 export type MainView = 'frontpage' | TeacherViews | StudentViews;
 export type SubView = 'playLevel' | 'agent' | 'environment' | 'rewards' | 'interaction' | null;
-export type Overlay = 'import' | 'share' | 'paused' | 'menu' | 'backgroundDialog' | null;
+export type Overlay = 'import' | 'share' | 'menu' | 'backgroundDialog' | null;
 
 export type GenericObservation = {
     neighbours: CellType[];
@@ -664,6 +656,16 @@ export type Target =
           y: number;
       }
     | {
-          type: 'screen';
-          position: 'center' | 'top-left';
+          type: 'viewport';
+          x: number;
+          y: number;
+      }
+    | {
+          type: 'viewport';
+          position: 'center' | 'topLeft';
+      }
+    | {
+          type: 'origin';
+          x: number;
+          y: number;
       };

@@ -59,7 +59,7 @@ export default function TestProgress({ target = 5 }: TestProgressProps) {
     }, [active, testWin, target, setTest, setHudVis, setGameControls]);
 
     const handleTestAgent = () => {
-        setStepsLeft(0); // TODO: Does not reset env, figure a way.
+        setStepsLeft(0); // TODO: Does not reset env, figure a way!!.
         setTestWin({ beatsScore: 0 });
 
         if (active === 'available') {
@@ -108,7 +108,7 @@ export default function TestProgress({ target = 5 }: TestProgressProps) {
                             onClick={handleTestAgent}
                         >
                             <TestIcon
-                                size={s(220)}
+                                size={s(160)}
                                 title={'TEST'}
                                 target={target}
                                 current={testWin.beatsScore}

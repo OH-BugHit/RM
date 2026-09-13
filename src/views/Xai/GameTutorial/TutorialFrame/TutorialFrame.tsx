@@ -7,6 +7,8 @@ import { FocusOverlay } from '../../../../components/QTable/FocusOverlay/FocusOv
 import { QLearningAgent } from '../../../../components/agents/rlAgentQ';
 import { LevelConfAtom } from '../../../../atoms/gameState';
 import LevelTextBox from '../LevelTextBox';
+import { useGameScale } from '../../../../context/GameScale/useGameScale';
+import { TutorialLayout } from '../../../../types';
 
 interface TutorialFrameProps {
     visible?: boolean;
@@ -17,6 +19,13 @@ interface TutorialFrameProps {
     agentRef: React.RefObject<QLearningAgent | undefined>;
 }
 
+const defaultSmall: TutorialLayout = {
+    position: { top: '50%', left: '80%' },
+    centerX: -50,
+    centerY: -50,
+    variant: 'narrow',
+};
+
 export default function TutorialFrame({
     visible = true,
     mapRef,
@@ -25,19 +34,24 @@ export default function TutorialFrame({
     focusFrameRef,
     agentRef,
 }: TutorialFrameProps) {
+    const { scale } = useGameScale();
     const step = useAtomValue(TextStepAtom);
     const inspect = useAtomValue(InspectAtom);
     const level = useAtomValue(LevelConfAtom);
     const mode = level?.levelText?.modes?.[step] ?? 'hidden';
     const layouts = level?.levelText?.layouts;
 
-    const layout = layouts?.[step] ??
-        (layouts ? layouts[Math.max(...Object.keys(layouts).map(Number))] : undefined) ?? {
-            position: { top: '50%', left: '50%' },
-            centerX: -50,
-            centerY: -50,
-            variant: 'wide',
-        };
+    const isSmallScreen = scale < 0.8;
+
+    const layout = isSmallScreen
+        ? defaultSmall
+        : (layouts?.[step] ??
+          (layouts ? layouts[Math.max(...Object.keys(layouts).map(Number))] : undefined) ?? {
+              position: { top: '50%', left: '50%' },
+              centerX: -50,
+              centerY: -50,
+              variant: 'wide',
+          });
 
     return (
         <NewFrame
@@ -47,7 +61,7 @@ export default function TutorialFrame({
             centerX={layout.centerX}
             centerY={layout.centerY}
         >
-            {mode !== 'hidden' && !inspect.vis && <LevelTextBox variant={layout.variant} />}
+            {mode !== 'hidden' && !inspect.vis && <LevelTextBox variant={isSmallScreen ? 'narrow' : layout.variant} />}
             {inspect.vis && (
                 <InspectText
                     mapRef={mapRef}

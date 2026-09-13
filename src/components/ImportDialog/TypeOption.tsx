@@ -28,12 +28,12 @@ export default function TypeOption({ type, onSelect, selected, disabled, hint = 
             disabled={disabled}
         >
             {type !== 'background' && (
-                <h3
+                <h4
                     className={style.buttonTitle}
                     style={{ marginLeft: `${scaleWidth * 1}rem` }}
                 >
                     {t(`common.cell.${type}`)}
-                </h3>
+                </h4>
             )}
             <div
                 className={style.buttonContent}

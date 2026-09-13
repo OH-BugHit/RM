@@ -1,7 +1,7 @@
 const separator = {
     width: '100%',
     height: '1px',
-    margin: '2rem 0',
+    margin: '2dvh 0',
     scale: '0.8',
 };
 

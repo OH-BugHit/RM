@@ -24,12 +24,12 @@ export function getRewardButtons(scale: number, scaleWidth: number): ButtonShape
             content: <TimeStepReward />,
             size: {
                 h: 180 * scale,
-                w: Math.min(500, 500 * scaleWidth),
+                w: Math.max(250, Math.min(500, 500 * scaleWidth)),
             },
             target: {
                 type: 'cluster',
-                x: Math.min(-150, -300 * scaleWidth),
-                y: 130 * scale,
+                x: Math.max(-390, Math.min(-150, -500 * scaleWidth)),
+                y: 90 * scale,
             },
         },
         {
@@ -39,11 +39,11 @@ export function getRewardButtons(scale: number, scaleWidth: number): ButtonShape
             content: <TimeUpReward />,
             size: {
                 h: 180 * scale,
-                w: Math.min(500, 500 * scaleWidth),
+                w: Math.max(250, Math.min(500, 500 * scaleWidth)),
             },
             target: {
                 type: 'cluster',
-                x: Math.min(-120, -250 * scaleWidth),
+                x: Math.max(-310, Math.min(-120, -350 * scaleWidth)),
                 y: 220 * scale,
             },
         },

@@ -50,11 +50,17 @@
         "github": "Github",
         "goPhase": "Or play singleplayer",
         "phases": {
-            "classroom": "Classroom",
+            "desc": {
+                "classroom": "Create or join to your own classroom session.",
+                "yourWorld": "For single learner."
+            },
             "import": "Import Environment",
             "potsAndBurglar": "Pots and Burglar",
             "recap": "Recap",
-            "yourWorld": "Singleplayer"
+            "titles": {
+                "classroom": "For the classroom",
+                "yourWorld": "For other users"
+            }
         },
         "teachingMaterials": "Teaching Materials"
     },
@@ -85,7 +91,7 @@
         "or": "or",
         "paused": "Game Paused",
         "previous": "Previous",
-        "selected": "Selected: <Type>{{type}}</Type>",
+        "selected": "Creating:\n<Type>{{type}}</Type>",
         "subtitle": "Game for learning about Reinforcement Learning.",
         "title": "Reward Machine",
         "tutorial": "Tutorial"
@@ -192,14 +198,22 @@
             "stats": "See how the reward and win/lose rate progress"
         }
     },
+    "hud": {
+        "agentVision": {
+            "observation": {
+                "title": "Observation"
+            }
+        }
+    },
     "import": {
         "actions": {
             "createNew": "Create new",
+            "load": "Load",
             "loadGame": "Load game",
             "loadingImage": "loading",
             "openFileExplorer": "Select game file from your files",
             "openImageFileExplorer": "Select image from your files",
-            "playLoaded": "Play loaded game",
+            "playLoaded": "Loaded game",
             "setImage": "Create"
         },
         "messages": {
@@ -229,6 +243,10 @@
         "7": "Click Inspect again at any point of the game to run these 8 steps again."
     },
     "levels": {
+        "levelSelect": {
+            "title": "Select level",
+            "start": "Start level"
+        },
         "1": {
             "tasks": {
                 "p1": {
@@ -331,7 +349,7 @@
             },
 
             "text": {
-                "1": "There are two things in this level: 1. the observation and 2. how it values future rewards, also known as \"discounted rewards\".",
+                "1": "There are two things in this level:\n1. the observation \n2. how it values future rewards, also known as \"discounted rewards\".",
                 "2": "Let's start with the observation. The agent can observe the environment. In this game, the agent can only observe part of the whole environment, or as we say in reinforcement learning: \"Partial Observation.\" Well, enough with the technical stuff. Let's have a look...",
                 "3": "This new inspection tool is called \"Agent Vision.\" It allows you to clearly see what the agent actually observes.",
                 "4": "And yeah, the agent actually doesn't see or observe the game. It just receives numbers representing these tiles. Toggle it to see the agent's actual observation with that button in the frame.",
@@ -406,6 +424,12 @@
             },
             "usernameTaken": "Username was taken, try again after reload..."
         }
+    },
+    "orientation": {
+        "full": "Enter fullscreen",
+        "fullDesc": "Fullscreen mode is required to continue.",
+        "rotate": "Rotate to landscape",
+        "rotateDesc": "Please rotate your device to landscape mode to continue."
     },
     "playEnv": {
         "load": {
@@ -606,6 +630,8 @@
             "onePerson": "{{count}} person has joined.",
             "orGoStraight": "Or go straight to the address:",
             "manyPeople": "{{count}} people have joined.",
+            "scanQR": "Scan the QR code to join",
+            "tip": "Click the QR code to connect yourself.",
             "waitingPeople": "Waiting for people..."
         },
         "titles": {
@@ -742,6 +768,11 @@
             "title": "Tasks",
             "tutorialCompletion": "Tutorial completion"
         }
+    },
+    "winScreen": {
+        "levelSelect": "Levels",
+        "title": "Congratulations",
+        "titleDesc": "You passed level:"
     },
     "wizard": {
         "actions": {

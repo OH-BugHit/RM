@@ -13,7 +13,7 @@ export default function ControlHandler() {
         goToView({
             main: config.phase,
             sub: store.get(ActiveViewAtom).sub,
-            overlay: config.pause ? 'paused' : undefined,
+            overlay: undefined,
         });
     }, [config, goToView, store]);
 

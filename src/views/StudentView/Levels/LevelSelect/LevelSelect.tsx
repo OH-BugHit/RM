@@ -9,6 +9,9 @@ import { levelGroups } from '../../../../utils/levels/levelGroups';
 import { OpenLevelGroupsAtom } from '../../../../atoms/state';
 import { motion, PanInfo } from 'framer-motion';
 import { useViewNavigation } from '../../../../hooks/useViewNavigation';
+import { useTranslation } from 'react-i18next';
+import NextArrowIcon from '../../../../components/Buttons/ButtonIcons/OtherIcons/NextArrowIcon';
+import { useGameScale } from '../../../../context/GameScale/useGameScale';
 
 type CardPosition = 'left' | 'center' | 'right';
 
@@ -33,10 +36,12 @@ const cardVariants = {
     },
 };
 
-const SWIPE_DISTANCE = 50;
+const SWIPE_DISTANCE = 100;
 const SWIPE_VELOCITY = 500;
 
 export default function LevelSelect() {
+    const { t } = useTranslation();
+    const { s } = useGameScale();
     const [selectedLevel, setSelectedLevel] = useState<Level | null>(null);
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -129,7 +134,7 @@ export default function LevelSelect() {
 
     return (
         <div className={style.container}>
-            <h1>Level select</h1>
+            <h1>{t('levels.levelSelect.title')}</h1>
 
             <div className={style.worldNavigation}>
                 {levelGroups.map((group) => {
@@ -153,63 +158,82 @@ export default function LevelSelect() {
                 })}
             </div>
 
-            <div className={style.carousel}>
-                {getVisibleGroups().map(({ group, position }) => {
-                    const isCenter = position === 'center';
+            <div className={style.carouselContainer}>
+                <Button
+                    style={{ scale: -1, height: `${s(110)}px`, opacity: activeIndex === 0 ? 0 : 1 }}
+                    onClick={() => setActiveIndex((old) => old - 1)}
+                    disabled={activeIndex === 0}
+                >
+                    <NextArrowIcon
+                        ready
+                        size={s(110)}
+                    />
+                </Button>
+                <div className={style.carousel}>
+                    {getVisibleGroups().map(({ group, position }) => {
+                        const isCenter = position === 'center';
 
-                    const handleCardClick = () => {
-                        if (isCenter) {
-                            return;
-                        }
+                        const handleCardClick = () => {
+                            if (isCenter) {
+                                return;
+                            }
 
-                        const index = openGroups.findIndex((openGroup) => openGroup.groupType === group.groupType);
+                            const index = openGroups.findIndex((openGroup) => openGroup.groupType === group.groupType);
 
-                        goToWorld(index);
-                    };
+                            goToWorld(index);
+                        };
 
-                    return (
-                        <motion.div
-                            key={group.groupType}
-                            className={`${style.worldCard} ${isCenter ? style.centerCard : style.sideCard}`}
-                            variants={cardVariants}
-                            initial={position}
-                            animate={position}
-                            transition={{
-                                duration: 0.4,
-                                ease: [0.22, 1, 0.36, 1],
-                            }}
-                            drag={isCenter ? 'x' : false}
-                            dragConstraints={{
-                                left: 0,
-                                right: 0,
-                            }}
-                            dragElastic={0.2}
-                            onDragEnd={isCenter ? handleCenterDragEnd : undefined}
-                            onClick={!isCenter ? handleCardClick : undefined}
-                        >
-                            <LevelGroup
-                                levels={group.levels}
-                                title={group.groupName}
-                                /*
-                                 * Ainoastaan keskikortin
-                                 * LevelGroup on interaktiivinen.
-                                 */
-                                onSelect={isCenter ? (level: Level) => setSelectedLevel(level) : () => {}}
-                                selected={isCenter ? selectedLevel : null}
-                                interactive={isCenter}
-                            />
-                        </motion.div>
-                    );
-                })}
+                        return (
+                            <motion.div
+                                key={group.groupType}
+                                className={`${style.worldCard} ${isCenter ? style.centerCard : style.sideCard}`}
+                                variants={cardVariants}
+                                initial={position}
+                                animate={position}
+                                transition={{
+                                    duration: 0.4,
+                                    ease: [0.22, 1, 0.36, 1],
+                                }}
+                                drag={isCenter ? 'x' : false}
+                                dragConstraints={{
+                                    left: 0,
+                                    right: 0,
+                                }}
+                                dragElastic={0.2}
+                                onDragEnd={isCenter ? handleCenterDragEnd : undefined}
+                                onClick={!isCenter ? handleCardClick : undefined}
+                            >
+                                <LevelGroup
+                                    levels={group.levels}
+                                    title={group.groupName}
+                                    onSelect={isCenter ? (level: Level) => setSelectedLevel(level) : () => {}}
+                                    selected={isCenter ? selectedLevel : null}
+                                    interactive={isCenter}
+                                />
+                            </motion.div>
+                        );
+                    })}
+                </div>
+                <Button
+                    style={{ height: `${s(110)}px`, opacity: activeIndex === openGroups.length - 1 ? 0 : 1 }}
+                    onClick={() => setActiveIndex((old) => old + 1)}
+                    disabled={activeIndex === openGroups.length - 1}
+                >
+                    <NextArrowIcon
+                        ready
+                        size={s(110)}
+                    />
+                </Button>
             </div>
-
-            <Button
-                variant="contained"
-                onClick={handleStart}
-                disabled={!selectedLevel}
-            >
-                Start Level
-            </Button>
+            <div className={style.startButton}>
+                <Button
+                    variant="contained"
+                    onClick={handleStart}
+                    disabled={!selectedLevel}
+                >
+                    {t('levels.levelSelect.start')}
+                </Button>
+            </div>
         </div>
     );
 }

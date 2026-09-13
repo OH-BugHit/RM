@@ -6,8 +6,6 @@
     border-radius: 1.5rem;
     text-align: center;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.479);
-    height: 600px;
-    width: 400px;
     max-height: 60vh;
     overflow-y: auto;
 }

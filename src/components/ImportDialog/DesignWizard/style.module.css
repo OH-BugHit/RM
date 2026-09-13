@@ -1,24 +1,43 @@
-@value primary, secondary textDark from "@genai-fi/base/css/colours.module.css";
-
 .typeOptionContainer {
     display: flex;
     flex-direction: column;
     height: 100%;
+    min-height: 0;
+    overflow: hidden;
 }
 
 .tileOptionContent {
-    height: 100%;
-    overflow: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
 }
+
+.column {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
 
 .titleRow {
     display: flex;
+    flex: 0 0 auto;
     background: rgb(255, 242, 144);
     border-radius: 2.4rem 2.4rem 0 0;
     align-items: stretch;
     overflow: hidden;
     width: 100%;
 }
+
+.helpMessage {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+}
+
 
 .title {
     flex: 0 0 auto;
@@ -39,7 +58,7 @@
 .selectModelMessage {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    flex: 0 0 auto;
 }
 
 .columnItem,
@@ -50,16 +69,19 @@
 
 .descText {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
     width: 100%;
 }
 
 .previewSection {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    justify-items: center;
+    flex: 0 0 auto;
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 12px;
     background: rgba(0, 0, 0, 0.02);
@@ -89,6 +111,12 @@
     color: rgba(0, 0, 0, 0.55);
     font-size: 13px;
     background: rgba(0, 0, 0, 0.04);
+}
+
+.libraryContent {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
 }
 
 .enabled:hover,
@@ -158,12 +186,13 @@
 }
 
 .optionContainer {
+    position: relative;
     display: flex;
     flex-direction: column;
+    padding: 1rem 0 1rem;
     gap: 12px;
     align-items: center;
     height: 100%;
-    margin-bottom: 3rem;
     overflow: auto;
 }
 
@@ -188,38 +217,7 @@
     animation: shine 1.5s linear infinite;
 }
 
-.tabBar {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    gap: 1.5rem;
-}
 
-.tab,
-.activeTab {
-    appearance: none;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: white;
-    border-radius: 999px;
-    padding: 8px 14px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition:
-        background 120ms ease,
-        border-color 120ms ease,
-        color 120ms ease;
-}
-
-.tab:hover {
-    background: rgba(0, 0, 0, 0.04);
-}
-
-.activeTab {
-    border-color: rgb(174, 37, 174);
-    background: rgba(174, 37, 174, 0.08);
-    color: rgb(174, 37, 174);
-    font-weight: 600;
-}
 
 @keyframes shine {
     from {

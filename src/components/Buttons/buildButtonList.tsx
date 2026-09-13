@@ -15,7 +15,7 @@ type ButtonShape = {
 };
 
 const DESIGN_HEIGHT = 1080;
-const VIEWPORT_GAP = 100;
+const VIEWPORT_GAP = 140;
 
 export function getBuildButtons(scale: number = 1, scaleWidth: number = 1): ButtonShape[] {
     const h = DESIGN_HEIGHT * scale;
@@ -28,12 +28,9 @@ export function getBuildButtons(scale: number = 1, scaleWidth: number = 1): Butt
             content: <DesignWizard active />,
             size: {
                 h: Math.min(1000 * scale, h - VIEWPORT_GAP),
-                w: Math.max(340, Math.min(800, scaleWidth * 800)),
+                w: Math.max(500, Math.min(800, scaleWidth * 800)),
             },
-            target: {
-                type: 'screen',
-                position: 'center',
-            },
+            target: { type: 'viewport', position: 'center' },
         },
         {
             id: 'tools',
@@ -43,7 +40,7 @@ export function getBuildButtons(scale: number = 1, scaleWidth: number = 1): Butt
             target: {
                 type: 'cluster',
                 x: 40 * scale,
-                y: -h + scale * 200,
+                y: -h,
             },
         },
         {
@@ -58,7 +55,7 @@ export function getBuildButtons(scale: number = 1, scaleWidth: number = 1): Butt
             target: {
                 type: 'cluster',
                 x: -300 * scaleWidth,
-                y: -600 * scale,
+                y: -570 * scale,
             },
         },
     ];

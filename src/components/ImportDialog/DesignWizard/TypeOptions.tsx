@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import TypeOption from '../TypeOption';
 import { BASIC_CELL_TYPE_OPTIONS, CellType } from '../../../types';
 import { useGameScale } from '../../../context/GameScale/useGameScale';
+import { Help } from '@genai-fi/base';
 
 interface TypeOptionsProps {
     selectedType: CellType | 'background' | null;
@@ -28,11 +29,16 @@ function TypeOptions({ selectedType, onSelectType, allowedTypes, hint }: TypeOpt
                 </h1>
                 <div className={style.stripes}></div>
             </div>
-            <div className={style.selectModelMessage}>
-                <h2 className={style.columnItem}>{t('import.messages.selectType')}</h2>
-            </div>
 
             <div className={style.optionContainer}>
+                <div className={style.helpMessage}>
+                    <span>
+                        <Help
+                            inplace
+                            message={t('import.messages.selectType')}
+                        />
+                    </span>
+                </div>
                 {BASIC_CELL_TYPE_OPTIONS.map((type) => (
                     <TypeOption
                         key={type}

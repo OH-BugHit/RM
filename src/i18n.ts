@@ -11,7 +11,8 @@ i18n.use(detector)
     .use(Backend)
     .use(initReactI18next) // passes i18n down to react-i18next
     .init({
-        ns: [],
+        ns: ['translation'],
+        defaultNS: 'translation',
         backend: {
             loadPath: '/locales/{{lng}}/{{ns}}.json',
         },

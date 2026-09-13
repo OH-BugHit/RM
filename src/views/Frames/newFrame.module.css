@@ -26,7 +26,8 @@
     z-index: 50;
     background: linear-gradient(to bottom, #eaf9fb 0%, #d9f3f0 50%, #c7d9ea 100%);
     width: fit-content;
-    padding: 1.2dvh 1.2dvw 1.2dvh 2.6dvw
+    border-radius: 1.2rem;
+    padding: min(1rem, 2.5dvh) min(1rem, 0.2dvw) 0 min(1rem, 1.2dvw)
 }
 
 
@@ -87,11 +88,8 @@
 
 .overlayLeft {
     position: absolute;
-
     left: -25px;
     top: 50%;
-
-    transform: translateY(-50%);
     z-index: 4;
 }
 

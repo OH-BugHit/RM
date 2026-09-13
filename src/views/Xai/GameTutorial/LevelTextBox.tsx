@@ -9,13 +9,14 @@ import NextArrowIcon from '../../../components/Buttons/ButtonIcons/OtherIcons/Ne
 import { useEffect, useState } from 'react';
 import { LevelConfAtom } from '../../../atoms/gameState';
 import { useGameScale } from '../../../context/GameScale/useGameScale';
+import i18n from '../../../i18n';
 
 interface LevelTextBoxProps {
     variant?: 'wide' | 'narrow';
 }
 export default function LevelTextBox({ variant = 'wide' }: LevelTextBoxProps) {
     const { t } = useTranslation();
-    const { s, sw } = useGameScale();
+    const { s, scale } = useGameScale();
     const [step, setStep] = useAtom(TextStepAtom);
     const uiHelp = useAtomValue(UiHelpAtom);
     const level = useAtomValue(LevelConfAtom);
@@ -32,18 +33,31 @@ export default function LevelTextBox({ variant = 'wide' }: LevelTextBoxProps) {
         minHeight: `${s(70)}px`,
     };
 
+    const isSmallScreen = scale < 1;
+
+    const key = `${level?.levelText?.textKey}.text.${step}`;
+
+    console.log('translation key:', key);
+    console.log('exists:', i18n.exists(key));
+    console.log('translation:', t(key));
+
     return (
         <div
-            className={`${style.textContainer} ${variant === 'narrow' ? style.narrowContainer : style.wideContainer} `}
+            className={`${style.textContainer} ${variant === 'narrow' || isSmallScreen ? style.narrowContainer : style.wideContainer} `}
             style={
-                variant === 'narrow'
+                isSmallScreen
                     ? {
                           ...styleProps,
                           width: `${s(400)}px`,
-                          maxWidth: `${sw(20)}dvw`,
-                          margin: `0 ${sw(-2.7)}rem ${sw(-1)}rem`,
+                          maxWidth: `50dvw`,
                       }
-                    : { ...styleProps, width: `${s(550)}px`, maxWidth: `${sw(40)}dvw` }
+                    : variant === 'narrow'
+                      ? {
+                            ...styleProps,
+                            width: `${s(400)}px`,
+                            maxWidth: `30dvw`,
+                        }
+                      : { ...styleProps, width: `${s(550)}px`, maxWidth: `30dvw`, paddingBottom: '1rem' }
             }
         >
             <div className={style.textContent}>
@@ -54,13 +68,18 @@ export default function LevelTextBox({ variant = 'wide' }: LevelTextBoxProps) {
                             angle={270}
                         />
                     )}
-                    <p className={style.storyText}>
-                        <TypewriterText
-                            onComplete={() => setReady(true)}
-                            startDelay={step < 1 ? 600 : 200}
-                            speed={25}
-                            text={t(`${level?.levelText?.textKey}.text.${step}`)}
-                        />
+                    <p
+                        className={style.storyText}
+                        style={mode === 'text' && variant === 'narrow' ? { paddingBottom: '1rem' } : {}}
+                    >
+                        {i18n.exists(`${level?.levelText?.textKey}.text.${step}`) && (
+                            <TypewriterText
+                                onComplete={() => setReady(true)}
+                                startDelay={step < 1 ? 600 : 200}
+                                speed={22}
+                                text={t(`${level?.levelText?.textKey}.text.${step}`)}
+                            />
+                        )}
                     </p>
                     {mode === 'textNext' && (
                         <>

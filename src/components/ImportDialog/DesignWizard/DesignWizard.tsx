@@ -11,7 +11,7 @@ import TileOptions from './TileOptions';
 import { BASIC_CELL_TYPE_OPTIONS, Cell, CellType, TileDefinition, TileLibraryItem } from '../../../types';
 import { CurrentTileToolAtom, StoryProgressAtom, TilePropsAtom } from '../../../atoms/uiState';
 import { InnerFillCellAtom, WorldGridRenderAtom } from '../../../atoms/gameState';
-import { EmojiItem } from '../EmojiLibrary/emojiLibraryData';
+import { EmojiItem } from '../TileLibrary/emojiLibraryData';
 import { emojiToDataUrl } from '../../../utils/import';
 import { useGameScale } from '../../../context/GameScale/useGameScale';
 
@@ -31,7 +31,6 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
     const [selectedLibraryTile, setSelectedLibraryTile] = useState<TileLibraryItem | null>(null);
     const [selectedEmoji, setSelectedEmoji] = useState<EmojiItem | null>(null);
     const [selectedPreview, setSelectedPreview] = useState<string | null>(selectedTile?.image ?? null);
-    const [tab, setTab] = useState<'library' | 'emoji' | 'upload'>('library');
 
     const [tiles, setTiles] = useAtom<TileDefinition[]>(TilePropsAtom);
     const [storyProgress, setStoryProgress] = useAtom(StoryProgressAtom);
@@ -62,7 +61,6 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
         setSelectedLibraryTile(null);
         setSelectedEmoji(null);
         setSelectedPreview(selectedTile?.image ?? null);
-        setTab('library');
         setPage(0);
     }, [selectedTile]);
 
@@ -211,8 +209,9 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                     }
                     setInnerFill(innerFill);
                 } else {
+                    const id = crypto.randomUUID?.() ?? `${Date.now()}-${Math.random()}`;
                     const newTile: TileDefinition = {
-                        id: crypto.randomUUID(),
+                        id: id,
                         type: selectedType,
                         image: '',
                         emoji: '',
@@ -220,6 +219,7 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                         reloadTime: -1,
                         timer: 0,
                     };
+                    resetSelection();
 
                     if (selectedLibraryTile) {
                         newTile.image = selectedLibraryTile.image;
@@ -258,7 +258,7 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
     const controls = (
         <div
             className={style.wizardControls}
-            style={{ gap: `${s(0.5)}rem`, padding: `${s(1)}rem` }}
+            style={{ gap: `${s(0.5)}rem`, padding: `0 ${s(1)}rem ${s(1)}rem` }}
         >
             <div className={style.wizardControlsLeft}>
                 {page === 1 ? (
@@ -267,6 +267,7 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                         color="inherit"
                         className={style.actionButton}
                         onClick={() => setPage(0)}
+                        style={{ height: `${Math.max(30, s(48))}px` }}
                         startIcon={<ArrowBackIosNewIcon />}
                     >
                         {t('wizard.actions.back')}
@@ -289,6 +290,7 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                         variant="contained"
                         onClick={() => setPage(1)}
                         disabled={selectedType === null}
+                        style={{ height: `${Math.max(30, s(48))}px` }}
                         aria-live="off"
                     >
                         {t('wizard.actions.continue')}
@@ -300,8 +302,8 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                             className={style.actionButton}
                             variant="contained"
                             color="secondary"
-                            data-testid="teacher-start-button"
                             onClick={handleAccept}
+                            style={{ height: `${Math.max(30, s(48))}px` }}
                             disabled={!hasSelection || selectedType === null || selectedTile === null || loading}
                         >
                             {loading ? t('import.actions.loadingImage') : t('import.actions.setImage')}
@@ -350,11 +352,9 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                         selectedPreview={selectedPreview}
                         selectedLibraryTile={selectedLibraryTile}
                         selectedEmoji={selectedEmoji}
-                        tab={tab}
                         hasSelection={hasSelection}
                         onSelectTile={handleLibrarySelect}
                         onSelectEmoji={handleEmojiSelect}
-                        onTabChange={setTab}
                         onDelete={handleDelete}
                     />
                 </SlideShow>

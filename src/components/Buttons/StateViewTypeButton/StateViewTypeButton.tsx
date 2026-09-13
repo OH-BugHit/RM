@@ -1,8 +1,8 @@
 import { useAtom } from 'jotai';
 import { ObsViewTypeAtom, QmapViewTypeAtom } from '../../../atoms/uiState';
-import GameButton from '../GameButton/GameButton';
-import SmartToyIcon from '@mui/icons-material/SmartToy';
+import AndroidIcon from '@mui/icons-material/Android';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
+import { IconButton } from '@mui/material';
 
 interface StateViewTypeProps {
     screen: 'observation' | 'qMap';
@@ -13,7 +13,7 @@ export default function StateViewTypeButton({ screen }: StateViewTypeProps) {
     const [viewType, setStateViewType] = useAtom(atom);
 
     return (
-        <GameButton
+        <IconButton
             title={viewType === 'sprite' ? 'Actual state' : 'Visualized state'}
             onClick={() =>
                 setStateViewType(() => {
@@ -21,8 +21,9 @@ export default function StateViewTypeButton({ screen }: StateViewTypeProps) {
                     return 'sprite';
                 })
             }
+            color="secondary"
         >
-            {viewType === 'sprite' ? <SmartToyIcon /> : <ImageOutlinedIcon />}
-        </GameButton>
+            {viewType === 'sprite' ? <AndroidIcon fontSize="small" /> : <ImageOutlinedIcon />}
+        </IconButton>
     );
 }

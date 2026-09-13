@@ -61,6 +61,7 @@
     min-height: 0;
     border-radius: 1rem;
     box-sizing: border-box;
+    border: 1px solid #31403037;
 }
 
 .selected {

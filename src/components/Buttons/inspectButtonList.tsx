@@ -49,10 +49,7 @@ export default function getInspectButtons(
                 h: h * 0.32 + 150 * scale,
                 w: w * 0.05 + 534 * scale,
             },
-            target: {
-                type: 'screen',
-                position: 'top-left',
-            },
+            target: { type: 'viewport', position: 'topLeft' },
         },
         {
             id: 'agentVision',
@@ -60,7 +57,8 @@ export default function getInspectButtons(
             icon: <InspectObsIcon size={140 * scale} />,
             content: (
                 <NewFrame
-                    centerX={-4}
+                    centerX={-18}
+                    centerY={-6}
                     variant="blob"
                     overlayLeft={<StateViewTypeButton screen="observation" />}
                 >
@@ -69,7 +67,7 @@ export default function getInspectButtons(
             ),
             size: {
                 h: 360 * scale,
-                w: 320 * scale,
+                w: 360 * scale,
             },
             target: {
                 type: 'cluster',

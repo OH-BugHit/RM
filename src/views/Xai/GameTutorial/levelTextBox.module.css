@@ -1,6 +1,7 @@
 .textContainer {
     display: flex;
     justify-content: center;
+    height: 100%;
 }
 
 .narrowContainer {
@@ -22,5 +23,4 @@
     height: 100%;
     overflow-wrap: normal;
     white-space: normal;
-    padding-left: 1rem;
 }

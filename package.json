@@ -12,6 +12,7 @@
     },
     "type": "module",
     "scripts": {
+        "host": "vite --host",
         "dev": "vite",
         "build": "tsc -b && vite build",
         "test": "vitest",

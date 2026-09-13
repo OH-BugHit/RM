@@ -11,37 +11,42 @@
 
     padding: 2rem;
     box-sizing: border-box;
-
     background: rgba(0, 0, 0, 0.9);
 
     z-index: 9999;
 }
 
 .content {
-    width: min(100%, 500px);
-
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-evenly;
 
     gap: 1.5rem;
 
     text-align: center;
 }
 
+.column {
+    flex-direction: column;
+}
+
 .icon {
     font-size: clamp(3rem, 10vw, 5rem);
     line-height: 1;
+    color: var(--text-light)
 }
 
 .content h1 {
     margin: 0;
     font-size: clamp(1.75rem, 6vw, 3rem);
+    color: var(--text-light);
 }
 
 .content p {
     max-width: 400px;
     margin: 0;
+    color: grey;
 
     font-size: clamp(1rem, 3vw, 1.25rem);
     line-height: 1.5;

@@ -1,35 +1,45 @@
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
-import { ReactNode } from 'react';
 import { Button } from '@genai-fi/base';
+import { useGameScale } from '../../context/GameScale/useGameScale';
 
 interface Props {
     id: string;
-    url?: string;
-    icon?: ReactNode;
+    image: string;
     onClick?: () => void;
 }
 
-export default function Phase({ id, url, icon, onClick }: Props) {
+export default function Phase({ id, image, onClick }: Props) {
     const { t } = useTranslation();
+    const { s } = useGameScale();
 
-    if (url)
-        return (
+    return (
+        <li>
             <Button
                 onClick={onClick}
                 className={style.step}
             >
-                {icon && icon}
-                <h2>{t(`app.phases.${id}`)}</h2>
+                {image && (
+                    <div
+                        className={style.imageContainer}
+                        style={{
+                            height: Math.min(200, s(200)),
+                        }}
+                    >
+                        <img
+                            src={image}
+                            alt={t(`app.phases.titles.${id}`)}
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'fill',
+                            }}
+                        />
+                    </div>
+                )}
+                <h2>{t(`app.phases.titles.${id}`)}</h2>
+                <div className={style.description}>{t(`app.phases.desc.${id}`)}</div>
             </Button>
-        );
-    return (
-        <Button
-            onClick={onClick}
-            className={style.step}
-        >
-            {icon && icon}
-            <h2>{t(`app.phases.${id}`)}</h2>
-        </Button>
+        </li>
     );
 }

@@ -1,11 +1,11 @@
-import style from './EmojiLibrary/style.module.css';
+import style from './style.module.css';
 import { useMemo, useState } from 'react';
 import { TextField } from '@mui/material';
-import { TileLibraryItem } from '../../types';
-import { EMOJI_LIBRARY, EmojiItem } from './EmojiLibrary/emojiLibraryData';
-import { TILE_LIBRARY } from './TileLibrary/tileLibraryData';
-import { useGameScale } from '../../context/GameScale/useGameScale';
 import { t } from 'i18next';
+import { useGameScale } from '../../../context/GameScale/useGameScale';
+import { EMOJI_LIBRARY, EmojiItem } from '../TileLibrary/emojiLibraryData';
+import { TileLibraryItem } from '../../../types';
+import { TILE_LIBRARY } from '../TileLibrary/tileLibraryData';
 
 interface LibrarySearchProps {
     onSelectTile: (tile: TileLibraryItem) => void;

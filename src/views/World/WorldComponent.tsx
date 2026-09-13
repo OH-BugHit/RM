@@ -55,7 +55,7 @@ export default function WorldComponent({ worldGrid, floatItems, deactivate, envR
             )}
             <RewardFloats
                 items={floatItems}
-                cellSize={40}
+                cellSize={s(40)}
                 onComplete={deactivate}
             />
         </div>

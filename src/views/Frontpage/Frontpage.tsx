@@ -9,9 +9,7 @@ import LinkButton from '../../components/Buttons/LinkButton/LinkButton';
 import Phase from './Phase';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import SinglePlayerIcon from '../../components/Buttons/ButtonIcons/OtherIcons/SinglePlayerIcon';
 import { AnimatePresence, motion } from 'framer-motion';
-import ClassroomIcon from '../../components/Buttons/ButtonIcons/OtherIcons/ClassroomIcon';
 import { useGameScale } from '../../context/GameScale/useGameScale';
 import NextArrowIcon from '../../components/Buttons/ButtonIcons/OtherIcons/NextArrowIcon';
 
@@ -136,7 +134,7 @@ export default function Frontpage() {
                     )}
 
                     {mode === 'unset' && (
-                        <motion.div
+                        <motion.ul
                             className={style.phases}
                             initial="hidden"
                             key="modeIcons"
@@ -150,7 +148,7 @@ export default function Frontpage() {
                                 key="classroombutton"
                             >
                                 <Phase
-                                    icon={<ClassroomIcon size={s(128)} />}
+                                    image={'/images/previewImages/tournamentPlay.png'}
                                     id="classroom"
                                     key="classroom"
                                     onClick={() => setMode('multi')}
@@ -161,13 +159,13 @@ export default function Frontpage() {
                                 key="singleplayerbutton"
                             >
                                 <Phase
-                                    icon={<SinglePlayerIcon size={s(128)} />}
+                                    image={'/images/previewImages/play1940.png'}
                                     id="yourWorld"
                                     key="singleplayer"
                                     onClick={() => navigate('/student/single/main?view=main&overlay=menu')}
                                 />
                             </div>
-                        </motion.div>
+                        </motion.ul>
                     )}
                 </div>
             </main>

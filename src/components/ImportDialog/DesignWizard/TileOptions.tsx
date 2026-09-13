@@ -3,11 +3,11 @@ import { Trans, useTranslation } from 'react-i18next';
 import { DialogContent, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { TileDefinition, TileLibraryItem, CellType } from '../../../types';
-import { EmojiItem } from '../EmojiLibrary/emojiLibraryData';
+import { EmojiItem } from '../TileLibrary/emojiLibraryData';
 import TileLibrary from '../TileLibrary/TileLibrary';
-import EmojiLibrary from '../EmojiLibrary/EmojiLibrary';
-import LibrarySearch from '../LibrarySearch';
 import { useGameScale } from '../../../context/GameScale/useGameScale';
+import { Help } from '@genai-fi/base';
+import LibrarySearch from '../LibrarySearch/LibrarySearch';
 
 interface TileOptionsProps {
     selectedTile?: TileDefinition;
@@ -15,11 +15,9 @@ interface TileOptionsProps {
     selectedPreview: string | null;
     selectedLibraryTile: TileLibraryItem | null;
     selectedEmoji: EmojiItem | null;
-    tab: 'library' | 'emoji' | 'upload';
     hasSelection: boolean;
     onSelectTile: (tile: TileLibraryItem) => void;
     onSelectEmoji: (emojiItem: EmojiItem) => void;
-    onTabChange: (tab: 'library' | 'emoji' | 'upload') => void;
     onDelete: () => void;
 }
 
@@ -29,17 +27,15 @@ export default function TileOptions({
     selectedType,
     selectedLibraryTile,
     selectedEmoji,
-    tab,
     onSelectTile,
     onSelectEmoji,
-    onTabChange,
     onDelete,
 }: TileOptionsProps) {
     const { t } = useTranslation();
     const { s, scale } = useGameScale();
 
     return (
-        <div>
+        <div className={style.typeOptionContainer}>
             <div className={style.titleRow}>
                 <div className={style.stripes}></div>
                 <h1 className={style.title}>
@@ -48,15 +44,31 @@ export default function TileOptions({
                 <div className={style.stripes}></div>
             </div>
 
-            <DialogContent className={style.tileOptionContent}>
-                <div className={style.selectModelMessage}>
-                    <div className={style.descText}>
-                        <p>
-                            {selectedType !== 'background'
-                                ? t('import.messages.selectTile')
-                                : t('import.messages.selectBackground')}
-                        </p>
-                        <div>
+            <DialogContent
+                className={style.tileOptionContent}
+                style={{ padding: `${Math.min(20, s(20))}px ${Math.min(24, s(24))}px` }}
+            >
+                <div className={style.helpMessage}>
+                    <span>
+                        <Help
+                            inplace
+                            message={
+                                selectedType !== 'background'
+                                    ? t('import.messages.selectTile')
+                                    : t('import.messages.selectBackground')
+                            }
+                        />
+                    </span>
+                </div>
+                <div
+                    className={style.selectModelMessage}
+                    style={{ gap: `${s(16)}px` }}
+                >
+                    <div
+                        className={style.previewSection}
+                        style={{ minHeight: `${s(120)}px`, padding: `${s(12)}px` }}
+                    >
+                        <p style={{ whiteSpace: 'pre-line' }}>
                             {selectedType !== 'background' && (
                                 <Trans
                                     i18nKey="common.selected"
@@ -68,12 +80,7 @@ export default function TileOptions({
                                     }}
                                 />
                             )}
-                        </div>
-                    </div>
-                    <div
-                        className={style.previewSection}
-                        style={{ minHeight: `${s(120)}px`, padding: `${s(12)}px` }}
-                    >
+                        </p>
                         {selectedPreview ? (
                             <img
                                 src={selectedPreview}
@@ -90,42 +97,22 @@ export default function TileOptions({
                             </div>
                         )}
                     </div>
-                </div>
-                {scale > 0.8 && (
-                    <LibrarySearch
-                        onSelectTile={onSelectTile}
-                        onSelectEmoji={onSelectEmoji}
-                    />
-                )}
-                <div className={style.tabBar}>
-                    <button
-                        type="button"
-                        className={tab === 'library' ? style.activeTab : style.tab}
-                        onClick={() => onTabChange('library')}
-                    >
-                        {t('wizard.tabs.library')}
-                    </button>
-                    <button
-                        type="button"
-                        className={tab === 'emoji' ? style.activeTab : style.tab}
-                        onClick={() => onTabChange('emoji')}
-                    >
-                        {t('wizard.tabs.emojis')}
-                    </button>
-                </div>
 
-                {tab === 'library' && (
+                    {scale > 0.6 && (
+                        <LibrarySearch
+                            onSelectTile={onSelectTile}
+                            onSelectEmoji={onSelectEmoji}
+                        />
+                    )}
+                </div>
+                <div className={style.libraryContent}>
                     <TileLibrary
-                        onSelect={onSelectTile}
+                        onTileSelect={onSelectTile}
+                        onEmojiSelect={onSelectEmoji}
                         selectedTileId={selectedLibraryTile?.id}
-                    />
-                )}
-                {tab === 'emoji' && (
-                    <EmojiLibrary
-                        onSelect={onSelectEmoji}
                         selectedEmoji={selectedEmoji?.emoji}
                     />
-                )}
+                </div>
             </DialogContent>
             <div className={`${style.buttonGroupTile} ${style.buttonGroup}`}>
                 {!selectedTile?.isCoreTile && selectedTile && (

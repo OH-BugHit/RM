@@ -2,12 +2,11 @@ import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { useAtomValue } from 'jotai';
 import React, { useCallback } from 'react';
-import { Dialog, DialogContent, DialogTitle } from '@mui/material';
-import { LargeButton } from '@genai-fi/base';
+import { Alert, Dialog, DialogContent, DialogTitle } from '@mui/material';
+import { LargeButton, QRCode } from '@genai-fi/base';
 import { useLocation, useNavigate } from 'react-router';
 import { ActiveViewAtom } from '../../../atoms/uiState';
 import { usersAtom } from '../../../atoms/state';
-import LinkButton from '../../../components/Buttons/LinkButton/LinkButton';
 
 interface Props {
     code: string;
@@ -43,11 +42,15 @@ function StartDialog({ code }: Props) {
             <DialogContent>
                 <div className={style.connectMessage}>
                     <div className={style.column}>
-                        {t('teacher.messages.goTo')}
-                        <em>{`${window.location.origin}/student/${code}/main?view=join`}</em>
-                        <LinkButton href={`${window.location.origin}/student/${code}/main?view=join`}>
-                            Test button for dev TODO: Remove
-                        </LinkButton>
+                        {t('teacher.messages.scanQR')}
+                        <QRCode
+                            url={`${window.location.origin}/student/${code}/main?view=join`}
+                            size={size}
+                            label={t('teacher.aria.linkForFeed')}
+                        />
+                        <Alert severity="info">{t('teacher.messages.tip')}</Alert>
+                    </div>
+                    <div className={style.column}>
                         <div>{t('teacher.messages.connection')}</div>
                         <h2>{code}</h2>
                         <a

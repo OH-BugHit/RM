@@ -3,10 +3,10 @@ import { Button } from '@genai-fi/base';
 import { useSetAtom } from 'jotai';
 import { CurrentTileToolAtom } from '../../../../../../atoms/uiState';
 import { TileDefinition } from '../../../../../../types';
-import IconButtons from './IconButtons';
 import { CELL_TYPE_COLORS } from '../../../../../../utils/defaults';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import PropIconMenu from './PropIconMenu';
 
 interface PropRowProps {
     tile: TileDefinition;
@@ -50,7 +50,6 @@ export default function PropToolIcon({ tile, selected, disabled = false, size }:
             )}
             <Button
                 aria-disabled={disabled}
-                onPointerDown={handleClick}
                 onClick={handleClick}
                 style={{
                     cursor: disabled ? 'not-allowed' : 'pointer',
@@ -62,7 +61,7 @@ export default function PropToolIcon({ tile, selected, disabled = false, size }:
                     height={size}
                 />
             </Button>
-            {selected && <IconButtons />}
+            {selected && <PropIconMenu tile={tile} />}
         </div>
     );
 }

@@ -8,7 +8,7 @@ interface MenuIconProps {
     size?: number;
 }
 
-export default function MenuButton({ size = 64 }: MenuIconProps) {
+export default function MenuButton({ size = 84 }: MenuIconProps) {
     const { s } = useGameScale();
     const { goToView } = useViewNavigation();
     const [isOpen] = useAtom(MenuOpenAtom);

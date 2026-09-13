@@ -3,7 +3,7 @@ import { LargeButton } from '@genai-fi/base';
 import TileOptions from '../../ImportDialog/DesignWizard/TileOptions';
 import { useCallback, useRef, useState } from 'react';
 import { Cell, TileLibraryItem } from '../../../types';
-import { EmojiItem } from '../../ImportDialog/EmojiLibrary/emojiLibraryData';
+import { EmojiItem } from '../../ImportDialog/TileLibrary/emojiLibraryData';
 import { emojiToDataUrl } from '../../../utils/import';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { ActiveViewAtom } from '../../../atoms/uiState';
@@ -20,7 +20,6 @@ export default function BackgroundWizard() {
     const [selectedLibraryTile, setSelectedLibraryTile] = useState<TileLibraryItem | null>(null);
     const [selectedEmoji, setSelectedEmoji] = useState<EmojiItem | null>(null);
     const [selectedPreview, setSelectedPreview] = useState<string | null>('');
-    const [tab, setTab] = useState<'library' | 'emoji' | 'upload'>('library');
     const view = useAtomValue(ActiveViewAtom);
     const previewUrlRef = useRef<string | null>(null);
     const hasSelection = Boolean(selectedLibraryTile || selectedEmoji);
@@ -120,11 +119,9 @@ export default function BackgroundWizard() {
                                 selectedPreview={selectedPreview}
                                 selectedLibraryTile={selectedLibraryTile}
                                 selectedEmoji={selectedEmoji}
-                                tab={tab}
                                 hasSelection={hasSelection}
                                 onSelectTile={handleLibrarySelect}
                                 onSelectEmoji={handleEmojiSelect}
-                                onTabChange={setTab}
                                 onDelete={() => {}}
                             />
                         </SlideShow>
