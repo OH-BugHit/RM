@@ -20,7 +20,6 @@
     overflow-y: hidden;
     gap: 8px;
     padding: 8px 0 12px;
-    background: white;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
@@ -53,8 +52,9 @@
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    padding-right: 6px;
     scroll-behavior: smooth;
+    border-radius: 1rem;
+    background-color: #ffe5c3;
 }
 
 .libraryScrollArea::-webkit-scrollbar {

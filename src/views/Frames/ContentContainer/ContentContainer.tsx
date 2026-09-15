@@ -202,7 +202,9 @@ export default function ContentContainer({
                         }}
                     />
                 </div>
+
                 <motion.div
+                    data-dismissible-exclude
                     className={styles.content}
                     animate={{
                         opacity: open ? 1 : 0,

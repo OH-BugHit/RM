@@ -14,6 +14,7 @@ export default function StateViewTypeButton({ screen }: StateViewTypeProps) {
 
     return (
         <IconButton
+            data-dismissible-exclude
             title={viewType === 'sprite' ? 'Actual state' : 'Visualized state'}
             onClick={() =>
                 setStateViewType(() => {

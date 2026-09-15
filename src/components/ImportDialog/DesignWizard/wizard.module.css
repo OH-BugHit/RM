@@ -40,7 +40,8 @@
 .wizardInner {
     margin: 0 auto;
     overflow: hidden;
-    background: white;
+    background-color: rgb(250, 225, 180);
+    /*Koko tausta*/
     border-radius: 2.2rem 2.2rem 1.2rem 1.2rem;
 }
 
@@ -63,6 +64,7 @@
     animation-name: fadein;
     animation-duration: 0.4s;
     animation-iteration-count: 1;
+    background: rgb(255, 255, 255);
 }
 
 .wizardControlsLeft {
@@ -74,7 +76,9 @@
 }
 
 .wizardControlsRight {
+    display: flex;
     justify-self: end;
+    gap: 1rem;
 }
 
 @keyframes fadein {

@@ -91,7 +91,7 @@ export function NewFrame({
                                   ...styleProps,
                                   ...position,
                               }
-                            : { position: 'absolute', ...position, zIndex: zIndex }
+                            : { position: 'relative', ...position, zIndex: zIndex }
                     }
                     initial={{
                         scale: 0.95,

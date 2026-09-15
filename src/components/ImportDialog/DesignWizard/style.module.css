@@ -86,6 +86,8 @@
     border-radius: 12px;
     background: rgba(0, 0, 0, 0.02);
     padding: 12px;
+    background-color: #ffe5c3;
+        border-radius: 1rem;
 }
 
 .previewSection h2 {

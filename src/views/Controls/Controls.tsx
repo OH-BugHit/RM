@@ -68,6 +68,7 @@ function Controls() {
             <div
                 className={style.controlsContainer}
                 style={{ padding: `${s(12)}px`, gap: `${s(0.8)}rem` }}
+                data-dismissible-exclude
             >
                 <GameButton
                     title="One step"

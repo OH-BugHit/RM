@@ -26,6 +26,7 @@ export default function GameButton({
 }: Props) {
     return (
         <Button
+            data-dismissible-exclude
             title={title}
             variant={variant}
             disabled={disabled}

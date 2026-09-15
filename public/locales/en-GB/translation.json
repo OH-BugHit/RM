@@ -220,7 +220,7 @@
             "selectAgent": "Upload your own image.",
             "selectBackground": "Select background used for transparent tiles such as grass or dust.",
             "selectGame": "Upload game file",
-            "selectTile": "Choose a image from the library tab or select emoji from emoji tab.",
+            "selectTile": "Select a image to represent these tiles.",
             "selectType": "Select the type of the tile."
         },
         "titles": {

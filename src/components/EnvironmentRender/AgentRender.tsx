@@ -13,7 +13,7 @@ interface AgentRenderInterface {
 }
 
 export default function AgentRender({ env }: AgentRenderInterface) {
-    const { scale, scaleWidth } = useGameScale();
+    const { scale } = useGameScale();
     const trigger = useAtomValue(AgentRenderPulseAtom);
     const agent = useAtomValue(ActiveAgentAtom);
     const facing = useAtomValue(FacingAtom);
@@ -53,7 +53,6 @@ export default function AgentRender({ env }: AgentRenderInterface) {
                     position: 'relative',
                     top: `16px`,
                     left: `16px`,
-                    width: scaleWidth * 40,
                     height: scale * 40,
                     display: visibleTiles.agent ? 'block' : 'none',
                 }}

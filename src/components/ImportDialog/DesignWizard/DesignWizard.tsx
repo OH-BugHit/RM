@@ -283,6 +283,13 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                 />
             </div>
             <div className={style.wizardControlsRight}>
+                <LargeButton
+                    variant="outlined"
+                    color="info"
+                    className={style.actionButton}
+                >
+                    Close
+                </LargeButton>
                 {page === 0 ? (
                     <LargeButton
                         color="primary"

@@ -148,6 +148,7 @@ export default function TileTable({ agentRef, lWorld, mapRef, layerRef, focusFra
                 layerRef={layerRef}
             />
             <div
+                data-dismissible-exclude
                 id="map"
                 className={style.map}
             />

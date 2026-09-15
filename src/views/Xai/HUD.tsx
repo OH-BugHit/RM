@@ -145,7 +145,6 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                 <NewFrame
                     visible={inspectC.qMap && !hideHud}
                     variant="blob"
-                    position={{ top: '0px', left: '0px' }}
                     overlayRight={
                         <TableControls
                             lWorld={lWorld}

@@ -32,75 +32,78 @@ export default function MainMenu() {
     return (
         <AnimatePresence>
             {view.overlay === 'menu' && (
-                <motion.div
-                    className={style.main}
-                    initial={{
-                        transform: 'translate(-50%, -45%)',
-                        opacity: 0,
-                    }}
-                    animate={{
-                        transform: 'translate(-50%, -50%)',
-                        opacity: 1,
-                    }}
-                    exit={{
-                        transform: 'translate(-50%, -45%)',
-                        opacity: 0,
-                    }}
-                    transition={{
-                        duration: 0.25,
-                        ease: 'easeInOut',
-                    }}
-                    style={{
-                        height: s(500),
-                    }}
-                >
-                    <div className={style.content}>
-                        <h1 style={{ fontFamily: 'Tektur', scale: 0.9 }}>Reward Machine</h1>
+                <>
+                    <div className={style.backgroundLayer} />
+                    <motion.div
+                        className={style.main}
+                        initial={{
+                            transform: 'translate(-50%, -45%)',
+                            opacity: 0,
+                        }}
+                        animate={{
+                            transform: 'translate(-50%, -50%)',
+                            opacity: 1,
+                        }}
+                        exit={{
+                            transform: 'translate(-50%, -45%)',
+                            opacity: 0,
+                        }}
+                        transition={{
+                            duration: 0.25,
+                            ease: 'easeInOut',
+                        }}
+                        style={{
+                            height: s(500),
+                        }}
+                    >
+                        <div className={style.content}>
+                            <h1 style={{ fontFamily: 'Tektur', scale: 0.9 }}>Reward Machine</h1>
 
-                        <div
-                            className={style.mainActions}
-                            style={{ width: `${Math.min(500, scaleWidth * 700)}px` }}
-                        >
-                            <MenuItem
-                                height={s(60)}
-                                width={scaleWidth * 260}
-                                title="Levels"
-                                onSelect={() => onSelect('levels')}
-                            />
-                            <MenuItem
-                                height={s(60)}
-                                width={scaleWidth * 260}
-                                title="Recap"
-                                onSelect={() => onSelect('recap')}
-                            />
-                            <MenuItem
-                                height={s(60)}
-                                width={scaleWidth * 260}
-                                title="Create"
-                                onSelect={() => onSelect('ownLevels')}
-                            />
-                        </div>
+                            <div
+                                className={style.mainActions}
+                                style={{ width: `${Math.min(500, scaleWidth * 700)}px` }}
+                            >
+                                <MenuItem
+                                    height={s(60)}
+                                    width={scaleWidth * 260}
+                                    title="Levels"
+                                    onSelect={() => onSelect('levels')}
+                                />
+                                <MenuItem
+                                    height={s(60)}
+                                    width={scaleWidth * 260}
+                                    title="Recap"
+                                    onSelect={() => onSelect('recap')}
+                                />
+                                <MenuItem
+                                    height={s(60)}
+                                    width={scaleWidth * 260}
+                                    title="Create"
+                                    onSelect={() => onSelect('ownLevels')}
+                                />
+                            </div>
 
-                        <div className={style.secondaryActions}>
-                            <IconButton
-                                sx={{ height: `${s(60)}` }}
-                                title="Settings"
-                                color="primary"
-                                onClick={() => onSelect('levels')}
-                            >
-                                <SettingsIcon fontSize={scale < 0.5 ? 'medium' : 'large'} />
-                            </IconButton>
-                            <IconButton
-                                sx={{ height: `${s(60)}` }}
-                                title="Home"
-                                color="primary"
-                                onClick={() => onSelect('frontpage')}
-                            >
-                                <HomeIcon fontSize={scale < 0.5 ? 'medium' : 'large'} />
-                            </IconButton>
+                            <div className={style.secondaryActions}>
+                                <IconButton
+                                    sx={{ height: `${s(60)}` }}
+                                    title="Settings"
+                                    color="primary"
+                                    onClick={() => onSelect('levels')}
+                                >
+                                    <SettingsIcon fontSize={scale < 0.5 ? 'medium' : 'large'} />
+                                </IconButton>
+                                <IconButton
+                                    sx={{ height: `${s(60)}` }}
+                                    title="Home"
+                                    color="primary"
+                                    onClick={() => onSelect('frontpage')}
+                                >
+                                    <HomeIcon fontSize={scale < 0.5 ? 'medium' : 'large'} />
+                                </IconButton>
+                            </div>
                         </div>
-                    </div>
-                </motion.div>
+                    </motion.div>
+                </>
             )}
         </AnimatePresence>
     );

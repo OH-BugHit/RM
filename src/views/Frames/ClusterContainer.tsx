@@ -14,6 +14,8 @@ import TrashIcon from '../../components/Buttons/ButtonIcons/Agent/TrashIcon';
 import { ResetUiPulseAtom } from '../../atoms/state';
 import { Button } from '@genai-fi/base';
 import { useGameScale } from '../../context/GameScale/useGameScale';
+import Dismissible from '../../utils/Dismissible';
+import CloseIcon from '../../components/Buttons/ButtonIcons/OtherIcons/CloseIcon';
 
 interface FrameContainerProps {
     position: 'topLeft' | 'topRight' | 'bottomRight' | 'bottomLeft';
@@ -130,11 +132,21 @@ export default function ClusterContainer({ position, type, vis, children, inspec
                                             }}
                                         >
                                             <IconButton
+                                                data-dismissible-exclude
                                                 className={style.actionButton}
                                                 style={{ width: `${s(140)}px`, height: `${s(140)}px` }}
                                                 onClick={() => handleOpenClick(button.id)}
                                             >
-                                                {button.icon}
+                                                <div style={{ position: 'absolute', inset: 0 }}>{button.icon}</div>
+
+                                                {openState[button.id as keyof typeof openState] && (
+                                                    <div style={{ position: 'absolute', inset: 0 }}>
+                                                        <CloseIcon
+                                                            size={s(140)}
+                                                            type="red"
+                                                        />
+                                                    </div>
+                                                )}
                                             </IconButton>
                                         </div>
 
@@ -157,7 +169,14 @@ export default function ClusterContainer({ position, type, vis, children, inspec
                                                 contentHeight={button.size.h}
                                                 target={button.target}
                                             >
-                                                {button.content}
+                                                {button.content && (
+                                                    <Dismissible
+                                                        open={openState[button.id as keyof typeof openState]}
+                                                        onClose={() => handleOpenClick(button.id)}
+                                                    >
+                                                        {button.content}
+                                                    </Dismissible>
+                                                )}
                                             </ContentContainer>
                                         )}
                                     </React.Fragment>

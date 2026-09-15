@@ -10,7 +10,7 @@ type ButtonShape = {
     id: AgentButtons;
     angle: number;
     icon: React.ReactNode;
-    content?: React.ReactNode;
+    content?: React.ReactElement;
     size: { h: number; w: number };
     target: Target;
 };

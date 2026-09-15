@@ -119,6 +119,7 @@ export default function LodFar({ agentRef, scrollToState }: QCanvasProps) {
         <div
             ref={containerRef}
             className={style.qCanvasContainer}
+            data-dismissible-exclude
         >
             <CompactHeatmapCanvas
                 agent={agentRef}

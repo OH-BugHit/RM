@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Footer from '../Footer/Footer';
 import { Button } from '@genai-fi/base';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import SchoolIcon from '@mui/icons-material/School';
+/*import SchoolIcon from '@mui/icons-material/School';*/
 import { TextField } from '@mui/material';
 import LinkButton from '../../components/Buttons/LinkButton/LinkButton';
 import Phase from './Phase';
@@ -55,13 +55,13 @@ export default function Frontpage() {
                         <h1>{t('common.title')}</h1>
                         <h2>{t('common.subtitle')}</h2>
                         <div className={style.buttons}>
-                            <LinkButton
+                            {/*<LinkButton
                                 href="https://gen-ai.fi/en/"
                                 startIcon={<SchoolIcon />}
                                 key="materialLink"
                             >
                                 <p>{t('app.teachingMaterials')}</p>
-                            </LinkButton>
+                            </LinkButton>*/}
                             <LinkButton
                                 href="https://github.com/OH-BugHit/BM"
                                 startIcon={<GitHubIcon />}

@@ -23,7 +23,7 @@ type ButtonShape = {
     id: InspectButtons;
     angle: number;
     icon: React.ReactNode;
-    content?: React.ReactNode;
+    content?: React.ReactElement;
     size: { h: number; w: number };
     target: Target;
 };
@@ -57,8 +57,6 @@ export default function getInspectButtons(
             icon: <InspectObsIcon size={140 * scale} />,
             content: (
                 <NewFrame
-                    centerX={-18}
-                    centerY={-6}
                     variant="blob"
                     overlayLeft={<StateViewTypeButton screen="observation" />}
                 >
