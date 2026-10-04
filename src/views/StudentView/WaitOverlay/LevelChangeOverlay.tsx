@@ -14,9 +14,8 @@ export default function LevelChangeOverlay({ onReady }: WaitOverlayProps) {
 
     return (
         <NewFrame
-            position={{ top: '50%', left: '50%' }}
+            position={{ top: '0%', left: '50%' }}
             centerX={-50}
-            centerY={-50}
             zIndex={21}
             variant="blob"
         >

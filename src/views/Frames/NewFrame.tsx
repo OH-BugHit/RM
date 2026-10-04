@@ -83,75 +83,79 @@ export function NewFrame({
     return (
         <AnimatePresence mode="popLayout">
             {visible && (
-                <motion.div
-                    className={`${style.frame} ${variant === 'tutorial' ? style.tutorial : variant === 'blob' ? style.blob : ''}`}
-                    style={
-                        variant !== 'blob'
-                            ? {
-                                  ...styleProps,
-                                  ...position,
-                              }
-                            : { position: 'relative', ...position, zIndex: zIndex }
-                    }
-                    initial={{
-                        scale: 0.95,
-                        opacity: 0,
-                    }}
-                    animate={{
-                        scale: 1,
-                        opacity: 1,
+                <>
+                    <motion.div
+                        className={`${style.frame} ${variant === 'tutorial' ? style.tutorial : variant === 'blob' ? style.blob : ''}`}
+                        style={
+                            variant !== 'blob'
+                                ? {
+                                      ...styleProps,
+                                      ...position,
+                                  }
+                                : { position: 'relative', ...position, zIndex: zIndex }
+                        }
+                        initial={{
+                            scale: 0.95,
+                            opacity: 0,
+                        }}
+                        animate={{
+                            scale: 1,
+                            opacity: 1,
 
-                        top: position?.top,
-                        right: position?.right,
-                        bottom: position?.bottom,
-                        left: position?.left,
+                            top: position?.top,
+                            right: position?.right,
+                            bottom: position?.bottom,
+                            left: position?.left,
 
-                        x: centerX ? `${centerX}%` : '0%',
-                        y: centerY ? `${centerY}%` : '0%',
-                    }}
-                    exit={{
-                        overflow: 'hidden',
-                        opacity: 0,
-                    }}
-                    transition={{
-                        duration: 0.45,
-                        ease: 'easeInOut',
-                    }}
-                >
-                    {overlayRight && !minimize && (
-                        <div className={`${style.overlayRight} ${variant === 'blob' ? style.blobOverlayRight : ''}`}>
-                            {overlayRight}
-                        </div>
-                    )}
-                    {overlayLeft && !minimize && (
-                        <div className={`${style.overlayLeft} ${variant === 'blob' ? style.blobOverlayLeft : ''}`}>
-                            {overlayLeft}
-                        </div>
-                    )}
-                    {overlayRightTop && (
-                        <div className={`${style.overlayRightTop} ${minimize ? style.minRT : ''}`}>
-                            {overlayRightTop}
-                        </div>
-                    )}
+                            x: centerX ? `${centerX}%` : '0%',
+                            y: centerY ? `${centerY}%` : '0%',
+                        }}
+                        exit={{
+                            overflow: 'hidden',
+                            opacity: 0,
+                        }}
+                        transition={{
+                            duration: 0.45,
+                            ease: 'easeInOut',
+                        }}
+                    >
+                        {overlayRight && !minimize && (
+                            <div
+                                className={`${style.overlayRight} ${variant === 'blob' ? style.blobOverlayRight : ''}`}
+                            >
+                                {overlayRight}
+                            </div>
+                        )}
+                        {overlayLeft && !minimize && (
+                            <div className={`${style.overlayLeft} ${variant === 'blob' ? style.blobOverlayLeft : ''}`}>
+                                {overlayLeft}
+                            </div>
+                        )}
+                        {overlayRightTop && (
+                            <div className={`${style.overlayRightTop} ${minimize ? style.minRT : ''}`}>
+                                {overlayRightTop}
+                            </div>
+                        )}
+                        {minimize && <h4 className={style.minTitle}>{title}</h4>}
+                        <motion.div
+                            className={style.content}
+                            variants={minimizeVariants}
+                            animate={minimize ? 'closed' : 'open'}
+                            style={{
+                                ...(backgroundColour && {
+                                    backgroundColor: backgroundColour,
+                                    backgroundImage: 'none',
+                                    padding: `0rem ${s(1)}rem ${0.5}rem ${1}rem`,
+                                }),
+                            }}
+                        >
+                            {children}
+                        </motion.div>
+                    </motion.div>
                     {contentUnder && (
                         <div className={`${style.contentUnder} ${minimize ? style.minRT : ''}`}>{contentUnder}</div>
                     )}
-                    {minimize && <h4 className={style.minTitle}>{title}</h4>}
-                    <motion.div
-                        className={style.content}
-                        variants={minimizeVariants}
-                        animate={minimize ? 'closed' : 'open'}
-                        style={{
-                            ...(backgroundColour && {
-                                backgroundColor: backgroundColour,
-                                backgroundImage: 'none',
-                                padding: `0rem ${s(1)}rem ${0.5}rem ${1}rem`,
-                            }),
-                        }}
-                    >
-                        {children}
-                    </motion.div>
-                </motion.div>
+                </>
             )}
         </AnimatePresence>
     );

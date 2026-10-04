@@ -1,4 +1,4 @@
-const url = import.meta.env.VITE_APP_APIURL || window.location.origin || 'http://localhost:9000';
+const url = import.meta.env.VITE_APP_PS || window.location.origin || 'http://localhost:9000';
 const apiUrl = URL.parse(url);
 
 const isSecure = apiUrl?.protocol === 'https:';

@@ -88,7 +88,11 @@ export default function MainMenu() {
                                     sx={{ height: `${s(60)}` }}
                                     title="Settings"
                                     color="primary"
-                                    onClick={() => onSelect('levels')}
+                                    onClick={() =>
+                                        goToView({
+                                            overlay: 'settings',
+                                        })
+                                    }
                                 >
                                     <SettingsIcon fontSize={scale < 0.5 ? 'medium' : 'large'} />
                                 </IconButton>

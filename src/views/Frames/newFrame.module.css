@@ -95,7 +95,7 @@
 }
 
 .blobOverlayLeft {
-    left: -40px;
+    left: 0px;
     background: rgb(223, 241, 245);
 }
 
@@ -118,10 +118,6 @@
 }
 
 .contentUnder {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    top: 100%;
     z-index: 4;
 }
 

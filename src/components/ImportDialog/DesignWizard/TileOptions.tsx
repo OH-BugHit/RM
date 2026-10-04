@@ -36,17 +36,11 @@ export default function TileOptions({
 
     return (
         <div className={style.typeOptionContainer}>
-            <div className={style.titleRow}>
-                <div className={style.stripes}></div>
-                <h1 className={style.title}>
-                    {selectedType !== 'background' ? t('import.titles.tileType') : t('import.titles.background')}
-                </h1>
-                <div className={style.stripes}></div>
-            </div>
-
             <DialogContent
                 className={style.tileOptionContent}
-                style={{ padding: `${Math.min(20, s(20))}px ${Math.min(24, s(24))}px` }}
+                style={{
+                    padding: `${Math.min(20, s(20))}px ${Math.min(24, s(24))}px ${Math.min(10, s(10))}px ${Math.min(24, s(24))}px`,
+                }}
             >
                 <div className={style.helpMessage}>
                     <span>

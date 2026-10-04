@@ -32,7 +32,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
-    padding-bottom: 30dvh;
 }
 
 .homeContainer li {
@@ -77,7 +76,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 4dvh;
+    padding-top: 10dvh;
     gap: 1rem;
     flex-wrap: wrap;
 }

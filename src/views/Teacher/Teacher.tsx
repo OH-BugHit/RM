@@ -9,6 +9,8 @@ import { useRef } from 'react';
 import ServerProtocol from '../../services/ServerProtocol';
 import Guidance from './SidePanel/Guidance';
 import ViewHandler from '../../components/ViewHandler';
+import Settings from '../Settings/Settings';
+import { GameScaleProvider } from '../../context/GameScale/GameScaleProvied';
 
 export default function Teacher({ ID }: { ID: string }) {
     const blockRef = useRef(true);
@@ -26,16 +28,18 @@ export default function Teacher({ ID }: { ID: string }) {
             code={`reward-${ID}`}
         >
             <ViewHandler />
-            <div className={style.teacher}>
-                <div className={style.serverProtocolContainer}>
-                    <ServerProtocol />
+            <GameScaleProvider>
+                <div className={style.teacher}>
+                    <div className={style.serverProtocolContainer}>
+                        <ServerProtocol />
+                    </div>
+                    <StartDialog code={ID} />
+                    <Guidance />
+                    <Settings mode="teacher" />
+                    <TeacherContent />
+                    <Footer hideLang={false} />
                 </div>
-                <StartDialog code={ID} />
-                <Guidance />
-                {/*<Settings />*/}
-                <TeacherContent />
-                <Footer hideLang={false} />
-            </div>
+            </GameScaleProvider>
         </Peer>
     );
 }

@@ -1,5 +1,7 @@
 .testButton {
+    display: block;
+    position: relative;
+    transform: translateY(100%);
     border-radius: 50%;
-    overflow: hidden;
     cursor: pointer;
 }

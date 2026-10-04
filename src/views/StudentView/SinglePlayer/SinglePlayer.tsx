@@ -7,7 +7,7 @@ import Levels from '../Levels/Levels';
 import MainMenu from '../Student/MainMenu/MainView';
 import ViewHandler from '../../../components/ViewHandler';
 import { allGroups } from '../../../utils/levels/levelGroups';
-import MenuButton from '../../../components/Buttons/ButtonIcons/OtherIcons/MenuIcon';
+import MenuIcon from '../../../components/Buttons/MenuButton/MenuIcon';
 import Tutorial from '../../Tutorial/Tutorial';
 import PlayEnv from '../../PlayEnv/PlayEnv';
 import BuildView from '../../BuildView/BuildView';
@@ -15,6 +15,7 @@ import GameView from '../../GameView/GameView';
 import { QLearningAgent } from '../../../components/agents/rlAgentQ';
 import { OrientationPrompt } from '../../../components/Orientation/OrientationPrompt';
 import { GameScaleProvider } from '../../../context/GameScale/GameScaleProvied';
+import Settings from '../../Settings/Settings';
 
 export default function SinglePlayer() {
     const view = useAtomValue(ActiveViewAtom);
@@ -29,7 +30,8 @@ export default function SinglePlayer() {
         <GameScaleProvider>
             <div className={style.studentContainer}>
                 <OrientationPrompt />
-                <MenuButton />
+                <MenuIcon />
+                <Settings mode="student" />
                 <ViewHandler />
                 <MainMenu />
                 {view.main === 'recap' && <Tutorial />}

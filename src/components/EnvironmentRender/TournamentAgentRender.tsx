@@ -4,15 +4,15 @@ import { useAtomValue } from 'jotai';
 import { QPolicyAgent } from '../agents/policyQagent';
 import { RefObject } from 'react';
 import { tournamentAgentUpdatesAtom } from '../../atoms/state';
+import { useGameScale } from '../../context/GameScale/useGameScale';
 
 interface AgentRenderInterface {
     agentsRef: RefObject<QPolicyAgent[] | undefined>;
-    tileSize?: number;
 }
 
-export default function TournamentAgentRender({ agentsRef, tileSize = 40 }: AgentRenderInterface) {
+export default function TournamentAgentRender({ agentsRef }: AgentRenderInterface) {
     const updates = useAtomValue(tournamentAgentUpdatesAtom);
-
+    const { scale } = useGameScale();
     const agents = agentsRef.current ?? [];
 
     return (
@@ -34,8 +34,8 @@ export default function TournamentAgentRender({ agentsRef, tileSize = 40 }: Agen
                             delay: 0,
                         }}
                         animate={{
-                            x: agent.position.x * tileSize,
-                            y: agent.position.y * tileSize,
+                            x: agent.position.x * Math.min(40, scale * 40),
+                            y: agent.position.y * Math.min(40, scale * 40),
                             opacity: 1,
                         }}
                     >
@@ -45,10 +45,9 @@ export default function TournamentAgentRender({ agentsRef, tileSize = 40 }: Agen
                             className={`${style.tileLayer} ${style.tileForeground}`}
                             style={{
                                 position: 'relative',
-                                top: '16px',
-                                left: '16px',
-                                width: tileSize,
-                                height: tileSize,
+                                top: '0px',
+                                left: '0px',
+                                height: scale * 40,
                                 display: 'block',
                             }}
                             initial={{ opacity: 0 }}

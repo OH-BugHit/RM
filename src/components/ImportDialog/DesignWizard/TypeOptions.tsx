@@ -3,7 +3,6 @@ import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import TypeOption from '../TypeOption';
 import { BASIC_CELL_TYPE_OPTIONS, CellType } from '../../../types';
-import { useGameScale } from '../../../context/GameScale/useGameScale';
 import { Help } from '@genai-fi/base';
 
 interface TypeOptionsProps {
@@ -15,26 +14,15 @@ interface TypeOptionsProps {
 
 function TypeOptions({ selectedType, onSelectType, allowedTypes, hint }: TypeOptionsProps) {
     const { t } = useTranslation();
-    const { s } = useGameScale();
 
     return (
         <div className={style.typeOptionContainer}>
-            <div className={style.titleRow}>
-                <div className={style.stripes}></div>
-                <h1
-                    className={style.title}
-                    style={{ padding: `0 ${s(2)}rem ${s(8)}px` }}
-                >
-                    {t('import.titles.tileType')}
-                </h1>
-                <div className={style.stripes}></div>
-            </div>
-
             <div className={style.optionContainer}>
                 <div className={style.helpMessage}>
                     <span>
                         <Help
                             inplace
+                            style={{ color: '#4f0e1a', background: '#fffefd', borderRadius: '50%' }}
                             message={t('import.messages.selectType')}
                         />
                     </span>

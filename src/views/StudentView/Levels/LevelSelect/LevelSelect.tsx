@@ -215,7 +215,10 @@ export default function LevelSelect() {
                     })}
                 </div>
                 <Button
-                    style={{ height: `${s(110)}px`, opacity: activeIndex === openGroups.length - 1 ? 0 : 1 }}
+                    style={{
+                        height: `${s(110)}px`,
+                        opacity: activeIndex === openGroups.length - 1 ? 0 : openGroups.length === 0 ? 0 : 1,
+                    }}
                     onClick={() => setActiveIndex((old) => old + 1)}
                     disabled={activeIndex === openGroups.length - 1}
                 >

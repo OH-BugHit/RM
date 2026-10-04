@@ -48,7 +48,7 @@
     margin: 0;
 
     max-width: 55ch;
-
+    white-space: pre-wrap;
     font-size: clamp(1rem, 2.5dvh, 1.25rem);
     line-height: 1.5;
     text-align: center;

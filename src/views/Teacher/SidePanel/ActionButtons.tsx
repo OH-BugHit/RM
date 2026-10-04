@@ -53,7 +53,7 @@ export default function ActionButtons() {
                     data-testid="action-button"
                     aria-label={t('sidePanel.actions.connectUsers')}
                 >
-                    <QrCode2Icon />
+                    <QrCode2Icon sx={{ color: 'black' }} />
                 </IconButton>
             </Tooltip>
         </div>

@@ -53,8 +53,9 @@
     overflow-y: auto;
     overflow-x: hidden;
     scroll-behavior: smooth;
+    padding-bottom: 10px;
     border-radius: 1rem;
-    background-color: #ffe5c3;
+    background-color: #fff1d054;
 }
 
 .libraryScrollArea::-webkit-scrollbar {

@@ -15,7 +15,7 @@ export default function UserGridItem({ username, alive, profilePicture }: Props)
     return (
         <button
             aria-pressed={selectedUser.username === username}
-            className={style.gridItem}
+            className={`${style.gridItem} ${selectedUser.username === username ? style.selected : ''}`}
             onClick={(e: MouseEvent) => {
                 setSelectedUser((old) =>
                     old.username === username

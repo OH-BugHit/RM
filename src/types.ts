@@ -424,7 +424,7 @@ export type Offset = { dx: number; dy: number };
 export type View = {
     main?: MainView;
     sub?: SubView;
-    overlay?: Overlay | TeacherDialogs;
+    overlay?: Overlay;
 };
 export type SinglePlayViews = 'ownLevels' | 'play' | 'build';
 export type StudentViews = 'join' | 'main' | GamePhase | SinglePlayViews;
@@ -437,7 +437,7 @@ export type GroupType = 'basic' | 'rewards' | 'exploreExploit' | 'observation' |
 
 export type MainView = 'frontpage' | TeacherViews | StudentViews;
 export type SubView = 'playLevel' | 'agent' | 'environment' | 'rewards' | 'interaction' | null;
-export type Overlay = 'import' | 'share' | 'menu' | 'backgroundDialog' | null;
+export type Overlay = 'import' | 'share' | 'menu' | 'backgroundDialog' | TeacherDialogs | null;
 
 export type GenericObservation = {
     neighbours: CellType[];

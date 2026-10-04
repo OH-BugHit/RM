@@ -32,6 +32,17 @@ export function fromSavedCell(cell: CellSave): Cell {
     };
 }
 
+/**
+ * Restores imagerepresentation of emoji. Used by teacher in play tournament.
+ */
+export function loadMissingImagesFromEmojis(cell: CellSave): CellSave {
+    return {
+        ...cell,
+        emoji: cell.emoji || '',
+        image: restoreImage(cell.image, cell.emoji),
+    };
+}
+
 export async function loadSavePreview(file: File): Promise<SavePreview> {
     const zip = await JSZip.loadAsync(file);
 
@@ -84,7 +95,6 @@ async function readJson<T>(zip: JSZip, path: string): Promise<T> {
 
 /**
  * Preprecesses input file to Environment and game data
- * TODO: Implement, this is just placeholder
  */
 export async function readSavedFile(file: File): Promise<LoadedGame> {
     const zip = await JSZip.loadAsync(file);

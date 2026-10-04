@@ -1,4 +1,4 @@
-import { LargeButton } from '@genai-fi/base';
+import { Button } from '@genai-fi/base';
 import style from './wizard.module.css';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -9,7 +9,7 @@ import Stepper from '../../SlideShow/Stepper';
 import TypeOptions from './TypeOptions';
 import TileOptions from './TileOptions';
 import { BASIC_CELL_TYPE_OPTIONS, Cell, CellType, TileDefinition, TileLibraryItem } from '../../../types';
-import { CurrentTileToolAtom, StoryProgressAtom, TilePropsAtom } from '../../../atoms/uiState';
+import { BuildCAtom, CurrentTileToolAtom, StoryProgressAtom, TilePropsAtom } from '../../../atoms/uiState';
 import { InnerFillCellAtom, WorldGridRenderAtom } from '../../../atoms/gameState';
 import { EmojiItem } from '../TileLibrary/emojiLibraryData';
 import { emojiToDataUrl } from '../../../utils/import';
@@ -36,6 +36,7 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
     const [storyProgress, setStoryProgress] = useAtom(StoryProgressAtom);
     const setWorldGrid = useSetAtom(WorldGridRenderAtom);
     const setInnerFill = useSetAtom(InnerFillCellAtom);
+    const setBuild = useSetAtom(BuildCAtom);
 
     useEffect(() => {
         return () => {
@@ -262,7 +263,7 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
         >
             <div className={style.wizardControlsLeft}>
                 {page === 1 ? (
-                    <LargeButton
+                    <Button
                         variant="outlined"
                         color="inherit"
                         className={style.actionButton}
@@ -271,7 +272,7 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                         startIcon={<ArrowBackIosNewIcon />}
                     >
                         {t('wizard.actions.back')}
-                    </LargeButton>
+                    </Button>
                 ) : (
                     <div style={{ width: Math.min(96, s(96)) }} />
                 )}
@@ -283,15 +284,17 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                 />
             </div>
             <div className={style.wizardControlsRight}>
-                <LargeButton
+                <Button
                     variant="outlined"
                     color="info"
+                    style={{ height: `${Math.max(30, s(48))}px` }}
+                    onClick={() => setBuild({ create: false, settings: false, tools: false })}
                     className={style.actionButton}
                 >
-                    Close
-                </LargeButton>
+                    {t('common.close')}
+                </Button>
                 {page === 0 ? (
-                    <LargeButton
+                    <Button
                         color="primary"
                         className={style.actionButton}
                         variant="contained"
@@ -301,10 +304,10 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                         aria-live="off"
                     >
                         {t('wizard.actions.continue')}
-                    </LargeButton>
+                    </Button>
                 ) : (
                     <>
-                        <LargeButton
+                        <Button
                             title={loading ? t('import.actions.loadingImage') : t('import.actions.setImage')}
                             className={style.actionButton}
                             variant="contained"
@@ -314,7 +317,7 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                             disabled={!hasSelection || selectedType === null || selectedTile === null || loading}
                         >
                             {loading ? t('import.actions.loadingImage') : t('import.actions.setImage')}
-                        </LargeButton>
+                        </Button>
                     </>
                 )}
             </div>

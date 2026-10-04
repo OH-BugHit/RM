@@ -1,14 +1,14 @@
-import { useViewNavigation } from '../../../../hooks/useViewNavigation';
+import { useViewNavigation } from '../../../hooks/useViewNavigation';
 import style from './menuIcon.module.css';
-import { MenuOpenAtom } from '../../../../atoms/uiState';
+import { MenuOpenAtom } from '../../../atoms/uiState';
 import { useAtom } from 'jotai';
-import { useGameScale } from '../../../../context/GameScale/useGameScale';
+import { useGameScale } from '../../../context/GameScale/useGameScale';
 
 interface MenuIconProps {
     size?: number;
 }
 
-export default function MenuButton({ size = 84 }: MenuIconProps) {
+export default function MenuIcon({ size = 84 }: MenuIconProps) {
     const { s } = useGameScale();
     const { goToView } = useViewNavigation();
     const [isOpen] = useAtom(MenuOpenAtom);

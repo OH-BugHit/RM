@@ -8,11 +8,12 @@ import MessageDisplay from '../../../components/MessageDisplay/MessageDisplay';
 import { ActiveViewAtom } from '../../../atoms/uiState';
 import Levels from '../Levels/Levels';
 import MainMenu from './MainMenu/MainView';
-import MenuButton from '../../../components/Buttons/ButtonIcons/OtherIcons/MenuIcon';
 import BuildView from '../../BuildView/BuildView';
 import StudentTournamentWrapper from './Tournament/StudentTournamentWrapper';
 import ScoreBridge from './ScoreBridge';
 import PauseLayer from '../../../components/Pause/PauseLayer';
+import MenuButton from '../../../components/Buttons/MenuButton/MenuButton';
+import Settings from '../../Settings/Settings';
 
 interface StudentProps {
     serverCode?: string;
@@ -62,6 +63,7 @@ export default function Student({ serverCode }: StudentProps) {
             <MenuButton />
             <MessageDisplay open={showError} />
             <MainMenu />
+            <Settings mode="student" />
             {config.phase === 'levels' && view.main === 'levels' && <Levels view={view.sub} />}
             {config.phase === 'tournamentBuild' && view.main === 'tournamentBuild' && (
                 <BuildView

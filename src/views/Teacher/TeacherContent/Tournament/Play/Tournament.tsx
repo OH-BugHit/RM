@@ -11,7 +11,10 @@ export default function Tournament() {
 
     return (
         <div className={style.container}>
-            <SelectChallenge visible={openSelect} />
+            <SelectChallenge
+                visible={openSelect}
+                setVisible={setOpenSelect}
+            />
             <div className={style.title}>
                 <h1>Tournament</h1>
             </div>

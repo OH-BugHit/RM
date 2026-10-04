@@ -141,10 +141,10 @@ export default function ServerProtocol() {
                 } // TODO: Here is one good place to implement random profile picture if we would like one? Just memo note here..
             }
         } else if (data.event === 'eter:modelRequest') {
-            if (levelObject) {
+            if (tournamentLevelFile) {
                 conn.send({
-                    event: 'eter:levelTransfer',
-                    data: levelObject,
+                    event: 'eter:envTransfer',
+                    data: { studentId: '', file: tournamentLevelFile },
                 });
             } else {
                 console.warn('Level not found when requested by student');
@@ -277,7 +277,7 @@ export default function ServerProtocol() {
 
     return (
         <ConnectionStatus
-            api={import.meta.env.VITE_APP_APIURL}
+            api={import.meta.env.VITE_APP_PS}
             appName={'reward'}
             visibility={2}
         />

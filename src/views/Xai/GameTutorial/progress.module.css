@@ -21,4 +21,5 @@
 
 .progressContent li {
     margin-left: 0;
+    display: flex;
 }

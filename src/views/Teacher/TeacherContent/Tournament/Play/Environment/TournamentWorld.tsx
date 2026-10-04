@@ -5,22 +5,17 @@ import { QPolicyAgent } from '../../../../../../components/agents/policyQagent';
 import Tile from '../../../../../../components/EnvironmentRender/Tile';
 import RewardFloats from '../../../../../../components/RewardFloats.tsx/RewardFloats';
 import { CellSave } from '../../../../../../utils/types';
+import { useGameScale } from '../../../../../../context/GameScale/useGameScale';
 
 interface worldComponentProps {
     worldGrid: React.RefObject<CellSave[][]>;
-    tileSize?: number;
     agentsRef: React.RefObject<QPolicyAgent[] | undefined>;
     floatItems: FloatItem[];
     deactivate: (id: number) => void;
 }
 
-export default function TournamentWorld({
-    worldGrid,
-    tileSize = 40,
-    floatItems,
-    deactivate,
-    agentsRef,
-}: worldComponentProps) {
+export default function TournamentWorld({ worldGrid, floatItems, deactivate, agentsRef }: worldComponentProps) {
+    const { s } = useGameScale();
     const agents = agentsRef.current;
 
     if (!worldGrid.current || !agents) return null;
@@ -34,8 +29,8 @@ export default function TournamentWorld({
             className={style.worldContainer}
             style={{
                 display: 'grid',
-                gridTemplateColumns: `repeat(${width}, ${tileSize}px)`,
-                gridTemplateRows: `repeat(${height}, ${tileSize}px)`,
+                gridTemplateColumns: `repeat(${width}, ${s(40)}px)`,
+                gridTemplateRows: `repeat(${height}, ${s(40)}px)`,
             }}
         >
             {worldGrid.current.map((row, y) =>
@@ -43,7 +38,7 @@ export default function TournamentWorld({
                     <div key={`${x}-${y}`}>
                         <Tile
                             cell={{ ...cell, reloadTime: 0, timer: 0 }}
-                            tileSize={tileSize}
+                            tileSize={s(40)}
                             agentLocations={positions}
                             cellLocation={{ x: x, y: y }}
                             worldHeight={height}
@@ -54,7 +49,7 @@ export default function TournamentWorld({
             )}
             <RewardFloats
                 items={floatItems}
-                cellSize={40}
+                cellSize={s(40)}
                 onComplete={deactivate}
             />
         </div>

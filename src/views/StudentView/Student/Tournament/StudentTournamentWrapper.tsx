@@ -7,6 +7,7 @@ import { ControlEnablerAtom, HUDvisAtom, TileVisibilityAtom } from '../../../../
 import { playHudVis, visibleTilesTrue } from '../../../../utils/defaults';
 import { QLearningAgent } from '../../../../components/agents/rlAgentQ';
 import AgentSendBridge from '../AgentSendBridge';
+import { Spinner } from '@genai-fi/base';
 
 export default function StudentTournamentWrapper() {
     const agentRef = useRef<QLearningAgent>(undefined);
@@ -56,7 +57,13 @@ export default function StudentTournamentWrapper() {
     }, [tournamentFile, store]);
 
     if (!tournamentFile) {
-        return <div>Turnausta ei ole ladattu.</div>;
+        return (
+            <div>
+                <Spinner />
+                <br />
+                Turnausta ei ole ladattu.
+            </div>
+        );
     }
 
     if (!loaded) {

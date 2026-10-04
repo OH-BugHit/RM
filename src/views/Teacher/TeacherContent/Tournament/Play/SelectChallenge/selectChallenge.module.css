@@ -2,11 +2,10 @@
     position: absolute;
     top: 50%;
     left: 50%;
+    display: flex;
     transform: translate(-50%, -50%);
     opacity: 0;
-    height: max-content;
-    width: max-content;
-    background: var(--border-grey);
+    background: var(--light-element);
     color: rgb(4, 4, 4);
     padding: 2.4rem 2rem 2rem 2rem;
     border-radius: 10% / 420%;
@@ -21,12 +20,13 @@
     border-radius: 80% 80% 80% 80% / 2% 2% 2% 2%;
     border: 2px solid var(--border-grey);
     box-shadow:
-        0 18px 30px rgba(195, 195, 195, 0.631),
+        0 18px 30px rgba(147, 205, 205, 0.565),
         0 5px 1px rgba(215, 215, 215, 0.761),
         inset 8px 8px 8px rgba(255, 255, 255, 0.452),
         inset -1px -1px 2px rgba(205, 205, 205, 0.553);
     justify-content: center;
     align-content: center;
+    width: max-content;
     overflow: hidden;
     z-index: 99;
 }
@@ -34,12 +34,17 @@
 .content {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 3rem;
     padding: 1rem;
 }
 
 .levels {
     position: relative;
+    max-height: 80dvh;
+    width: 70dvw;
+    overflow: auto;
     display: flex;
     flex-direction: column;
     padding: 2rem;
@@ -59,4 +64,5 @@
 
 .active {
     background: var(--info-light);
+    scale: 1.2;
 }

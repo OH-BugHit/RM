@@ -120,7 +120,7 @@ export default function Frontpage() {
                             <Button
                                 style={{
                                     scale: '-1',
-                                    transform: `translateY(${s(2)}rem)`,
+                                    transform: `translateY(-25%)`,
                                 }}
                                 onClick={() => setMode('unset')}
                                 key="goBackToMode"

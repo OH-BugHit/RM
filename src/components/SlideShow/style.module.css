@@ -1,5 +1,31 @@
 @value backgroundDark, textDark from "@genai-fi/base/css/colours.module.css";
 
+.titleRow {
+    display: flex;
+    flex: 0 0 auto;
+    background: rgb(255, 242, 144);
+    border-radius: 2.4rem 2.4rem 0 0;
+    align-items: stretch;
+    overflow: hidden;
+    width: 100%;
+}
+
+.title {
+    flex: 0 0 auto;
+    background: rgb(255, 242, 144);
+    position: relative;
+    min-width: 40%;
+}
+
+.stripes {
+    flex: 1;
+    background: repeating-linear-gradient(-45deg,
+            #000000a1 0,
+            #000000e8 24px,
+            transparent 24px,
+            transparent 48px);
+}
+
 .container {
     position: relative;
     display: flex;
@@ -24,15 +50,15 @@
 .slideControls::before {
     content: "";
     position: absolute;
-    top: -20px;
+    top: -24px;
     left: 0;
     width: 100%;
-    height: 20px;
+    height: 24px;
     background: linear-gradient(to bottom,
             transparent 0%,
-            rgba(255, 255, 255, 0.423) 40%,
-            white 80%,
-            white 100%);
+            rgba(255, 255, 255, 0.423) 7%,
+            rgba(255, 255, 255, 0.92) 50%,
+            rgba(255, 255, 255, 1) 100%);
     pointer-events: none;
     z-index: 1;
 }

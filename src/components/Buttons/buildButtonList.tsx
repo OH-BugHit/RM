@@ -15,7 +15,7 @@ type ButtonShape = {
 };
 
 const DESIGN_HEIGHT = 1080;
-const VIEWPORT_GAP = 140;
+const VIEWPORT_GAP = 10;
 
 export function getBuildButtons(scale: number = 1, scaleWidth: number = 1): ButtonShape[] {
     const h = DESIGN_HEIGHT * scale;

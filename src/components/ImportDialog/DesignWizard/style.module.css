@@ -22,16 +22,6 @@
 }
 
 
-.titleRow {
-    display: flex;
-    flex: 0 0 auto;
-    background: rgb(255, 242, 144);
-    border-radius: 2.4rem 2.4rem 0 0;
-    align-items: stretch;
-    overflow: hidden;
-    width: 100%;
-}
-
 .helpMessage {
     position: absolute;
     right: 4px;
@@ -39,21 +29,6 @@
 }
 
 
-.title {
-    flex: 0 0 auto;
-    background: rgb(255, 242, 144);
-    position: relative;
-    min-width: 40%;
-}
-
-.stripes {
-    flex: 1;
-    background: repeating-linear-gradient(-45deg,
-            #000000a1 0,
-            #000000e8 24px,
-            transparent 24px,
-            transparent 48px);
-}
 
 .selectModelMessage {
     display: flex;
@@ -86,8 +61,8 @@
     border-radius: 12px;
     background: rgba(0, 0, 0, 0.02);
     padding: 12px;
-    background-color: #ffe5c3;
-        border-radius: 1rem;
+    background-color: #fee98b36;
+    border-radius: 1rem;
 }
 
 .previewSection h2 {
@@ -192,7 +167,8 @@
     display: flex;
     flex-direction: column;
     padding: 1rem 0 1rem;
-    gap: 12px;
+    gap: 8px;
+    justify-content: space-evenly;
     align-items: center;
     height: 100%;
     overflow: auto;

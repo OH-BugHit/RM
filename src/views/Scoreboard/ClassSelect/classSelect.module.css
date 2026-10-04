@@ -20,7 +20,7 @@
     flex-direction: column;
     text-align: center;
     /*background-color: rgba(50, 121, 208, 0.278);*/
-    background: linear-gradient(45deg, var(--bg-subdued3), rgba(19, 62, 123, 0));
+    background: #17bdd7a5;
     border-radius: 2rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
@@ -36,7 +36,8 @@
 
 .selectedTermItem {
     composes: termItem;
-    background: linear-gradient(45deg, var(--bg-colorful3), #2367e613);
+    background: #1ae0ffa5;
+    box-shadow: 2px 2px 4px #444;
     color: white;
 }
 
@@ -49,7 +50,7 @@
 
 .termItem:focus {
     /*transform: scale(1.1, 1.1);*/
-    box-shadow: 0 0 8px rgba(45, 236, 239, 0.309);
+    box-shadow: 2px 2px 4px #1b1b1b;
     ;
 }
 

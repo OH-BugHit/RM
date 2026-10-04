@@ -55,10 +55,10 @@
 
     <!-- Tumma, syvä taustagradientti -->
     <radialGradient id="darkBgGradient" cx="50%" cy="40%" r="80%">
-      <stop offset="0%" stop-color="#fdf9f3" />
-      <stop offset="40%" stop-color="#f4ebe1" />
-      <stop offset="80%" stop-color="#e2f0e3" />
-      <stop offset="100%" stop-color="#d3ebd5" />
+      <stop offset="0%" stop-color="#f7feff" />
+      <stop offset="40%" stop-color="#ebf7fa" />
+      <stop offset="80%" stop-color="#d1edf2" />
+      <stop offset="100%" stop-color="#b8eaf2" />
     </radialGradient>
 
     <!-- Pystysuuntainen saumaton kuvio (400 x 800 px) -->

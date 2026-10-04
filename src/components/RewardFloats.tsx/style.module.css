@@ -13,4 +13,5 @@
     font-size: xx-large;
     border-radius: 999px;
     padding: var(--padding-reward);
+    z-index: 10;
 }

@@ -4,6 +4,7 @@ import { renderWorldPreview } from '../../../../components/EnvironmentRender/ren
 import { Level } from '../../../../types';
 import { useAtomValue } from 'jotai';
 import { studentResultsAtom } from '../../../../atoms/state';
+import { useTranslation } from 'react-i18next';
 
 interface LevelItemProps {
     level: Level;
@@ -12,6 +13,7 @@ interface LevelItemProps {
 }
 
 export default function LevelItem({ level, selected = false, score = true }: LevelItemProps) {
+    const { t } = useTranslation();
     const [preview, setPreview] = useState<string | null>(null);
     const [studentScore, setStudentScore] = useState<number>(0);
     const results = useAtomValue(studentResultsAtom);
@@ -49,11 +51,12 @@ export default function LevelItem({ level, selected = false, score = true }: Lev
                         <img
                             src={preview}
                             alt={level.level.manifest.gameName}
+                            style={{ pointerEvents: 'none' }}
                         />
 
                         {score && (
                             <div className={style.score}>
-                                Highscore: <b>{studentScore}</b>
+                                {t('common.labels.highscore')}: <b>{studentScore}</b>
                             </div>
                         )}
                     </>

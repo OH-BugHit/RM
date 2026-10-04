@@ -47,6 +47,7 @@
         ]
     },
     "app": {
+        "cancel": "Cancel",
         "github": "Github",
         "goPhase": "Or play singleplayer",
         "phases": {
@@ -62,11 +63,26 @@
                 "yourWorld": "For other users"
             }
         },
+        "reportProblem": "Feedback",
+        "reportProblemTip": "Report an issue or idea to us.",
+        "report": {
+            "title": "Feedback or Bug",
+            "reason": "Reason",
+            "bug": "There is a problem",
+            "feedback": "I have a suggestion",
+            "other": "Other reason",
+            "message": "Message",
+            "send": "Send",
+            "error": "Failed to send report."
+        },
         "teachingMaterials": "Teaching Materials"
     },
     "common": {
         "actions": {
             "startLevel": "Start Level"
+        },
+        "labels": {
+            "highscore": "Highscore"
         },
         "cancel": "Cancel",
         "cell": {
@@ -280,7 +296,7 @@
             },
             "nextLevelInfo": "The next level will introduce you to the concept of rewards. The agent learns from the rewards it receives while playing and remembers which actions were rewarded the most in different situations.",
             "postMessage": "In this level, you learned how the game works. You taught your agent to reach the goal successfully! In reinforcement learning, an agent learns by playing and interacting with the game.",
-            "preMessage": "In reinforcement learning, an agent learns by playing and interacting with the game. Your goal is to teach your agent how to play. First, complete the tasks to set up the game and help your agent learn. Then, test your agent to see if it has learned to complete the level."
+            "preMessage": "In reinforcement learning, an agent learns by playing and interacting with the game. Your goal is to teach your agent how to play.\nFirst, complete the tasks to set up the game and help your agent learn. Then, test your agent to see if it has learned to complete the level."
         },
         "2": {
             "tasks": {
@@ -332,7 +348,7 @@
                 "5": "In this game it is called \"Curiosity\".",
                 "6": "This parameter tunes how often agent selects random action on instead of best action it knows.",
                 "7": "Usually 0.1 (10% propability!) is enough, but in this level you may need keep it higher for at least some time that your agent explores enough.",
-                "8": "Good luck! You can reset agents memory from trash button near agent menu. BTW: For test phase the Curiosity is set to 0 and it follows the best learned policy."
+                "8": "Good luck! You can reset agents memory from trash button near agent menu. For test phase the Curiosity is set to 0 and it follows the best learned policy."
             },
             "nextLevelInfo": "At the next level we take a glimpse how agent actually observes the environment. We also take a look to how it stores its' learned.",
             "postMessage": "This level taught you about exploration vs exploitation dilemma: The agent can not know what is the ultimate reward, but it has to stop looking at some point.",
@@ -478,6 +494,20 @@
             "resultPictures": "Result Pictures",
             "scores": "Scores",
             "standings": "Standings"
+        }
+    },
+    "settings": {
+        "labels": {
+            "autoGrow": "Adjust grid automatically",
+            "scoreboardLimit": "Limit scoreboard to {{limit}} best scores",
+            "showCrowns": "Show crowns for top three",
+            "showFullScoreboard": "Show all scores on scoreboard",
+            "userGridMaxColumns": "User grid view size"
+        },
+        "titles": {
+            "general": "General",
+            "settings": "Settings",
+            "userGridSettings": "Grid view settings"
         }
     },
     "sidePanel": {
@@ -767,6 +797,17 @@
             "taskScare": "Scare away the burglar",
             "title": "Tasks",
             "tutorialCompletion": "Tutorial completion"
+        }
+    },
+    "userGrid": {
+        "actions": {
+            "kickUser": "Kick user",
+            "deleteUser": "Remove user from game",
+            "selectUser": "Select user by clicking",
+            "selectLabel": "Label to reset"
+        },
+        "titles": {
+            "users": "Users"
         }
     },
     "winScreen": {

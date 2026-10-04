@@ -53,6 +53,9 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
             // Sets configuration of the game, such as pause and phase.
             setConfig(data.configuration);
             conn.send({ event: 'eter:alive', user: { username: ownUsername } }); // Alive signal
+            if (data.configuration.phase === 'tournamentPlay') {
+                conn.send({ event: 'eter:modelRequest' });
+            }
         } else if (data.event === 'eter:userlist') {
             setAvailableUsernames(data.available);
             setTakenUsernames(data.taken);
@@ -134,7 +137,7 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
             {hasBeenReady && children}
             <div style={{ position: 'absolute', top: '0.6rem', right: '0.6rem', pointerEvents: 'none' }}>
                 <ConnectionStatus
-                    api={import.meta.env.VITE_APP_APIURL}
+                    api={import.meta.env.VITE_APP_PS}
                     appName={'reward'}
                     visibility={1}
                 />

@@ -5,7 +5,8 @@
     align-items: center;
     border-radius: 1vw;
     overflow: auto;
-    background: rgba(211, 203, 109, 0.241);
+    background: #fad6305e;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.746);
 }
 
 .buttonTitle {
@@ -41,9 +42,10 @@
 
 .activeType {
     border-color: rgb(26, 220, 23);
-    background: rgba(86, 226, 47, 0.188);
+    background: rgba(214, 255, 176, 0.701);
     color: primary;
     font-weight: 600;
+    scale: 1.04;
 }
 
 .disabled {
