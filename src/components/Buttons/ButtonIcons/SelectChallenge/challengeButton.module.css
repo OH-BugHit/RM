@@ -35,7 +35,7 @@
 /* Hover */
 
 .button:hover .background {
-    stroke: #ffff8d;
+    stroke: var(--primary-light);
 }
 
 .button:hover .gridWorld {
@@ -52,12 +52,12 @@
 }
 
 .button:hover .text {
-    fill: #ffffff;
+    fill: #f9fce5;
     filter: drop-shadow(0 0 4px rgba(154, 248, 255, 0.35));
 }
 
 .button:hover .arrow {
-    stroke: #ffffff;
+    stroke: #f9fce5;
     filter: drop-shadow(0 0 5px rgba(110, 234, 255, 0.5));
 }
 

@@ -12,8 +12,9 @@ import BuildView from '../../BuildView/BuildView';
 import StudentTournamentWrapper from './Tournament/StudentTournamentWrapper';
 import ScoreBridge from './ScoreBridge';
 import PauseLayer from '../../../components/Pause/PauseLayer';
-import MenuButton from '../../../components/Buttons/MenuButton/MenuButton';
 import Settings from '../../Settings/Settings';
+import MenuIcon from '../../../components/Buttons/MenuButton/MenuIcon';
+import { MENU_AT_TOP } from '../../../types';
 
 interface StudentProps {
     serverCode?: string;
@@ -60,9 +61,17 @@ export default function Student({ serverCode }: StudentProps) {
         <div className={style.studentContainer}>
             <PauseLayer />
             <ScoreBridge />
-            <MenuButton />
+            <MenuIcon
+                position={
+                    view.sub === 'playLevel'
+                        ? 'right'
+                        : view.main && MENU_AT_TOP.includes(view.main)
+                          ? 'top-right'
+                          : 'right'
+                }
+            />
             <MessageDisplay open={showError} />
-            <MainMenu />
+            <MainMenu mode="classroom" />
             <Settings mode="student" />
             {config.phase === 'levels' && view.main === 'levels' && <Levels view={view.sub} />}
             {config.phase === 'tournamentBuild' && view.main === 'tournamentBuild' && (

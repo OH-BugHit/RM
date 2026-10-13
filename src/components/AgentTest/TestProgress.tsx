@@ -42,7 +42,6 @@ export default function TestProgress({ target = 5 }: TestProgressProps) {
     useEffect(() => {
         if (active === 'isRunning' && testWin.beatsScore >= target && !completedRef.current) {
             completedRef.current = true;
-            console.log('level completed');
             setTest('passed');
 
             setHudVis((old) => ({

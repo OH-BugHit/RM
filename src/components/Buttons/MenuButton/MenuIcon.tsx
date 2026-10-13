@@ -6,9 +6,10 @@ import { useGameScale } from '../../../context/GameScale/useGameScale';
 
 interface MenuIconProps {
     size?: number;
+    position?: 'right' | 'top-right';
 }
 
-export default function MenuIcon({ size = 84 }: MenuIconProps) {
+export default function MenuIcon({ size = 84, position = 'right' }: MenuIconProps) {
     const { s } = useGameScale();
     const { goToView } = useViewNavigation();
     const [isOpen] = useAtom(MenuOpenAtom);
@@ -19,7 +20,10 @@ export default function MenuIcon({ size = 84 }: MenuIconProps) {
         });
     };
     return (
-        <div className={style.menuButtonContainer}>
+        <div
+            className={style.menuButtonContainer}
+            style={{ top: position === 'right' ? '50%' : '0px' }}
+        >
             <button
                 className={`${style.menuButton} ${isOpen ? style.isOpen : ''}`}
                 type="button"

@@ -1,6 +1,6 @@
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom, useAtomValue, useStore } from 'jotai';
 import style from './win.module.css';
-import { LevelConfAtom, TestAgentAtom } from '../../../atoms/gameState';
+import { LevelConfAtom, LevelMapNodesAtom, TestAgentAtom } from '../../../atoms/gameState';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@genai-fi/base';
 import Separator from '../../../components/Separator/Separator';
@@ -11,8 +11,33 @@ export default function WinScreen() {
     const [level] = useAtom(LevelConfAtom);
     const vis = useAtomValue(TestAgentAtom);
     const { goToView } = useViewNavigation();
+    const store = useStore();
 
     const onNextLevel = () => {
+        if (level) {
+            const nodes = store.get(LevelMapNodesAtom);
+
+            const currentNode = nodes.find(
+                (node) =>
+                    node.level.level.manifest.gameName === level.level.manifest.gameName && node.kind === 'required'
+            );
+
+            if (currentNode) {
+                const updatedNodes = nodes.map((node) => {
+                    if (node.groupType === currentNode.groupType && node.kind === 'bonus') {
+                        return {
+                            ...node,
+                            allowed: true,
+                        };
+                    }
+
+                    return node;
+                });
+
+                store.set(LevelMapNodesAtom, updatedNodes);
+            }
+        }
+
         goToView({
             main: 'levels',
             sub: null,

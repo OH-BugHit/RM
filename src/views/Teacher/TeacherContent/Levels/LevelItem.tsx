@@ -10,9 +10,10 @@ interface LevelItemProps {
     level: Level;
     selected?: boolean;
     score?: boolean;
+    cellSize?: number;
 }
 
-export default function LevelItem({ level, selected = false, score = true }: LevelItemProps) {
+export default function LevelItem({ level, selected = false, score = true, cellSize = 40 }: LevelItemProps) {
     const { t } = useTranslation();
     const [preview, setPreview] = useState<string | null>(null);
     const [studentScore, setStudentScore] = useState<number>(0);
@@ -21,7 +22,7 @@ export default function LevelItem({ level, selected = false, score = true }: Lev
     useEffect(() => {
         const loadPreview = async () => {
             try {
-                const canvas = await renderWorldPreview(level.level.game.world);
+                const canvas = await renderWorldPreview(level.level.game.world, cellSize);
                 const previewUrl = canvas.toDataURL();
                 setPreview(previewUrl);
             } catch (err) {
@@ -31,7 +32,7 @@ export default function LevelItem({ level, selected = false, score = true }: Lev
         };
 
         loadPreview();
-    }, [level]);
+    }, [level, cellSize]);
 
     useEffect(() => {
         const topScore = results.data.get(level.level.manifest.gameName);
@@ -54,7 +55,7 @@ export default function LevelItem({ level, selected = false, score = true }: Lev
                             style={{ pointerEvents: 'none' }}
                         />
 
-                        {score && (
+                        {score && studentScore > 0 && (
                             <div className={style.score}>
                                 {t('common.labels.highscore')}: <b>{studentScore}</b>
                             </div>

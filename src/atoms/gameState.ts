@@ -16,6 +16,8 @@ import { getDefaultObservation } from '../components/GameComponents/agentProps';
 import { ChartState } from '../components/Charts/rewardStreamEngine';
 import { defaultCell, defaultEnvSettings } from '../utils/defaults';
 import { basicsLevel1 } from '../utils/levels/1basics/leveldata';
+import { levelMapNodes } from '../views/StudentView/Levels/LevelSelect/LevelMap/levelMapData';
+import { LevelMapNode } from '../views/StudentView/Levels/LevelSelect/LevelMap/levelMapTypes';
 
 export const SmallObsAtom = atom<GenericObservation>(getDefaultObservation('small'));
 export const LargeObsAtom = atom<GenericObservation>(getDefaultObservation('large'));
@@ -49,6 +51,11 @@ export const LevelConfAtom = atom<Level | undefined>(basicsLevel1);
  * If test phase active
  */
 export const TestAgentAtom = atom<AgentTest>('no');
+
+/**
+ * Contains completed levels
+ */
+export const LevelMapNodesAtom = atom<LevelMapNode[]>(levelMapNodes);
 
 // Set true to activate. Disarms itself
 export const FireWorksPulseAtom = atom<FireworkPulse>({ highScore: false, bestScore: false });

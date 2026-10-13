@@ -22,11 +22,11 @@ export default function ChallengeButton({ text = 'Select Challenge', isOpen = fa
                 >
                     <stop
                         offset="0"
-                        stopColor="#c3855c"
+                        stopColor="var(--primary-light)" /*stopColor="#c3855c"*/
                     />
                     <stop
                         offset="1"
-                        stopColor="#412f17"
+                        stopColor="var(--primary)"
                     />
                 </linearGradient>
 
@@ -57,7 +57,7 @@ export default function ChallengeButton({ text = 'Select Challenge', isOpen = fa
                 height="102"
                 rx="22"
                 fill="url(#challengeButtonBg)"
-                stroke="#ffd86e"
+                stroke="var(--border-gray)"
                 strokeWidth="4"
             />
 
@@ -70,7 +70,7 @@ export default function ChallengeButton({ text = 'Select Challenge', isOpen = fa
                 height="90"
                 rx="17"
                 fill="none"
-                stroke="#7f6638"
+                stroke="#387f5e"
                 strokeWidth="2"
             />
 
@@ -82,8 +82,8 @@ export default function ChallengeButton({ text = 'Select Challenge', isOpen = fa
                 <circle
                     className={style.gridCircle}
                     r="29"
-                    fill="#692204"
-                    stroke="#ffdd6e"
+                    fill="#04694c"
+                    stroke="#6efdff"
                     strokeWidth="3"
                 />
 
@@ -94,7 +94,7 @@ export default function ChallengeButton({ text = 'Select Challenge', isOpen = fa
                     height="36"
                     rx="3"
                     fill="none"
-                    stroke="#ffe79a"
+                    stroke="#9afaff"
                     strokeWidth="3"
                 />
 
@@ -106,7 +106,7 @@ export default function ChallengeButton({ text = 'Select Challenge', isOpen = fa
                         M-18 6 H18
                     "
                     fill="none"
-                    stroke="#f0ff9a"
+                    stroke="#9af2ff"
                     strokeWidth="2.5"
                     strokeLinecap="round"
                 />
@@ -118,7 +118,7 @@ export default function ChallengeButton({ text = 'Select Challenge', isOpen = fa
                     width="10"
                     height="10"
                     rx="2"
-                    fill="#ffe96e"
+                    fill="#95f6ee"
                 />
             </g>
 
@@ -132,7 +132,7 @@ export default function ChallengeButton({ text = 'Select Challenge', isOpen = fa
                 fontSize="27"
                 fontWeight="700"
                 letterSpacing="0.5"
-                fill="#fffc9a"
+                fill="var(--text-light)"
             >
                 {text}
             </text>
@@ -142,7 +142,7 @@ export default function ChallengeButton({ text = 'Select Challenge', isOpen = fa
                 className={`${style.arrow} ${isOpen ? style.arrowOpen : ''}`}
                 d="M370 64 L382 52 L394 64"
                 fill="none"
-                stroke="#ffe06e"
+                stroke="var(--text-light)"
                 strokeWidth="4"
                 strokeLinecap="round"
                 strokeLinejoin="round"

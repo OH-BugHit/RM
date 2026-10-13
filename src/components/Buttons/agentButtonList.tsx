@@ -16,7 +16,6 @@ type ButtonShape = {
 };
 
 export function getAgentButtons(scale: number = 1, scaleWidth: number = 1): ButtonShape[] {
-    console.log(scaleWidth);
     return [
         {
             id: 'img',

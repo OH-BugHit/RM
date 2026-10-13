@@ -10,8 +10,13 @@ import { IconButton } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAtomValue } from 'jotai';
 import { ActiveViewAtom } from '../../../../atoms/uiState';
+import { t } from 'i18next';
 
-export default function MainMenu() {
+interface MainMenuProps {
+    mode?: 'single' | 'classroom';
+}
+
+export default function MainMenu({ mode = 'single' }: MainMenuProps) {
     const view = useAtomValue(ActiveViewAtom);
     const { s, scaleWidth, scale } = useGameScale();
     const { goToView } = useViewNavigation();
@@ -53,35 +58,37 @@ export default function MainMenu() {
                             ease: 'easeInOut',
                         }}
                         style={{
-                            height: s(500),
+                            height: 'max-content',
+                            padding: '1.1rem 0',
                         }}
                     >
                         <div className={style.content}>
-                            <h1 style={{ fontFamily: 'Tektur', scale: 0.9 }}>Reward Machine</h1>
-
-                            <div
-                                className={style.mainActions}
-                                style={{ width: `${Math.min(500, scaleWidth * 700)}px` }}
-                            >
-                                <MenuItem
-                                    height={s(60)}
-                                    width={scaleWidth * 260}
-                                    title="Levels"
-                                    onSelect={() => onSelect('levels')}
-                                />
-                                <MenuItem
-                                    height={s(60)}
-                                    width={scaleWidth * 260}
-                                    title="Recap"
-                                    onSelect={() => onSelect('recap')}
-                                />
-                                <MenuItem
-                                    height={s(60)}
-                                    width={scaleWidth * 260}
-                                    title="Create"
-                                    onSelect={() => onSelect('ownLevels')}
-                                />
-                            </div>
+                            <h1 style={{ fontFamily: 'Tektur', scale: 0.9 }}>{t('common.title')}</h1>
+                            {mode === 'single' && (
+                                <div
+                                    className={style.mainActions}
+                                    style={{ width: `${Math.min(500, scaleWidth * 700)}px` }}
+                                >
+                                    <MenuItem
+                                        height={s(60)}
+                                        width={scaleWidth * 260}
+                                        title="Levels"
+                                        onSelect={() => onSelect('levels')}
+                                    />
+                                    <MenuItem
+                                        height={s(60)}
+                                        width={scaleWidth * 260}
+                                        title="Recap"
+                                        onSelect={() => onSelect('recap')}
+                                    />
+                                    <MenuItem
+                                        height={s(60)}
+                                        width={scaleWidth * 260}
+                                        title="Create"
+                                        onSelect={() => onSelect('ownLevels')}
+                                    />
+                                </div>
+                            )}
 
                             <div className={style.secondaryActions}>
                                 <IconButton

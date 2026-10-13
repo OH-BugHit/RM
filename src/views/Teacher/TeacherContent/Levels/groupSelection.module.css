@@ -61,7 +61,7 @@
 }
 
 .selected {
-    border: 8px solid #1988b1 !important;
+    border: 4px solid #1988b1 !important;
     box-shadow:
         0 0 0 3px rgba(25, 177, 167, 0.2),
         0 4px 15px rgba(0, 0, 0, 0.35);

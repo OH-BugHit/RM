@@ -1,0 +1,123 @@
+.viewport {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 1rem;
+    scrollbar-width: thin;
+}
+
+.map {
+    position: relative;
+    width: max(100%, 900px);
+    min-width: 900px;
+    height: auto;
+    overflow: hidden;
+    border-radius: 1rem;
+    isolation: isolate;
+}
+
+.svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.worldLabel {
+    fill: #35533a;
+    font-size: 25px;
+    font-weight: 700;
+    paint-order: stroke;
+    stroke: #eaf5d5;
+    stroke-width: 5px;
+    stroke-linejoin: round;
+}
+
+.levelNode {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+
+    transform: translate(-50%, -50%);
+    border: 3px solid #5d8048;
+    border-radius: 50%;
+    background: #fffdf4;
+    color: #263d29;
+    cursor: pointer;
+    box-shadow: 0 4px 0 rgb(43 70 37 / 20%);
+
+    /* Painikkeiden tarkat koot voi säätää myöhemmin. */
+    width: clamp(76px, 8vw, 112px);
+    min-height: 76px;
+    padding: 0.65rem 0.4rem;
+
+    transition:
+        transform 150ms ease,
+        box-shadow 150ms ease,
+        background-color 150ms ease;
+}
+
+.levelNode:hover {
+    transform: translate(-50%, -54%);
+    box-shadow: 0 7px 0 rgb(43 70 37 / 20%);
+}
+
+.levelNode:focus-visible {
+    outline: 4px solid #244fba;
+    outline-offset: 4px;
+}
+
+.selected {
+    background: #ffe28a;
+    border-color: #9a6a16;
+    box-shadow: 0 0 0 5px rgb(255 226 138 / 45%);
+}
+
+.bonus {
+    border-style: dashed;
+    background: #f4e8ff;
+    border-color: #8860a8;
+}
+
+.nodeNumber {
+    display: grid;
+    place-items: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    background: #dcebcf;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.nodeLabel {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+@media (max-width: 600px) {
+    .map {
+        width: 900px;
+        min-width: 900px;
+    }
+
+    .worldLabel {
+        font-size: 23px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .levelNode {
+        transition: none;
+    }
+}

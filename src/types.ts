@@ -439,6 +439,8 @@ export type MainView = 'frontpage' | TeacherViews | StudentViews;
 export type SubView = 'playLevel' | 'agent' | 'environment' | 'rewards' | 'interaction' | null;
 export type Overlay = 'import' | 'share' | 'menu' | 'backgroundDialog' | TeacherDialogs | null;
 
+export const MENU_AT_TOP: MainView[] = ['levels', 'recap', 'ownLevels', 'tournamentPlay'];
+
 export type GenericObservation = {
     neighbours: CellType[];
     POIdirection?: SixthSenseDirection;

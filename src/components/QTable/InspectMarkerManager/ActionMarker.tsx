@@ -9,11 +9,8 @@ interface ActionMarkerProps {
     qValues: number[] | undefined;
 }
 export default function ActionMarker({ action, stateId, qValues }: ActionMarkerProps) {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
-    console.log('language:', i18n.language);
-    console.log('action:', t('qMap.text.action'));
-    console.log('resources:', i18n.getResourceBundle(i18n.language, 'translation'));
     const store = useStore();
 
     const epsilon = store.get(AgentSettingsAtom).epsilon ?? 0;

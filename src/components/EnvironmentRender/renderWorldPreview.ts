@@ -1,7 +1,6 @@
 import { Cell } from '../../types';
 import { CellSave } from '../../utils/types';
 
-const CELL_SIZE = 40;
 const BACKGROUND = 'rgba(255,255,255,0.5)';
 
 const imageCache = new Map<string, HTMLImageElement>();
@@ -23,13 +22,16 @@ async function loadImage(src: string): Promise<HTMLImageElement> {
     return image;
 }
 
-export async function renderWorldPreview(world: Cell[][] | CellSave[][]): Promise<HTMLCanvasElement> {
+export async function renderWorldPreview(
+    world: Cell[][] | CellSave[][],
+    cellSize: number = 40
+): Promise<HTMLCanvasElement> {
     const rows = world.length;
     const cols = Math.max(...world.map((row) => row.length), 0);
 
     const canvas = document.createElement('canvas');
-    canvas.width = cols * CELL_SIZE;
-    canvas.height = rows * CELL_SIZE;
+    canvas.width = cols * cellSize;
+    canvas.height = rows * cellSize;
 
     const ctx = canvas.getContext('2d');
 
@@ -48,11 +50,11 @@ export async function renderWorldPreview(world: Cell[][] | CellSave[][]): Promis
         for (let x = 0; x < world[y].length; x++) {
             const cell = world[y][x];
 
-            const px = x * CELL_SIZE;
-            const py = y * CELL_SIZE;
+            const px = x * cellSize;
+            const py = y * cellSize;
 
             if (cell.emoji) {
-                ctx.fillText(cell.emoji, px + CELL_SIZE / 2, py + CELL_SIZE / 2);
+                ctx.fillText(cell.emoji, px + cellSize / 2, py + cellSize / 2);
                 continue;
             }
 
@@ -60,7 +62,7 @@ export async function renderWorldPreview(world: Cell[][] | CellSave[][]): Promis
                 try {
                     const image = await loadImage(cell.image);
 
-                    ctx.drawImage(image, px, py, CELL_SIZE, CELL_SIZE);
+                    ctx.drawImage(image, px, py, cellSize, cellSize);
                 } catch (err) {
                     console.warn(`Unable to load image '${cell.image}'.`, err);
                 }

@@ -16,6 +16,7 @@ import { QLearningAgent } from '../../../components/agents/rlAgentQ';
 import { OrientationPrompt } from '../../../components/Orientation/OrientationPrompt';
 import { GameScaleProvider } from '../../../context/GameScale/GameScaleProvied';
 import Settings from '../../Settings/Settings';
+import { MENU_AT_TOP } from '../../../types';
 
 export default function SinglePlayer() {
     const view = useAtomValue(ActiveViewAtom);
@@ -30,7 +31,15 @@ export default function SinglePlayer() {
         <GameScaleProvider>
             <div className={style.studentContainer}>
                 <OrientationPrompt />
-                <MenuIcon />
+                <MenuIcon
+                    position={
+                        view.sub === 'playLevel'
+                            ? 'right'
+                            : view.main && MENU_AT_TOP.includes(view.main)
+                              ? 'top-right'
+                              : 'right'
+                    }
+                />
                 <Settings mode="student" />
                 <ViewHandler />
                 <MainMenu />

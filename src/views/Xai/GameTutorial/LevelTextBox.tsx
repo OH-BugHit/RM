@@ -35,12 +35,6 @@ export default function LevelTextBox({ variant = 'wide' }: LevelTextBoxProps) {
 
     const isSmallScreen = scale < 1;
 
-    const key = `${level?.levelText?.textKey}.text.${step}`;
-
-    console.log('translation key:', key);
-    console.log('exists:', i18n.exists(key));
-    console.log('translation:', t(key));
-
     return (
         <div
             className={`${style.textContainer} ${variant === 'narrow' || isSmallScreen ? style.narrowContainer : style.wideContainer} `}

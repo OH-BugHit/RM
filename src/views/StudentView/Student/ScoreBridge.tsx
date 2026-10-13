@@ -13,7 +13,6 @@ export default function ScoreBridge() {
 
     useEffect(() => {
         if (!scores) return;
-        console.log('Sending scores?');
 
         const previous = prevRef.current;
 

@@ -29,7 +29,10 @@ export default function Tournament() {
             </div>
 
             <div className={style.buttons}>
-                <Button onClick={() => setOpenSelect((old) => !old)}>
+                <Button
+                    onClick={() => setOpenSelect((old) => !old)}
+                    style={{ borderRadius: '2rem' }}
+                >
                     <ChallengeButton isOpen={openSelect} />
                 </Button>
             </div>
