@@ -1,9 +1,9 @@
 import style from './style.module.css';
 import { LargeButton } from '@genai-fi/base';
-import TileOptions from '../../ImportDialog/DesignWizard/TileOptions';
+import TileOptions from '../../Dialogs/DesignWizard/TileOptions';
 import { useCallback, useRef, useState } from 'react';
 import { Cell, TileLibraryItem } from '../../../types';
-import { EmojiItem } from '../../ImportDialog/TileLibrary/emojiLibraryData';
+import { EmojiItem } from '../../Dialogs/TileLibrary/emojiLibraryData';
 import { emojiToDataUrl } from '../../../utils/import';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { ActiveViewAtom } from '../../../atoms/uiState';

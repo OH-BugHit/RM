@@ -101,7 +101,7 @@ function Controls() {
                     onClick={() => {
                         setLod(2);
 
-                        if (controls.isRunning) {
+                        if (controls.isRunning && !controls.isFast) {
                             // Pause
                             setControls((old) => ({
                                 ...old,
@@ -119,7 +119,7 @@ function Controls() {
                         }
                     }}
                 >
-                    {controls.isRunning ? (
+                    {controls.isRunning && !controls.isFast ? (
                         <PauseIcon
                             size={s(64)}
                             active
@@ -144,22 +144,43 @@ function Controls() {
                         color="success"
                         disabled={!hudVis.controls.ff || !enable?.ff || test === 'isRunning' || test === 'passed'}
                         onClick={() => {
-                            storyFF();
-                            setLod(1);
-                            setControls((old) => {
-                                return {
+                            if (controls.isFast) {
+                                // Pause
+                                setControls((old) => ({
                                     ...old,
-                                    isRunning: true,
-                                    isFast: true,
-                                };
-                            });
+                                    isRunning: false,
+                                    isFast: false,
+                                }));
+                            } else {
+                                storyFF();
+                                setLod(1);
+                                setControls((old) => {
+                                    return {
+                                        ...old,
+                                        isRunning: true,
+                                        isFast: true,
+                                    };
+                                });
+                            }
                         }}
                     >
-                        <FastForwardIcon
-                            size={s(64)}
-                            active={controls.isFast}
-                            disabled={!hudVis.controls.ff || !enable?.ff || test === 'isRunning' || test === 'passed'}
-                        />
+                        {controls.isFast ? (
+                            <PauseIcon
+                                size={s(64)}
+                                active
+                                disabled={
+                                    !hudVis.controls.ff || !enable?.ff || test === 'isRunning' || test === 'passed'
+                                }
+                            />
+                        ) : (
+                            <FastForwardIcon
+                                size={s(64)}
+                                active={controls.isFast}
+                                disabled={
+                                    !hudVis.controls.ff || !enable?.ff || test === 'isRunning' || test === 'passed'
+                                }
+                            />
+                        )}
                     </GameButton>
                 )}
 

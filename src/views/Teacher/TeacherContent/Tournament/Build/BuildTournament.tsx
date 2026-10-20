@@ -1,7 +1,7 @@
 import { useAtomValue } from 'jotai';
 import { studentGamesAtom } from '../../../../../atoms/state';
 import style from './bTournament.module.css';
-import LevelPreview from '../../../../../components/ImportDialog/LevelPreview/LevelPreview';
+import LevelPreview from '../../../../../components/Dialogs/LevelPreview/LevelPreview';
 import { LoadedGame } from '../../../../../utils/types';
 import { renderWorldPreview } from '../../../../../components/EnvironmentRender/renderWorldPreview';
 

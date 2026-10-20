@@ -31,7 +31,6 @@
     padding: min(1rem, 2.5dvh) min(1rem, 0.2dvw) 0 min(1rem, 1.2dvw)
 }
 
-
 .frame::before {
     content: "";
     position: absolute;

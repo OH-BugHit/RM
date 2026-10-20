@@ -435,7 +435,7 @@ export type LevelGroup = {
 };
 export type GroupType = 'basic' | 'rewards' | 'exploreExploit' | 'observation' | 'learning' | 'bonus';
 
-export type MainView = 'frontpage' | TeacherViews | StudentViews;
+export type MainView = 'frontpage' | TeacherViews | StudentViews | 'null';
 export type SubView = 'playLevel' | 'agent' | 'environment' | 'rewards' | 'interaction' | null;
 export type Overlay = 'import' | 'share' | 'menu' | 'backgroundDialog' | TeacherDialogs | null;
 

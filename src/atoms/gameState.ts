@@ -16,8 +16,8 @@ import { getDefaultObservation } from '../components/GameComponents/agentProps';
 import { ChartState } from '../components/Charts/rewardStreamEngine';
 import { defaultCell, defaultEnvSettings } from '../utils/defaults';
 import { basicsLevel1 } from '../utils/levels/1basics/leveldata';
-import { levelMapNodes } from '../views/StudentView/Levels/LevelSelect/LevelMap/levelMapData';
-import { LevelMapNode } from '../views/StudentView/Levels/LevelSelect/LevelMap/levelMapTypes';
+import { levelMapNodes } from '../views/StudentView/Levels/LevelSelect/levelMapData';
+import { LevelMapNode } from '../views/StudentView/Levels/LevelSelect/levelMapTypes';
 
 export const SmallObsAtom = atom<GenericObservation>(getDefaultObservation('small'));
 export const LargeObsAtom = atom<GenericObservation>(getDefaultObservation('large'));

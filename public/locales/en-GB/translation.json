@@ -110,7 +110,8 @@
         "selected": "Creating:\n<Type>{{type}}</Type>",
         "subtitle": "Game for learning about Reinforcement Learning.",
         "title": "Reward Machine",
-        "tutorial": "Tutorial"
+        "tutorial": "Tutorial",
+        "wait": "Wait for Teacher to set the game"
     },
     "createMenu": {
         "title": { "close": "Close menu", "open": "Open menu" },

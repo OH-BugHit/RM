@@ -32,7 +32,6 @@ export default function GroupSelection({
                     <LevelItem
                         key={levels[0].level.manifest.gameName}
                         level={levels[0]}
-                        score={false}
                     />
                 )}
             </div>

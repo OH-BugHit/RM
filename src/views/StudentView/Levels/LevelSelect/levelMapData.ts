@@ -1,8 +1,8 @@
-import { basicsLevel1 } from '../../../../../utils/levels/1basics/leveldata';
-import { rewardsLevel1 } from '../../../../../utils/levels/2rewards/leveldata';
-import { exploreLevel1 } from '../../../../../utils/levels/3exploreAndExploit/leveldata';
-import { observationLevel1 } from '../../../../../utils/levels/4observation/leveldata';
-import { learningLevel1 } from '../../../../../utils/levels/5learning/leveldata';
+import { basicsLevel1 } from '../../../../utils/levels/1basics/leveldata';
+import { rewardsLevel1 } from '../../../../utils/levels/2rewards/leveldata';
+import { exploreLevel1 } from '../../../../utils/levels/3exploreAndExploit/leveldata';
+import { observationLevel1 } from '../../../../utils/levels/4observation/leveldata';
+import { learningLevel1 } from '../../../../utils/levels/5learning/leveldata';
 import { LevelMapNode } from './levelMapTypes';
 
 export const levelMapNodes: LevelMapNode[] = [

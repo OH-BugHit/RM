@@ -1,6 +1,6 @@
 import { SubView } from '../../../types';
 import StudentView from '../StudentView';
-import LevelSelect from './LevelSelect/LevelMap/LevelSelect';
+import LevelSelect from './LevelSelect/LevelSelect';
 
 interface LevelsProps {
     view: SubView | undefined;

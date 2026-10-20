@@ -1,5 +1,5 @@
 import { useAtomValue } from 'jotai';
-import { NewFrame } from '../../../Frames/NewFrame';
+import { MovableFrame } from '../../../Frames/MovableFrame';
 import { InspectAtom, TextStepAtom } from '../../../../atoms/uiState';
 import InspectText from '../InspectText';
 import { WorldStore } from '../../../../components/QTable/utils';
@@ -20,9 +20,9 @@ interface TutorialFrameProps {
 }
 
 const defaultSmall: TutorialLayout = {
-    position: { top: '50%', left: '80%' },
+    position: { top: '30%', left: '50%' },
     centerX: -50,
-    centerY: -50,
+    centerY: 0,
     variant: 'narrow',
 };
 
@@ -41,7 +41,7 @@ export default function TutorialFrame({
     const mode = level?.levelText?.modes?.[step] ?? 'hidden';
     const layouts = level?.levelText?.layouts;
 
-    const isSmallScreen = scale < 0.8;
+    const isSmallScreen = scale < 1;
 
     const layout = isSmallScreen
         ? defaultSmall
@@ -54,7 +54,7 @@ export default function TutorialFrame({
           });
 
     return (
-        <NewFrame
+        <MovableFrame
             variant="tutorial"
             visible={visible && (mode !== 'hidden' || inspect.vis)}
             position={layout.position}
@@ -71,6 +71,6 @@ export default function TutorialFrame({
                     agentRef={agentRef}
                 />
             )}
-        </NewFrame>
+        </MovableFrame>
     );
 }

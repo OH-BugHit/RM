@@ -1,4 +1,4 @@
-import { GroupType, Level } from '../../../../../types';
+import { GroupType, Level } from '../../../../types';
 
 export type LevelMapNodeKind = 'required' | 'bonus';
 

@@ -1,0 +1,21 @@
+.moveHandle {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    border-radius: 50%;
+    z-index: 5;
+    color: var(--primary);
+    background: none;
+    border: none;
+    cursor: grab;
+    touch-action: none;
+}
+
+.moveHandle:active {
+    cursor: grabbing;
+}
+
+.moveHandle:focus-visible {
+    outline: 3px solid #1264a3;
+    outline-offset: 2px;
+}

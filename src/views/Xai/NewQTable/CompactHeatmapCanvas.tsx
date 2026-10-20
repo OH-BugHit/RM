@@ -36,7 +36,7 @@ export default function CompactHeatmapCanvas({
         const rows = Math.ceil(totalStates / cols);
 
         return { cols, rows, totalStates };
-    }, [agent, updateTrigger]);
+    }, [agent]);
 
     // Find scrollToState index for highlighting
     const scrollToStateIndex = useMemo(() => {
@@ -44,7 +44,7 @@ export default function CompactHeatmapCanvas({
         const qTable = agent.current.getQTable();
         const states = Object.keys(qTable);
         return states.indexOf(scrollToState);
-    }, [scrollToState, agent, updateTrigger]);
+    }, [scrollToState, agent]);
 
     // Render all states to compact heatmap
     useEffect(() => {

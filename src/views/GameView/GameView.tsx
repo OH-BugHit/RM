@@ -18,7 +18,7 @@ interface GameViewProps {
 }
 
 function GameView({ agentRef, nameRef = undefined }: GameViewProps) {
-    const lWorld = useMemo(() => new WorldStore(agentRef), []);
+    const lWorld = useMemo(() => new WorldStore(agentRef), [agentRef]);
     const obsRef = useRef<GenericObservation>(undefined);
     const actionRef = useRef<Actions>(undefined);
     const qvalueRef = useRef<number[]>([]);

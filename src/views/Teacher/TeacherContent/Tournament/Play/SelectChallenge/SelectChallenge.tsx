@@ -7,7 +7,7 @@ import {
     TournamentFileAtom,
     TournamentGameAtom,
 } from '../../../../../../atoms/state';
-import LevelPreview from '../../../../../../components/ImportDialog/LevelPreview/LevelPreview';
+import LevelPreview from '../../../../../../components/Dialogs/LevelPreview/LevelPreview';
 import { createPreview } from '../../../../../../utils/common';
 import { Button } from '@genai-fi/base';
 import { AnimatePresence, motion } from 'framer-motion';

@@ -1,6 +1,6 @@
 import { BuildButtons, Target } from '../../types';
 import GameSettings from '../../views/Story/Selectors/GameSettings/GameSettings';
-import DesignWizard from '../ImportDialog/DesignWizard/DesignWizard';
+import DesignWizard from '../Dialogs/DesignWizard/DesignWizard';
 import CreateToolIcon from './ButtonIcons/Build/CreateToolIcon';
 import DesignIcon from './ButtonIcons/Build/DesignIcon';
 import WorldSettingsIcon from './ButtonIcons/Build/WorldSettingsIcon';

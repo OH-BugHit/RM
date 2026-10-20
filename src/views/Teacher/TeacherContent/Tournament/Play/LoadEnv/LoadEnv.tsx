@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
-import GameDialog from '../../../../../../components/ImportDialog/GameImport/GameDialog';
+import GameDialog from '../../../../../../components/Dialogs/GameImport/GameDialog';
 import SelectorItem from '../../../../../Story/Selectors/SelectorItem';
 import { readSavedFile } from '../../../../../../utils/import';
 import { useViewNavigation } from '../../../../../../hooks/useViewNavigation';

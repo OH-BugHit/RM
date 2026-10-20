@@ -2,7 +2,7 @@ import { useGameScale } from '../../context/GameScale/useGameScale';
 import style from './newFrame.module.css';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 
-interface FrameProps {
+export interface NewFrameProps {
     children: React.ReactNode;
     title?: string;
     minWidth?: number | string;
@@ -21,6 +21,8 @@ interface FrameProps {
     centerX?: number;
     centerY?: number;
     minimize?: boolean;
+    positionOffset?: { x: number; y: number };
+    frameRef?: React.Ref<HTMLDivElement>;
 }
 
 const minimizeVariants: Variants = {
@@ -65,7 +67,9 @@ export function NewFrame({
     centerX,
     centerY,
     minimize = false,
-}: FrameProps) {
+    positionOffset,
+    frameRef,
+}: NewFrameProps) {
     const { s } = useGameScale();
     const styleProps: React.CSSProperties = {
         minWidth,
@@ -85,14 +89,25 @@ export function NewFrame({
             {visible && (
                 <>
                     <motion.div
+                        ref={frameRef}
                         className={`${style.frame} ${variant === 'tutorial' ? style.tutorial : variant === 'blob' ? style.blob : ''}`}
                         style={
                             variant !== 'blob'
                                 ? {
                                       ...styleProps,
                                       ...position,
+                                      translate: positionOffset
+                                          ? `${positionOffset.x}px ${positionOffset.y}px`
+                                          : undefined,
                                   }
-                                : { position: 'relative', ...position, zIndex: zIndex }
+                                : {
+                                      position: 'relative',
+                                      ...position,
+                                      zIndex,
+                                      translate: positionOffset
+                                          ? `${positionOffset.x}px ${positionOffset.y}px`
+                                          : undefined,
+                                  }
                         }
                         initial={{
                             scale: 0.95,

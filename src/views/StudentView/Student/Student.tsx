@@ -15,6 +15,7 @@ import PauseLayer from '../../../components/Pause/PauseLayer';
 import Settings from '../../Settings/Settings';
 import MenuIcon from '../../../components/Buttons/MenuButton/MenuIcon';
 import { MENU_AT_TOP } from '../../../types';
+import Wait from '../../../components/Pause/Wait';
 
 interface StudentProps {
     serverCode?: string;
@@ -60,6 +61,7 @@ export default function Student({ serverCode }: StudentProps) {
     return (
         <div className={style.studentContainer}>
             <PauseLayer />
+            <Wait show={view.main === 'null'} />
             <ScoreBridge />
             <MenuIcon
                 position={

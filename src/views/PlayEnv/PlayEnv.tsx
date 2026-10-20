@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import style from './style.module.css';
-import GameDialog from '../../components/ImportDialog/GameImport/GameDialog';
+import GameDialog from '../../components/Dialogs/GameImport/GameDialog';
 import AddIcon from '@mui/icons-material/Add';
 import SelectorItem from '../Story/Selectors/SelectorItem';
 import { useSetAtom, useStore } from 'jotai';
@@ -20,7 +20,7 @@ import { ActiveEnvironmentAtom } from '../../atoms/state';
 import { useViewNavigation } from '../../hooks/useViewNavigation';
 import { useState } from 'react';
 import { renderWorldPreview } from '../../components/EnvironmentRender/renderWorldPreview';
-import LevelPreview from '../../components/ImportDialog/LevelPreview/LevelPreview';
+import LevelPreview from '../../components/Dialogs/LevelPreview/LevelPreview';
 import { useGameScale } from '../../context/GameScale/useGameScale';
 import { Button } from '@genai-fi/base';
 

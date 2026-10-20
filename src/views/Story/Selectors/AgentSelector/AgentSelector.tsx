@@ -6,7 +6,7 @@ import { ActiveViewAtom, StoryProgressAtom } from '../../../../atoms/uiState';
 
 import { defaultAgents } from '../../../../utils/defaults';
 import { useTranslation } from 'react-i18next';
-import ImportDialog from '../../../../components/ImportDialog/ImportDialog';
+import ImportDialog from '../../../../components/Dialogs/ImportDialog';
 import { preprocessImageWScale } from '../../../../utils/import';
 import { useEffect } from 'react';
 

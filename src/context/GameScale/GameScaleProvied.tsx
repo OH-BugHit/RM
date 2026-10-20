@@ -33,7 +33,7 @@ export function GameScaleProvider({ children }: GameScaleProviderProps) {
     }, []);
 
     const scale = Math.min(Math.max(viewport.height / DESIGN_HEIGHT, MIN_SCALE), MAX_SCALE);
-    const trueScale = viewport.height / DESIGN_HEIGHT;
+    const trueScale = viewport.width / DESIGN_WIDTH;
 
     const scaleWidth = viewport.width / DESIGN_WIDTH;
 

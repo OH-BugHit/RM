@@ -14,5 +14,13 @@
     align-items: center;
     justify-content: center;
     pointer-events: auto;
-    z-index: 999;
+    z-index: 99;
+}
+
+.wait {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
 }

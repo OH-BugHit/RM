@@ -8,7 +8,7 @@ import { ActiveAgentAtom, ActiveEnvironmentAtom, AgentSettingsAtom } from '../at
 import { SAVE_VERSION } from './export';
 import { AgentUpdate, Cell, CellType, TileDefinition } from '../types';
 
-function restoreImage(image: string, emoji: string): string {
+export function restoreImage(image: string, emoji: string): string {
     return emoji ? emojiToDataUrl(emoji) : image;
 }
 
