@@ -66,6 +66,12 @@ export const TILE_LIBRARY: TileLibrarySection[] = [
         label: 'Treasures',
         items: [
             {
+                id: 'goal-mover',
+                label: 'Charge station',
+                image: '/images/assets/mover_charge_128.png',
+                category: 'treasures',
+            },
+            {
                 id: 'treasure-1',
                 label: 'Gold coins',
                 image: '/images/assets/smallTreasure_260.png',

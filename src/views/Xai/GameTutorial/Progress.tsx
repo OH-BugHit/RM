@@ -9,7 +9,7 @@ import { StoryProgressAtom, TextStepAtom } from '../../../atoms/uiState';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { StoryProgressField } from '../../../utils/types';
-import { TestAgentAtom } from '../../../atoms/gameState';
+import { StepsRequiredAtom, TestAgentAtom } from '../../../atoms/gameState';
 import { useGameScale } from '../../../context/GameScale/useGameScale';
 
 interface ProgressProps {
@@ -23,6 +23,7 @@ export default function Progress({ tasks }: ProgressProps) {
     const [step, setStep] = useAtom(TextStepAtom);
     const setTest = useSetAtom(TestAgentAtom);
     const progressReadyRef = useRef<boolean>(false);
+    const requiredSteps = useAtomValue(StepsRequiredAtom);
 
     const getFieldValue = (progress: StoryProgress, field: StoryProgressField): boolean => {
         const [section, key] = field.split('.') as [keyof StoryProgress, string];
@@ -42,7 +43,7 @@ export default function Progress({ tasks }: ProgressProps) {
     const completedTasks = taskStates.filter((task) => task.completed).length;
     const totalProgress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
 
-    if (totalProgress === 100 && !progressReadyRef.current) {
+    if (totalProgress === 100 && !progressReadyRef.current && requiredSteps <= step) {
         progressReadyRef.current = true;
         setTest('available');
     }

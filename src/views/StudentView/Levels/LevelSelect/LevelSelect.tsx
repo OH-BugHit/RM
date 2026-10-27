@@ -11,6 +11,7 @@ import { useGameScale } from '../../../../context/GameScale/useGameScale';
 import LevelItem from '../../../Teacher/TeacherContent/Levels/LevelItem';
 import Wait from '../../../../components/Pause/Wait';
 import LevelPopup from '../../../../components/Dialogs/LevelPopup/LevelPopup';
+import { createBonusPathsY, createRoutePathX } from './pathUtils';
 
 export default function LevelSelect() {
     const { t } = useTranslation();
@@ -45,20 +46,11 @@ export default function LevelSelect() {
 
     const mapWidth = Math.max(trueScale * 1940, ...mapNodes.map((node) => node.x + 100));
 
-    const routePath = requiredNodes.map((node, index) => `${index === 0 ? 'M' : 'L'} ${node.x} ${s(node.y)}`).join(' ');
-    const bonusPaths = bonusNodes.flatMap((bonusNode) => {
-        const sourceNode = requiredNodes.find((node) => node.groupType === bonusNode.groupType);
-
-        if (!sourceNode) {
-            return [];
-        }
-
-        return [
-            {
-                id: bonusNode.id,
-                d: `M ${sourceNode.x} ${s(sourceNode.y)} L ${bonusNode.x} ${s(bonusNode.y)}`,
-            },
-        ];
+    const routePath = createRoutePathX({ nodes: requiredNodes, s: s });
+    const bonusPaths = createBonusPathsY({
+        bonusNodes,
+        nodes: requiredNodes,
+        s,
     });
 
     const dragState = useRef<{
@@ -314,6 +306,9 @@ export default function LevelSelect() {
                                         type="button"
                                         data-level-node
                                         disabled={!node.allowed}
+                                        aria-haspopup="dialog"
+                                        aria-expanded={isSelected}
+                                        aria-controls={isSelected ? `level-popup-${node.id}` : undefined}
                                         className={[
                                             style.levelNode,
                                             node.kind === 'bonus' ? style.bonusNode : '',
@@ -327,8 +322,6 @@ export default function LevelSelect() {
                                             top: `${(node.y / mapHeight) * s(100)}%`,
                                         }}
                                         onClick={(event) => handleNodeClick(node.id, event.currentTarget)}
-                                        aria-haspopup="dialog"
-                                        aria-expanded={isSelected}
                                     >
                                         <LevelItem
                                             level={node.level}

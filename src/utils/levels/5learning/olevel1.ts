@@ -519,7 +519,7 @@ export const level1Grid: CellSave[][] = [
         {
             type: -1,
             emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
+            image: '/images/assets/start.png',
         },
         {
             type: 1,
@@ -854,7 +854,7 @@ export const level1Grid: CellSave[][] = [
         {
             type: -1,
             emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
+            image: '/images/assets/start.png',
         },
         {
             type: 0,

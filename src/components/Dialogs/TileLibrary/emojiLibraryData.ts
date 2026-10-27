@@ -81,6 +81,7 @@ export const EMOJI_LIBRARY: EmojiSection[] = [
             { emoji: '👻', label: 'Ghost', category: 'animals-nature' },
             { emoji: '🤖', label: 'Robot', category: 'animals-nature' },
             { emoji: '💀', label: 'Skull', category: 'animals-nature' },
+            { emoji: '🦴', label: 'Bone', category: 'animals-nature' },
             { emoji: '☠️', label: 'Skull and crossbones', category: 'animals-nature' },
             { emoji: '👹', label: 'Ogre', category: 'animals-nature' },
             { emoji: '👺', label: 'Goblin', category: 'animals-nature' },

@@ -9,7 +9,6 @@ interface InfoRowProps {
 }
 export default function InfoRow({ title, nodes, backgroundColour }: InfoRowProps) {
     if (nodes.size < 1) return;
-    console.log(nodes);
     return (
         <div className={style.infoRow}>
             <div
@@ -22,8 +21,8 @@ export default function InfoRow({ title, nodes, backgroundColour }: InfoRowProps
                         <img
                             src={restoreImage(t.image, t.emoji)}
                             alt="Agent location background"
-                            width={40}
-                            height={40}
+                            width={30}
+                            height={30}
                         />
                     ))}
                 </div>

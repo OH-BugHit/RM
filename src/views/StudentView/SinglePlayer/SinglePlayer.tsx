@@ -17,6 +17,7 @@ import { OrientationPrompt } from '../../../components/Orientation/OrientationPr
 import { GameScaleProvider } from '../../../context/GameScale/GameScaleProvied';
 import Settings from '../../Settings/Settings';
 import { MENU_AT_TOP } from '../../../types';
+import ModifyView from '../../BuildView/ModifyView';
 
 export default function SinglePlayer() {
     const view = useAtomValue(ActiveViewAtom);
@@ -46,6 +47,7 @@ export default function SinglePlayer() {
                 {view.main === 'recap' && <Tutorial />}
                 {view.main === 'ownLevels' && <PlayEnv />}
                 {view.main === 'build' && <BuildView />}
+                {view.main === 'modify' && <ModifyView />}
                 {view.main === 'play' && <GameView agentRef={agentRef} />}
                 {view.main === 'levels' && <Levels view={view.sub} />}
             </div>

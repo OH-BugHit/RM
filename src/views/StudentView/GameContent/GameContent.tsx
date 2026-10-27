@@ -4,7 +4,7 @@ import { QLearningAgent } from '../../../components/agents/rlAgentQ';
 import { WorldStore } from '../../../components/QTable/utils';
 import { Actions, GameEnvironmentInfo, GenericObservation, StateData } from '../../../types';
 import RewardMachine from '../../Environments/RewardMachine/RewardMachine';
-import { EpisodicDataAtom, LevelConfAtom, TestAgentAtom } from '../../../atoms/gameState';
+import { EpisodicDataAtom, LevelConfAtom, StepsRequiredAtom, TestAgentAtom } from '../../../atoms/gameState';
 import { useEffect, useRef, useState } from 'react';
 import {
     ControlEnablerAtom,
@@ -75,6 +75,7 @@ export default function GameContent({
                 };
             });
             setProgress(falseStoryProgress);
+            store.set(StepsRequiredAtom, level.level.manifest.stepsRequired ?? 0);
             nameRef.current = level.level.manifest.gameName;
         }
     }, [level, store, setHudVis, setTopBar, setEpisodicData, setProgress, setTilevis, setTasks, setControls, setTest]);

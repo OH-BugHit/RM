@@ -18,6 +18,7 @@ import {
     UiHelp,
     WorldGeneratorProps,
 } from '../types';
+import { BackgroundTile } from './types';
 
 export const manhattanDirecitons = [
     { x: 0, y: -1 },
@@ -753,7 +754,7 @@ export const defaultAgents = {
     adventurer: {
         name: 'Adventurer',
         type: 'adventurer',
-        img: '/images/agents/adventurerRobo2.png',
+        img: '/images/agents/adventure_256.png',
     },
     roboMover: {
         name: 'Robo-Mover',
@@ -772,12 +773,14 @@ export const defaultAgents = {
     },
 } as const;
 
-const S: Cell = {
-    type: CellType.Spawn,
+export const defaultEmptyCell: Cell = {
+    type: CellType.Empty,
     reloadTime: 0,
     timer: 0,
     image: '/images/assets/cleanWhiteStone.png',
 };
+
+const E: Cell = defaultEmptyCell;
 
 const W: Cell = {
     type: CellType.Solid,
@@ -786,25 +789,35 @@ const W: Cell = {
     image: '/images/assets/wall.png',
 };
 
-export const defaultCell: Cell = {
+export const defaultSpawnCell = {
     type: CellType.Spawn,
     reloadTime: 0,
     timer: 0,
-    image: '/images/assets/grass.png',
+    image: '/images/assets/start.png',
 };
+
+// Do not point to defaultSpawnCell from this S!! The need to be different objects!
+const S: Cell = {
+    type: CellType.Spawn,
+    reloadTime: 0,
+    timer: 0,
+    image: '/images/assets/start.png',
+};
+
+export const defaultBackground: BackgroundTile = { emoji: '', image: '/images/assets/grass.png' };
 
 export const defaultWorldGrid: Cell[][] = [
     [W, W, W, W, W, W, W, W, W, W, W, W],
-    [W, S, S, S, S, S, S, S, S, S, S, W],
-    [W, S, S, S, S, S, S, S, S, S, S, W],
-    [W, S, S, S, S, S, S, S, S, S, S, W],
-    [W, S, S, S, S, S, S, S, S, S, S, W],
-    [W, S, S, S, S, S, S, S, S, S, S, W],
-    [W, S, S, S, S, S, S, S, S, S, S, W],
-    [W, S, S, S, S, S, S, S, S, S, S, W],
-    [W, S, S, S, S, S, S, S, S, S, S, W],
-    [W, S, S, S, S, S, S, S, S, S, S, W],
-    [W, S, S, S, S, S, S, S, S, S, S, W],
+    [W, E, E, E, E, E, E, E, E, E, E, W],
+    [W, E, E, E, E, E, E, E, E, E, E, W],
+    [W, E, E, E, E, E, E, E, E, E, E, W],
+    [W, E, E, E, E, E, E, E, E, E, E, W],
+    [W, E, E, E, E, S, E, E, E, E, E, W],
+    [W, E, E, E, E, E, E, E, E, E, E, W],
+    [W, E, E, E, E, E, E, E, E, E, E, W],
+    [W, E, E, E, E, E, E, E, E, E, E, W],
+    [W, E, E, E, E, E, E, E, E, E, E, W],
+    [W, E, E, E, E, E, E, E, E, E, E, W],
     [W, W, W, W, W, W, W, W, W, W, W, W],
 ];
 

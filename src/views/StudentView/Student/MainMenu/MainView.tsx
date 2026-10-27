@@ -9,7 +9,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import { Dialog, IconButton } from '@mui/material';
 import { useAtomValue } from 'jotai';
 import { ActiveViewAtom } from '../../../../atoms/uiState';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 interface MainMenuProps {
     mode?: 'single' | 'classroom';
@@ -17,6 +17,7 @@ interface MainMenuProps {
 
 export default function MainMenu({ mode = 'single' }: MainMenuProps) {
     const view = useAtomValue(ActiveViewAtom);
+    const { t } = useTranslation();
     const { s, scaleWidth, scale } = useGameScale();
     const { goToView } = useViewNavigation();
     const navigate = useNavigate();
@@ -52,19 +53,19 @@ export default function MainMenu({ mode = 'single' }: MainMenuProps) {
                             <MenuItem
                                 height={s(60)}
                                 width={scaleWidth * 260}
-                                title="Levels"
+                                title={t('menu.items.levels')}
                                 onSelect={() => onSelect('levels')}
                             />
                             <MenuItem
                                 height={s(60)}
                                 width={scaleWidth * 260}
-                                title="Recap"
+                                title={t('menu.items.recap')}
                                 onSelect={() => onSelect('recap')}
                             />
                             <MenuItem
                                 height={s(60)}
                                 width={scaleWidth * 260}
-                                title="Create"
+                                title={t('menu.items.creative')}
                                 onSelect={() => onSelect('ownLevels')}
                             />
                         </div>

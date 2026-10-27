@@ -14,10 +14,11 @@ import {
 } from '../types';
 import { getDefaultObservation } from '../components/GameComponents/agentProps';
 import { ChartState } from '../components/Charts/rewardStreamEngine';
-import { defaultCell, defaultEnvSettings } from '../utils/defaults';
+import { defaultBackground, defaultEmptyCell, defaultEnvSettings } from '../utils/defaults';
 import { basicsLevel1 } from '../utils/levels/1basics/leveldata';
 import { levelMapNodes } from '../views/StudentView/Levels/LevelSelect/levelMapData';
 import { LevelMapNode } from '../views/StudentView/Levels/LevelSelect/levelMapTypes';
+import { BackgroundTile } from '../utils/types';
 
 export const SmallObsAtom = atom<GenericObservation>(getDefaultObservation('small'));
 export const LargeObsAtom = atom<GenericObservation>(getDefaultObservation('large'));
@@ -30,8 +31,10 @@ export const TestWinAtom = atom<TestWinData>({ beatsScore: 0 });
 export const SelectedObsShapeAtom = atom<ObservationShape>('unset');
 
 export const WorldGridRenderAtom = atom<Cell[][]>();
-export const InnerFillCellAtom = atom<Cell>(defaultCell);
+export const InnerFillCellAtom = atom<Cell>(defaultEmptyCell);
+export const TileBackgroundAtom = atom<BackgroundTile>(defaultBackground);
 
+export const SpawnCountAtom = atom<number>(0);
 export const ChartAtom = atom<ChartState>({
     episode: [],
     reward: [],
@@ -51,6 +54,11 @@ export const LevelConfAtom = atom<Level | undefined>(basicsLevel1);
  * If test phase active
  */
 export const TestAgentAtom = atom<AgentTest>('no');
+
+/**
+ * Steps required for test button to appear in levels
+ */
+export const StepsRequiredAtom = atom<number>(0);
 
 /**
  * Contains completed levels

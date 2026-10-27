@@ -85,7 +85,7 @@ export function NewFrame({
     };
 
     return (
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence>
             {visible && (
                 <>
                     <motion.div

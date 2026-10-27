@@ -22,7 +22,8 @@ export type Manifest = {
     highScore?: number;
     saveVersion: number;
     createdAt: string;
-    levelIndex?: number;
+    levelIndex?: number; // Level index-number for traslations
+    stepsRequired?: number; // How many text steps are required to test button to be available
 };
 export type TileDefinitionSave = {
     id: string;
@@ -33,6 +34,12 @@ export type TileDefinitionSave = {
     image: string;
     isCoreTile?: boolean;
 };
+
+export type BackgroundTile = {
+    emoji?: string;
+    image: string;
+};
+
 export type CellSave = {
     type: CellType;
     emoji: string;
@@ -50,6 +57,7 @@ export type LoadedGame = {
     manifest: Manifest;
     tools: {
         tileDefinitions: TileDefinitionSave[];
+        background: BackgroundTile;
     };
     game: {
         world: CellSave[][];

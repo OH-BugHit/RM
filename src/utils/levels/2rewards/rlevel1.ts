@@ -20,17 +20,7 @@ export const level2uiControls: UiControlsField[][] = [[], [], [], [], [], [], []
 
 export const level2HudConfig: HUDvisibilityField[][] = [
     [],
-    [
-        'text',
-        'gameBar',
-        'progress',
-        'agent.img',
-        'agentCluster',
-        'controlBar',
-        'controls.play',
-        'controls.ff',
-        'controls.step',
-    ],
+    ['text', 'gameBar', 'progress', 'agentCluster', 'controlBar', 'controls.play', 'controls.ff', 'controls.step'],
     ['gameBarContent.picked', 'gameBarContent.score'],
     [],
     [],
@@ -313,7 +303,7 @@ export const level2Grid: CellSave[][] = [
         {
             type: -1,
             emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
+            image: '/images/assets/start.png',
         },
         {
             type: 0,
@@ -333,7 +323,7 @@ export const level2Grid: CellSave[][] = [
         {
             type: -1,
             emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
+            image: '/images/assets/start.png',
         },
         {
             type: 0,

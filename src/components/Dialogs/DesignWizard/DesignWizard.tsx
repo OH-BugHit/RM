@@ -26,11 +26,11 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
     const [page, setPage] = useState(0);
     const [loading, setLoading] = useState(false);
 
-    const [selectedTile, setSelectedTool] = useAtom(CurrentTileToolAtom);
-    const [selectedType, setSelectedType] = useState<CellType | 'background' | null>(selectedTile?.type ?? null);
+    const [, setSelectedTool] = useAtom(CurrentTileToolAtom);
+    const [selectedType, setSelectedType] = useState<CellType | 'background' | null>(null);
     const [selectedLibraryTile, setSelectedLibraryTile] = useState<TileLibraryItem | null>(null);
     const [selectedEmoji, setSelectedEmoji] = useState<EmojiItem | null>(null);
-    const [selectedPreview, setSelectedPreview] = useState<string | null>(selectedTile?.image ?? null);
+    const [selectedPreview, setSelectedPreview] = useState<string | null>(null);
 
     const [tiles, setTiles] = useAtom<TileDefinition[]>(TilePropsAtom);
     const [storyProgress, setStoryProgress] = useAtom(StoryProgressAtom);
@@ -43,13 +43,6 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
             setSelectedTool(undefined);
         };
     }, [setSelectedTool]);
-    useEffect(() => {
-        setSelectedType(selectedTile?.type ?? null);
-    }, [selectedTile]);
-
-    useEffect(() => {
-        setSelectedPreview(selectedTile?.image ?? null);
-    }, [selectedTile]);
 
     const previewUrlRef = useRef<string | null>(null);
 
@@ -58,12 +51,12 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
             URL.revokeObjectURL(previewUrlRef.current);
             previewUrlRef.current = null;
         }
-        setSelectedType(selectedTile?.type ?? null);
+        setSelectedType(null);
         setSelectedLibraryTile(null);
         setSelectedEmoji(null);
-        setSelectedPreview(selectedTile?.image ?? null);
+        setSelectedPreview(null);
         setPage(0);
-    }, [selectedTile]);
+    }, []);
 
     const handleLibrarySelect = useCallback((tile: TileLibraryItem) => {
         setSelectedLibraryTile(tile);
@@ -91,16 +84,13 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
         allowedTypes.add(CellType.Solid);
         hint.add(CellType.Solid);
     } else if (!storyProgress.design.spawn) {
-        allowedTypes.add(CellType.Spawn);
-        hint.add(CellType.Spawn);
+        allowedTypes.add(CellType.Empty);
+        hint.add(CellType.Empty);
     } else if (!storyProgress.design.goal) {
         allowedTypes.add(CellType.Trigger);
         hint.add(CellType.Trigger);
     } else {
         BASIC_CELL_TYPE_OPTIONS.forEach((t) => allowedTypes.add(t));
-    }
-    if (selectedTile?.isCoreTile) {
-        allowedTypes.clear();
     }
 
     const onSelect = useCallback(
@@ -144,7 +134,7 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                         }
                         break;
                     }
-                    case CellType.Spawn: {
+                    case CellType.Empty: {
                         if (tile.image) {
                             setStoryProgress((old) => ({
                                 ...old,
@@ -158,7 +148,7 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                                 if (!old) return old;
                                 return old.map((row) =>
                                     row.map((cell) =>
-                                        cell.type === CellType.Spawn ? { ...cell, image: tile.image } : cell
+                                        cell.type === CellType.Empty ? { ...cell, image: tile.image } : cell
                                     )
                                 );
                             });
@@ -180,81 +170,49 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
     const handleAccept = useCallback(async () => {
         try {
             setLoading(true);
-            if (selectedTile) {
+            if (selectedType === null) return;
+            if (selectedType === 'background') {
+                const innerFill: Cell = { type: CellType.Empty, reloadTime: 0, timer: 0, image: '', emoji: '' };
                 if (selectedLibraryTile) {
-                    selectedTile.image = selectedLibraryTile.image;
+                    innerFill.image = selectedLibraryTile.image;
                 }
 
                 if (selectedEmoji && selectedPreview) {
-                    selectedTile.image = selectedPreview;
-                    selectedTile.emoji = selectedEmoji.emoji;
+                    innerFill.image = selectedPreview;
+                    innerFill.emoji = selectedEmoji.emoji;
                 }
-                if (selectedType === null) return;
-                if (selectedType === 'background') {
-                    console.error('Error on handle accept');
-                    return;
-                }
-                selectedTile.type = selectedType;
-                onSelect(selectedTile, false);
+                setInnerFill(innerFill);
             } else {
-                if (selectedType === null) return;
-                if (selectedType === 'background') {
-                    const innerFill: Cell = { type: CellType.Spawn, reloadTime: 0, timer: 0, image: '', emoji: '' };
-                    if (selectedLibraryTile) {
-                        innerFill.image = selectedLibraryTile.image;
-                    }
+                const id = crypto.randomUUID?.() ?? `${Date.now()}-${Math.random()}`;
+                const newTile: TileDefinition = {
+                    id: id,
+                    type: selectedType,
+                    image: '',
+                    emoji: '',
+                    isCoreTile: false,
+                    reloadTime: -1,
+                    timer: 0,
+                };
+                resetSelection();
 
-                    if (selectedEmoji && selectedPreview) {
-                        innerFill.image = selectedPreview;
-                        innerFill.emoji = selectedEmoji.emoji;
-                    }
-                    setInnerFill(innerFill);
-                } else {
-                    const id = crypto.randomUUID?.() ?? `${Date.now()}-${Math.random()}`;
-                    const newTile: TileDefinition = {
-                        id: id,
-                        type: selectedType,
-                        image: '',
-                        emoji: '',
-                        isCoreTile: false,
-                        reloadTime: -1,
-                        timer: 0,
-                    };
-                    resetSelection();
-
-                    if (selectedLibraryTile) {
-                        newTile.image = selectedLibraryTile.image;
-                    }
-
-                    if (selectedEmoji && selectedPreview) {
-                        newTile.image = selectedPreview;
-                        newTile.emoji = selectedEmoji.emoji;
-                    }
-                    onSelect(newTile, true);
+                if (selectedLibraryTile) {
+                    newTile.image = selectedLibraryTile.image;
                 }
+
+                if (selectedEmoji && selectedPreview) {
+                    newTile.image = selectedPreview;
+                    newTile.emoji = selectedEmoji.emoji;
+                }
+                onSelect(newTile, true);
             }
+
             resetSelection();
         } finally {
             setLoading(false);
         }
-    }, [
-        onSelect,
-        resetSelection,
-        setInnerFill,
-        selectedEmoji,
-        selectedLibraryTile,
-        selectedPreview,
-        selectedTile,
-        selectedType,
-    ]);
+    }, [onSelect, resetSelection, setInnerFill, selectedEmoji, selectedLibraryTile, selectedPreview, selectedType]);
 
-    const handleDelete = useCallback(() => {
-        if (!selectedTile || selectedTile.isCoreTile) return;
-        setTiles((old) => old.filter((t) => t.id !== selectedTile.id));
-        resetSelection();
-    }, [resetSelection, selectedTile, setTiles]);
-
-    const hasSelection = Boolean(selectedLibraryTile || selectedEmoji || selectedTile);
+    const hasSelection = Boolean(selectedLibraryTile || selectedEmoji);
 
     const controls = (
         <div
@@ -314,7 +272,7 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                             color="secondary"
                             onClick={handleAccept}
                             style={{ height: `${Math.max(30, s(48))}px` }}
-                            disabled={!hasSelection || selectedType === null || selectedTile === null || loading}
+                            disabled={!hasSelection || selectedType === null || loading}
                         >
                             {loading ? t('import.actions.loadingImage') : t('import.actions.setImage')}
                         </Button>
@@ -357,7 +315,6 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                         hint={hint}
                     />
                     <TileOptions
-                        selectedTile={selectedTile}
                         selectedType={selectedType}
                         selectedPreview={selectedPreview}
                         selectedLibraryTile={selectedLibraryTile}
@@ -365,7 +322,6 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                         hasSelection={hasSelection}
                         onSelectTile={handleLibrarySelect}
                         onSelectEmoji={handleEmojiSelect}
-                        onDelete={handleDelete}
                     />
                 </SlideShow>
             </div>

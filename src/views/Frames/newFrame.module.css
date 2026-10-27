@@ -28,7 +28,7 @@
     background: linear-gradient(to bottom, #eaf9fb 0%, #d9f3f0 50%, #c7d9ea 100%);
     width: fit-content;
     border-radius: 1.2rem;
-    padding: min(1rem, 2.5dvh) min(1rem, 0.2dvw) 0 min(1rem, 1.2dvw)
+    padding: min(1rem, 2.5dvh) min(1rem, 0.2dvw) 0 0
 }
 
 .frame::before {

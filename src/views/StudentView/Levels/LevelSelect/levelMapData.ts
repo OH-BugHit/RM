@@ -3,6 +3,7 @@ import { rewardsLevel1 } from '../../../../utils/levels/2rewards/leveldata';
 import { exploreLevel1 } from '../../../../utils/levels/3exploreAndExploit/leveldata';
 import { observationLevel1 } from '../../../../utils/levels/4observation/leveldata';
 import { learningLevel1 } from '../../../../utils/levels/5learning/leveldata';
+import { basicsBonusLevel1 } from '../../../../utils/levels/bonusLevels/bonus1/leveldata';
 import { LevelMapNode } from './levelMapTypes';
 
 export const levelMapNodes: LevelMapNode[] = [
@@ -15,17 +16,17 @@ export const levelMapNodes: LevelMapNode[] = [
         kind: 'required',
         allowed: true,
     },
-    /*
+
     {
         id: 'basic-2',
         groupType: 'basic',
-        level: observationLevel1,
+        level: basicsBonusLevel1,
         x: 220,
         y: 600,
         kind: 'bonus',
         allowed: false,
     },
-    */
+
     {
         id: 'rewards-1',
         groupType: 'rewards',

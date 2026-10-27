@@ -43,6 +43,15 @@
     justify-self: center;
 }
 
+.spanContent {
+    position: absolute;
+    right: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+    color: red;
+    white-space: nowrap;
+}
+
 .row {
     display: flex;
     width: 80%;

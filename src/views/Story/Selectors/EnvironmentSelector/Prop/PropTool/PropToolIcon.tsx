@@ -17,7 +17,7 @@ interface PropRowProps {
 export default function PropToolIcon({ tile, selected, disabled = false, size }: PropRowProps) {
     const { t } = useTranslation();
     const setSelected = useSetAtom(CurrentTileToolAtom);
-    const [showError, setShowError] = useState(false);
+    const [showError, setShowError] = useState(false); // TODO: Errors does not happen anymore. Story is dropped. Remove this when cleaning
     if (tile.image === 'none') return; // Core tiles have 'none' as default image.
     const handleClick = () => {
         if (disabled) {
@@ -34,20 +34,7 @@ export default function PropToolIcon({ tile, selected, disabled = false, size }:
             className={`${style.icon} ${selected ? style.selectedIcon : style.notSelectedIcon} ${disabled ? style.disabled : ''}`}
             key={tile.id}
         >
-            {showError && (
-                <span
-                    style={{
-                        position: 'absolute',
-                        right: 'calc(100% + 8px)',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        color: 'red',
-                        whiteSpace: 'nowrap',
-                    }}
-                >
-                    {t('progress.help.toolsDisabled')}
-                </span>
-            )}
+            {showError && <span className={style.spanContent}>{t('progress.help.toolsDisabled')}</span>}
             <Button
                 aria-disabled={disabled}
                 onClick={handleClick}

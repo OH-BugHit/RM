@@ -1,14 +1,14 @@
 import JSZip from 'jszip';
-import { CellSave, LoadedGame, Manifest, SavePreview, TileDefinitionSave } from './types';
+import { BackgroundTile, CellSave, LoadedGame, Manifest, SavePreview, TileDefinitionSave } from './types';
 import { TilePropsAtom } from '../atoms/uiState';
-import { EnvSettingsAtom, InnerFillCellAtom, WorldGridRenderAtom } from '../atoms/gameState';
+import { EnvSettingsAtom, InnerFillCellAtom, TileBackgroundAtom, WorldGridRenderAtom } from '../atoms/gameState';
 import { Store } from 'jotai/vanilla/store';
-import { defaultCell } from './defaults';
+import { defaultEmptyCell } from './defaults';
 import { ActiveAgentAtom, ActiveEnvironmentAtom, AgentSettingsAtom } from '../atoms/state';
 import { SAVE_VERSION } from './export';
 import { AgentUpdate, Cell, CellType, TileDefinition } from '../types';
 
-export function restoreImage(image: string, emoji: string): string {
+export function restoreImage(image: string, emoji: string | undefined): string {
     return emoji ? emojiToDataUrl(emoji) : image;
 }
 
@@ -29,6 +29,13 @@ export function fromSavedCell(cell: CellSave): Cell {
         image: restoreImage(cell.image, cell.emoji),
         reloadTime: 0,
         timer: 0,
+    };
+}
+
+function fromSavedBackground(cell: BackgroundTile): BackgroundTile {
+    return {
+        emoji: cell.emoji || undefined,
+        image: restoreImage(cell.image, cell.emoji),
     };
 }
 
@@ -56,7 +63,7 @@ export async function loadSavePreview(file: File): Promise<SavePreview> {
     };
 }
 
-export function applyLoadedGame(store: Store, loadedGame: LoadedGame, loadAgent: boolean = false) {
+export function applyLoadedGame(store: Store, loadedGame: LoadedGame, loadAgent: boolean = true) {
     store.set(TilePropsAtom, loadedGame.tools.tileDefinitions.map(fromSavedTile));
 
     store.set(
@@ -70,8 +77,11 @@ export function applyLoadedGame(store: Store, loadedGame: LoadedGame, loadAgent:
 
     store.set(
         InnerFillCellAtom,
-        loadedGame.tools.tileDefinitions.find((tile) => tile.isCoreTile && tile.type === CellType.Spawn) ?? defaultCell
+        loadedGame.tools.tileDefinitions.find((tile) => tile.isCoreTile && tile.type === CellType.Empty) ??
+            defaultEmptyCell
     );
+
+    store.set(TileBackgroundAtom, fromSavedBackground(loadedGame.tools.background));
 
     store.set(ActiveEnvironmentAtom, { name: loadedGame.manifest.gameName, type: undefined });
 
@@ -109,6 +119,7 @@ export async function readSavedFile(file: File): Promise<LoadedGame> {
         manifest,
         tools: {
             tileDefinitions: await readJson(zip, 'Tools/tileDefinitions.json'),
+            background: await readJson(zip, 'Tools/background.json'),
         },
         game: {
             world: await readJson(zip, 'Game/world.json'),

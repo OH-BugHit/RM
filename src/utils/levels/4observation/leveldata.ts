@@ -1,5 +1,5 @@
 import { Level } from '../../../types';
-import { defaultAgents } from '../../defaults';
+import { defaultAgents, defaultBackground } from '../../defaults';
 import { testTileDef } from '../../testLevel/tileDefinitions';
 import { LoadedGame } from '../../types';
 import {
@@ -13,8 +13,8 @@ import {
 } from './olevel1';
 
 const level1Data: LoadedGame = {
-    manifest: { gameName: 'Observation 1', highScore: 0, saveVersion: 1, createdAt: '123', levelIndex: 4 },
-    tools: { tileDefinitions: testTileDef },
+    manifest: { gameName: 'Observation 1', highScore: 0, saveVersion: 2, createdAt: '123', levelIndex: 4 },
+    tools: { tileDefinitions: testTileDef, background: defaultBackground },
     game: {
         world: level1Grid,
         envSettings: level1Env,
@@ -22,10 +22,8 @@ const level1Data: LoadedGame = {
     agent: {
         settings: { alpha: 0.1, epsilon: 0.1, gamma: 0, learning: true },
         activeAgent: {
-            name: 'Testiagentti',
-            type: 'robodog',
+            ...defaultAgents.adventurer,
             observationShape: 'large',
-            img: defaultAgents.robodog.img,
         },
     },
 };

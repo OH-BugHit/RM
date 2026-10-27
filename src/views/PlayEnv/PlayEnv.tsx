@@ -107,7 +107,20 @@ export default function PlayEnv() {
                             size={s(96)}
                         />
                         <div className={style.buttons}>
-                            <Button variant="outlined">Modify</Button>
+                            <Button
+                                variant="outlined"
+                                onClick={() => {
+                                    setEnv((old) => {
+                                        return { ...old, type: 'modify' };
+                                    });
+                                    setUiHelp({ ...playUIHelp, mode: 'modify' });
+                                    goToView({
+                                        main: 'modify',
+                                    });
+                                }}
+                            >
+                                Modify
+                            </Button>
                             <Button
                                 variant="contained"
                                 onClick={() => {

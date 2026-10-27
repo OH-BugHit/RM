@@ -1,6 +1,6 @@
 import style from './style.module.css';
 import { useAtomValue } from 'jotai';
-import { InnerFillCellAtom } from '../../../atoms/gameState';
+import { TileBackgroundAtom } from '../../../atoms/gameState';
 import { Button } from '@genai-fi/base';
 import { useState } from 'react';
 import { useViewNavigation } from '../../../hooks/useViewNavigation';
@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 export default function ChangeBackground() {
     const { t } = useTranslation();
     const { goToView } = useViewNavigation();
-    const background = useAtomValue(InnerFillCellAtom);
+    const background = useAtomValue(TileBackgroundAtom);
     const [dialog, setDialog] = useState<boolean>(false);
 
     const doDialog = () => {
@@ -30,7 +30,7 @@ export default function ChangeBackground() {
                         {t('common.current')}:
                         <img
                             src={background.emoji ? background.emoji : background.image}
-                            height={64}
+                            height={54}
                         />
                     </div>
                 </Button>

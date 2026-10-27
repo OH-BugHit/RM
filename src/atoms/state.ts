@@ -22,7 +22,13 @@ import {
     UserItemData,
     Username,
 } from '../types';
-import { defaultAgentSettings, defaultControls, defaultAudioSettings, testTeacherControls } from '../utils/defaults';
+import {
+    defaultAgentSettings,
+    defaultControls,
+    defaultAudioSettings,
+    testTeacherControls,
+    defaultAgents,
+} from '../utils/defaults';
 import { LoadedGame } from '../utils/types';
 
 export const sessionCodeAtom = atom<string>('');
@@ -161,7 +167,7 @@ export const ActiveEnvironmentAtom = atom<EnvironmentSelection>({
     name: '',
     type: undefined,
 });
-export const ActiveAgentAtom = atom<Agent>({ name: 'Agent X', observationShape: 'large', type: 'created', img: '' });
+export const ActiveAgentAtom = atom<Agent>({ observationShape: 'large', ...defaultAgents.adventurer });
 export const ImportedAgentImgAtom = atom<string | undefined>(undefined);
 
 export const UpdateSpritesPulseAtom = atom<boolean>(true);

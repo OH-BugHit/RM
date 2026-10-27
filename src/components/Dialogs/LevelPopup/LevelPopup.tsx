@@ -1,7 +1,7 @@
-import { Button } from '@genai-fi/base';
+import { Button, Help } from '@genai-fi/base';
 import { ClickAwayListener, Popper } from '@mui/material';
 import { motion } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CellType, Level } from '../../../types';
 import { LevelMapNode } from '../../../views/StudentView/Levels/LevelSelect/levelMapTypes';
@@ -24,13 +24,28 @@ export default function LevelPopup({ node, anchorEl, placement, open, onClose, o
     const { t } = useTranslation();
     const results = useAtomValue(studentResultsAtom);
     const titleId = `level-popup-title-${node.id}`;
-    const popupRef = useRef<HTMLDivElement>(null);
+    const descriptionId = `level-popup-description-${node.id}`;
 
-    useEffect(() => {
-        if (open) {
-            popupRef.current?.focus();
+    const setDialogRef = useCallback((element: HTMLDivElement | null) => {
+        if (element) {
+            element.focus();
         }
-    }, [open]);
+    }, []);
+
+    const handleClose = useCallback(
+        (restoreFocus = true) => {
+            onClose();
+
+            if (restoreFocus && anchorEl) {
+                requestAnimationFrame(() => {
+                    if (anchorEl.isConnected && !anchorEl.disabled) {
+                        anchorEl.focus();
+                    }
+                });
+            }
+        },
+        [anchorEl, onClose]
+    );
 
     useEffect(() => {
         if (!open) return;
@@ -38,7 +53,7 @@ export default function LevelPopup({ node, anchorEl, placement, open, onClose, o
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
                 event.stopPropagation();
-                onClose();
+                handleClose();
             }
         };
 
@@ -47,7 +62,7 @@ export default function LevelPopup({ node, anchorEl, placement, open, onClose, o
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [open, onClose]);
+    }, [open, handleClose]);
 
     const trigger = new Map<string, CellSave>();
     const plus1 = new Map<string, CellSave>();
@@ -77,7 +92,11 @@ export default function LevelPopup({ node, anchorEl, placement, open, onClose, o
         });
     });
 
-    console.log(plus2);
+    const result = t(`levels.${node.level.level.manifest.levelIndex}.describe`, {
+        returnObjects: true,
+    });
+
+    const concepts: string[] = Array.isArray(result) ? result : [];
 
     return (
         <Popper
@@ -101,27 +120,60 @@ export default function LevelPopup({ node, anchorEl, placement, open, onClose, o
                 }}
             >
                 <motion.div
-                    ref={popupRef}
+                    ref={setDialogRef}
+                    id={`level-popup-${node.id}`}
                     className={style.popup}
                     role="dialog"
+                    aria-modal="false"
                     aria-labelledby={titleId}
+                    aria-describedby={descriptionId}
                     tabIndex={-1}
+                    autoFocus
                     initial={{ opacity: 0, y: 8, scale: 0.98 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.18, ease: 'easeOut' }}
                 >
                     <h1
-                        id={titleId}
                         className={style.title}
+                        id={titleId}
                     >
                         {node.level.level.manifest.gameName}
                     </h1>
 
+                    <p
+                        id={descriptionId}
+                        className={style.screenReaderOnly}
+                    >
+                        {t('levels.levelSelect.dialogDescription')}
+                    </p>
                     <div className={style.score}>
-                        <b>
-                            {t('common.labels.highscore')}: {highScore ?? 0}
-                        </b>
+                        <b>{t('common.labels.highscore')}:</b>
+                        <b>{highScore ?? 0}</b>
                     </div>
+                    {concepts.length > 0 && (
+                        <div className={style.lo}>
+                            <h2>Learning objectives:</h2>
+                            <ul className={style.conceptList}>
+                                {concepts.map((concept) => (
+                                    <li key={concept}>
+                                        {concept}
+                                        <span>
+                                            <Help
+                                                inplace
+                                                style={{
+                                                    color: '#0e4b4f',
+                                                    background: '#fffefd',
+                                                    borderRadius: '50%',
+                                                    height: '12px',
+                                                }}
+                                                message={t(`common.concepts.desc.${concept}`)}
+                                            />
+                                        </span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
                     <div className={style.levelInfo}>
                         <InfoRow
                             title={'Goal'}
@@ -145,6 +197,7 @@ export default function LevelPopup({ node, anchorEl, placement, open, onClose, o
                         />
                     </div>
                     <Button
+                        aria-describedby={descriptionId}
                         variant="contained"
                         onClick={() => onStart(node.level)}
                     >

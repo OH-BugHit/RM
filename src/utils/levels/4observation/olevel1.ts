@@ -36,7 +36,7 @@ export const level1uiControls: UiControlsField[][] = [
 
 export const level1HudConfig: HUDvisibilityField[][] = [
     ['options.autoPlay'],
-    ['text', 'gameBar', 'progress', 'agent.img', 'agentCluster'],
+    ['text', 'gameBar', 'progress', 'agentCluster'],
     [],
     ['inspectCluster', 'inspect.agentVision'],
     ['agentVision'],
@@ -181,10 +181,10 @@ export const level1Grid: CellSave[][] = [
         {
             type: -1,
             emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
+            image: '/images/assets/start.png',
         },
         {
-            type: -1,
+            type: 0,
             emoji: '',
             image: '/images/assets/cleanWhiteStone.png',
         },
@@ -243,10 +243,10 @@ export const level1Grid: CellSave[][] = [
         {
             type: -1,
             emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
+            image: '/images/assets/start.png',
         },
         {
-            type: -1,
+            type: 0,
             emoji: '',
             image: '/images/assets/cleanWhiteStone.png',
         },
@@ -305,10 +305,10 @@ export const level1Grid: CellSave[][] = [
         {
             type: -1,
             emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
+            image: '/images/assets/start.png',
         },
         {
-            type: -1,
+            type: 0,
             emoji: '',
             image: '/images/assets/cleanWhiteStone.png',
         },
@@ -367,10 +367,10 @@ export const level1Grid: CellSave[][] = [
         {
             type: -1,
             emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
+            image: '/images/assets/start.png',
         },
         {
-            type: -1,
+            type: 0,
             emoji: '',
             image: '/images/assets/cleanWhiteStone.png',
         },
@@ -429,10 +429,10 @@ export const level1Grid: CellSave[][] = [
         {
             type: -1,
             emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
+            image: '/images/assets/start.png',
         },
         {
-            type: -1,
+            type: 0,
             emoji: '',
             image: '/images/assets/cleanWhiteStone.png',
         },

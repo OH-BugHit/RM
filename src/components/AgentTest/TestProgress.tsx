@@ -14,7 +14,7 @@ interface TestProgressProps {
     target?: number;
 }
 
-export default function TestProgress({ target = 5 }: TestProgressProps) {
+export default function TestProgress({ target = 3 }: TestProgressProps) {
     const { s } = useGameScale();
     const stats = useAtomValue(EpisodicDataAtom);
     const setStepsLeft = useSetAtom(StepsLeftAtom);

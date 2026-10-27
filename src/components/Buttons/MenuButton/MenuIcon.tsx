@@ -1,7 +1,7 @@
 import { useViewNavigation } from '../../../hooks/useViewNavigation';
 import style from './menuIcon.module.css';
-import { MenuOpenAtom } from '../../../atoms/uiState';
-import { useAtom } from 'jotai';
+import { BuildCAtom, MenuOpenAtom } from '../../../atoms/uiState';
+import { useAtom, useAtomValue } from 'jotai';
 import { useGameScale } from '../../../context/GameScale/useGameScale';
 
 interface MenuIconProps {
@@ -13,6 +13,7 @@ export default function MenuIcon({ size = 84, position = 'right' }: MenuIconProp
     const { s } = useGameScale();
     const { goToView } = useViewNavigation();
     const [isOpen] = useAtom(MenuOpenAtom);
+    const buildTools = useAtomValue(BuildCAtom);
 
     const onClick = () => {
         goToView({
@@ -21,11 +22,11 @@ export default function MenuIcon({ size = 84, position = 'right' }: MenuIconProp
     };
     return (
         <div
-            className={style.menuButtonContainer}
+            className={`${style.menuButtonContainer} ${buildTools.tools ? style.hidden : ''}`}
             style={{ top: position === 'right' ? '50%' : '0px' }}
         >
             <button
-                className={`${style.menuButton} ${isOpen ? style.isOpen : ''}`}
+                className={`${style.menuButton} ${isOpen ? style.isOpen : ''} `}
                 type="button"
                 onClick={onClick}
                 aria-label={isOpen ? 'Close menu' : 'Open menu'}

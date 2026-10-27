@@ -1,5 +1,5 @@
 import { Level } from '../../../types';
-import { defaultAgentSettings } from '../../defaults';
+import { defaultAgents, defaultAgentSettings, defaultBackground } from '../../defaults';
 import {
     level1Env,
     level1Grid,
@@ -13,8 +13,15 @@ import { testTileDef } from '../../testLevel/tileDefinitions';
 import { LoadedGame } from '../../types';
 
 const level1Data: LoadedGame = {
-    manifest: { gameName: 'Basics 1', highScore: -1, saveVersion: 1, createdAt: '123', levelIndex: 1 },
-    tools: { tileDefinitions: testTileDef },
+    manifest: {
+        gameName: 'Basics 1',
+        highScore: -1,
+        saveVersion: 2,
+        createdAt: '123',
+        levelIndex: 1,
+        stepsRequired: 12,
+    },
+    tools: { tileDefinitions: testTileDef, background: defaultBackground },
     game: {
         world: level1Grid,
         envSettings: level1Env,
@@ -22,10 +29,8 @@ const level1Data: LoadedGame = {
     agent: {
         settings: defaultAgentSettings,
         activeAgent: {
-            name: 'Level 1 agent',
-            type: 'unset',
+            ...defaultAgents.adventurer,
             observationShape: 'large',
-            img: '',
         },
     },
 };

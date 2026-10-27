@@ -2,8 +2,13 @@
     position: absolute;
     right: 2px;
     top: 50%;
-
+    opacity: 1;
+    scale: 1;
     z-index: 23;
+
+    transition:
+        opacity 280ms ease,
+        scale 220ms ease;
 }
 
 .menuButton {
@@ -105,4 +110,14 @@
 
 .isOpen .lineBottom {
     transform: translateY(-32px) rotate(-45deg);
+}
+
+.hidden {
+    z-index: -1;
+    scale: 0.6;
+    opacity: 0.08;
+    pointer-events: none;
+    transition:
+        opacity 220ms ease,
+        scale 220ms ease;
 }

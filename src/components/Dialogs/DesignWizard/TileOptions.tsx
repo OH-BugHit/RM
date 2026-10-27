@@ -1,8 +1,7 @@
 import style from './style.module.css';
 import { Trans, useTranslation } from 'react-i18next';
-import { DialogContent, IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { TileDefinition, TileLibraryItem, CellType } from '../../../types';
+import { DialogContent } from '@mui/material';
+import { TileLibraryItem, CellType } from '../../../types';
 import { EmojiItem } from '../TileLibrary/emojiLibraryData';
 import TileLibrary from '../TileLibrary/TileLibrary';
 import { useGameScale } from '../../../context/GameScale/useGameScale';
@@ -10,7 +9,6 @@ import { Help } from '@genai-fi/base';
 import LibrarySearch from '../LibrarySearch/LibrarySearch';
 
 interface TileOptionsProps {
-    selectedTile?: TileDefinition;
     selectedType: CellType | 'background' | null;
     selectedPreview: string | null;
     selectedLibraryTile: TileLibraryItem | null;
@@ -18,18 +16,15 @@ interface TileOptionsProps {
     hasSelection: boolean;
     onSelectTile: (tile: TileLibraryItem) => void;
     onSelectEmoji: (emojiItem: EmojiItem) => void;
-    onDelete: () => void;
 }
 
 export default function TileOptions({
-    selectedTile,
     selectedPreview,
     selectedType,
     selectedLibraryTile,
     selectedEmoji,
     onSelectTile,
     onSelectEmoji,
-    onDelete,
 }: TileOptionsProps) {
     const { t } = useTranslation();
     const { s, scale } = useGameScale();
@@ -108,17 +103,6 @@ export default function TileOptions({
                     />
                 </div>
             </DialogContent>
-            <div className={`${style.buttonGroupTile} ${style.buttonGroup}`}>
-                {!selectedTile?.isCoreTile && selectedTile && (
-                    <IconButton
-                        onClick={onDelete}
-                        size="large"
-                        color="error"
-                    >
-                        <DeleteIcon fontSize="large" />
-                    </IconButton>
-                )}
-            </div>
         </div>
     );
 }

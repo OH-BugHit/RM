@@ -11,7 +11,7 @@ import RewardMachine from '../Environments/RewardMachine/RewardMachine';
 import { defaultWorldGrid, hudVisBuild, visibleTilesTrue } from '../../utils/defaults';
 import { useSetAtom, useStore } from 'jotai';
 import { ControlEnablerAtom, HUDvisAtom, TileVisibilityAtom } from '../../atoms/uiState';
-import { WorldGridRenderAtom } from '../../atoms/gameState';
+import { SpawnCountAtom, WorldGridRenderAtom } from '../../atoms/gameState';
 import { createSave } from '../../utils/export';
 import { LevelData } from '../../utils/types';
 import { usernameAtom } from '../../atoms/state';
@@ -35,6 +35,7 @@ export default function BuildView({ doSendEnvironment = undefined, envStateRef =
     const layerRef = useRef<CustomGridLayer | null>(null);
     const currentStateRef = useRef<StateData>({ previous: '', current: '' });
     const setWorld = useSetAtom(WorldGridRenderAtom);
+    const setSpawnCount = useSetAtom(SpawnCountAtom);
 
     const store = useStore();
 
@@ -49,8 +50,9 @@ export default function BuildView({ doSendEnvironment = undefined, envStateRef =
     useEffect(() => {
         setHudVis(hudVisBuild);
         setTileVis(visibleTilesTrue);
+        setSpawnCount(1);
         setControls({ play: true, step: true, ff: true, inspect: false });
-    }, [setHudVis, setTileVis, setControls]);
+    }, [setHudVis, setTileVis, setControls, setSpawnCount]);
 
     useEffect(() => {
         let cancelled = false;

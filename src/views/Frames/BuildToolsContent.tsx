@@ -5,8 +5,9 @@ import PropToolIcon from '../Story/Selectors/EnvironmentSelector/Prop/PropTool/P
 import { useEffect } from 'react';
 import ChangeBackground from '../../components/Buttons/ChangeBackground/ChangeBackground';
 import { useViewNavigation } from '../../hooks/useViewNavigation';
-import { Target } from '../../types';
+import { Target, TileDefinition } from '../../types';
 import { useGameScale } from '../../context/GameScale/useGameScale';
+import { defaultSpawnCell } from '../../utils/defaults';
 
 interface BuildToolsContentProps {
     open: boolean;
@@ -25,7 +26,7 @@ const TOOL_WIDTH = 120;
 const TOOL_HEIGHT = 120;
 const TOOL_SPACING_X = 44;
 const TOOL_SPACING_Y = 0;
-const VIEWPORT_MARGIN = 90;
+const CLUSTER_ADD = 90;
 
 function getToolTargets(
     baseTarget: { x: number; y: number },
@@ -41,7 +42,10 @@ function getToolTargets(
 
     const maxRows = Math.max(
         1,
-        Math.floor((window.innerHeight - VIEWPORT_MARGIN * 2 + TOOL_SPACING_Y) / (toolHeight + TOOL_SPACING_Y))
+        Math.floor(
+            (window.innerHeight - Math.max(window.innerHeight * 0.2 + CLUSTER_ADD) + TOOL_SPACING_Y) /
+                (toolHeight + TOOL_SPACING_Y)
+        )
     );
     const firstRowY = Math.max(baseTarget.y, 20 + contentHeight / 2 - clusterPosition.y);
 
@@ -64,9 +68,6 @@ export default function BuildToolsContent({ open, origin, baseTarget, clusterPos
 
     useEffect(() => {
         setDesignOpen(true);
-        if (!open) {
-            goToView({ overlay: null });
-        }
         return () => {
             setDesignOpen(false);
         };
@@ -79,15 +80,38 @@ export default function BuildToolsContent({ open, origin, baseTarget, clusterPos
     const toolContentHeight = scale * 110;
     const targets = getToolTargets(
         { x: xT, y: yT },
-        tiles.length,
+        tiles.length + 1,
         TOOL_WIDTH * scaleWidth,
         TOOL_HEIGHT * scale,
         clusterPosition,
         toolContentHeight
     );
 
+    const spawnCell: TileDefinition = { ...defaultSpawnCell, id: 'spawn-cell' };
+
+    console.log(selectedTool, spawnCell);
+
     return (
         <>
+            <ContentContainer
+                key={'spawnTool'}
+                unmountOnClose={true}
+                clusterPosition={clusterPosition}
+                open={open}
+                origin={origin}
+                target={targets[0] ?? { type: 'cluster', x: 0, y: 0 }}
+                delay={0}
+                size={s(140)}
+                contentWidth={scaleWidth * 50}
+                contentHeight={toolContentHeight - 10}
+                background="build"
+            >
+                <PropToolIcon
+                    tile={spawnCell}
+                    size={Math.min(48, 64 * scale)}
+                    selected={spawnCell.id === selectedTool?.id}
+                />
+            </ContentContainer>
             {tiles.map((tile, index) => (
                 <ContentContainer
                     key={tile.id}
@@ -95,11 +119,11 @@ export default function BuildToolsContent({ open, origin, baseTarget, clusterPos
                     clusterPosition={clusterPosition}
                     open={open}
                     origin={origin}
-                    target={targets[index] ?? { type: 'cluster', x: 0, y: 0 }}
-                    delay={index * 60}
+                    target={targets[index + 1] ?? { type: 'cluster', x: 0, y: 0 }}
+                    delay={(index + 1) * 60}
                     size={s(140)}
-                    contentWidth={scaleWidth * 80}
-                    contentHeight={toolContentHeight}
+                    contentWidth={scaleWidth * 50}
+                    contentHeight={toolContentHeight - 10}
                     background="build"
                 >
                     <PropToolIcon
@@ -115,11 +139,11 @@ export default function BuildToolsContent({ open, origin, baseTarget, clusterPos
                 clusterPosition={clusterPosition}
                 open={open}
                 origin={origin}
-                target={{ type: 'cluster', x: scaleWidth * -500, y: 0 }}
+                target={{ type: 'cluster', x: scaleWidth * -320, y: 0 }}
                 delay={200}
                 size={s(140)}
-                contentWidth={scaleWidth * 350}
-                contentHeight={scale * 110}
+                contentWidth={scaleWidth * 250}
+                contentHeight={scale * 100}
                 background="build"
             >
                 <ChangeBackground />

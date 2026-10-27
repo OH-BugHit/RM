@@ -315,11 +315,10 @@ export enum CellType {
  */
 export const CELL_TYPE_OPTIONS = Object.values(CellType).filter((v) => typeof v === 'number') as CellType[];
 
-// Basic options for celltypes
+// Basic options for celltypes. Spawn type is special type
 export const BASIC_CELL_TYPE_OPTIONS: CellType[] = [
-    CellType.Spawn,
-    CellType.Empty,
     CellType.Solid,
+    CellType.Empty,
     CellType.Trigger,
     CellType.Treasure,
     CellType.TreasureBig,
@@ -426,7 +425,7 @@ export type View = {
     sub?: SubView;
     overlay?: Overlay;
 };
-export type SinglePlayViews = 'ownLevels' | 'play' | 'build';
+export type SinglePlayViews = 'ownLevels' | 'play' | 'build' | 'modify';
 export type StudentViews = 'join' | 'main' | GamePhase | SinglePlayViews;
 export type LevelGroup = {
     groupName: string;

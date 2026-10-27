@@ -37,10 +37,10 @@ export default function PropIconMenu({ tile }: PropIconMenuProps) {
                 aria-haspopup="true"
                 aria-expanded={open}
                 onClick={handleClick}
-                disabled={tile.isCoreTile}
+                disabled={tile.isCoreTile || tile.id === 'spawn-cell'}
                 sx={{ padding: 0 }}
             >
-                <MoreVertIcon fontSize="large" />
+                {!tile.isCoreTile && tile.id !== 'spawn-cell' && <MoreVertIcon fontSize="large" />}
             </Button>
             <Menu
                 id="fade-menu"

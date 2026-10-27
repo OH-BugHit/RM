@@ -2,11 +2,11 @@ import { Store } from 'jotai/vanilla/store';
 import JSZip from 'jszip';
 import { TilePropsAtom, TopbarAtom } from '../atoms/uiState';
 import { AgentUpdate, Cell, EnvSettings, TileDefinition } from '../types';
-import { EnvSettingsAtom, WorldGridRenderAtom } from '../atoms/gameState';
+import { EnvSettingsAtom, TileBackgroundAtom, WorldGridRenderAtom } from '../atoms/gameState';
 import { ActiveAgentAtom, ActiveEnvironmentAtom, AgentSettingsAtom } from '../atoms/state';
 import { CellSave, Manifest, TileDefinitionSave } from './types';
 import { QLearningAgent } from '../components/agents/rlAgentQ';
-export const SAVE_VERSION = 1;
+export const SAVE_VERSION = 2;
 
 function createManifest(store: Store): Manifest {
     return {
@@ -41,6 +41,7 @@ function saveTools(zip: JSZip, store: Store) {
     const folder = zip.folder('Tools');
 
     folder?.file('tileDefinitions.json', JSON.stringify(store.get(TilePropsAtom).map(toSaveTile), null, 2));
+    folder?.file('background.json', JSON.stringify(store.get(TileBackgroundAtom), null, 2));
 }
 
 function saveSettings(zip: JSZip, store: Store) {

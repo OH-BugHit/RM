@@ -8,7 +8,6 @@ export const level1TextModes: TextMode[] = [
     'textNext',
     'textNext',
     'textNext',
-    'text',
     'textNext',
     'text',
     'text',
@@ -19,15 +18,14 @@ export const level1TextModes: TextMode[] = [
     'hidden',
 ];
 
-export const level1uiControls: UiControlsField[][] = [[], [], [], [], [], ['agentC.img']];
+export const level1uiControls: UiControlsField[][] = [[]];
 
 export const level1HudConfig: HUDvisibilityField[][] = [
     [],
-    ['text'],
+    ['text', 'agentCluster'],
     [],
     [],
     ['progress'],
-    ['agentCluster', 'agent.img'],
     ['gameBar'],
     ['controlBar', 'controls.step'],
     ['controls.play'],
@@ -44,20 +42,6 @@ export const level1Layout: Record<number, TutorialLayout> = {
 };
 
 export const level1Tasks: TaskGroup[] = [
-    {
-        id: 'agent',
-        title: 'levels.1.tasks.p1.title',
-        visibleFrom: 0,
-        visibleTo: 8,
-        tasks: [
-            {
-                id: 'agent-image',
-                text: 'levels.1.tasks.p1.task.1',
-                field: 'agent.img',
-                takeStep: true,
-            },
-        ],
-    },
     {
         id: 'controls',
         title: 'levels.1.tasks.p2.title',
@@ -234,7 +218,7 @@ export const level1Grid: CellSave[][] = [
         {
             type: -1,
             emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
+            image: '/images/assets/start.png',
         },
         {
             type: 0,

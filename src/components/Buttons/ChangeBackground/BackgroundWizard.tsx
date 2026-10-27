@@ -2,17 +2,18 @@ import style from './style.module.css';
 import { LargeButton } from '@genai-fi/base';
 import TileOptions from '../../Dialogs/DesignWizard/TileOptions';
 import { useCallback, useRef, useState } from 'react';
-import { Cell, TileLibraryItem } from '../../../types';
+import { TileLibraryItem } from '../../../types';
 import { EmojiItem } from '../../Dialogs/TileLibrary/emojiLibraryData';
 import { emojiToDataUrl } from '../../../utils/import';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { ActiveViewAtom } from '../../../atoms/uiState';
 import { AnimatePresence, motion } from 'framer-motion';
-import { InnerFillCellAtom } from '../../../atoms/gameState';
+import { TileBackgroundAtom } from '../../../atoms/gameState';
 import { useTranslation } from 'react-i18next';
 import SlideShow from '../../SlideShow/SlideShow';
 import { useViewNavigation } from '../../../hooks/useViewNavigation';
-import { defaultCell } from '../../../utils/defaults';
+import { BackgroundTile } from '../../../utils/types';
+import { defaultBackground } from '../../../utils/defaults';
 
 export default function BackgroundWizard() {
     const { t } = useTranslation();
@@ -23,8 +24,8 @@ export default function BackgroundWizard() {
     const view = useAtomValue(ActiveViewAtom);
     const previewUrlRef = useRef<string | null>(null);
     const hasSelection = Boolean(selectedLibraryTile || selectedEmoji);
-    const [temp, setTemp] = useState<Cell>(defaultCell);
-    const setBackground = useSetAtom(InnerFillCellAtom);
+    const [temp, setTemp] = useState<BackgroundTile>(defaultBackground);
+    const setBackground = useSetAtom(TileBackgroundAtom);
 
     const handleLibrarySelect = useCallback(
         (tile: TileLibraryItem) => {
@@ -114,7 +115,6 @@ export default function BackgroundWizard() {
                             controls={controls}
                         >
                             <TileOptions
-                                selectedTile={undefined}
                                 selectedType={'background'}
                                 selectedPreview={selectedPreview}
                                 selectedLibraryTile={selectedLibraryTile}
@@ -122,7 +122,6 @@ export default function BackgroundWizard() {
                                 hasSelection={hasSelection}
                                 onSelectTile={handleLibrarySelect}
                                 onSelectEmoji={handleEmojiSelect}
-                                onDelete={() => {}}
                             />
                         </SlideShow>
                     </div>

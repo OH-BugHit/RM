@@ -2,10 +2,10 @@ import { useMemo, useState } from 'react';
 import { Cell, CellType, Position } from '../../types';
 import style from './style.module.css';
 import { getOnSight } from '../GameComponents/drawComponent';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom, useStore } from 'jotai';
 import { ActiveAgentAtom } from '../../atoms/state';
 import { DesignOpenAtom, CurrentTileToolAtom, StoryProgressAtom, TileVisibilityAtom } from '../../atoms/uiState';
-import { InnerFillCellAtom, RewardsPulseAtom } from '../../atoms/gameState';
+import { RewardsPulseAtom, TileBackgroundAtom, SpawnCountAtom } from '../../atoms/gameState';
 
 interface TileProps {
     cell: Cell;
@@ -28,11 +28,16 @@ export default function Tile({
     const agent = useAtomValue(ActiveAgentAtom);
     const visibleTiles = useAtomValue(TileVisibilityAtom);
     const propTool = useAtomValue(CurrentTileToolAtom);
-    const [trigger, setTrigger] = useState<boolean>(true);
-    const fillerTile = useAtomValue(InnerFillCellAtom);
+    const [trigger, setTrigger] = useState<boolean>(true); // Can't remeber the funtion of this trigger, possibly unneccessary
+    const background = useAtomValue(TileBackgroundAtom);
     const updateWorldPulse = useSetAtom(RewardsPulseAtom);
     const setStoryProgress = useSetAtom(StoryProgressAtom);
+    const setSpawnCount = useSetAtom(SpawnCountAtom);
     const design = useAtomValue(DesignOpenAtom);
+
+    const store = useStore();
+
+    const backgroundUrl = background.image !== '' ? background.image : '/images/assets/grass.png';
 
     const border =
         cellLocation.x === 0 ||
@@ -97,7 +102,7 @@ export default function Tile({
                         style={{ width: tileSize, height: tileSize }}
                     >
                         <img
-                            src={fillerTile.image}
+                            src={backgroundUrl}
                             alt="Background"
                             className={`${style.tileLayer} ${style.tileBackground}`}
                             style={{
@@ -124,7 +129,7 @@ export default function Tile({
                         style={{ width: tileSize, height: tileSize }}
                     >
                         <img
-                            src={fillerTile.image}
+                            src={backgroundUrl}
                             alt="Background"
                             className={`${style.tileLayer} ${style.tileBackground}`}
                             style={{
@@ -151,7 +156,7 @@ export default function Tile({
                         style={{ width: tileSize, height: tileSize }}
                     >
                         <img
-                            src={fillerTile.image}
+                            src={backgroundUrl}
                             alt="Background"
                             className={`${style.tileLayer} ${style.tileBackground}`}
                             style={{
@@ -175,7 +180,7 @@ export default function Tile({
                         style={{ width: tileSize, height: tileSize }}
                     >
                         <img
-                            src={fillerTile.image}
+                            src={backgroundUrl}
                             alt="Background"
                             className={`${style.tileLayer} ${style.tileBackground}`}
                             style={{
@@ -200,7 +205,7 @@ export default function Tile({
                         style={{ width: tileSize, height: tileSize }}
                     >
                         <img
-                            src={fillerTile.image}
+                            src={backgroundUrl}
                             alt="Background"
                             className={`${style.tileLayer} ${style.tileBackground}`}
                             style={{
@@ -242,7 +247,7 @@ export default function Tile({
                         style={{ width: tileSize, height: tileSize }}
                     >
                         <img
-                            src={fillerTile.image}
+                            src={backgroundUrl}
                             alt="Background"
                             className={`${style.tileLayer} ${style.tileBackground}`}
                             style={{
@@ -267,7 +272,7 @@ export default function Tile({
                         style={{ width: tileSize, height: tileSize }}
                     >
                         <img
-                            src={fillerTile.image}
+                            src={backgroundUrl}
                             alt="Background"
                             className={`${style.tileLayer} ${style.tileBackground}`}
                             style={{
@@ -290,7 +295,7 @@ export default function Tile({
                         style={{ width: tileSize, height: tileSize }}
                     >
                         <img
-                            src={fillerTile.image}
+                            src={backgroundUrl}
                             alt="Background"
                             className={`${style.tileLayer} ${style.tileBackground}`}
                             style={{
@@ -319,7 +324,7 @@ export default function Tile({
             default: {
                 return (
                     <img
-                        src={fillerTile.image}
+                        src={backgroundUrl}
                         width={tileSize}
                         height={tileSize}
                         alt="Default floor"
@@ -342,6 +347,16 @@ export default function Tile({
                         },
                     };
                 });
+            }
+            if (cell.type === CellType.Spawn) {
+                if (store.get(SpawnCountAtom) < 2) return;
+                if (propTool.type !== CellType.Spawn) {
+                    setSpawnCount((old) => old - 1);
+                }
+            } else {
+                if (propTool.type === CellType.Spawn) {
+                    setSpawnCount((old) => old + 1);
+                }
             }
             setTrigger(!trigger);
             cell.image = propTool.image;
