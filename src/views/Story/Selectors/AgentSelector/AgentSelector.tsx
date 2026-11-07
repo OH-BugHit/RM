@@ -135,7 +135,7 @@ export default function AgentSelector() {
                     selected={selectedAgent.type === 'adventurer'}
                 />
                 <SelectorItem
-                    title="Use own image"
+                    title="Use your own image"
                     img={importedImg ?? defaultAgents.created.img}
                     onClick={() => {
                         setSelectedAgent((old) => {

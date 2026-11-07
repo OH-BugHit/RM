@@ -20,7 +20,7 @@
     flex-direction: column;
     text-align: center;
     /*background-color: rgba(50, 121, 208, 0.278);*/
-    background: #17bdd7a5;
+    background: #ecfbff;
     border-radius: 2rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
@@ -36,14 +36,16 @@
 
 .selectedTermItem {
     composes: termItem;
-    background: #1ae0ffa5;
+    background: #bef3f5;
+    /*#1ae0ffa5;*/
     box-shadow: 2px 2px 4px #444;
     color: white;
 }
 
 .termItem:hover {
     /*transform: scale(1.1, 1.1);*/
-    background: var(--light-element);
+    background: #bef3f5;
+    filter: brightness(1.07);
     box-shadow: 0 0 8px rgba(45, 236, 239, 0.309);
     ;
 }

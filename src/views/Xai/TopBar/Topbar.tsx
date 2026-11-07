@@ -12,6 +12,7 @@ interface EnvironmentProps {
 export default function TopBar({ hideStuff }: EnvironmentProps) {
     const { s, scaleWidth } = useGameScale();
     const hudVis = useAtomValue(HUDvisAtom);
+
     return (
         <>
             {hudVis.gameBar && !hideStuff && (
@@ -26,8 +27,9 @@ export default function TopBar({ hideStuff }: EnvironmentProps) {
                         <div
                             className={`${style.left} ${hudVis.gameBarContent.picked ? '' : style.hidden}`}
                             style={{
-                                width: `${Math.min(370, scaleWidth * 370)}px`,
-                                paddingRight: `${scaleWidth * 1}rem`,
+                                width: `${Math.min(150, scaleWidth * 140)}px`,
+
+                                paddingRight: s(170) / 2,
                             }}
                         >
                             <ItemProgress />
@@ -38,17 +40,27 @@ export default function TopBar({ hideStuff }: EnvironmentProps) {
                         <div
                             className={`${style.right} ${hudVis.gameBarContent.score ? '' : style.hidden}`}
                             style={{
-                                width: `${Math.min(700, scaleWidth * 700)}px`,
-                                paddingLeft: `${scaleWidth * 1}rem`,
+                                width: `${Math.min(150, scaleWidth * 140)}px`,
+
+                                paddingLeft: s(170) / 2,
                             }}
                         >
                             <Score />
                         </div>
                     </div>
-
+                    <div
+                        style={{
+                            display: 'flex',
+                            gap: '0.2rem',
+                            position: 'absolute',
+                            top: '100%',
+                            right: 0,
+                            zIndex: 9999,
+                        }}
+                    ></div>
                     <div
                         className={style.clock}
-                        style={{ padding: `${s(6)}px ${s(6)}px 0px ${s(6)}px`, top: `${s(64)}px` }}
+                        style={{ top: `${s(64)}px` }}
                     >
                         <Stopwatch size={s(170)} />
                     </div>

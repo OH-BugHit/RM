@@ -12,9 +12,10 @@ import { useGameScale } from '../../context/GameScale/useGameScale';
 
 interface TestProgressProps {
     target?: number;
+    bonus?: boolean;
 }
 
-export default function TestProgress({ target = 3 }: TestProgressProps) {
+export default function TestProgress({ target = 3, bonus = false }: TestProgressProps) {
     const { s } = useGameScale();
     const stats = useAtomValue(EpisodicDataAtom);
     const setStepsLeft = useSetAtom(StepsLeftAtom);
@@ -27,6 +28,11 @@ export default function TestProgress({ target = 3 }: TestProgressProps) {
     const store = useStore();
     const agentPrm = useRef<AgentProps>(defaultAgentSettings);
 
+    useEffect(() => {
+        if (bonus) {
+            setTest('available');
+        }
+    }, [bonus, setTest]);
     useEffect(() => {
         if (stats && active === 'isRunning') {
             if (startRef.current === 'unset') {

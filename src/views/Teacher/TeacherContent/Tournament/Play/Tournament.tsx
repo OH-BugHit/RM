@@ -1,20 +1,15 @@
 import style from './tournament.module.css';
-import ChallengeButton from '../../../../../components/Buttons/ButtonIcons/SelectChallenge/SelectChallengeButton';
 import { Button } from '@genai-fi/base';
-import { useState } from 'react';
-import SelectChallenge from './SelectChallenge/SelectChallenge';
 import Scoreboard from '../../../../Scoreboard/Scoreboard';
 import TournamentEnvironmentWrapper from './Environment/TournamentEnvironmentWrapper';
+import { useViewNavigation } from '../../../../../hooks/useViewNavigation';
+import SelectChallenge from './SelectChallenge/SelectChallenge';
 
 export default function Tournament() {
-    const [openSelect, setOpenSelect] = useState(false);
-
+    const { goToView } = useViewNavigation();
     return (
         <div className={style.container}>
-            <SelectChallenge
-                visible={openSelect}
-                setVisible={setOpenSelect}
-            />
+            <SelectChallenge />
             <div className={style.title}>
                 <h1>Tournament</h1>
             </div>
@@ -30,10 +25,11 @@ export default function Tournament() {
 
             <div className={style.buttons}>
                 <Button
-                    onClick={() => setOpenSelect((old) => !old)}
+                    onClick={() => goToView({ sub: 'selectChallenge' })}
                     style={{ borderRadius: '2rem' }}
+                    variant="contained"
                 >
-                    <ChallengeButton isOpen={openSelect} />
+                    Select Challenge
                 </Button>
             </div>
         </div>

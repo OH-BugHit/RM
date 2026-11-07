@@ -31,7 +31,7 @@
     z-index: 99;
 }
 
-.content {
+.levelList {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -65,4 +65,85 @@
 .active {
     background: var(--info-light);
     scale: 1.2;
+}
+
+/*New>>>>>*/
+
+.main {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.1rem 0;
+
+    background:
+        radial-gradient(circle at 32% 25%,
+            #bdddf9 0%,
+            #68b3d8 50%,
+            #355392 95%,
+            #2e6df5 100%);
+
+    box-shadow:
+        0 18px 30px rgba(40, 65, 75, 0.25),
+        0 5px 10px rgba(40, 65, 75, 0.2),
+        inset 8px 8px 18px rgba(255, 255, 255, 0.35),
+        inset -10px -12px 20px rgba(20, 80, 80, 0.28);
+
+    overflow: hidden;
+}
+
+.main::before {
+    content: "";
+    position: absolute;
+
+    width: 75%;
+    height: 35%;
+
+    top: -10%;
+    left: 12%;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.18);
+
+    filter: blur(12px);
+
+    transform: rotate(-5deg);
+
+    pointer-events: none;
+}
+
+.main::after {
+    content: "";
+    position: absolute;
+
+    width: 80%;
+    height: 20%;
+
+    bottom: -12%;
+    left: 10%;
+
+    border-radius: 50%;
+
+    background: rgba(20, 80, 80, 0.18);
+
+    filter: blur(18px);
+
+    pointer-events: none;
+}
+
+.content {
+    width: 100%;
+    max-height: 80dvh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    align-items: center;
+    justify-items: center;
+    background: white;
+    border-radius: 80% 80% 80% 80% / 2% 2% 2% 2%;
+    overflow: auto;
+}
+
+.content h1 {
+    margin: 4% 0 0%;
 }

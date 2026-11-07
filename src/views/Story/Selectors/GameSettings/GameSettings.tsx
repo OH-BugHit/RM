@@ -156,7 +156,7 @@ export default function GameSettings() {
                     />
                 </div>
                 <Separator />
-                <h3>Save</h3>
+                <h3>{t('createMenu.settings.download')}</h3>
                 <SaveButton />
             </div>
         </div>

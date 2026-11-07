@@ -1,4 +1,4 @@
-import { EnvSettings } from '../../../../types';
+import { EnvSettings, HUDvisibilityField } from '../../../../types';
 import { CellSave } from '../../../types';
 
 export const level1Env: EnvSettings = {
@@ -24,6 +24,10 @@ export const level1Env: EnvSettings = {
         },
     },
 };
+
+export const blevel1HudConfig: HUDvisibilityField[][] = [
+    ['text', 'agentCluster', 'progress', 'gameBar', 'controlBar', 'controls.step', 'controls.play', 'controls.ff'],
+];
 
 export const level1Grid: CellSave[][] = [
     [

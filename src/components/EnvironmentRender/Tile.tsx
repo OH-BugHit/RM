@@ -28,7 +28,7 @@ export default function Tile({
     const agent = useAtomValue(ActiveAgentAtom);
     const visibleTiles = useAtomValue(TileVisibilityAtom);
     const propTool = useAtomValue(CurrentTileToolAtom);
-    const [trigger, setTrigger] = useState<boolean>(true); // Can't remeber the funtion of this trigger, possibly unneccessary
+    const [renderTrigger, setTrigger] = useState<boolean>(true); // Can't remeber the funtion of this trigger, possibly unneccessary
     const background = useAtomValue(TileBackgroundAtom);
     const updateWorldPulse = useSetAtom(RewardsPulseAtom);
     const setStoryProgress = useSetAtom(StoryProgressAtom);
@@ -358,7 +358,7 @@ export default function Tile({
                     setSpawnCount((old) => old + 1);
                 }
             }
-            setTrigger(!trigger);
+            setTrigger(!renderTrigger);
             cell.image = propTool.image;
             cell.type = propTool.type;
             cell.emoji = propTool.emoji;

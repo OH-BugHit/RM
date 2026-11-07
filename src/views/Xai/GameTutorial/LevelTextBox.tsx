@@ -4,7 +4,7 @@ import { useAtom, useAtomValue } from 'jotai';
 import { TextStepAtom, UiHelpAtom } from '../../../atoms/uiState';
 import { Button } from '@genai-fi/base';
 import Arrow from '../../../components/HelperArrow/Arrow';
-import TypewriterText from '../../../components/Typewriter/TypeWriterText';
+import { SampleWriter } from '../../../components/Typewriter/TypeWriterText';
 import NextArrowIcon from '../../../components/Buttons/ButtonIcons/OtherIcons/NextArrowIcon';
 import { useEffect, useState } from 'react';
 import { LevelConfAtom } from '../../../atoms/gameState';
@@ -67,11 +67,11 @@ export default function LevelTextBox({ variant = 'wide' }: LevelTextBoxProps) {
                         style={mode === 'text' && variant === 'narrow' ? { paddingBottom: '1rem' } : {}}
                     >
                         {i18n.exists(`${level?.levelText?.textKey}.text.${step}`) && (
-                            <TypewriterText
+                            <SampleWriter
                                 onComplete={() => setReady(true)}
                                 startDelay={step < 1 ? 600 : 200}
                                 speed={22}
-                                text={t(`${level?.levelText?.textKey}.text.${step}`)}
+                                sample={t(`${level?.levelText?.textKey}.text.${step}`)}
                             />
                         )}
                     </p>

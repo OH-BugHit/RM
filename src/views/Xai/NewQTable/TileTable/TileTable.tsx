@@ -98,7 +98,11 @@ export default function TileTable({ agentRef, lWorld, mapRef, layerRef, focusFra
             setMapCenter(map.getCenter());
             const zoom = map.getZoom();
             setZoomLevel(zoom);
-            if (zoom < 13) setMapType('sprite');
+            if (zoom < 13) {
+                setMapType('sprite');
+            } else {
+                setMapType('agent');
+            }
         });
 
         const inspectMarkerManager = new InspectMarkerManager(map, lWorld, agentSelections.observationShape);

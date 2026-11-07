@@ -4,15 +4,14 @@ import { useAtomValue } from 'jotai';
 import { QPolicyAgent } from '../agents/policyQagent';
 import { RefObject } from 'react';
 import { tournamentAgentUpdatesAtom } from '../../atoms/state';
-import { useGameScale } from '../../context/GameScale/useGameScale';
 
 interface AgentRenderInterface {
     agentsRef: RefObject<QPolicyAgent[] | undefined>;
+    tileSize: number;
 }
 
-export default function TournamentAgentRender({ agentsRef }: AgentRenderInterface) {
+export default function TournamentAgentRender({ agentsRef, tileSize }: AgentRenderInterface) {
     const updates = useAtomValue(tournamentAgentUpdatesAtom);
-    const { scale } = useGameScale();
     const agents = agentsRef.current ?? [];
 
     return (
@@ -25,7 +24,7 @@ export default function TournamentAgentRender({ agentsRef }: AgentRenderInterfac
                         key={agent.studentId}
                         style={{
                             position: 'absolute',
-                            zIndex: 20,
+                            zIndex: 2,
                         }}
                         transition={{
                             type: 'tween',
@@ -34,8 +33,8 @@ export default function TournamentAgentRender({ agentsRef }: AgentRenderInterfac
                             delay: 0,
                         }}
                         animate={{
-                            x: agent.position.x * Math.min(40, scale * 40),
-                            y: agent.position.y * Math.min(40, scale * 40),
+                            x: agent.position.x * tileSize,
+                            y: agent.position.y * tileSize,
                             opacity: 1,
                         }}
                     >
@@ -47,7 +46,7 @@ export default function TournamentAgentRender({ agentsRef }: AgentRenderInterfac
                                 position: 'relative',
                                 top: '0px',
                                 left: '0px',
-                                height: scale * 40,
+                                height: tileSize,
                                 display: 'block',
                             }}
                             initial={{ opacity: 0 }}

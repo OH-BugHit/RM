@@ -10,18 +10,17 @@ import {
 import LevelPreview from '../../../../../../components/Dialogs/LevelPreview/LevelPreview';
 import { createPreview } from '../../../../../../utils/common';
 import { Button } from '@genai-fi/base';
-import { AnimatePresence, motion } from 'framer-motion';
 import { LoadedGame } from '../../../../../../utils/types';
 import LoadEnv from '../LoadEnv/LoadEnv';
 import { loadMissingImagesFromEmojis } from '../../../../../../utils/import';
-import { Dispatch, SetStateAction } from 'react';
+import { ActiveViewAtom } from '../../../../../../atoms/uiState';
+import { useViewNavigation } from '../../../../../../hooks/useViewNavigation';
+import { Dialog } from '@mui/material';
 
-interface SelectChallengeProps {
-    visible?: boolean;
-    setVisible: Dispatch<SetStateAction<boolean>>;
-}
-export default function SelectChallenge({ visible = true, setVisible }: SelectChallengeProps) {
+export default function SelectChallenge() {
     const games = useAtomValue(studentGamesAtom);
+    const view = useAtomValue(ActiveViewAtom);
+    const { goToView } = useViewNavigation();
     const store = useStore();
     const setTournamentFile = useSetAtom(TournamentFileAtom);
     const setControls = useSetAtom(GameControlAtom);
@@ -36,73 +35,55 @@ export default function SelectChallenge({ visible = true, setVisible }: SelectCh
                 ...game,
                 game: { envSettings: game.game.envSettings, world: grid },
             });
-            setVisible(false);
             setControls((old) => {
                 return { isRunning: false, takeStep: !old.takeStep, isFast: false };
             });
+            goToView({ sub: null });
         } else {
             console.error('Error selecting the tournament game.');
         }
     };
 
     return (
-        <AnimatePresence mode="popLayout">
-            {visible && (
-                <motion.div
-                    className={style.container}
-                    initial={{
-                        transform: 'translate(-50%, -20%)',
-                        scale: 0.95,
-                        opacity: 0,
+        <Dialog
+            open={view.sub === 'selectChallenge'}
+            onClose={() => goToView({ sub: null })}
+            maxWidth="lg"
+            scroll="paper"
+            fullWidth
+        >
+            <div className={style.main}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                        goToView({ sub: null });
                     }}
-                    animate={{
-                        transform: 'translate(-50%, -50%)',
-                        scale: 1,
-                        opacity: 1,
-                    }}
-                    exit={{
-                        overflow: 'hidden',
-                        transform: 'translate(-50%, 0%)',
-                        opacity: 0,
-                    }}
-                    transition={{
-                        duration: 0.45,
-                        ease: 'easeInOut',
-                    }}
+                    style={{ zIndex: 999, position: 'absolute', bottom: '1.2rem', right: '50%', textAlign: 'right' }}
                 >
-                    <div className={style.levels}>
-                        <div style={{ position: 'sticky', top: '0', textAlign: 'right', width: '100%', height: 0 }}>
+                    Cancel
+                </Button>
+                <div className={style.content}>
+                    <h2>Select Game</h2>
+                    <div className={style.levelList}>
+                        {Array.from(games.students?.entries() ?? []).map(([studentId, game]) => (
                             <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={() => {
-                                    setVisible(false);
-                                }}
+                                key={studentId}
+                                onClick={() => handleGameChange(studentId, game)}
+                                className={`${style.levelItem} ${game === tournamentGame ? style.active : ''}`}
                             >
-                                Cancel
+                                <h3>{game.manifest.gameName}</h3>
+                                <LevelPreview
+                                    size={180}
+                                    preview={createPreview(game)}
+                                />
                             </Button>
-                        </div>
-                        <h2>Select Game</h2>
-                        <div className={style.content}>
-                            {Array.from(games.students?.entries() ?? []).map(([studentId, game]) => (
-                                <Button
-                                    key={studentId}
-                                    onClick={() => handleGameChange(studentId, game)}
-                                    className={`${style.levelItem} ${game === tournamentGame ? style.active : ''}`}
-                                >
-                                    <h3>{game.manifest.gameName}</h3>
-                                    <LevelPreview
-                                        size={180}
-                                        preview={createPreview(game)}
-                                    />
-                                </Button>
-                            ))}
+                        ))}
 
-                            <LoadEnv />
-                        </div>
+                        <LoadEnv />
                     </div>
-                </motion.div>
-            )}
-        </AnimatePresence>
+                </div>
+            </div>
+        </Dialog>
     );
 }

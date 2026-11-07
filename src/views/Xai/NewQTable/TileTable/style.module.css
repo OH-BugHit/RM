@@ -1,8 +1,6 @@
 .map {
-    width: 600px;
-    height: 800px;
-    max-width: 30dvw;
-    max-height: 40dvh;
+    width: 440px;
+    height: 400px;
     position: relative;
     overflow: hidden;
     border-radius: 1rem;

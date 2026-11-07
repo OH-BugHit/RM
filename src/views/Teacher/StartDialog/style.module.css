@@ -3,7 +3,7 @@
 .connectMessage {
     font-size: 1.6rem;
     color: textDark;
-    padding: 2rem;
+    padding: 2rem 2rem 0 2rem;
     display: flex;
     gap: 2rem;
     overflow: hidden;
@@ -23,7 +23,7 @@
 }
 
 .userListing {
-    padding: 2rem;
+    padding: 1rem 1rem 1rem 1rem;
     font-size: 1.2rem;
     display: flex;
     justify-content: space-around;

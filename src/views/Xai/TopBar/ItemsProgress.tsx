@@ -11,21 +11,9 @@ export default function ItemProgress() {
 
     return (
         <div
-            className={style.itemContainer}
+            className={style.itemContainerLeft}
             style={{ fontSize: `${s(2.5)}rem` }}
         >
-            <div className={style.itemElement}>
-                <b>-1</b>
-                <b className={style.traps}>{state.traps}</b>
-            </div>
-            <div className={style.itemElement}>
-                <b>+1</b>
-                <b className={style.treasures}>{state.treasures}</b>
-            </div>
-            <div className={style.itemElement}>
-                <b>+2</b>
-                <b className={style.bigTreasures}>{state.bigTreasures}</b>
-            </div>
             <div className={style.itemElement}>
                 <b>{t('topBar.score.gained')}</b>
                 <b className={style.gained}>{state.score}</b>

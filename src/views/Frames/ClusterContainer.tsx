@@ -43,7 +43,7 @@ export default function ClusterContainer({ position, type, vis, children, inspec
             : type === 'reward'
               ? getRewardButtons(scale, scaleWidth)
               : type === 'inspect'
-                ? getInspectButtons(inspectButtonProps, scale, scaleWidth)
+                ? getInspectButtons(inspectButtonProps, scale)
                 : getBuildButtons(scale, scaleWidth);
 
     const buildOpenState = type === 'build' ? (openState as import('../../types').BuildCluster) : undefined;

@@ -22,7 +22,6 @@
 
 .rewardTuneRow {
     width: 90%;
-    justify-items: center;
     border-radius: 1rem;
     max-width: 500px;
     background-color: rgba(244, 211, 128, 0.734);
@@ -30,7 +29,7 @@
 
 .rewardRow {
     display: flex;
-    width: 80%;
+    width: 100%;
     flex-direction: row;
     padding: 0 0 0.2rem 0;
     justify-content: space-between;
@@ -39,6 +38,7 @@
 
 .reward {
     display: flex;
+    justify-content: center;
     flex-direction: row;
     gap: 1rem
 }

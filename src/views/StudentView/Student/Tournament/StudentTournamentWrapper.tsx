@@ -20,7 +20,7 @@ export default function StudentTournamentWrapper() {
     const nameRef = useRef<string>('');
 
     useEffect(() => {
-        setHudVis(playHudVis);
+        setHudVis({ ...playHudVis, controls: { ...playHudVis.controls, inspect: false } });
         setTileVis(visibleTilesTrue);
         setControls({ play: true, step: true, ff: true, inspect: true });
     }, [setHudVis, setTileVis, setControls]);

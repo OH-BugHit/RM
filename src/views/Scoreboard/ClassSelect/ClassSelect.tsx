@@ -28,9 +28,10 @@ export default function ClassSelect({ openResult, setOpenResult, blockOverall }:
     const toggleMenu = (key: string | null) => {
         if (!openResult || openResult !== key) {
             setOpenResult(key);
-        } else {
+        } /* Old way unselected selection if re-click else {
             setOpenResult(null);
         }
+            */
     };
 
     if (!studentData?.students) return <div>Ei kuvia</div>;

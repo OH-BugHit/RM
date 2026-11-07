@@ -173,6 +173,7 @@
             "objects": "Rewards for reaching objects:"
         },
         "settings": {
+            "download": "Download",
             "episodeLength": "Set the episode length",
             "episodeLengthDesc": "Episode length is the maximum number of steps allowed in one game. The agent must reach the goal before this limit. If it runs out of steps first, the episode ends with a loss.",
             "lengthInputLabel": "Episode length",
@@ -391,7 +392,7 @@
                 "1": "There are two things in this level:\n1. the observation \n2. how it values future rewards, also known as \"discounted rewards\".",
                 "2": "Let's start with the observation. The agent can observe the environment. In this game, the agent can only observe part of the whole environment. Let's have a look...",
                 "3": "This inspection tool allows you to clearly see what the agent actually observes.",
-                "4": "And yeah, the agent actually doesn't see or observe the game. It just receives numbers representing these tiles. Toggle it to see the agent's actual observation with that button in the frame.",
+                "4": "And yeah, the agent actually doesn't see or observe the game. It just receives numbers representing these tiles.",
                 "5": "That's that. Now for your task in this level!",
                 "6": "You already know that the agent receives rewards from the environment.",
                 "7": "These rewards help the agent learn. But sometimes, it needs to think about future rewards too, not just the reward it gets right now.",
@@ -733,7 +734,7 @@
     "topBar": {
         "score": {
             "gained": "Score",
-            "top": "Your Best",
+            "top": "Highscore",
             "toBeat": "To Beat"
         }
     },

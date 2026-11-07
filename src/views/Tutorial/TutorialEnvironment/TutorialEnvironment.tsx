@@ -357,7 +357,7 @@ function TutorialEnvironment() {
                         <motion.div
                             style={{
                                 position: 'absolute',
-                                zIndex: 20,
+                                zIndex: 1,
                             }}
                             transition={{
                                 type: 'spring',

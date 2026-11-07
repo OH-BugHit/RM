@@ -89,8 +89,6 @@ export default function BuildToolsContent({ open, origin, baseTarget, clusterPos
 
     const spawnCell: TileDefinition = { ...defaultSpawnCell, id: 'spawn-cell' };
 
-    console.log(selectedTool, spawnCell);
-
     return (
         <>
             <ContentContainer

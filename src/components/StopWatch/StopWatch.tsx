@@ -26,7 +26,7 @@ export default function Stopwatch({ size = 180 }: StopwatchProps) {
         <svg
             width={size}
             height={size}
-            viewBox="0 0 200 200"
+            viewBox="0 0 200 190"
         >
             <defs>
                 <linearGradient

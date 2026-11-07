@@ -4,7 +4,7 @@ import { useAtomValue } from 'jotai';
 import { ActiveAgentAtom } from '../../atoms/state';
 import { GenericRLEnv } from '../../views/Environments/Generic/environment';
 import { FacingAtom } from '../../atoms/gameState';
-import { AgentRenderPulseAtom, TileVisibilityAtom } from '../../atoms/uiState';
+import { AgentRenderPulseAtom, TileSizeAtom, TileVisibilityAtom } from '../../atoms/uiState';
 import { useEffect } from 'react';
 import { useGameScale } from '../../context/GameScale/useGameScale';
 
@@ -18,6 +18,7 @@ export default function AgentRender({ env }: AgentRenderInterface) {
     const agent = useAtomValue(ActiveAgentAtom);
     const facing = useAtomValue(FacingAtom);
     const visibleTiles = useAtomValue(TileVisibilityAtom);
+    const tileSize = useAtomValue(TileSizeAtom);
 
     useEffect(() => {}, [trigger]);
 
@@ -27,7 +28,7 @@ export default function AgentRender({ env }: AgentRenderInterface) {
         <motion.div
             style={{
                 position: 'absolute',
-                zIndex: 20,
+                zIndex: 2,
             }}
             transition={
                 trigger.mode === 'normal'
@@ -40,8 +41,8 @@ export default function AgentRender({ env }: AgentRenderInterface) {
                     : {}
             }
             animate={{
-                x: env.position.x * Math.min(40, scale * 40),
-                y: env.position.y * Math.min(40, scale * 40),
+                x: env.position.x * Math.min(tileSize, scale * tileSize),
+                y: env.position.y * Math.min(tileSize, scale * tileSize),
                 opacity: 1,
             }}
         >
@@ -53,7 +54,7 @@ export default function AgentRender({ env }: AgentRenderInterface) {
                     position: 'relative',
                     top: `16px`,
                     left: `16px`,
-                    height: scale * 40,
+                    height: scale * tileSize,
                     display: visibleTiles.agent ? 'block' : 'none',
                 }}
                 initial={{ opacity: 0 }}

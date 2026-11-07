@@ -19,12 +19,15 @@ export default function Frontpage() {
     const [inputCode, setInputCode] = useState<string>('');
     const [mode, setMode] = useState<'multi' | 'unset'>('unset');
     const navigate = useNavigate();
+    const [disabled, setDisabled] = useState<boolean>(false);
 
     const toStudent = () => {
+        setDisabled(true);
         navigate(`/student/${inputCode}/main?view=join`);
     };
 
     const toTeacher = () => {
+        setDisabled(true);
         navigate(`/teacher/?view=users&overlay=share`);
     };
 
@@ -103,7 +106,7 @@ export default function Frontpage() {
                                 sx={{ minWidth: '140px' }}
                                 onClick={toStudent}
                                 variant="contained"
-                                disabled={inputCode.length < 5}
+                                disabled={inputCode.length < 5 || disabled}
                             >
                                 {t('frontpage.actions.start')}
                             </Button>
@@ -114,6 +117,7 @@ export default function Frontpage() {
                                 onClick={toTeacher}
                                 variant="outlined"
                                 title={t('frontpage.actions.createNew')}
+                                disabled={disabled}
                             >
                                 {t('frontpage.actions.createNew')}
                             </Button>

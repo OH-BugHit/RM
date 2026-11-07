@@ -27,7 +27,7 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
     const [loading, setLoading] = useState(false);
 
     const [, setSelectedTool] = useAtom(CurrentTileToolAtom);
-    const [selectedType, setSelectedType] = useState<CellType | 'background' | null>(null);
+    const [selectedType, setSelectedType] = useState<CellType | null>(null);
     const [selectedLibraryTile, setSelectedLibraryTile] = useState<TileLibraryItem | null>(null);
     const [selectedEmoji, setSelectedEmoji] = useState<EmojiItem | null>(null);
     const [selectedPreview, setSelectedPreview] = useState<string | null>(null);
@@ -152,6 +152,14 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
                                     )
                                 );
                             });
+                            const innerFill: Cell = {
+                                type: CellType.Empty,
+                                reloadTime: 0,
+                                timer: 0,
+                                image: tile.image,
+                                emoji: tile.emoji,
+                            };
+                            setInnerFill(innerFill);
                         }
                         break;
                     }
@@ -164,53 +172,41 @@ export default function DesignWizard({ active, variant = 'styled' }: Props) {
             }
             setTiles((old) => [...old, tile]);
         },
-        [setStoryProgress, setTiles, setWorldGrid, tiles.length]
+        [setStoryProgress, setTiles, setWorldGrid, setInnerFill, tiles.length]
     );
 
     const handleAccept = useCallback(async () => {
         try {
             setLoading(true);
             if (selectedType === null) return;
-            if (selectedType === 'background') {
-                const innerFill: Cell = { type: CellType.Empty, reloadTime: 0, timer: 0, image: '', emoji: '' };
-                if (selectedLibraryTile) {
-                    innerFill.image = selectedLibraryTile.image;
-                }
 
-                if (selectedEmoji && selectedPreview) {
-                    innerFill.image = selectedPreview;
-                    innerFill.emoji = selectedEmoji.emoji;
-                }
-                setInnerFill(innerFill);
-            } else {
-                const id = crypto.randomUUID?.() ?? `${Date.now()}-${Math.random()}`;
-                const newTile: TileDefinition = {
-                    id: id,
-                    type: selectedType,
-                    image: '',
-                    emoji: '',
-                    isCoreTile: false,
-                    reloadTime: -1,
-                    timer: 0,
-                };
-                resetSelection();
+            const id = crypto.randomUUID?.() ?? `${Date.now()}-${Math.random()}`;
+            const newTile: TileDefinition = {
+                id: id,
+                type: selectedType,
+                image: '',
+                emoji: '',
+                isCoreTile: false,
+                reloadTime: -1,
+                timer: 0,
+            };
+            resetSelection();
 
-                if (selectedLibraryTile) {
-                    newTile.image = selectedLibraryTile.image;
-                }
-
-                if (selectedEmoji && selectedPreview) {
-                    newTile.image = selectedPreview;
-                    newTile.emoji = selectedEmoji.emoji;
-                }
-                onSelect(newTile, true);
+            if (selectedLibraryTile) {
+                newTile.image = selectedLibraryTile.image;
             }
+
+            if (selectedEmoji && selectedPreview) {
+                newTile.image = selectedPreview;
+                newTile.emoji = selectedEmoji.emoji;
+            }
+            onSelect(newTile, true);
 
             resetSelection();
         } finally {
             setLoading(false);
         }
-    }, [onSelect, resetSelection, setInnerFill, selectedEmoji, selectedLibraryTile, selectedPreview, selectedType]);
+    }, [onSelect, resetSelection, selectedEmoji, selectedLibraryTile, selectedPreview, selectedType]);
 
     const hasSelection = Boolean(selectedLibraryTile || selectedEmoji);
 

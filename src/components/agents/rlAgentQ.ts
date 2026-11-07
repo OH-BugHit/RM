@@ -103,7 +103,7 @@ export class QLearningAgent {
         const aIdx = ACTIONS.indexOf(action);
 
         const maxNext = isTerminal ? 0 : Math.max(...nextValues); // Maximum reward if following best policy in state reached by step
-        const adjustment = this.alpha * (reward + this.gamma * maxNext - values[aIdx]);
+        const adjustment = Number((this.alpha * (reward + this.gamma * maxNext - values[aIdx])).toFixed(6)); // TODO: Check if this accuracy is sufficient?
         values[aIdx] += adjustment; // Update rule
 
         this.visitTimes[state] = (this.visitTimes[state] || 0) + 1; // Update visited count (version count)

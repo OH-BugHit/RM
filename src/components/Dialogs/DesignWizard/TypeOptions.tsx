@@ -6,10 +6,10 @@ import { BASIC_CELL_TYPE_OPTIONS, CellType } from '../../../types';
 import { Help } from '@genai-fi/base';
 
 interface TypeOptionsProps {
-    selectedType: CellType | 'background' | null;
-    onSelectType: (type: CellType | 'background') => void;
+    selectedType: CellType | null;
+    onSelectType: (type: CellType) => void;
     allowedTypes: Set<CellType>;
-    hint: Set<CellType | 'background'>;
+    hint: Set<CellType>;
 }
 
 function TypeOptions({ selectedType, onSelectType, allowedTypes, hint }: TypeOptionsProps) {

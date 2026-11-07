@@ -12,6 +12,10 @@ export default function LevelChangeOverlay({ onReady }: WaitOverlayProps) {
     const { t } = useTranslation();
     const level = useAtomValue(LevelConfAtom);
 
+    if (!level?.level.manifest.levelIndex) {
+        onReady();
+    }
+
     return (
         <NewFrame
             position={{ top: '0%', left: '50%' }}

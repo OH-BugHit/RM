@@ -1,21 +1,19 @@
-import style from './style.module.css';
 import { FloatItem } from '../../../../../../hooks/useRewardFloats';
 import { Position } from '../../../../../../types';
 import { QPolicyAgent } from '../../../../../../components/agents/policyQagent';
 import Tile from '../../../../../../components/EnvironmentRender/Tile';
 import RewardFloats from '../../../../../../components/RewardFloats.tsx/RewardFloats';
 import { CellSave } from '../../../../../../utils/types';
-import { useGameScale } from '../../../../../../context/GameScale/useGameScale';
 
 interface worldComponentProps {
     worldGrid: React.RefObject<CellSave[][]>;
     agentsRef: React.RefObject<QPolicyAgent[] | undefined>;
     floatItems: FloatItem[];
     deactivate: (id: number) => void;
+    tileSize: number;
 }
 
-export default function TournamentWorld({ worldGrid, floatItems, deactivate, agentsRef }: worldComponentProps) {
-    const { s } = useGameScale();
+export default function TournamentWorld({ worldGrid, floatItems, deactivate, agentsRef, tileSize }: worldComponentProps) {
     const agents = agentsRef.current;
 
     if (!worldGrid.current || !agents) return null;
@@ -26,11 +24,10 @@ export default function TournamentWorld({ worldGrid, floatItems, deactivate, age
 
     return (
         <div
-            className={style.worldContainer}
             style={{
                 display: 'grid',
-                gridTemplateColumns: `repeat(${width}, ${s(40)}px)`,
-                gridTemplateRows: `repeat(${height}, ${s(40)}px)`,
+                gridTemplateColumns: `repeat(${width}, ${tileSize}px)`,
+                gridTemplateRows: `repeat(${height}, ${tileSize}px)`,
             }}
         >
             {worldGrid.current.map((row, y) =>
@@ -38,7 +35,7 @@ export default function TournamentWorld({ worldGrid, floatItems, deactivate, age
                     <div key={`${x}-${y}`}>
                         <Tile
                             cell={{ ...cell, reloadTime: 0, timer: 0 }}
-                            tileSize={s(40)}
+                            tileSize={tileSize}
                             agentLocations={positions}
                             cellLocation={{ x: x, y: y }}
                             worldHeight={height}
@@ -49,7 +46,7 @@ export default function TournamentWorld({ worldGrid, floatItems, deactivate, age
             )}
             <RewardFloats
                 items={floatItems}
-                cellSize={s(40)}
+                cellSize={tileSize}
                 onComplete={deactivate}
             />
         </div>

@@ -58,76 +58,82 @@ export default function ResizeButton({ envRef, side, sx }: Props) {
     };
 
     return (
-        <Box
-            sx={{
-                display: 'flex',
-                visibility: visibility.tools ? 'visible' : 'hidden',
-                flexDirection: side === 'top' || side === 'bottom' ? 'column' : 'row',
-                width: '100%',
-                height: '100%',
-                background: 'rgba(1, 115, 141, 0.24)',
-                zIndex: 10,
-                ...sx,
-            }}
-        >
-            {side === 'bottom' && (
-                <Button
-                    variant={VARIANT}
-                    onClick={() => handleChange(side, false)}
-                    style={{ fontSize: `${s(0.875)}rem` }}
-                >
-                    Remove row
-                </Button>
-            )}
-            {side === 'right' && (
-                <Button
-                    variant={VARIANT}
-                    onClick={() => handleChange(side, false)}
-                    className={style.vertical}
-                    style={{ fontSize: `${s(0.875)}rem`, minWidth: `${s(64)}px` }}
-                >
-                    Remove column
-                </Button>
-            )}
-            {(side === 'left' || side === 'right') && (
-                <Button
-                    variant={VARIANT}
-                    onClick={() => handleChange(side, true)}
-                    className={style.vertical}
-                    style={{ fontSize: `${s(0.875)}rem`, minWidth: `${s(64)}px` }}
-                >
-                    Add column
-                </Button>
-            )}
-            {side === 'left' && (
-                <Button
-                    variant={VARIANT}
-                    onClick={() => handleChange(side, false)}
-                    className={style.vertical}
-                    style={{ fontSize: `${s(0.875)}rem`, minWidth: `${s(64)}px` }}
-                >
-                    Remove column
-                </Button>
-            )}
-            {(side === 'top' || side === 'bottom') && (
-                <Button
-                    variant={VARIANT}
-                    onClick={() => handleChange(side, true)}
-                    style={{ fontSize: `${s(0.875)}rem` }}
-                >
-                    Add row
-                </Button>
-            )}
+        <>
+            {visibility.tools && (
+                <>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            visibility: visibility.tools ? 'visible' : 'hidden',
+                            flexDirection: side === 'top' || side === 'bottom' ? 'column' : 'row',
+                            width: '100%',
+                            height: '100%',
+                            background: 'rgba(1, 115, 141, 0.24)',
+                            zIndex: 10,
+                            ...sx,
+                        }}
+                    >
+                        {side === 'bottom' && (
+                            <Button
+                                variant={VARIANT}
+                                onClick={() => handleChange(side, false)}
+                                style={{ fontSize: `${s(0.875)}rem` }}
+                            >
+                                Remove row
+                            </Button>
+                        )}
+                        {side === 'right' && (
+                            <Button
+                                variant={VARIANT}
+                                onClick={() => handleChange(side, false)}
+                                className={style.vertical}
+                                style={{ fontSize: `${s(0.875)}rem`, minWidth: `${s(64)}px` }}
+                            >
+                                Remove column
+                            </Button>
+                        )}
+                        {(side === 'left' || side === 'right') && (
+                            <Button
+                                variant={VARIANT}
+                                onClick={() => handleChange(side, true)}
+                                className={style.vertical}
+                                style={{ fontSize: `${s(0.875)}rem`, minWidth: `${s(64)}px` }}
+                            >
+                                Add column
+                            </Button>
+                        )}
+                        {side === 'left' && (
+                            <Button
+                                variant={VARIANT}
+                                onClick={() => handleChange(side, false)}
+                                className={style.vertical}
+                                style={{ fontSize: `${s(0.875)}rem`, minWidth: `${s(64)}px` }}
+                            >
+                                Remove column
+                            </Button>
+                        )}
+                        {(side === 'top' || side === 'bottom') && (
+                            <Button
+                                variant={VARIANT}
+                                onClick={() => handleChange(side, true)}
+                                style={{ fontSize: `${s(0.875)}rem` }}
+                            >
+                                Add row
+                            </Button>
+                        )}
 
-            {side === 'top' && (
-                <Button
-                    variant={VARIANT}
-                    onClick={() => handleChange(side, false)}
-                    style={{ fontSize: `${s(0.875)}rem` }}
-                >
-                    Remove row
-                </Button>
+                        {side === 'top' && (
+                            <Button
+                                variant={VARIANT}
+                                onClick={() => handleChange(side, false)}
+                                style={{ fontSize: `${s(0.875)}rem` }}
+                            >
+                                Remove row
+                            </Button>
+                        )}
+                    </Box>
+                </>
             )}
-        </Box>
+        </>
     );
 }

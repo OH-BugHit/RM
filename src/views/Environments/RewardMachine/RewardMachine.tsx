@@ -41,7 +41,8 @@ import AgentRender from '../../../components/EnvironmentRender/AgentRender';
 import { AgentRenderPulseAtom, TopbarAtom } from '../../../atoms/uiState';
 
 const STEP_INTERVAL = 400; //ms
-const FAST_STEPS = 5000;
+const FAST_STEPS = 2500;
+const FAST_LOOP_INTERVAL = 20;
 const FLOAT_RING_SIZE = 32;
 
 interface GenericWorldProps {
@@ -223,6 +224,12 @@ function RewardMachine({
      * Syncrhonises UI, when fast forwarding, this is called with frequence
      */
     const syncUI = React.useCallback(() => {
+        setRerenderAgent((old) => {
+            return {
+                mode: 'fast',
+                pulse: !old.pulse,
+            };
+        });
         if (obsRef.current && agentRef.current && obsRef.current) {
             setObs(obsRef.current);
             setTimeStepData({ lastReward: episodicRewardRef.current, lastAction: lastActionRef.current });
@@ -236,7 +243,7 @@ function RewardMachine({
             qvalueRef.current = agentRef.current.getQValues(obsRef.current);
             setUpdateWorldPulse((old) => !old);
         }
-    }, [agentRef, obsRef, qvalueRef, setObs, setTimeStepData, setEpisodicData, setUpdateWorldPulse]);
+    }, [agentRef, obsRef, qvalueRef, setObs, setRerenderAgent, setTimeStepData, setEpisodicData, setUpdateWorldPulse]);
 
     const stepUI = React.useCallback(() => {
         if (obsRef.current && agentRef.current && obsRef.current && envRef.current) {
@@ -427,19 +434,15 @@ function RewardMachine({
                     obsRef.current = nextObs;
                 }
             }
-            setRerenderAgent((old) => {
-                return {
-                    mode: 'fast',
-                    pulse: !old.pulse,
-                };
-            });
             syncUI();
         }
-    }, [store, syncUI, setRerenderAgent, obsRef, agentRef, envRef, infoRef, actionRef]);
+    }, [store, syncUI, obsRef, agentRef, envRef, infoRef, actionRef]);
 
     useEffect(() => {
         if (!controls.isRunning || !controls.isFast) return;
         let running = true;
+        let frameId = 0;
+        let lastStepTime = performance.now();
         setTopBar((old) => {
             return {
                 ...old,
@@ -449,13 +452,18 @@ function RewardMachine({
                 score: 0,
             };
         });
-        const loop = () => {
+        const loop = (now: number) => {
             if (!running) return;
-            stepFast();
-            requestAnimationFrame(loop);
+            if (now - lastStepTime >= FAST_LOOP_INTERVAL) {
+                stepFast();
+                lastStepTime = now;
+            }
+            frameId = requestAnimationFrame(loop);
         };
 
-        loop();
+        stepFast();
+        lastStepTime = performance.now();
+        frameId = requestAnimationFrame(loop);
         return () => {
             setRerenderAgent((old) => {
                 return {
@@ -464,6 +472,7 @@ function RewardMachine({
                 };
             });
             running = false;
+            cancelAnimationFrame(frameId);
         };
     }, [controls.isFast, setRerenderAgent, controls.isRunning, stepFast, setTopBar]);
 
@@ -506,6 +515,7 @@ function RewardMachine({
                 <div className={style.worldContainer}>
                     <div
                         style={{
+                            position: 'relative',
                             display: 'grid',
                             width: 'fit-content',
                             height: 'fit-content',
@@ -521,6 +531,7 @@ function RewardMachine({
                                 justifySelf: 'center',
                             }}
                         />
+
                         <div />
                         <ResizeButton
                             envRef={envRef}
@@ -531,6 +542,7 @@ function RewardMachine({
                                 justifySelf: 'center',
                             }}
                         />
+
                         <div>
                             <AgentRender env={env} />
                             <WorldComponent

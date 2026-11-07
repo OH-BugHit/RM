@@ -55,10 +55,14 @@ export default function WinScreen() {
                 <b>
                     {t('winScreen.titleDesc')} {level?.level.manifest.gameName}.
                 </b>
-                <Separator />
-                <p>{t(`${level?.levelText?.textKey}.postMessage`)}</p>
-                <Separator />
-                <p>{t(`${level?.levelText?.textKey}.nextLevelInfo`)}</p>
+                {level?.level.manifest.levelIndex && (
+                    <>
+                        <Separator />
+                        <p>{t(`${level?.levelText?.textKey}.postMessage`)}</p>
+                        <Separator />
+                        <p>{t(`${level?.levelText?.textKey}.nextLevelInfo`)}</p>
+                    </>
+                )}
                 <Separator />
                 <Button
                     onClick={onNextLevel}

@@ -58,20 +58,19 @@ export default function Student({ serverCode }: StudentProps) {
         }
     }, [bouncer.reload, serverCode]);
 
+    const getMenuButtonPosition = (): 'right' | 'top-right' => {
+        if (view.main === 'tournamentPlay') return 'right';
+        if (view.sub === 'playLevel') return 'right';
+        if (view.main && MENU_AT_TOP.includes(view.main)) return 'top-right';
+        return 'right';
+    };
+
     return (
         <div className={style.studentContainer}>
             <PauseLayer />
             <Wait show={view.main === 'null'} />
             <ScoreBridge />
-            <MenuIcon
-                position={
-                    view.sub === 'playLevel'
-                        ? 'right'
-                        : view.main && MENU_AT_TOP.includes(view.main)
-                          ? 'top-right'
-                          : 'right'
-                }
-            />
+            <MenuIcon position={getMenuButtonPosition()} />
             <MessageDisplay open={showError} />
             <MainMenu mode="classroom" />
             <Settings mode="student" />

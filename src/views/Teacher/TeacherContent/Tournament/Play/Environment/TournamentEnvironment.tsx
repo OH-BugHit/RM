@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import style from './style.module.css';
 import { useAtomValue, useSetAtom } from 'jotai';
 
@@ -11,6 +11,7 @@ import TournamentWorld from './TournamentWorld';
 import { QPolicyAgent } from '../../../../../../components/agents/policyQagent';
 import { CellSave } from '../../../../../../utils/types';
 import TournamentAgentRender from '../../../../../../components/EnvironmentRender/TournamentAgentRender';
+import { useGameScale } from '../../../../../../context/GameScale/useGameScale';
 
 const STEP_INTERVAL = 400; //ms
 const FLOAT_RING_SIZE = 32;
@@ -24,31 +25,52 @@ const maxTurns = 30;
 
 function TournamentEnvironment({ agentsRef, grid }: GenericWorldProps) {
     const worldGrid = useRef(grid);
+    const [viewport, setViewport] = useState<HTMLDivElement | null>(null);
+    const [tileSize, setTileSize] = useState(0);
     const setStepsLeft = useSetAtom(StepsLeftAtom);
+    const { maxTile } = useGameScale();
 
     const controls = useAtomValue(GameControlAtom);
 
     const envRef = useRef<TournamentEnv>(undefined);
+    const [environment, setEnvironment] = useState<TournamentEnv>();
 
     const { items: floatItems, spawnFloat, deactivate } = useRewardFloats({ size: FLOAT_RING_SIZE });
+    const height = grid.length;
+    const width = grid[0]?.length ?? 0;
+
+    useEffect(() => {
+        if (!viewport) return;
+
+        const observer = new ResizeObserver(([entry]) => {
+            if (!entry) return;
+            const { width: availableWidth, height: availableHeight } = entry.contentRect;
+            setTileSize(maxTile(availableHeight, height, availableWidth, width));
+        });
+
+        observer.observe(viewport);
+        return () => observer.disconnect();
+    }, [height, maxTile, viewport, width]);
 
     /**
      * Resets environment. Agent starts with new q-table and environment is reset.
      */
     const resetUI = React.useCallback(() => {
-        envRef.current = new TournamentEnv({
+        const environment = new TournamentEnv({
             world: grid,
             maxTurns,
         });
+        envRef.current = environment;
+        setEnvironment(environment);
 
         const agents = agentsRef.current;
 
         if (agents) {
             agents.forEach((agent) => {
-                envRef.current?.resetAgent(agent);
+                environment.resetAgent(agent);
             });
 
-            envRef.current.resetEnv(agents);
+            environment.resetEnv(agents);
         }
     }, [grid, agentsRef]);
 
@@ -106,7 +128,7 @@ function TournamentEnvironment({ agentsRef, grid }: GenericWorldProps) {
         return () => clearInterval(id);
     }, [controls.isFast, controls.isRunning, stepUI]);
 
-    const env = envRef.current;
+    const env = environment;
 
     if (!env) {
         console.warn('Missing info - env ', env);
@@ -122,27 +144,34 @@ function TournamentEnvironment({ agentsRef, grid }: GenericWorldProps) {
             transition={{ duration: 0.4 }}
             className={style.container}
         >
-            {envRef.current && (
-                <div className={style.worldContainer}>
+            <div
+                ref={setViewport}
+                className={style.worldContainer}
+            >
+                {tileSize > 0 && (
                     <div
+                        inert
                         style={{
-                            display: 'grid',
-                            width: 'fit-content',
-                            height: 'fit-content',
+                            position: 'relative',
+                            width: width * tileSize,
+                            height: height * tileSize,
+                            flex: 'none',
                         }}
                     >
-                        <div inert>
-                            <TournamentAgentRender agentsRef={agentsRef} />
-                            <TournamentWorld
-                                worldGrid={worldGrid}
-                                agentsRef={agentsRef}
-                                floatItems={floatItems}
-                                deactivate={deactivate}
-                            />
-                        </div>
+                        <TournamentAgentRender
+                            agentsRef={agentsRef}
+                            tileSize={tileSize}
+                        />
+                        <TournamentWorld
+                            worldGrid={worldGrid}
+                            agentsRef={agentsRef}
+                            floatItems={floatItems}
+                            deactivate={deactivate}
+                            tileSize={tileSize}
+                        />
                     </div>
-                </div>
-            )}
+                )}
+            </div>
         </motion.div>
     );
 }

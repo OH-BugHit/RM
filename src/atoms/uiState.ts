@@ -57,7 +57,7 @@ export const DesignOpenAtom = atom<boolean>(false); // Enables tile buttons
 
 export const AgentRenderPulseAtom = atom<{ pulse: boolean; mode: 'fast' | 'normal' }>({ pulse: false, mode: 'fast' }); // Triggers re-render on agent image
 export const HideHudAtom = atom<boolean>(false);
-export const ObsViewTypeAtom = atom<StateViewType>('sprite');
+export const ObsViewTypeAtom = atom<StateViewType>('agent');
 export const QmapViewTypeAtom = atom<StateViewType>('sprite');
 export const ZoomLevelAtom = atom<number>(14);
 export const MapCenterAtom = atom<{ lat: number; lng: number }>({ lat: 0, lng: 0 });
@@ -84,3 +84,5 @@ export const RewardCAtom = atom<RewardCluster>(defRewardContent);
 export const ClusterOpenAtom = atom<Clusters>({ agent: false, inspect: false, reward: false, build: false });
 
 export const MenuOpenAtom = atom<boolean>(false);
+
+export const TileSizeAtom = atom<number>(40);

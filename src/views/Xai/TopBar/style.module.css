@@ -7,7 +7,7 @@
 }
 
 .itemElement b {
-    font-size: var(--font-size-h2)
+    font-size: var(--font-size-h3)
 }
 
 .topBar {
@@ -17,33 +17,43 @@
 }
 
 .infoBar {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     height: min-content;
+}
 
-
+.zoom {
+    position: absolute;
+    right: -40px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
 }
 
 .left,
 .right {
+    position: absolute;
+    top: 0;
     flex: 1;
     display: flex;
-    align-items: center;
     background: rgba(55, 42, 30, 0.55);
     border: 2px solid rgba(255, 255, 255, .15);
-
     box-shadow:
         inset 0 1px 1px rgba(255, 255, 255, .08),
         0 2px 6px rgba(0, 0, 0, .25);
 }
 
 .left {
+    transform: translateX(-50%);
     justify-content: flex-start;
     border-radius: 5rem 0 0 5rem;
 }
 
 .right {
+    transform: translateX(50%);
     justify-content: flex-end;
     border-radius: 0 5rem 5rem 0;
 }
@@ -67,14 +77,13 @@
     border-radius: 2rem;
 }
 
-.itemContainer {
+.itemContainerLeft,
+.itemContainerRight {
     display: flex;
+    justify-content: center;
+    gap: 1rem;
     flex-direction: row;
     width: 100%;
-    gap: 1rem;
-    padding: 0 1rem 0 1rem;
-    justify-content: space-evenly;
-
 }
 
 .itemElement {

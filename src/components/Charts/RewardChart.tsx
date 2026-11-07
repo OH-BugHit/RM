@@ -2,8 +2,8 @@ import style from './style.module.css';
 import { useAtom } from 'jotai';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { ChartAtom } from '../../atoms/gameState';
-import TimeStepStats from '../../views/Xai/Stats/TimeStepStats';
-import TotalStats from '../../views/Xai/Stats/TotalStats';
+//import TimeStepStats from '../../views/Xai/Stats/TimeStepStats';
+//import TotalStats from '../../views/Xai/Stats/TotalStats';
 
 interface ChartProps {
     width: number;
@@ -54,10 +54,12 @@ export function RewardChart({ width, height }: ChartProps) {
                     },
                 ]}
             />
+            {/*
             <div className={style.statsContent}>
                 <TotalStats />
                 <TimeStepStats />
             </div>
+            */}
         </div>
     );
 }

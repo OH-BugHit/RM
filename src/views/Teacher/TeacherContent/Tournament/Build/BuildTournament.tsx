@@ -4,8 +4,11 @@ import style from './bTournament.module.css';
 import LevelPreview from '../../../../../components/Dialogs/LevelPreview/LevelPreview';
 import { LoadedGame } from '../../../../../utils/types';
 import { renderWorldPreview } from '../../../../../components/EnvironmentRender/renderWorldPreview';
+import { useTranslation } from 'react-i18next';
 
 export default function BuildTournament() {
+    const {t} = useTranslation()
+
     const games = useAtomValue(studentGamesAtom);
 
     const createPreview = async (game: LoadedGame) => {
@@ -17,28 +20,28 @@ export default function BuildTournament() {
         <div className={style.content}>
             <ul className={style.buildInformation}>
                 <li>
-                    <b>Consider a problem</b>
-                    <em>What would you like your agent to learn to do?</em>
+                    <b>{t('teacher.tournament.build.tipTitle.1')}</b>
+                    <em>{t('teacher.tournament.build.tipText.1')}</em>
                 </li>
                 <li>
-                    <b>Think about the goal</b>
-                    <em>What should the agent try to achieve?</em>
+                    <b>{t('teacher.tournament.build.tipTitle.2')}</b>
+                    <em>{t('teacher.tournament.build.tipText.2')}</em>
                 </li>
                 <li>
-                    <b>Design the environment</b>
-                    <em>What does the world look like? What can the agent see and do?</em>
+                    <b>{t('teacher.tournament.build.tipTitle.3')}</b>
+                    <em>{t('teacher.tournament.build.tipText.3')}</em>
                 </li>
                 <li>
-                    <b>Plan the rewards</b>
-                    <em>What should the agent be rewarded for? What should it avoid?</em>
+                    <b>{t('teacher.tournament.build.tipTitle.4')}</b>
+                    <em>{t('teacher.tournament.build.tipText.4')}</em>
                 </li>
                 <li>
-                    <b>Build your environment</b>
-                    <em>Use the tools to create the world where your agent can learn.</em>
+                    <b>{t('teacher.tournament.build.tipTitle.5')}</b>
+                    <em>{t('teacher.tournament.build.tipText.5')}</em>
                 </li>
                 <li>
-                    <b>Test your agent</b>
-                    <em>Let the agent learn and see if it can solve the problem.</em>
+                    <b>{t('teacher.tournament.build.tipTitle.6')}</b>
+                    <em>{t('teacher.tournament.build.tipText.6')}</em>
                 </li>
             </ul>
             <div className={style.studentLevels}>

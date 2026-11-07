@@ -8,6 +8,7 @@ import { WorldGridRenderAtom } from '../../atoms/gameState';
 import { useEffect } from 'react';
 import { GenericRLEnv } from '../Environments/Generic/environment';
 import { useGameScale } from '../../context/GameScale/useGameScale';
+import { TileSizeAtom } from '../../atoms/uiState';
 
 interface worldComponentProps {
     worldGrid: React.RefObject<Cell[][]>;
@@ -19,6 +20,7 @@ interface worldComponentProps {
 export default function WorldComponent({ worldGrid, floatItems, deactivate, envRef }: worldComponentProps) {
     const { s } = useGameScale();
     const worldGridA = useAtomValue(WorldGridRenderAtom);
+    const tileSize = useAtomValue(TileSizeAtom);
 
     // world grid fer updater
     useEffect(() => {
@@ -35,8 +37,8 @@ export default function WorldComponent({ worldGrid, floatItems, deactivate, envR
             className={style.worldContainer}
             style={{
                 display: 'grid',
-                gridTemplateColumns: `repeat(${width}, ${s(40)}px)`,
-                gridTemplateRows: `repeat(${height}, ${s(40)}px)`,
+                gridTemplateColumns: `repeat(${width}, ${s(tileSize)}px)`,
+                gridTemplateRows: `repeat(${height}, ${s(tileSize)}px)`,
             }}
         >
             {worldGridA.map((row, y) =>
@@ -44,7 +46,7 @@ export default function WorldComponent({ worldGrid, floatItems, deactivate, envR
                     <div key={`${x}-${y}`}>
                         <Tile
                             cell={cell}
-                            tileSize={s(40)}
+                            tileSize={s(tileSize)}
                             agentLocation={env.position}
                             cellLocation={{ x: x, y: y }}
                             worldHeight={height}
@@ -55,7 +57,7 @@ export default function WorldComponent({ worldGrid, floatItems, deactivate, envR
             )}
             <RewardFloats
                 items={floatItems}
-                cellSize={s(40)}
+                cellSize={s(tileSize)}
                 onComplete={deactivate}
             />
         </div>

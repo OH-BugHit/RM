@@ -1,6 +1,6 @@
 import { Level } from '../../../../types';
 import { defaultAgents, defaultAgentSettings, defaultBackground } from '../../../defaults';
-import { level1Env, level1Grid } from './blevel1';
+import { blevel1HudConfig, level1Env, level1Grid } from './blevel1';
 import { testTileDef } from '../../../testLevel/tileDefinitions';
 import { LoadedGame } from '../../../types';
 
@@ -27,4 +27,5 @@ const level1Data: LoadedGame = {
 
 export const basicsBonusLevel1: Level = {
     level: level1Data,
+    hudSettings: blevel1HudConfig,
 };

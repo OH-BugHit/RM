@@ -124,6 +124,19 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                         <Cable variant="vertical" />
                     </div>
                 )}
+                {hudVis.progress && tasks.length === 0 && (
+                    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+                        <Cable variant="vertical" />
+                        <NewFrame variant="blob">
+                            <TestProgress
+                                target={3}
+                                bonus
+                            />
+                        </NewFrame>
+
+                        <Cable variant="vertical" />
+                    </div>
+                )}
             </FrameContainer>
 
             <FrameContainer position="top-center">

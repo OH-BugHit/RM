@@ -42,7 +42,7 @@ export default function PotsAndBurglarRender({ gridSize, env, floatItems, deacti
                     <motion.div
                         style={{
                             position: 'absolute',
-                            zIndex: 20,
+                            zIndex: 1,
                         }}
                         transition={{
                             type: 'spring',
