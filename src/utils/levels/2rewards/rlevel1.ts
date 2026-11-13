@@ -1,6 +1,54 @@
 import { EnvSettings, HUDvisibilityField, TextMode, TutorialLayout, UiControlsField } from '../../../types';
 import { TaskGroup } from '../../progress';
-import { CellSave } from '../../types';
+import { CellSave, TileDefinitionSave } from '../../types';
+
+export const rewardTileDef: TileDefinitionSave[] = [
+    {
+        id: 'c6733b76-6909-4d6a-951a-dc59f343dde0',
+        type: 1,
+        reloadTime: -1,
+        timer: 0,
+        emoji: '',
+        image: '/images/assets/wall.png',
+        isCoreTile: true,
+    },
+    {
+        id: '9a18c997-1493-4382-9528-c10cbac8bfe5',
+        type: -1,
+        reloadTime: -1,
+        timer: 0,
+        emoji: '',
+        image: '/images/assets/cleanWhiteStone.png',
+        isCoreTile: true,
+    },
+    {
+        id: '09ea4284-02f0-44e6-ab01-3a02b93b3574',
+        type: 2,
+        reloadTime: -1,
+        timer: 0,
+        emoji: '',
+        image: '/images/assets/bigTreasure_260.png',
+        isCoreTile: true,
+    },
+    {
+        id: '7ca037a8-c2a4-405a-a6ae-504485ff112d',
+        type: 6,
+        reloadTime: -1,
+        timer: 0,
+        emoji: '',
+        image: '/images/assets/smallTreasure_260.png',
+        isCoreTile: false,
+    },
+    {
+        id: 'd46cf016-3e3f-4386-a2da-313af846fae4',
+        type: 0,
+        reloadTime: -1,
+        timer: 0,
+        emoji: '',
+        image: '/images/assets/cleanWhiteStone.png',
+        isCoreTile: false,
+    },
+];
 
 export const level2TextModes: TextMode[] = [
     'hidden', // 0
@@ -13,7 +61,8 @@ export const level2TextModes: TextMode[] = [
     'textNext',
     'textNext', // 7
     'textNext', // 8
-    'hidden', // 9
+    'textNext', // 9
+    'hidden', // 10
 ];
 
 export const level2uiControls: UiControlsField[][] = [[], [], [], [], [], [], [], ['rewardC.time'], ['rewardC.props']];
@@ -21,13 +70,14 @@ export const level2uiControls: UiControlsField[][] = [[], [], [], [], [], [], []
 export const level2HudConfig: HUDvisibilityField[][] = [
     [],
     ['text', 'gameBar', 'progress', 'agentCluster', 'controlBar', 'controls.play', 'controls.ff', 'controls.step'],
-    ['gameBarContent.picked', 'gameBarContent.score'],
+    ['gameBarContent.picked', 'gameBarContent.score', 'gameBarContent.toBeat'],
     [],
     [],
     [],
     [],
     ['rewardCluster', 'reward.time'],
     ['reward.props'],
+    ['agent.trash'],
 ];
 
 export const level2Layout: Record<number, TutorialLayout> = {
@@ -60,21 +110,6 @@ export const level2Tasks: TaskGroup[] = [
         visibleTo: 12,
         tasks: [
             {
-                id: 'traps',
-                text: 'levels.2.tasks.p2.task.1',
-                field: 'gamePlay.noTrapsCollected',
-            },
-            {
-                id: 'treasure',
-                text: 'levels.2.tasks.p2.task.2',
-                field: 'gamePlay.treasureCollected',
-            },
-            {
-                id: 'bigTreasure',
-                text: 'levels.2.tasks.p2.task.3',
-                field: 'gamePlay.bigTreasureCollected',
-            },
-            {
                 id: 'highscore',
                 text: 'levels.2.tasks.p2.task.4',
                 field: 'gamePlay.newHighScore',
@@ -86,7 +121,7 @@ export const level2Tasks: TaskGroup[] = [
 export const level2Env: EnvSettings = {
     generic: {
         env: {
-            maxTurns: 30,
+            maxTurns: 25,
             numberOfItemsToGet: 1,
             propReloadDelay1: 'unlimited',
             collectItems: undefined,
@@ -164,11 +199,6 @@ export const level2Grid: CellSave[][] = [
             emoji: '',
             image: '/images/assets/wall.png',
         },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
     ],
     [
         {
@@ -177,14 +207,34 @@ export const level2Grid: CellSave[][] = [
             image: '/images/assets/wall.png',
         },
         {
-            type: 1,
+            type: 0,
             emoji: '',
-            image: '/images/assets/bush_240.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 1,
             emoji: '',
-            image: '/images/assets/bush_240.png',
+            image: '/images/assets/wall.png',
+        },
+        {
+            type: 0,
+            emoji: '',
+            image: '/images/assets/cleanWhiteStone.png',
+        },
+        {
+            type: 0,
+            emoji: '',
+            image: '/images/assets/cleanWhiteStone.png',
+        },
+        {
+            type: 6,
+            emoji: '',
+            image: '/images/assets/smallTreasure_260.png',
+        },
+        {
+            type: 1,
+            emoji: '',
+            image: '/images/assets/wall.png',
         },
         {
             type: 0,
@@ -200,31 +250,6 @@ export const level2Grid: CellSave[][] = [
             type: 0,
             emoji: '',
             image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/bush_240.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/bush_240.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/bush_240.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/bush_240.png',
         },
         {
             type: 1,
@@ -239,9 +264,24 @@ export const level2Grid: CellSave[][] = [
             image: '/images/assets/wall.png',
         },
         {
+            type: 0,
+            emoji: '',
+            image: '/images/assets/cleanWhiteStone.png',
+        },
+        {
+            type: 6,
+            emoji: '',
+            image: '/images/assets/smallTreasure_260.png',
+        },
+        {
+            type: 6,
+            emoji: '',
+            image: '/images/assets/smallTreasure_260.png',
+        },
+        {
             type: 1,
             emoji: '',
-            image: '/images/assets/bush_240.png',
+            image: '/images/assets/wall.png',
         },
         {
             type: 0,
@@ -254,9 +294,98 @@ export const level2Grid: CellSave[][] = [
             image: '/images/assets/cleanWhiteStone.png',
         },
         {
-            type: 9,
-            emoji: '🍄',
-            image: '',
+            type: 6,
+            emoji: '',
+            image: '/images/assets/smallTreasure_260.png',
+        },
+        {
+            type: 1,
+            emoji: '',
+            image: '/images/assets/wall.png',
+        },
+        {
+            type: 0,
+            emoji: '',
+            image: '/images/assets/cleanWhiteStone.png',
+        },
+        {
+            type: 1,
+            emoji: '',
+            image: '/images/assets/wall.png',
+        },
+    ],
+    [
+        {
+            type: 1,
+            emoji: '',
+            image: '/images/assets/wall.png',
+        },
+        {
+            type: 0,
+            emoji: '',
+            image: '/images/assets/cleanWhiteStone.png',
+        },
+        {
+            type: 6,
+            emoji: '',
+            image: '/images/assets/smallTreasure_260.png',
+        },
+        {
+            type: 1,
+            emoji: '',
+            image: '/images/assets/wall.png',
+        },
+        {
+            type: 1,
+            emoji: '',
+            image: '/images/assets/wall.png',
+        },
+        {
+            type: 1,
+            emoji: '',
+            image: '/images/assets/wall.png',
+        },
+        {
+            type: 1,
+            emoji: '',
+            image: '/images/assets/wall.png',
+        },
+        {
+            type: 1,
+            emoji: '',
+            image: '/images/assets/wall.png',
+        },
+        {
+            type: 1,
+            emoji: '',
+            image: '/images/assets/wall.png',
+        },
+        {
+            type: 0,
+            emoji: '',
+            image: '/images/assets/cleanWhiteStone.png',
+        },
+        {
+            type: 1,
+            emoji: '',
+            image: '/images/assets/wall.png',
+        },
+    ],
+    [
+        {
+            type: 1,
+            emoji: '',
+            image: '/images/assets/wall.png',
+        },
+        {
+            type: 0,
+            emoji: '',
+            image: '/images/assets/cleanWhiteStone.png',
+        },
+        {
+            type: -1,
+            emoji: '',
+            image: '/images/assets/start.png',
         },
         {
             type: 0,
@@ -289,128 +418,9 @@ export const level2Grid: CellSave[][] = [
             image: '/images/assets/bigTreasure_260.png',
         },
         {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-    ],
-    [
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: -1,
-            emoji: '',
-            image: '/images/assets/start.png',
-        },
-        {
             type: 0,
             emoji: '',
             image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/bush_240.png',
-        },
-        {
-            type: -1,
-            emoji: '',
-            image: '/images/assets/start.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 9,
-            emoji: '🍄',
-            image: '',
-        },
-        {
-            type: 9,
-            emoji: '🍄',
-            image: '',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-    ],
-    [
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/bush_240.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/bush_240.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/bush_240.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 6,
-            emoji: '',
-            image: '/images/assets/smallTreasure_260.png',
-        },
-        {
-            type: 6,
-            emoji: '',
-            image: '/images/assets/smallTreasure_260.png',
         },
         {
             type: 1,
@@ -460,19 +470,14 @@ export const level2Grid: CellSave[][] = [
             image: '/images/assets/cleanWhiteStone.png',
         },
         {
-            type: 1,
+            type: 0,
             emoji: '',
-            image: '/images/assets/bush_240.png',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
-            type: 6,
+            type: 0,
             emoji: '',
-            image: '/images/assets/smallTreasure_260.png',
-        },
-        {
-            type: 7,
-            emoji: '💰',
-            image: '',
+            image: '/images/assets/cleanWhiteStone.png',
         },
         {
             type: 1,
@@ -481,11 +486,6 @@ export const level2Grid: CellSave[][] = [
         },
     ],
     [
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
         {
             type: 1,
             emoji: '',

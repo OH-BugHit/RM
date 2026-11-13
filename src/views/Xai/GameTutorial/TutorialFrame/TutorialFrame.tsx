@@ -60,6 +60,7 @@ export default function TutorialFrame({
             position={layout.position}
             centerX={layout.centerX}
             centerY={layout.centerY}
+            zIndex={22}
         >
             {mode !== 'hidden' && !inspect.vis && <LevelTextBox variant={isSmallScreen ? 'narrow' : layout.variant} />}
             {inspect.vis && (

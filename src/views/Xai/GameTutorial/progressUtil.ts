@@ -56,6 +56,7 @@ export const buildHudVisibility = (config: HUDvisibilityField[]): HUDvisibility 
         gameBarContent: {
             score: fields.has('gameBarContent.score'),
             picked: fields.has('gameBarContent.picked'),
+            toBeat: fields.has('gameBarContent.toBeat'),
         },
         controlBar: fields.has('controlBar'),
 

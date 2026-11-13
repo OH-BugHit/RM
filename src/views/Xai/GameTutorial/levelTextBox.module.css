@@ -1,7 +1,7 @@
 .textContainer {
     display: flex;
     justify-content: center;
-    height: 100%;
+    height: auto;
 }
 
 .narrowContainer {
@@ -14,13 +14,19 @@
 
 .textContent {
     display: flex;
+    height: auto;
     flex-direction: inherit;
     justify-content: space-evenly;
 }
 
 .storyText {
     align-self: center;
-    height: 100%;
     overflow-wrap: normal;
     white-space: normal;
+    animation: none;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
 }

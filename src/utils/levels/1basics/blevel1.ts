@@ -1,4 +1,4 @@
-import { EnvSettings, HUDvisibilityField, TextMode, TutorialLayout, UiControlsField } from '../../../types';
+import { HUDvisibilityField, TextMode, TutorialLayout, UiControlsField, EnvSettings } from '../../../types';
 import { TaskGroup } from '../../progress';
 import { CellSave } from '../../types';
 
@@ -19,6 +19,8 @@ export const level1TextModes: TextMode[] = [
 ];
 
 export const level1uiControls: UiControlsField[][] = [[]];
+
+export const additionalMaterial: number[] = [6];
 
 export const level1HudConfig: HUDvisibilityField[][] = [
     [],
@@ -378,6 +380,60 @@ export const level1Grid: CellSave[][] = [
             type: 1,
             emoji: '',
             image: '/images/assets/wall.png',
+        },
+    ],
+];
+
+export const actionWorld: CellSave[][] = [
+    [
+        {
+            type: 0,
+            emoji: '',
+            image: '/images/assets/cleanWhiteStone.png',
+        },
+        {
+            type: 0,
+            emoji: '',
+            image: '/images/assets/cleanWhiteStone.png',
+        },
+        {
+            type: 1,
+            emoji: '',
+            image: '/images/assets/bush_240.png',
+        },
+    ],
+    [
+        {
+            type: -1,
+            emoji: '',
+            image: '/images/assets/start.png',
+        },
+        {
+            type: 0,
+            emoji: '',
+            image: '/images/assets/cleanWhiteStone.png',
+        },
+        {
+            type: 0,
+            emoji: '',
+            image: '/images/assets/cleanWhiteStone.png',
+        },
+    ],
+    [
+        {
+            type: 1,
+            emoji: '',
+            image: '/images/assets/bush_240.png',
+        },
+        {
+            type: 0,
+            emoji: '',
+            image: '/images/assets/cleanWhiteStone.png',
+        },
+        {
+            type: 0,
+            emoji: '',
+            image: '/images/assets/cleanWhiteStone.png',
         },
     ],
 ];

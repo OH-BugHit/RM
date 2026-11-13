@@ -50,6 +50,7 @@ export type Level = {
         modes?: TextMode[];
         textKey?: string;
         layouts?: Record<number, TutorialLayout>;
+        additionalMaterial?: number[]; // if additional information such as images etc. is needed, store here the step-numbers as keys
     };
     uiControls?: UiControlsField[][];
     hudSettings?: HUDvisibilityField[][]; // Available tools / clusters
@@ -229,6 +230,7 @@ export type HUDvisibility = {
     gameBarContent: {
         picked: boolean;
         score: boolean;
+        toBeat: boolean;
     };
     controlBar: boolean;
     controls: {

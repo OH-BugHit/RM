@@ -15,7 +15,7 @@ import {
     TileVisibilityAtom,
     TopbarAtom,
 } from '../../../atoms/uiState';
-import { defaultEpisodicData, falseStoryProgress, hudVisFalse, visibleTilesTrue } from '../../../utils/defaults';
+import { defaultEpisodicData, falseStoryProgress, hudVisLevels, visibleTilesTrue } from '../../../utils/defaults';
 import { applyLoadedGame, fromSavedCell } from '../../../utils/import';
 import LevelChangeOverlay from '../WaitOverlay/LevelChangeOverlay';
 
@@ -65,7 +65,7 @@ export default function GameContent({
             setMode('loaded');
             setTest('no');
             setEpisodicData(defaultEpisodicData);
-            setHudVis(hudVisFalse);
+            setHudVis(hudVisLevels);
             setTopBar((old) => {
                 return {
                     ...old,

@@ -434,6 +434,7 @@ export const defaultHUDvis: HUDvisibility = {
     gameBarContent: {
         picked: true,
         score: true,
+        toBeat: false,
     },
     controlBar: false,
     controls: {
@@ -540,6 +541,7 @@ export const playHudVis: HUDvisibility = {
     gameBarContent: {
         picked: true,
         score: true,
+        toBeat: false,
     },
     controls: {
         ff: true,
@@ -593,6 +595,7 @@ export const hudVisFalse: HUDvisibility = {
     gameBarContent: {
         picked: false,
         score: false,
+        toBeat: false,
     },
     controls: {
         ff: false,
@@ -634,6 +637,15 @@ export const hudVisFalse: HUDvisibility = {
     },
 };
 
+export const hudVisLevels: HUDvisibility = {
+    ...hudVisFalse,
+    gameBarContent: {
+        picked: false,
+        score: false,
+        toBeat: true,
+    },
+};
+
 export const hudVisBuild: HUDvisibility = {
     text: false,
     charts: true,
@@ -646,6 +658,7 @@ export const hudVisBuild: HUDvisibility = {
     gameBarContent: {
         picked: true,
         score: true,
+        toBeat: false,
     },
     controls: {
         ff: true,

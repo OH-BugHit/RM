@@ -116,7 +116,11 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                         <Cable variant="vertical" />
                         <NewFrame
                             variant="tutorial"
-                            contentUnder={<TestProgress target={3} />}
+                            contentUnder={
+                                <div style={{ justifyItems: 'baseline' }}>
+                                    <TestProgress target={2} />
+                                </div>
+                            }
                         >
                             <Progress tasks={tasks} />
                         </NewFrame>
@@ -128,10 +132,12 @@ export default function HUD({ lWorld, agentRef, mapRef, currentStateRef, layerRe
                     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
                         <Cable variant="vertical" />
                         <NewFrame variant="blob">
-                            <TestProgress
-                                target={3}
-                                bonus
-                            />
+                            <div style={{ justifyItems: 'baseline' }}>
+                                <TestProgress
+                                    target={2}
+                                    bonus
+                                />
+                            </div>
                         </NewFrame>
 
                         <Cable variant="vertical" />

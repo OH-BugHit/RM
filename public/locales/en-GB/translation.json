@@ -83,10 +83,9 @@
         },
         "concepts": {
             "desc": {
-                "Basic gameplay": "The agent plays the game using what it has learned. You control the gameflow. You also control the learning at later levels.",
-                "Agent": "The AI in the game that learns what to do.",
+                "Basic gameplay": "The agent plays the game. You control the gameflow and learning.",
+                "Agent": "The AI in the game that acts.",
                 "Environment": "The world where the agent plays.",
-                "Goals": "The target the agent should reach to complete the task.",
                 "Action": "Something the agent can do in the game.",
                 "Rewards": "Points the agent receives for its actions. The agent tries to maximize its rewards, while you try to maximize your score.",
                 "Agent-environment interaction": "The agent acts in the environment and learns from the results.",
@@ -285,7 +284,7 @@
             "dialogDescription": "Level details include the high score, learning objectives, and game items. Use your screen reader's reading commands to explore them, then activate Start level to begin."
         },
         "1": {
-            "describe": ["Basic gameplay", "Agent", "Environment", "Goals"],
+            "describe": ["Basic gameplay", "Agent", "Action"],
             "tasks": {
                 "p1": {
                     "title": "Design agent",
@@ -305,22 +304,22 @@
             "text": {
                 "1": "Hi, and welcome to Reward Machine!",
                 "2": "In this level, you will learn how to play the game.",
-                "3": "In this level, the goal is the treasure chest.",
-                "4": "Your tasks are shown on the left. Complete them all, and \"Test\" button will appear. Your agent then has to succesfully complete the level without interference.",
-                "5": "Clock up there shows how many moves the agent has left. The agent itself does not know how much time is left. The agent must reach the goal before time run out.",
-                "6": "Now let's start the game. The agent selects an action at each step. You can let the agent to act one step at a time.",
-                "7": "Or let the agent act continuously.",
-                "8": "You can also let the agent play at unlimited speed. This helps it learn quickly!",
-                "9": "Use Fast Forward to speed up learning.",
-                "10": "Great! Fast Forward helps the agent learn quickly. In later levels, you will get to change what the agent learns and see how it learns.",
+                "3": "Your mission is to train the agent to complete the given tasks.",
+                "4": "Tasks are shown on the left.\nComplete them all, and \"Test\" button will appear.\nYour agent then has to succesfully complete the level without interference.",
+                "5": "Clock up there shows how many moves the agent has left. The agent itself does not know how much time is left.",
+                "6": "The agent learns by itself while it plays. You can let the agent play one step at a time.\nAt each step the agent selects an action.",
+                "7": "Or let the agent play continuously.",
+                "8": "You can also let the agent play at unlimited speed. This allows it learn quickly!",
+                "9": "Use \"Fast Forward\"-button to speed up learning.",
+                "10": "Great! Fast Forward helps the agent learn quickly.\nIn later levels, you will tune the learning and see how the agent learns.",
                 "11": "All tasks are complete! Click \"Test Agent\" in the progress panel. To pass the level, the agent must reach the goal 3 times."
             },
-            "nextLevelInfo": "The next level will introduce you to the concept of rewards. The agent learns from the rewards it receives while playing and remembers which actions were rewarded the most in different situations.",
+            "nextLevelInfo": "The next level will introduce you to the concept of rewards.\nThe agent learns from the rewards it receives while playing and remembers which actions were rewarded the most in different situations.",
             "postMessage": "In this level, you learned how the game works. You taught your agent to reach the goal successfully! In reinforcement learning, an agent learns by playing and interacting with the game.",
-            "preMessage": "In reinforcement learning, an agent learns by playing and interacting with the game. Your goal is to teach your agent how to play.\nFirst, complete the tasks to set up the game and help your agent learn. Then, test your agent to see if it has learned to complete the level."
+            "preMessage": "In reinforcement learning, an agent learns by playing and interacting with the game.\n\nYour goal in this game is to teach your agent how to play.\n\nFirst, you train your agent to pass the given tasks. Then, test your agent to see if it has learned to complete the level."
         },
         "2": {
-            "describe": ["Action", "Rewards", "Agent-environment interaction"],
+            "describe": ["Environment", "Rewards", "Agent-environment interaction"],
             "tasks": {
                 "p1": {
                     "title": "Reach goal",
@@ -340,18 +339,19 @@
             },
             "text": {
                 "1": "First, let's recap. Reach the goal. Again, the treasure chest is the goal.",
-                "2": "That was easy! But from now on, you need also teach the agent to collect score on the way.",
+                "2": "That was easy! But from now on, you need also train your agent to collect score on the way.",
                 "3": "You can see your score next to the clock. Your objective is to beat the high score!",
-                "4": "For that, you need to teach the agent to avoid the mushrooms and other traps...",
-                "5": "...and collect the small and big treasures!",
-                "6": "Next, tune the rewards so the agent avoids mushrooms and collects treasures while still reaching the goal in time.",
+                "4": "For that, you need to teach the agent to collect treasures on the way to the chest!",
+                "5": "Next, tune the rewards so the agent collects treasures...",
+                "6": "...while still reaching the goal in time.",
                 "7": "You can set the reward for when the agent runs out of time before reaching the goal.",
                 "8": "And you can set the rewards for reaching different items.",
-                "9": "Complete all tasks and test your agent to complete the level!"
+                "9": "You can reset the agents memory from the trash icon if is seems to stuck on previously learned path.",
+                "10": "Complete all tasks and test your agent to complete the level!"
             },
             "nextLevelInfo": "Agent already learnt a lot. But how much is enough? The agent must try new things to learn new things but also it has to settle for something. Next level will introduce you to exploration vs exploitation dilemma.",
             "postMessage": "In this level, you learned that the agent receives rewards from the environment in different situations.",
-            "preMessage": "In this level, your goal is to tune the rewards for treasures and traps so that the agent avoids traps, collects treasures, and reaches the goal in time. Remember, the agent always tries to maximize its reward. It does not know the actual goal or the tasks."
+            "preMessage": "Now your goal is to tune the rewards given to the agent in different situations.\n\nYou need to shape the rewards so that the agent collects treasures and reaches the goal in time.\n\nThe agent always tries to maximize its reward. It does not know the actual goal or your tasks."
         },
         "3": {
             "describe": ["Exploration", "Exploitation"],

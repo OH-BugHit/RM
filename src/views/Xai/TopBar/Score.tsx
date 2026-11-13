@@ -7,7 +7,11 @@ import ZoomOutIcon from '@mui/icons-material/ZoomOut';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import { IconButton } from '@mui/material';
 
-export default function Score() {
+interface ScoreProps {
+    toBeat: boolean;
+}
+
+export default function Score({ toBeat }: ScoreProps) {
     const { t } = useTranslation();
     const { s } = useGameScale();
     const state = useAtomValue(TopbarAtom);
@@ -18,16 +22,18 @@ export default function Score() {
             className={style.itemContainerRight}
             style={{ fontSize: `${s(2.5)}rem` }}
         >
-            {/* This used to show the score to beat. It might be useful but now it is removed
-            <div className={style.itemElement}>
-                <b>{t('topBar.score.toBeat')}</b>
-                <b className={style.toBeat}>{state.toBeat}</b>
-            </div>
-            */}
-            <div className={style.itemElement}>
-                <b>{t('topBar.score.top')}</b>
-                <b className={style.topScore}>{state.topScore}</b>
-            </div>
+            {toBeat ? (
+                <div className={style.itemElement}>
+                    <b>{t('topBar.score.toBeat')}</b>
+                    <b className={style.toBeat}>{state.toBeat}</b>
+                </div>
+            ) : (
+                <div className={style.itemElement}>
+                    <b>{t('topBar.score.top')}</b>
+                    <b className={style.topScore}>{state.topScore}</b>
+                </div>
+            )}
+
             <div className={style.zoom}>
                 <IconButton
                     style={{ width: '30px', padding: 0, margin: 0 }}

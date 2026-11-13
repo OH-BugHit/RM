@@ -1,0 +1,57 @@
+.container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-evenly;
+    flex-direction: row;
+    align-items: center;
+}
+
+.world {
+    display: flex;
+    position: relative;
+    height: 100%;
+    align-items: center;
+}
+
+.column {
+    height: 100%;
+    padding: 16px
+}
+
+.numberContainer {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    text-align: center;
+}
+
+.number {
+    color: rgb(0, 2, 129);
+    font-size: 46px;
+}
+
+.agent {
+    position: absolute;
+    top: 76px;
+    left: 76px;
+    opacity: 0.5;
+}
+
+.tileBackground {
+    z-index: 0;
+}
+
+.tileForeground {
+    z-index: 1;
+    pointer-events: none;
+}

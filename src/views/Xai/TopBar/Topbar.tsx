@@ -45,7 +45,7 @@ export default function TopBar({ hideStuff }: EnvironmentProps) {
                                 paddingLeft: s(170) / 2,
                             }}
                         >
-                            <Score />
+                            <Score toBeat={hudVis.gameBarContent.toBeat} />
                         </div>
                     </div>
                     <div

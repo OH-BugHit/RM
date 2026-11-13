@@ -10,6 +10,9 @@ import { useEffect, useState } from 'react';
 import { LevelConfAtom } from '../../../atoms/gameState';
 import { useGameScale } from '../../../context/GameScale/useGameScale';
 import i18n from '../../../i18n';
+import AdditionalLevelMaterial from './AdditionalMaterial/MaterialContainer';
+import Separator from '../../../components/Separator/Separator';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface LevelTextBoxProps {
     variant?: 'wide' | 'narrow';
@@ -62,19 +65,56 @@ export default function LevelTextBox({ variant = 'wide' }: LevelTextBoxProps) {
                             angle={270}
                         />
                     )}
-                    <p
-                        className={style.storyText}
-                        style={mode === 'text' && variant === 'narrow' ? { paddingBottom: '1rem' } : {}}
-                    >
-                        {i18n.exists(`${level?.levelText?.textKey}.text.${step}`) && (
-                            <SampleWriter
-                                onComplete={() => setReady(true)}
-                                startDelay={step < 1 ? 600 : 200}
-                                speed={22}
-                                sample={t(`${level?.levelText?.textKey}.text.${step}`)}
-                            />
-                        )}
-                    </p>
+                    <div className={style.content}>
+                        <p
+                            className={style.storyText}
+                            style={mode === 'text' && variant === 'narrow' ? { paddingBottom: '1rem' } : {}}
+                        >
+                            {i18n.exists(`${level?.levelText?.textKey}.text.${step}`) && (
+                                <SampleWriter
+                                    onComplete={() => setReady(true)}
+                                    startDelay={step < 1 ? 600 : 200}
+                                    speed={22}
+                                    sample={t(`${level?.levelText?.textKey}.text.${step}`)}
+                                />
+                            )}
+                        </p>
+                        <AnimatePresence initial={false}>
+                            {level?.levelText?.additionalMaterial?.includes(step) && ready && (
+                                <motion.div
+                                    key={step}
+                                    initial={{ height: 0 }}
+                                    animate={{ height: 'auto' }}
+                                    exit={{ height: 0 }}
+                                    transition={{
+                                        height: {
+                                            duration: 0.3,
+                                            ease: 'easeOut',
+                                        },
+                                    }}
+                                    style={{ overflow: 'hidden' }}
+                                >
+                                    <motion.div
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{
+                                            opacity: {
+                                                duration: 0.2,
+                                                delay: 0.4,
+                                            },
+                                        }}
+                                    >
+                                        <Separator />
+                                        <AdditionalLevelMaterial
+                                            levelTextKey={level.levelText.textKey}
+                                            step={step}
+                                        />
+                                    </motion.div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
                     {mode === 'textNext' && (
                         <>
                             <Button
@@ -82,6 +122,7 @@ export default function LevelTextBox({ variant = 'wide' }: LevelTextBoxProps) {
                                 disabled={!ready}
                                 onClick={() => {
                                     setStep((old) => old + 1);
+                                    setReady(false);
                                 }}
                             >
                                 <NextArrowIcon size={s(64)} />

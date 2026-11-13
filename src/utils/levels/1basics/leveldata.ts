@@ -1,6 +1,7 @@
 import { Level } from '../../../types';
 import { defaultAgents, defaultAgentSettings, defaultBackground } from '../../defaults';
 import {
+    additionalMaterial,
     level1Env,
     level1Grid,
     level1HudConfig,
@@ -40,5 +41,10 @@ export const basicsLevel1: Level = {
     levelTasks: level1Tasks,
     hudSettings: level1HudConfig,
     uiControls: level1uiControls,
-    levelText: { modes: level1TextModes, textKey: 'levels.1', layouts: level1Layout },
+    levelText: {
+        modes: level1TextModes,
+        additionalMaterial: additionalMaterial,
+        textKey: 'levels.1',
+        layouts: level1Layout,
+    },
 };
