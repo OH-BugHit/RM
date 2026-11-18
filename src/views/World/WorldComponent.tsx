@@ -7,7 +7,6 @@ import { useAtomValue } from 'jotai';
 import { WorldGridRenderAtom } from '../../atoms/gameState';
 import { useEffect } from 'react';
 import { GenericRLEnv } from '../Environments/Generic/environment';
-import { useGameScale } from '../../context/GameScale/useGameScale';
 import { TileSizeAtom } from '../../atoms/uiState';
 
 interface worldComponentProps {
@@ -18,7 +17,6 @@ interface worldComponentProps {
 }
 
 export default function WorldComponent({ worldGrid, floatItems, deactivate, envRef }: worldComponentProps) {
-    const { s } = useGameScale();
     const worldGridA = useAtomValue(WorldGridRenderAtom);
     const tileSize = useAtomValue(TileSizeAtom);
 
@@ -37,8 +35,8 @@ export default function WorldComponent({ worldGrid, floatItems, deactivate, envR
             className={style.worldContainer}
             style={{
                 display: 'grid',
-                gridTemplateColumns: `repeat(${width}, ${s(tileSize)}px)`,
-                gridTemplateRows: `repeat(${height}, ${s(tileSize)}px)`,
+                gridTemplateColumns: `repeat(${width}, ${tileSize}px)`,
+                gridTemplateRows: `repeat(${height}, ${tileSize}px)`,
             }}
         >
             {worldGridA.map((row, y) =>
@@ -46,7 +44,7 @@ export default function WorldComponent({ worldGrid, floatItems, deactivate, envR
                     <div key={`${x}-${y}`}>
                         <Tile
                             cell={cell}
-                            tileSize={s(tileSize)}
+                            tileSize={tileSize}
                             agentLocation={env.position}
                             cellLocation={{ x: x, y: y }}
                             worldHeight={height}
@@ -57,7 +55,7 @@ export default function WorldComponent({ worldGrid, floatItems, deactivate, envR
             )}
             <RewardFloats
                 items={floatItems}
-                cellSize={s(tileSize)}
+                cellSize={tileSize}
                 onComplete={deactivate}
             />
         </div>

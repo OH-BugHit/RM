@@ -1,3 +1,4 @@
+import { useGameScale } from '../../../context/GameScale/useGameScale';
 import { restoreImage } from '../../../utils/import';
 import { CellSave } from '../../../utils/types';
 import style from './levelPopup.module.css';
@@ -6,8 +7,10 @@ interface InfoRowProps {
     title: string;
     nodes: Map<string, CellSave>;
     backgroundColour: string;
+    invert?: boolean;
 }
-export default function InfoRow({ title, nodes, backgroundColour }: InfoRowProps) {
+export default function InfoRow({ title, nodes, backgroundColour, invert = false }: InfoRowProps) {
+    const { s } = useGameScale()
     if (nodes.size < 1) return;
     return (
         <div className={style.infoRow}>
@@ -15,17 +18,22 @@ export default function InfoRow({ title, nodes, backgroundColour }: InfoRowProps
                 className={style.rowContent}
                 style={{ background: backgroundColour }}
             >
-                <h3>{title}</h3>
-                <div className={style.images}>
-                    {[...nodes.values()].map((t) => (
+                {!invert ? <h3>{title}</h3> : ''}
+                <div
+                    className={style.images}
+                    style={{ justifyContent: invert ? '' : 'right' }}
+                >
+                    {[...nodes.values()].map((t, i) => (
                         <img
+                            key={i}
                             src={restoreImage(t.image, t.emoji)}
                             alt="Agent location background"
-                            width={30}
-                            height={30}
+                            width={Math.min(s(50),30)}
+                            height={Math.min(s(50),30)}
                         />
                     ))}
                 </div>
+                {invert ? <h3>{title}</h3> : ''}
             </div>
         </div>
     );

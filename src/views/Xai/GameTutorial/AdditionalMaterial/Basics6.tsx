@@ -49,6 +49,7 @@ export default function Basics6() {
                         <div
                             key={`${x}-${y}`}
                             className={style.number}
+                            style={{fontSize: `${s(46)}px`}}
                         >
                             {actionNumbers(x, y)}
                         </div>
@@ -79,8 +80,9 @@ export default function Basics6() {
                     />
                     <img
                         src={agent.img}
-                        height={SIZE}
-                        width={SIZE}
+                        height={s(SIZE)}
+                        width={s(SIZE)}
+                        style={{top: `${Math.max(50,s(76))}px`, left: `${Math.max(50,s(76))}px`}}
                         alt="Agent Image"
                         className={style.agent}
                     />

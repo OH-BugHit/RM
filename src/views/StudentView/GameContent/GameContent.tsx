@@ -21,6 +21,7 @@ import LevelChangeOverlay from '../WaitOverlay/LevelChangeOverlay';
 
 import GameProgressBridge from './GameProgressBridge';
 import UIcontrolBridge from './UIcontrolBridge';
+import { ActiveAgentAtom } from '../../../atoms/state';
 
 interface GameContentProps {
     agentRef: React.RefObject<QLearningAgent | undefined>;
@@ -52,6 +53,7 @@ export default function GameContent({
     const setProgress = useSetAtom(StoryProgressAtom);
     const setTopBar = useSetAtom(TopbarAtom);
     const setEpisodicData = useSetAtom(EpisodicDataAtom);
+    const setActiveAgent = useSetAtom(ActiveAgentAtom)
     const nameRef = useRef<string>('');
     const [mode, setMode] = useState<Mode>('loading'); // Waiting for level
     const store = useStore();
@@ -82,7 +84,10 @@ export default function GameContent({
 
     const startLevel = () => {
         setStep(1);
-        setMode('ready');
+        if (level) {
+        setActiveAgent(level.level.agent.activeAgent)    
+        setMode('ready')
+    } else {console.warn("No level selected to start!")}
     };
 
     if (mode !== 'ready')

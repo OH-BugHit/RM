@@ -65,6 +65,8 @@ export const level2TextModes: TextMode[] = [
     'hidden', // 10
 ];
 
+export const additionalMaterial: number[] = [4];
+
 export const level2uiControls: UiControlsField[][] = [[], [], [], [], [], [], [], ['rewardC.time'], ['rewardC.props']];
 
 export const level2HudConfig: HUDvisibilityField[][] = [

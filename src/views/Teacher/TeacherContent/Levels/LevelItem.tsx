@@ -40,7 +40,7 @@ export default function LevelItem({ level, selected = false, cellSize = 40 }: Le
                         />
                     </>
                 ) : (
-                    <div className={style.emptyPreview}>No selection</div>
+                    <div className={style.emptyPreview}>Loading...</div>
                 )}
             </div>
         </div>

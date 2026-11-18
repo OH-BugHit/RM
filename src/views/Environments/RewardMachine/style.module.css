@@ -14,8 +14,6 @@
 }
 
 .worldContainer {
-    overflow: auto;
-    padding: 1rem;
-    max-height: 70dvh;
+    max-height: 65dvh;
     max-width: 70dvw;
 }

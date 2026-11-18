@@ -10,7 +10,7 @@ const group2: LevelGroup = { groupType: 'rewards', groupName: 'Rewards', levels:
 const group3: LevelGroup = { groupType: 'exploreExploit', groupName: 'Explore and Exploit', levels: [exploreLevel1] };
 const group4: LevelGroup = { groupType: 'observation', groupName: 'Observation', levels: [observationLevel1] };
 const group5: LevelGroup = { groupType: 'learning', groupName: 'Learning', levels: [learningLevel1] };
-const group6: LevelGroup = { groupType: 'bonus', groupName: 'Bonus', levels: [learningLevel1] };
-export const levelGroups = [group1, group2, group3, group4, group5, group6];
 
-export const allGroups = new Set<GroupType>(['basic', 'rewards', 'exploreExploit', 'observation', 'learning', 'bonus']);
+export const levelGroups = [group1, group2, group3, group4, group5];
+
+export const allGroups = new Set<GroupType>(['basic', 'rewards', 'exploreExploit', 'observation', 'learning']);

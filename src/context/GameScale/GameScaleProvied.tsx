@@ -7,6 +7,8 @@ const DESIGN_WIDTH = 1940;
 const MIN_SCALE = 0.425;
 const MAX_SCALE = 1;
 
+const MAX_TILE_SIZE = 70;
+
 interface GameScaleProviderProps {
     children: ReactNode;
 }
@@ -63,7 +65,7 @@ export function GameScaleProvider({ children }: GameScaleProviderProps) {
                     return 0;
                 }
 
-                return Math.min(containerHeight / rowCount, containerWidth / columnCount);
+                return Math.min(MAX_TILE_SIZE,Math.min(containerHeight / rowCount, containerWidth / columnCount));
             },
         }),
         [scale, scaleWidth, trueScale]

@@ -25,7 +25,6 @@
 
 .column {
     height: 100%;
-    padding: 16px
 }
 
 .numberContainer {
@@ -37,13 +36,10 @@
 
 .number {
     color: rgb(0, 2, 129);
-    font-size: 46px;
 }
 
 .agent {
     position: absolute;
-    top: 76px;
-    left: 76px;
     opacity: 0.5;
 }
 
@@ -54,4 +50,8 @@
 .tileForeground {
     z-index: 1;
     pointer-events: none;
+}
+
+.column ul {
+    font-size: var(--font-size-p)
 }

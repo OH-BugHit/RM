@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { QLearningAgent } from '../../../components/agents/rlAgentQ';
 import { Actions, Cell, GameEnvironmentInfo, GenericObservation, ObservationShape, StateData } from '../../../types';
 import WorldComponent from '../../World/WorldComponent';
@@ -38,7 +38,8 @@ import ResizeButton from '../../../components/Buttons/ReziseButton/ResizeButton'
 import AgentBridge from '../../../components/GameComponents/AgentBridge';
 import { WorldStore } from '../../../components/QTable/utils';
 import AgentRender from '../../../components/EnvironmentRender/AgentRender';
-import { AgentRenderPulseAtom, TopbarAtom } from '../../../atoms/uiState';
+import { AgentRenderPulseAtom, TileSizeAtom, TopbarAtom } from '../../../atoms/uiState';
+import { useGameScale } from '../../../context/GameScale/useGameScale';
 
 const STEP_INTERVAL = 400; //ms
 const FAST_STEPS = 2500;
@@ -98,6 +99,26 @@ function RewardMachine({
     const setEpisodicData = useSetAtom(EpisodicDataAtom);
     const setTimeStepData = useSetAtom(TimeStepDataAtom);
     const setSetRewardsPulse = useSetAtom(RewardsPulseAtom);
+
+    const { maxTile } = useGameScale();
+    const [viewport, setViewport] = useState<HTMLDivElement | null>(null); // Tile autoscale needs this
+    const setTileSize = useSetAtom(TileSizeAtom);
+    const renderedGrid = useAtomValue(WorldGridRenderAtom);
+
+    const height = renderedGrid?.length ?? worldGrid.current.length;
+    const width = renderedGrid?.[0]?.length ?? worldGrid.current[0]?.length ?? 0;
+    useEffect(() => {
+        if (!viewport) return;
+
+        const observer = new ResizeObserver(([entry]) => {
+            if (!entry) return;
+            const { width: availableWidth, height: availableHeight } = entry.contentRect;
+            setTileSize(maxTile(availableHeight, height, availableWidth, width) - 2);
+        });
+
+        observer.observe(viewport);
+        return () => observer.disconnect();
+    }, [height, maxTile, viewport, width, setTileSize]);
 
     const envRef = useRef<GenericRLEnv>(undefined);
 
@@ -512,7 +533,9 @@ function RewardMachine({
                 agentRef={agentRef}
             />
             {envRef.current && (
-                <div className={style.worldContainer}>
+                <div 
+                ref={setViewport}
+                className={style.worldContainer}>
                     <div
                         style={{
                             position: 'relative',

@@ -2,19 +2,22 @@ import { LevelMapNode } from './levelMapTypes';
 
 interface RoutePathProps {
     nodes: LevelMapNode[];
-    s: (value: number) => number;
+    mapHeight: number;
 }
-export const createRoutePathX = ({ nodes, s }: RoutePathProps): string => {
+
+const mapY = (percentage: number, mapHeight: number) => (percentage / 100) * mapHeight;
+
+export const createRoutePathX = ({ nodes, mapHeight }: RoutePathProps): string => {
     return nodes
         .map((node, index) => {
             if (index === 0) {
-                return `M ${node.x} ${s(node.y)}`;
+                return `M ${node.x} ${mapY(node.y, mapHeight)}`;
             }
 
             const prev = nodes[index - 1];
             const midX = (prev.x + node.x) / 2;
 
-            return `L ${midX} ${s(prev.y)} L ${midX} ${s(node.y)} L ${node.x} ${s(node.y)}`;
+            return `L ${midX} ${mapY(prev.y, mapHeight)} L ${midX} ${mapY(node.y, mapHeight)} L ${node.x} ${mapY(node.y, mapHeight)}`;
         })
         .join(' ');
 };
@@ -22,10 +25,10 @@ export const createRoutePathX = ({ nodes, s }: RoutePathProps): string => {
 interface BonusRouteProps {
     bonusNodes: LevelMapNode[];
     nodes: LevelMapNode[];
-    s: (value: number) => number;
+    mapHeight: number;
 }
 
-export const createBonusPathsY = ({ bonusNodes, nodes, s }: BonusRouteProps) =>
+export const createBonusPathsY = ({ bonusNodes, nodes, mapHeight }: BonusRouteProps) =>
     bonusNodes.flatMap((bonusNode) => {
         const sourceNode = nodes.find((node) => node.groupType === bonusNode.groupType);
 
@@ -38,7 +41,7 @@ export const createBonusPathsY = ({ bonusNodes, nodes, s }: BonusRouteProps) =>
         return [
             {
                 id: bonusNode.id,
-                d: `M ${sourceNode.x} ${s(sourceNode.y)} L ${sourceNode.x} ${s(midY)} L ${bonusNode.x} ${s(midY)} L ${bonusNode.x} ${s(bonusNode.y)}`,
+                d: `M ${sourceNode.x} ${mapY(sourceNode.y, mapHeight)} L ${sourceNode.x} ${mapY(midY, mapHeight)} L ${bonusNode.x} ${mapY(midY, mapHeight)} L ${bonusNode.x} ${mapY(bonusNode.y, mapHeight)}`,
             },
         ];
     });

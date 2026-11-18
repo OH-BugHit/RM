@@ -2,6 +2,7 @@ import { Level } from '../../../types';
 import { defaultAgents, defaultAgentSettings, defaultBackground } from '../../defaults';
 import { LoadedGame } from '../../types';
 import {
+    additionalMaterial,
     level2Env,
     level2Grid,
     level2HudConfig,
@@ -33,5 +34,10 @@ export const rewardsLevel1: Level = {
     levelTasks: level2Tasks,
     hudSettings: level2HudConfig,
     uiControls: level2uiControls,
-    levelText: { modes: level2TextModes, textKey: 'levels.2', layouts: level2Layout },
+    levelText: {
+        modes: level2TextModes,
+        additionalMaterial: additionalMaterial,
+        textKey: 'levels.2',
+        layouts: level2Layout,
+    },
 };

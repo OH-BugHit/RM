@@ -44,13 +44,13 @@ export default function LevelSelect() {
     const requiredNodes = mapNodes.filter((node) => node.kind === 'required');
     const bonusNodes = mapNodes.filter((node) => node.kind === 'bonus');
 
-    const mapWidth = Math.max(trueScale * 1940, ...mapNodes.map((node) => node.x + 100));
+    const mapWidth = Math.max(trueScale * 1940, ...mapNodes.map((node) => node.x + 300));
 
-    const routePath = createRoutePathX({ nodes: requiredNodes, s: s });
+    const routePath = createRoutePathX({ nodes: requiredNodes, mapHeight });
     const bonusPaths = createBonusPathsY({
         bonusNodes,
         nodes: requiredNodes,
-        s,
+        mapHeight,
     });
 
     const dragState = useRef<{
@@ -319,7 +319,7 @@ export default function LevelSelect() {
                                             .join(' ')}
                                         style={{
                                             left: `${(node.x / mapWidth) * 100}%`,
-                                            top: `${(node.y / mapHeight) * s(100)}%`,
+                                            top: `${Math.min(90, node.y)}%`,
                                         }}
                                         onClick={(event) => handleNodeClick(node.id, event.currentTarget)}
                                     >

@@ -4,15 +4,15 @@ import { CellSave } from '../../../types';
 export const level1Env: EnvSettings = {
     generic: {
         env: {
-            maxTurns: 20,
+            maxTurns: 35,
             numberOfItemsToGet: 1,
             propReloadDelay1: 'unlimited',
             collectItems: undefined,
         },
         reward: {
             rewardStep: 0,
-            reward1: 1,
-            reward2: 5,
+            reward1: 0,
+            reward2: 0,
             rPickObject: 5,
             rTrap: -5,
             rUseObject: 5,
@@ -30,289 +30,543 @@ export const blevel1HudConfig: HUDvisibilityField[][] = [
 ];
 
 export const level1Grid: CellSave[][] = [
-    [
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-    ],
-    [
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/bush_240.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/bush_240.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/bush_240.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-    ],
-    [
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: -1,
-            emoji: '',
-            image: '/images/assets/start.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 2,
-            emoji: '',
-            image: '/images/assets/bigTreasure_260.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-    ],
-    [
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/bush_240.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/bush_240.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 0,
-            emoji: '',
-            image: '/images/assets/cleanWhiteStone.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-    ],
-    [
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-        {
-            type: 1,
-            emoji: '',
-            image: '/images/assets/wall.png',
-        },
-    ],
+  [
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    }
+  ],
+  [
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    }
+  ],
+  [
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    }
+  ],
+  [
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 9,
+      "emoji": "",
+      "image": "/images/assets/hedgehog.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 6,
+      "emoji": "",
+      "image": "/images/assets/grassLong.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    }
+  ],
+  [
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    }
+  ],
+  [
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 2,
+      "emoji": "",
+      "image": "/images/assets/mover_charge_128.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": -1,
+      "emoji": "",
+      "image": "/images/assets/start.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 0,
+      "emoji": "",
+      "image": "/images/assets/grass.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 2,
+      "emoji": "",
+      "image": "/images/assets/mover_charge_128.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    }
+  ],
+  [
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    },
+    {
+      "type": 1,
+      "emoji": "",
+      "image": "/images/assets/bush_240.png"
+    }
+  ]
 ];
