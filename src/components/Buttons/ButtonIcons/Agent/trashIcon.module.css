@@ -16,6 +16,10 @@
         filter .2s ease;
 }
 
+.icon:hover {
+    scale: 1.1;
+}
+
 .icon:hover .innerRim {
     stroke: #FFFFFF;
     stroke-opacity: .75;

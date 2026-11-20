@@ -6,13 +6,10 @@ import { getAgentButtons } from '../../components/Buttons/agentButtonList';
 import { getRewardButtons } from '../../components/Buttons/rewardButtonList';
 import getInspectButtons, { InspectButtonProps } from '../../components/Buttons/inspectButtonList';
 import { getBuildButtons } from '../../components/Buttons/buildButtonList';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { BuildCAtom, ClusterOpenAtom, HUDvisAtom, RewardCAtom } from '../../atoms/uiState';
 import { useClusterOpenState } from './useClusterState';
 import BuildToolsContent from './BuildToolsContent';
-import TrashIcon from '../../components/Buttons/ButtonIcons/Agent/TrashIcon';
-import { ResetUiPulseAtom } from '../../atoms/state';
-import { Button } from '@genai-fi/base';
 import { useGameScale } from '../../context/GameScale/useGameScale';
 import Dismissible from '../../utils/Dismissible';
 import CloseIcon from '../../components/Buttons/ButtonIcons/OtherIcons/CloseIcon';
@@ -32,7 +29,6 @@ export default function ClusterContainer({ position, type, vis, children, inspec
     const { openState, handleOpenClick } = useClusterOpenState(type);
     const rewardC = useAtomValue(RewardCAtom);
     const buildC = useAtomValue(BuildCAtom);
-    const setResetEnv = useSetAtom(ResetUiPulseAtom);
     const hudVis = useAtomValue(HUDvisAtom);
     const clusterOpen = useAtomValue(ClusterOpenAtom);
     const RADIUS = 160;
@@ -92,21 +88,7 @@ export default function ClusterContainer({ position, type, vis, children, inspec
                         zIndex: 21,
                     }}
                 >
-                    <div>
-                        {children}
-                        {type === 'agent' && hudVis.agent.trash && (
-                            <div className={style.clusterSideButton}>
-                                <Button
-                                    variant="text"
-                                    color="error"
-                                    title="Reset agent"
-                                    onClick={() => setResetEnv((old) => !old)}
-                                >
-                                    <TrashIcon size={s(80)} />
-                                </Button>
-                            </div>
-                        )}
-                    </div>
+                    <div>{children}</div>
                     {clusterOpen[type] && (
                         <>
                             {buttons.map((button) => {

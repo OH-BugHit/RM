@@ -1,17 +1,16 @@
 .controlsWrapper {
-
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 0px 0px 4px rgba(117, 140, 2, 0.3);
-    backdrop-filter: blur(10px);
     border-radius: 3rem;
-    padding: 0 0.5rem 0 0.5rem;
+    border: 2px #123 solid;
+    text-align: center;
 }
 
 .controlsContainer {
     display: flex;
-    flex-direction: row;
+    height: 100%;
 }
 
 .container {
@@ -44,4 +43,58 @@
     border-radius: 0.5rem;
     padding: 0.4rem;
     background-color: rgba(150, 245, 245, 0.466);
+}
+
+.testing {
+    position: relative;
+    border-radius: 3rem 0 0 3rem;
+    padding: 0 0.5rem;
+    background-color: #aff1ff;
+    align-items: center;
+    justify-content: center;
+    border-right: #123 2px solid;
+    height: 100%;
+    width: 100%;
+}
+
+.training {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    border-radius: 0 3rem 3rem 0;
+    padding: 0 0.5rem;
+    background-color: #b3d7d8;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.labelText,
+.rightText,
+.leftText {
+    position: absolute;
+    top: 0;
+    transform: translateY(-100%);
+    color: rgb(0, 13, 85);
+    padding: 0rem 0.5rem;
+    text-align: center;
+    margin: 0;
+    border-top: 1px #123 solid;
+    border-left: 1px #123 solid;
+    border-right: 1px #123 solid;
+    z-index: -1;
+}
+
+.rightText {
+    right: -1px;
+    border-right: 1px #123 solid;
+    border-radius: 1rem 0 0 0;
+    background-color: #aff1ff;
+}
+
+.leftText {
+    left: -1px;
+    border-radius: 0 1rem 0 0;
+    background-color: #b3d7d8;
 }

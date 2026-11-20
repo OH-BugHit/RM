@@ -51,6 +51,8 @@ export type Level = {
         textKey?: string;
         layouts?: Record<number, TutorialLayout>;
         additionalMaterial?: number[]; // if additional information such as images etc. is needed, store here the step-numbers as keys
+        hintNext?: number[];
+        focusPoints?: Record<number, FocusPoint>;
     };
     uiControls?: UiControlsField[][];
     hudSettings?: HUDvisibilityField[][]; // Available tools / clusters
@@ -128,6 +130,7 @@ export type StoryProgress = {
         play: boolean;
         ff: boolean;
         inspect: boolean;
+        test: boolean;
     };
 };
 
@@ -159,6 +162,7 @@ export type InspectState = {
 };
 
 export type ControlOptions = {
+    test: boolean;
     play: boolean;
     ff: boolean;
     step: boolean;
@@ -234,6 +238,7 @@ export type HUDvisibility = {
     };
     controlBar: boolean;
     controls: {
+        test: boolean;
         ff: boolean;
         play: boolean;
         inspect: boolean;
@@ -672,3 +677,8 @@ export type Target =
           x: number;
           y: number;
       };
+
+export type FocusPoint = {
+    location: { x: number; y: number };
+    radius: number;
+};

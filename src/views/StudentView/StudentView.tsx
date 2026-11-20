@@ -8,6 +8,7 @@ import HUD from '../Xai/HUD';
 import { WorldStore } from '../../components/QTable/utils';
 import { CustomGridLayer } from '../Xai/NewQTable/TileTable/TileTable';
 import GameContent from './GameContent/GameContent';
+import FocusLayer from '../../components/Overlays/FocusLayer/FocusLayer';
 
 // React component
 function StudentView() {
@@ -29,6 +30,7 @@ function StudentView() {
                 className={style.gameView}
                 style={{ ['--background-image']: `url(${config.image})` } as React.CSSProperties}
             >
+                <FocusLayer />
                 <Bridge />
                 <div className={style.containerBox}>
                     <AnimatePresence>

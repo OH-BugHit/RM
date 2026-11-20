@@ -2,7 +2,9 @@ import { Level } from '../../../types';
 import { defaultAgents, defaultAgentSettings, defaultBackground } from '../../defaults';
 import {
     additionalMaterial,
+    hintNext,
     level1Env,
+    level1Focus,
     level1Grid,
     level1HudConfig,
     level1Layout,
@@ -44,7 +46,9 @@ export const basicsLevel1: Level = {
     levelText: {
         modes: level1TextModes,
         additionalMaterial: additionalMaterial,
+        hintNext: hintNext,
         textKey: 'levels.1',
         layouts: level1Layout,
+        focusPoints: level1Focus,
     },
 };

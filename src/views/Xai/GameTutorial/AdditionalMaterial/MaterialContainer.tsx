@@ -1,12 +1,12 @@
-import Basics6 from './Basics6';
-import Rewards4 from './Rewards4';
+import Basics6 from './Materials/Basics6';
+import Rewards4 from './Materials/Rewards4';
 
 interface AdditionalLevelMaterialProps {
     levelTextKey: string | undefined;
     step: number;
 }
 
-export default function AdditionalLevelMaterial({ step, levelTextKey }: AdditionalLevelMaterialProps) {
+export default function MaterialContainer({ step, levelTextKey }: AdditionalLevelMaterialProps) {
     switch (levelTextKey) {
         case undefined: {
             return;

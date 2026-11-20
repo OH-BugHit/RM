@@ -1,6 +1,6 @@
-import { useAtomValue } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { MovableFrame } from '../../../Frames/MovableFrame';
-import { InspectAtom, TextStepAtom } from '../../../../atoms/uiState';
+import { FocusAtom, InspectAtom, TextStepAtom } from '../../../../atoms/uiState';
 import InspectText from '../InspectText';
 import { WorldStore } from '../../../../components/QTable/utils';
 import { FocusOverlay } from '../../../../components/QTable/FocusOverlay/FocusOverlay';
@@ -38,8 +38,16 @@ export default function TutorialFrame({
     const step = useAtomValue(TextStepAtom);
     const inspect = useAtomValue(InspectAtom);
     const level = useAtomValue(LevelConfAtom);
+    const setFocus = useSetAtom(FocusAtom);
     const mode = level?.levelText?.modes?.[step] ?? 'hidden';
     const layouts = level?.levelText?.layouts;
+    const focus = level?.levelText?.focusPoints;
+
+    if (focus?.[step]) {
+        setFocus(focus[step]);
+    } else {
+        setFocus(null);
+    }
 
     const isSmallScreen = scale < 1;
 

@@ -1,4 +1,4 @@
-import { HUDvisibilityField, TextMode, TutorialLayout, UiControlsField, EnvSettings } from '../../../types';
+import { HUDvisibilityField, TextMode, TutorialLayout, UiControlsField, EnvSettings, FocusPoint } from '../../../types';
 import { TaskGroup } from '../../progress';
 import { CellSave } from '../../types';
 
@@ -14,13 +14,15 @@ export const level1TextModes: TextMode[] = [
     'textNext',
     'text',
     'textNext',
-    'textNext',
+    'text',
+    'text',
     'hidden',
 ];
 
 export const level1uiControls: UiControlsField[][] = [[]];
 
 export const additionalMaterial: number[] = [6];
+export const hintNext: number[] = [6, 7, 9, 11];
 
 export const level1HudConfig: HUDvisibilityField[][] = [
     [],
@@ -33,6 +35,8 @@ export const level1HudConfig: HUDvisibilityField[][] = [
     ['controls.play'],
     [],
     ['controls.ff'],
+    [],
+    ['controls.test'],
 ];
 
 export const level1Layout: Record<number, TutorialLayout> = {
@@ -40,6 +44,21 @@ export const level1Layout: Record<number, TutorialLayout> = {
         position: { top: '20%', left: '50%' },
         centerX: -50,
         centerY: 0,
+    },
+};
+
+export const level1Focus: Record<number, FocusPoint> = {
+    4: {
+        location: { x: 4, y: 50 },
+        radius: 120,
+    },
+    5: {
+        location: { x: 50, y: 2 },
+        radius: 100,
+    },
+    6: {
+        location: { x: 50, y: 98 },
+        radius: 60,
     },
 };
 
@@ -66,6 +85,12 @@ export const level1Tasks: TaskGroup[] = [
                 id: 'ff',
                 text: 'levels.1.tasks.p2.task.3',
                 field: 'controls.ff',
+                takeStep: true,
+            },
+            {
+                id: 'test',
+                text: 'levels.1.tasks.p2.task.4',
+                field: 'controls.test',
                 takeStep: true,
             },
         ],

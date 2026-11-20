@@ -55,3 +55,17 @@
 .column ul {
     font-size: var(--font-size-p)
 }
+
+.hintNext {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.hintContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

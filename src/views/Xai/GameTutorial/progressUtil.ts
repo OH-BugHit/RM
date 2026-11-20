@@ -61,6 +61,7 @@ export const buildHudVisibility = (config: HUDvisibilityField[]): HUDvisibility 
         controlBar: fields.has('controlBar'),
 
         controls: {
+            test: fields.has('controls.test'),
             play: fields.has('controls.play'),
             ff: fields.has('controls.ff'),
             step: fields.has('controls.step'),

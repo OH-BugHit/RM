@@ -409,6 +409,7 @@ export const falseStoryProgress: StoryProgress = {
         opened: false,
     },
     controls: {
+        test: false,
         step: false,
         play: false,
         ff: false,
@@ -417,6 +418,7 @@ export const falseStoryProgress: StoryProgress = {
 };
 
 export const defaultControlOptions: ControlOptions = {
+    test: true,
     play: true,
     ff: true,
     step: true,
@@ -438,6 +440,7 @@ export const defaultHUDvis: HUDvisibility = {
     },
     controlBar: false,
     controls: {
+        test: true,
         ff: true,
         play: true,
         inspect: true,
@@ -522,6 +525,7 @@ export const playStoryProgress: StoryProgress = {
         opened: false,
     },
     controls: {
+        test: true,
         step: true,
         play: true,
         ff: true,
@@ -544,6 +548,7 @@ export const playHudVis: HUDvisibility = {
         toBeat: false,
     },
     controls: {
+        test: true,
         ff: true,
         play: true,
         inspect: true,
@@ -598,6 +603,7 @@ export const hudVisFalse: HUDvisibility = {
         toBeat: false,
     },
     controls: {
+        test: false,
         ff: false,
         play: false,
         inspect: false,
@@ -661,6 +667,7 @@ export const hudVisBuild: HUDvisibility = {
         toBeat: false,
     },
     controls: {
+        test: true,
         ff: true,
         play: true,
         inspect: false,
@@ -727,6 +734,7 @@ export const playUIHelp: UiHelp = {
 };
 
 export const playControls: ControlOptions = {
+    test: true,
     ff: true,
     play: true,
     step: true,

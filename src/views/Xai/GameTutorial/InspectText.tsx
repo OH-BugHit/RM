@@ -26,7 +26,7 @@ export default function InspectText({ mapRef, world, focusFrameRef, layerRef, ag
     const setControls = useSetAtom(ControlEnablerAtom);
     const setGame = useSetAtom(GameControlAtom);
     useEffect(() => {
-        setControls({ play: false, ff: false, step: false, inspect: false });
+        setControls({ test: false, play: false, ff: false, step: false, inspect: false });
         setGame((old) => {
             return {
                 ...old,
@@ -53,7 +53,7 @@ export default function InspectText({ mapRef, world, focusFrameRef, layerRef, ag
 
         return () => {
             clearTimeout(timeout);
-            setControls({ play: true, ff: true, step: true, inspect: true });
+            setControls({ test: true, play: true, ff: true, step: true, inspect: true });
         };
     }, [setControls, setGame, agentRef, focusFrameRef, layerRef, mapRef, world.statePos]);
 

@@ -2,15 +2,15 @@ import style from './icon.module.css';
 
 interface PlayIconProps {
     size?: number;
-    className?: string;
+    testing?: boolean;
     active?: boolean;
     disabled?: boolean;
 }
 
-export default function PauseIcon({ size = 64, className = '', active = false, disabled }: PlayIconProps) {
+export default function PauseIcon({ size = 64, testing = false, active = false, disabled }: PlayIconProps) {
     return (
         <svg
-            className={`${style.icon} ${active ? style.active : ''} ${disabled ? style.disabled : ''} ${className}`}
+            className={`${style.icon} ${active ? style.active : ''} ${disabled ? style.disabled : ''}`}
             width={size}
             height={size}
             viewBox="0 0 256 256"
@@ -44,6 +44,36 @@ export default function PauseIcon({ size = 64, className = '', active = false, d
                     <stop
                         offset="100%"
                         stopColor="#D97B00"
+                    />
+                </linearGradient>
+
+                {/* Green material */}
+                <linearGradient
+                    id="testingGreen"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                >
+                    <stop
+                        offset="0%"
+                        stopColor="#C8FFC8"
+                    />
+                    <stop
+                        offset="22%"
+                        stopColor="#80F080"
+                    />
+                    <stop
+                        offset="55%"
+                        stopColor="#39CC39"
+                    />
+                    <stop
+                        offset="82%"
+                        stopColor="#20A820"
+                    />
+                    <stop
+                        offset="100%"
+                        stopColor="#087008"
                     />
                 </linearGradient>
 
@@ -127,7 +157,7 @@ export default function PauseIcon({ size = 64, className = '', active = false, d
                     width="54"
                     height="176"
                     rx="26"
-                    fill="url(#gold)"
+                    fill={testing ? 'url(#testingGreen)' : 'url(#gold)'}
                     stroke="#5C3200"
                     strokeWidth="10"
                 />
@@ -138,7 +168,7 @@ export default function PauseIcon({ size = 64, className = '', active = false, d
                     width="54"
                     height="176"
                     rx="26"
-                    fill="url(#gold)"
+                    fill={testing ? 'url(#testingGreen)' : 'url(#gold)'}
                     stroke="#5C3200"
                     strokeWidth="10"
                 />
@@ -189,88 +219,91 @@ export default function PauseIcon({ size = 64, className = '', active = false, d
         Q146 216 146 190
         Z"
                 />
+
                 {/* PCB */}
-                <g className={style.pcb}>
-                    {/* Left bar */}
+                {!testing && (
+                    <g className={style.pcb}>
+                        {/* Left bar */}
 
-                    <path d="M66 72 H92" />
-                    <path d="M92 72 V94" />
-                    <path d="M92 94 H102" />
+                        <path d="M66 72 H92" />
+                        <path d="M92 72 V94" />
+                        <path d="M92 94 H102" />
 
-                    <path d="M66 184 H92" />
-                    <path d="M92 184 V162" />
-                    <path d="M92 162 H102" />
+                        <path d="M66 184 H92" />
+                        <path d="M92 184 V162" />
+                        <path d="M92 162 H102" />
 
-                    <path d="M76 128 H102" />
+                        <path d="M76 128 H102" />
 
-                    {/* Right bar */}
+                        {/* Right bar */}
 
-                    <path d="M154 72 H180" />
-                    <path d="M180 72 V94" />
-                    <path d="M180 94 H190" />
+                        <path d="M154 72 H180" />
+                        <path d="M180 72 V94" />
+                        <path d="M180 94 H190" />
 
-                    <path d="M154 184 H180" />
-                    <path d="M180 184 V162" />
-                    <path d="M180 162 H190" />
+                        <path d="M154 184 H180" />
+                        <path d="M180 184 V162" />
+                        <path d="M180 162 H190" />
 
-                    <path d="M164 128 H190" />
+                        <path d="M164 128 H190" />
 
-                    {/* Left vias */}
+                        {/* Left vias */}
 
-                    <circle
-                        cx="92"
-                        cy="72"
-                        r="4"
-                    />
-                    <circle
-                        cx="92"
-                        cy="94"
-                        r="4"
-                    />
-                    <circle
-                        cx="92"
-                        cy="162"
-                        r="4"
-                    />
-                    <circle
-                        cx="92"
-                        cy="184"
-                        r="4"
-                    />
-                    <circle
-                        cx="102"
-                        cy="128"
-                        r="4"
-                    />
+                        <circle
+                            cx="92"
+                            cy="72"
+                            r="4"
+                        />
+                        <circle
+                            cx="92"
+                            cy="94"
+                            r="4"
+                        />
+                        <circle
+                            cx="92"
+                            cy="162"
+                            r="4"
+                        />
+                        <circle
+                            cx="92"
+                            cy="184"
+                            r="4"
+                        />
+                        <circle
+                            cx="102"
+                            cy="128"
+                            r="4"
+                        />
 
-                    {/* Right vias */}
+                        {/* Right vias */}
 
-                    <circle
-                        cx="180"
-                        cy="72"
-                        r="4"
-                    />
-                    <circle
-                        cx="180"
-                        cy="94"
-                        r="4"
-                    />
-                    <circle
-                        cx="180"
-                        cy="162"
-                        r="4"
-                    />
-                    <circle
-                        cx="180"
-                        cy="184"
-                        r="4"
-                    />
-                    <circle
-                        cx="190"
-                        cy="128"
-                        r="4"
-                    />
-                </g>
+                        <circle
+                            cx="180"
+                            cy="72"
+                            r="4"
+                        />
+                        <circle
+                            cx="180"
+                            cy="94"
+                            r="4"
+                        />
+                        <circle
+                            cx="180"
+                            cy="162"
+                            r="4"
+                        />
+                        <circle
+                            cx="180"
+                            cy="184"
+                            r="4"
+                        />
+                        <circle
+                            cx="190"
+                            cy="128"
+                            r="4"
+                        />
+                    </g>
+                )}
 
                 {/* Inner rim */}
                 <path

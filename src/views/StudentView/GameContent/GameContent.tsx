@@ -53,7 +53,7 @@ export default function GameContent({
     const setProgress = useSetAtom(StoryProgressAtom);
     const setTopBar = useSetAtom(TopbarAtom);
     const setEpisodicData = useSetAtom(EpisodicDataAtom);
-    const setActiveAgent = useSetAtom(ActiveAgentAtom)
+    const setActiveAgent = useSetAtom(ActiveAgentAtom);
     const nameRef = useRef<string>('');
     const [mode, setMode] = useState<Mode>('loading'); // Waiting for level
     const store = useStore();
@@ -62,7 +62,7 @@ export default function GameContent({
         if (level !== undefined) {
             applyLoadedGame(store, level.level, false);
             setTilevis(visibleTilesTrue);
-            setControls({ ff: true, play: true, step: true, inspect: true });
+            setControls({ test: true, ff: true, play: true, step: true, inspect: true });
             setTasks(level.levelTasks ?? []);
             setMode('loaded');
             setTest('no');
@@ -85,9 +85,11 @@ export default function GameContent({
     const startLevel = () => {
         setStep(1);
         if (level) {
-        setActiveAgent(level.level.agent.activeAgent)    
-        setMode('ready')
-    } else {console.warn("No level selected to start!")}
+            setActiveAgent(level.level.agent.activeAgent);
+            setMode('ready');
+        } else {
+            console.warn('No level selected to start!');
+        }
     };
 
     if (mode !== 'ready')

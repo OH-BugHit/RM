@@ -7,6 +7,9 @@
         filter .25s ease;
 }
 
+.disabled {
+    filter: grayscale();
+}
 
 .icon:hover {
     filter: brightness(1.08);

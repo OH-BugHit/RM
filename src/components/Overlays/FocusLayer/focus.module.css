@@ -1,0 +1,14 @@
+.layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at var(--focus-x) var(--focus-y),
+            transparent 0,
+            transparent var(--focus-radius),
+            rgba(0, 0, 0, 0.1) calc(var(--focus-radius) + 120px),
+            rgba(0, 0, 0, 0.35) calc(var(--focus-radius) + 180px));
+    pointer-events: none;
+    z-index: 22;
+}

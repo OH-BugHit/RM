@@ -2,15 +2,15 @@ import style from './icon.module.css';
 
 interface PlayIconProps {
     size?: number;
-    className?: string;
+    testing?: boolean;
     active?: boolean;
     disabled?: boolean;
 }
 
-export default function PlayIcon({ size = 64, className = '', active = false, disabled }: PlayIconProps) {
+export default function PlayIcon({ size = 64, testing = false, active = false, disabled }: PlayIconProps) {
     return (
         <svg
-            className={`${style.icon} ${active ? style.active : ''} ${disabled ? style.disabled : ''} ${className}`}
+            className={`${style.icon} ${active ? style.active : ''} ${disabled ? style.disabled : ''}`}
             width={size}
             height={size}
             viewBox="0 0 256 256"
@@ -44,6 +44,36 @@ export default function PlayIcon({ size = 64, className = '', active = false, di
                     <stop
                         offset="100%"
                         stopColor="#D97B00"
+                    />
+                </linearGradient>
+
+                {/* Green material */}
+                <linearGradient
+                    id="testingGreen"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                >
+                    <stop
+                        offset="0%"
+                        stopColor="#C8FFC8"
+                    />
+                    <stop
+                        offset="22%"
+                        stopColor="#80F080"
+                    />
+                    <stop
+                        offset="55%"
+                        stopColor="#39CC39"
+                    />
+                    <stop
+                        offset="82%"
+                        stopColor="#20A820"
+                    />
+                    <stop
+                        offset="100%"
+                        stopColor="#087008"
                     />
                 </linearGradient>
 
@@ -121,7 +151,7 @@ export default function PlayIcon({ size = 64, className = '', active = false, di
             <g filter="url(#shadow)">
                 {/* Main body */}
                 <path
-                    fill="url(#gold)"
+                    fill={testing ? 'url(#testingGreen)' : 'url(#gold)'}
                     stroke="#5C3200"
                     strokeWidth="10"
                     strokeLinejoin="round"
@@ -164,53 +194,55 @@ export default function PlayIcon({ size = 64, className = '', active = false, di
         Z"
                 />
                 {/* PCB */}
-                <g className={style.pcb}>
-                    {/* Top */}
+                {!testing && (
+                    <g className={style.pcb}>
+                        {/* Top */}
 
-                    <path d="M84 82 H116" />
-                    <path d="M116 82 V104" />
-                    <path d="M116 104 H145" />
+                        <path d="M84 82 H116" />
+                        <path d="M116 82 V104" />
+                        <path d="M116 104 H145" />
 
-                    {/* Center */}
+                        {/* Center */}
 
-                    <path d="M108 126 H154" />
+                        <path d="M108 126 H154" />
 
-                    {/* Bottom */}
+                        {/* Bottom */}
 
-                    <path d="M90 166 H122" />
-                    <path d="M122 166 V148" />
-                    <path d="M122 148 H152" />
+                        <path d="M90 166 H122" />
+                        <path d="M122 166 V148" />
+                        <path d="M122 148 H152" />
 
-                    {/* Vias */}
+                        {/* Vias */}
 
-                    <circle
-                        cx="116"
-                        cy="82"
-                        r="4"
-                    />
-                    <circle
-                        cx="116"
-                        cy="104"
-                        r="4"
-                    />
+                        <circle
+                            cx="116"
+                            cy="82"
+                            r="4"
+                        />
+                        <circle
+                            cx="116"
+                            cy="104"
+                            r="4"
+                        />
 
-                    <circle
-                        cx="122"
-                        cy="148"
-                        r="4"
-                    />
-                    <circle
-                        cx="122"
-                        cy="166"
-                        r="4"
-                    />
+                        <circle
+                            cx="122"
+                            cy="148"
+                            r="4"
+                        />
+                        <circle
+                            cx="122"
+                            cy="166"
+                            r="4"
+                        />
 
-                    <circle
-                        cx="154"
-                        cy="126"
-                        r="4"
-                    />
-                </g>
+                        <circle
+                            cx="154"
+                            cy="126"
+                            r="4"
+                        />
+                    </g>
+                )}
 
                 {/* Inner rim */}
                 <path

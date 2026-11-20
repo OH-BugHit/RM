@@ -1,10 +1,10 @@
-import style from './style.module.css';
+import style from '../style.module.css';
 import { useAtomValue } from 'jotai';
-import { ActiveAgentAtom } from '../../../../atoms/state';
-import { fromSavedCell } from '../../../../utils/import';
-import { actionWorld } from '../../../../utils/levels/1basics/blevel1';
-import WorldDrawer from '../../../World/WorldDrawer';
-import { useGameScale } from '../../../../context/GameScale/useGameScale';
+import { ActiveAgentAtom } from '../../../../../atoms/state';
+import { fromSavedCell } from '../../../../../utils/import';
+import { actionWorld } from '../../../../../utils/levels/1basics/blevel1';
+import WorldDrawer from '../../../../World/WorldDrawer';
+import { useGameScale } from '../../../../../context/GameScale/useGameScale';
 
 const SIZE = 60;
 
@@ -49,7 +49,7 @@ export default function Basics6() {
                         <div
                             key={`${x}-${y}`}
                             className={style.number}
-                            style={{fontSize: `${s(46)}px`}}
+                            style={{ fontSize: `${s(46)}px` }}
                         >
                             {actionNumbers(x, y)}
                         </div>
@@ -82,7 +82,7 @@ export default function Basics6() {
                         src={agent.img}
                         height={s(SIZE)}
                         width={s(SIZE)}
-                        style={{top: `${Math.max(50,s(76))}px`, left: `${Math.max(50,s(76))}px`}}
+                        style={{ top: `${Math.max(50, s(76))}px`, left: `${Math.max(50, s(76))}px` }}
                         alt="Agent Image"
                         className={style.agent}
                     />

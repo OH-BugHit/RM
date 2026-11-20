@@ -11,11 +11,11 @@ import MainMenu from './MainMenu/MainView';
 import BuildView from '../../BuildView/BuildView';
 import StudentTournamentWrapper from './Tournament/StudentTournamentWrapper';
 import ScoreBridge from './ScoreBridge';
-import PauseLayer from '../../../components/Pause/PauseLayer';
+import PauseLayer from '../../../components/Overlays/Pause/PauseLayer';
 import Settings from '../../Settings/Settings';
 import MenuIcon from '../../../components/Buttons/MenuButton/MenuIcon';
 import { MENU_AT_TOP } from '../../../types';
-import Wait from '../../../components/Pause/Wait';
+import Wait from '../../../components/Overlays/Pause/Wait';
 
 interface StudentProps {
     serverCode?: string;

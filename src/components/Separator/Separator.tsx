@@ -15,6 +15,7 @@ const verticalSeparator = {
 interface SeparatorProps {
     vertical?: boolean;
     color?: React.CSSProperties['backgroundColor'];
+    fullHeight?: boolean;
 }
 export default function Separator({ vertical = false, color = '#ccc' }: SeparatorProps) {
     return (

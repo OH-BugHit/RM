@@ -17,11 +17,12 @@ export default function TournamentEnvironmentWrapper() {
     const setTileVisibility = useSetAtom(TileVisibilityAtom);
 
     useEffect(() => {
-        setControls({ play: true, ff: false, step: true, inspect: false });
+        setControls({ test: true, play: true, ff: false, step: true, inspect: false });
         setHudVis((old) => {
             return {
                 ...old,
                 controls: {
+                    test: true,
                     ff: false,
                     play: true,
                     inspect: false,

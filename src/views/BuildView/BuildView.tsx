@@ -51,7 +51,7 @@ export default function BuildView({ doSendEnvironment = undefined, envStateRef =
         setHudVis(hudVisBuild);
         setTileVis(visibleTilesTrue);
         setSpawnCount(1);
-        setControls({ play: true, step: true, ff: true, inspect: false });
+        setControls({ test: true, play: true, step: true, ff: true, inspect: false });
     }, [setHudVis, setTileVis, setControls, setSpawnCount]);
 
     useEffect(() => {

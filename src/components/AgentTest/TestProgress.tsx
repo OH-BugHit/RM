@@ -98,32 +98,28 @@ export default function TestProgress({ target = 3, bonus = false }: TestProgress
         }
     };
 
-    if (active === 'no') return;
-
     return (
         <>
-            {active && (
-                <>
-                    <div className={style.testButton}>
-                        <GameButton
-                            title="Test Agent"
-                            color={active === 'isRunning' ? 'warning' : 'primary'}
-                            disabled={active === 'passed'}
-                            variant="text"
-                            onClick={handleTestAgent}
-                        >
-                            <TestIcon
-                                size={s(160)}
-                                title={'TEST'}
-                                target={target}
-                                current={testWin.beatsScore}
-                                active={active === 'isRunning'}
-                                disabled={active === 'passed'}
-                            />
-                        </GameButton>
-                    </div>
-                </>
-            )}
+            <div className={style.testButton}>
+                <GameButton
+                    title="Test Agent"
+                    color={active === 'isRunning' ? 'warning' : 'primary'}
+                    disabled={active === 'passed'}
+                    variant="text"
+                    onClick={handleTestAgent}
+                >
+                    <TestIcon
+                        size={s(160)}
+                        title={'TEST'}
+                        target={target}
+                        current={testWin.beatsScore}
+                        active={active === 'isRunning'}
+                        disabled={active === 'passed'}
+                        unlocked={active !== 'no'}
+                        locked={active === 'no'}
+                    />
+                </GameButton>
+            </div>
         </>
     );
 }

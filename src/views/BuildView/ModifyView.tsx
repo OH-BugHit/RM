@@ -50,7 +50,7 @@ export default function ModifyView() {
     useEffect(() => {
         setHudVis(hudVisBuild);
         setTileVis(visibleTilesTrue);
-        setControls({ play: true, step: true, ff: true, inspect: false });
+        setControls({ test: true, play: true, step: true, ff: true, inspect: false });
     }, [setHudVis, setTileVis, setControls]);
 
     return (

@@ -23,21 +23,22 @@ export default function TrashIcon({ size = 256 }: IconProps) {
                 >
                     <stop
                         offset="0%"
-                        stopColor="#7D98A7"
+                        stopColor="#A77D7D"
                     />
                     <stop
                         offset="40%"
-                        stopColor="#BFD3DD"
+                        stopColor="#DDBFBF"
                     />
                     <stop
                         offset="75%"
-                        stopColor="#EAF6FA"
+                        stopColor="#FAEAEA"
                     />
                     <stop
                         offset="100%"
                         stopColor="#FFFFFF"
                     />
                 </linearGradient>
+
                 <linearGradient
                     id="trash-metal"
                     x1="0%"
@@ -47,21 +48,22 @@ export default function TrashIcon({ size = 256 }: IconProps) {
                 >
                     <stop
                         offset="0%"
-                        stopColor="#087A74"
+                        stopColor="#7A0808"
                     />
                     <stop
                         offset="40%"
-                        stopColor="#19B1A8"
+                        stopColor="#B11919"
                     />
                     <stop
                         offset="75%"
-                        stopColor="#B7EFEC"
+                        stopColor="#EFB7B7"
                     />
                     <stop
                         offset="100%"
                         stopColor="#FFFFFF"
                     />
                 </linearGradient>
+
                 <radialGradient
                     id="trashPanel"
                     cx="50%"
@@ -73,17 +75,18 @@ export default function TrashIcon({ size = 256 }: IconProps) {
                     />
                     <stop
                         offset="22%"
-                        stopColor="#B7EFEC"
+                        stopColor="#EFB7B7"
                     />
                     <stop
                         offset="55%"
-                        stopColor="#8EA7B3"
+                        stopColor="#B38E8E"
                     />
                     <stop
                         offset="100%"
-                        stopColor="#5ca39fab"
+                        stopColor="#A35C5C"
                     />
                 </radialGradient>
+
                 <linearGradient
                     id="trash-dark"
                     x1="0%"
@@ -93,11 +96,11 @@ export default function TrashIcon({ size = 256 }: IconProps) {
                 >
                     <stop
                         offset="0%"
-                        stopColor="#064D49"
+                        stopColor="#4D0606"
                     />
                     <stop
                         offset="100%"
-                        stopColor="#0B7771"
+                        stopColor="#770B0B"
                     />
                 </linearGradient>
 
@@ -128,7 +131,7 @@ export default function TrashIcon({ size = 256 }: IconProps) {
             </defs>
 
             {/* Outer button */}
-
+            {/*
             <circle
                 className={style.outer}
                 cx="110"
@@ -140,7 +143,7 @@ export default function TrashIcon({ size = 256 }: IconProps) {
             />
 
             {/* Inner rim */}
-
+            {/* 
             <circle
                 className={style.innerRim}
                 cx="110"
@@ -322,3 +325,94 @@ export default function TrashIcon({ size = 256 }: IconProps) {
         </svg>
     );
 }
+
+/*
+old agent colors for thras:
+<linearGradient
+                    id="trash-panel-metal"
+                    x1="0%"
+                    y1="100%"
+                    x2="0%"
+                    y2="0%"
+                >
+                    <stop
+                        offset="0%"
+                        stopColor="#7D98A7"
+                    />
+                    <stop
+                        offset="40%"
+                        stopColor="#BFD3DD"
+                    />
+                    <stop
+                        offset="75%"
+                        stopColor="#EAF6FA"
+                    />
+                    <stop
+                        offset="100%"
+                        stopColor="#FFFFFF"
+                    />
+                </linearGradient>
+                <linearGradient
+                    id="trash-metal"
+                    x1="0%"
+                    y1="100%"
+                    x2="100%"
+                    y2="0%"
+                >
+                    <stop
+                        offset="0%"
+                        stopColor="#087A74"
+                    />
+                    <stop
+                        offset="40%"
+                        stopColor="#19B1A8"
+                    />
+                    <stop
+                        offset="75%"
+                        stopColor="#B7EFEC"
+                    />
+                    <stop
+                        offset="100%"
+                        stopColor="#FFFFFF"
+                    />
+                </linearGradient>
+                <radialGradient
+                    id="trashPanel"
+                    cx="50%"
+                    cy="35%"
+                >
+                    <stop
+                        offset="0%"
+                        stopColor="#FFFFFF"
+                    />
+                    <stop
+                        offset="22%"
+                        stopColor="#B7EFEC"
+                    />
+                    <stop
+                        offset="55%"
+                        stopColor="#8EA7B3"
+                    />
+                    <stop
+                        offset="100%"
+                        stopColor="#5ca39fab"
+                    />
+                </radialGradient>
+                <linearGradient
+                    id="trash-dark"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                >
+                    <stop
+                        offset="0%"
+                        stopColor="#064D49"
+                    />
+                    <stop
+                        offset="100%"
+                        stopColor="#0B7771"
+                    />
+                </linearGradient>
+
+*/

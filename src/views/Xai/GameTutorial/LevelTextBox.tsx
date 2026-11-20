@@ -10,9 +10,10 @@ import { useEffect, useState } from 'react';
 import { LevelConfAtom } from '../../../atoms/gameState';
 import { useGameScale } from '../../../context/GameScale/useGameScale';
 import i18n from '../../../i18n';
-import AdditionalLevelMaterial from './AdditionalMaterial/MaterialContainer';
+import MaterialContainer from './AdditionalMaterial/MaterialContainer';
 import Separator from '../../../components/Separator/Separator';
 import { AnimatePresence, motion } from 'framer-motion';
+import HintNext from './AdditionalMaterial/HintNext';
 
 interface LevelTextBoxProps {
     variant?: 'wide' | 'narrow';
@@ -106,7 +107,40 @@ export default function LevelTextBox({ variant = 'wide' }: LevelTextBoxProps) {
                                         }}
                                     >
                                         <Separator />
-                                        <AdditionalLevelMaterial
+                                        <MaterialContainer
+                                            levelTextKey={level.levelText.textKey}
+                                            step={step}
+                                        />
+                                    </motion.div>
+                                </motion.div>
+                            )}
+                            {level?.levelText?.hintNext?.includes(step) && ready && (
+                                <motion.div
+                                    key={step}
+                                    initial={{ height: 0 }}
+                                    animate={{ height: 'auto' }}
+                                    exit={{ height: 0 }}
+                                    transition={{
+                                        height: {
+                                            duration: 0.3,
+                                            ease: 'easeOut',
+                                        },
+                                    }}
+                                    style={{ overflow: 'hidden' }}
+                                >
+                                    <motion.div
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{
+                                            opacity: {
+                                                duration: 0.2,
+                                                delay: 0.4,
+                                            },
+                                        }}
+                                    >
+                                        <Separator />
+                                        <HintNext
                                             levelTextKey={level.levelText.textKey}
                                             step={step}
                                         />

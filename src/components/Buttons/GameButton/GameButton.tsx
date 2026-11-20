@@ -7,6 +7,7 @@ interface Props extends PropsWithChildren {
     onClick: () => void;
     title: string;
     disabled?: boolean;
+    fullHeight?: boolean;
     variant?: OverridableStringUnion<'text' | 'outlined' | 'contained', ButtonPropsVariantOverrides> | undefined;
     color?:
         | OverridableStringUnion<
@@ -23,6 +24,7 @@ export default function GameButton({
     disabled = false,
     color = 'secondary',
     children,
+    fullHeight = false,
 }: Props) {
     return (
         <Button
@@ -32,7 +34,7 @@ export default function GameButton({
             disabled={disabled}
             color={color}
             onClick={onClick}
-            style={{ height: 44 }}
+            style={{ height: fullHeight ? '100%' : 44 }}
         >
             {children}
         </Button>

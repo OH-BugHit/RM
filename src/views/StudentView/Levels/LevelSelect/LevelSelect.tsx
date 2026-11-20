@@ -9,7 +9,7 @@ import { OpenLevelGroupsAtom } from '../../../../atoms/state';
 import { levelGroups } from '../../../../utils/levels/levelGroups';
 import { useGameScale } from '../../../../context/GameScale/useGameScale';
 import LevelItem from '../../../Teacher/TeacherContent/Levels/LevelItem';
-import Wait from '../../../../components/Pause/Wait';
+import Wait from '../../../../components/Overlays/Pause/Wait';
 import LevelPopup from '../../../../components/Dialogs/LevelPopup/LevelPopup';
 import { createBonusPathsY, createRoutePathX } from './pathUtils';
 

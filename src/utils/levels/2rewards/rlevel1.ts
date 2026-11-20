@@ -1,4 +1,4 @@
-import { EnvSettings, HUDvisibilityField, TextMode, TutorialLayout, UiControlsField } from '../../../types';
+import { EnvSettings, FocusPoint, HUDvisibilityField, TextMode, TutorialLayout, UiControlsField } from '../../../types';
 import { TaskGroup } from '../../progress';
 import { CellSave, TileDefinitionSave } from '../../types';
 
@@ -66,12 +66,23 @@ export const level2TextModes: TextMode[] = [
 ];
 
 export const additionalMaterial: number[] = [4];
+export const hintNext: number[] = [9];
 
 export const level2uiControls: UiControlsField[][] = [[], [], [], [], [], [], [], ['rewardC.time'], ['rewardC.props']];
 
 export const level2HudConfig: HUDvisibilityField[][] = [
     [],
-    ['text', 'gameBar', 'progress', 'agentCluster', 'controlBar', 'controls.play', 'controls.ff', 'controls.step'],
+    [
+        'text',
+        'gameBar',
+        'progress',
+        'agentCluster',
+        'controlBar',
+        'controls.play',
+        'controls.ff',
+        'controls.step',
+        'controls.test',
+    ],
     ['gameBarContent.picked', 'gameBarContent.score', 'gameBarContent.toBeat'],
     [],
     [],
@@ -87,6 +98,21 @@ export const level2Layout: Record<number, TutorialLayout> = {
         position: { top: '20%', left: '50%' },
         centerX: -50,
         centerY: 0,
+    },
+};
+
+export const level2Focus: Record<number, FocusPoint> = {
+    7: {
+        location: { x: 90, y: 30 },
+        radius: 420,
+    },
+    8: {
+        location: { x: 90, y: 43 },
+        radius: 420,
+    },
+    9: {
+        location: { x: 50, y: 98 },
+        radius: 60,
     },
 };
 

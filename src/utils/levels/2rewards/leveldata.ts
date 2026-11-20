@@ -4,6 +4,7 @@ import { LoadedGame } from '../../types';
 import {
     additionalMaterial,
     level2Env,
+    level2Focus,
     level2Grid,
     level2HudConfig,
     level2Layout,
@@ -39,5 +40,6 @@ export const rewardsLevel1: Level = {
         additionalMaterial: additionalMaterial,
         textKey: 'levels.2',
         layouts: level2Layout,
+        focusPoints: level2Focus,
     },
 };

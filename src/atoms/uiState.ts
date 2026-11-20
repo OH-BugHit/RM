@@ -17,6 +17,7 @@ import {
     View,
     VisibleTiles,
     LevelText,
+    FocusPoint,
 } from '../types';
 import {
     defAgentContent,
@@ -86,3 +87,5 @@ export const ClusterOpenAtom = atom<Clusters>({ agent: false, inspect: false, re
 export const MenuOpenAtom = atom<boolean>(false);
 
 export const TileSizeAtom = atom<number>(40);
+
+export const FocusAtom = atom<FocusPoint | null>(null);

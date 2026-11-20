@@ -1,7 +1,7 @@
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
 import style from './pause.module.css';
-import { configAtom } from '../../atoms/state';
+import { configAtom } from '../../../atoms/state';
 
 export default function PauseLayer() {
     const { t } = useTranslation();
