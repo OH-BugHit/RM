@@ -1,5 +1,5 @@
 import style from './level.module.css';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { OpenLevelGroupsAtom } from '../../../../atoms/state';
 import { GroupType, LevelGroup } from '../../../../types';
 import { levelGroups } from '../../../../utils/levels/levelGroups';
@@ -7,10 +7,12 @@ import GroupSelection from './GroupSelection';
 import { useState } from 'react';
 import { Button } from '@genai-fi/base';
 import { useTranslation } from 'react-i18next';
+import { featureFlagsAtom } from '../../../../atoms/featureState';
 
 export default function Levels() {
+    const { allowLearningWorld } = useAtomValue(featureFlagsAtom);
     const { t } = useTranslation();
-    const groups = levelGroups;
+    const groups = allowLearningWorld ? levelGroups : levelGroups.filter((e) => e.groupType !== 'learning');
 
     const [openGroups, setOpenGroups] = useAtom(OpenLevelGroupsAtom);
     const [selected, setSelected] = useState<LevelGroup | null>(null);

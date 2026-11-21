@@ -10,10 +10,11 @@ import {
     level1Tasks,
     level1TextModes,
     level1uiControls,
+    level4Focus,
 } from './olevel1';
 
 const level1Data: LoadedGame = {
-    manifest: { gameName: 'Observation 1', highScore: 0, saveVersion: 2, createdAt: '123', levelIndex: 4 },
+    manifest: { gameName: 'Foresight', highScore: 0, saveVersion: 2, createdAt: '123', levelIndex: 4 },
     tools: { tileDefinitions: testTileDef, background: defaultBackground },
     game: {
         world: level1Grid,
@@ -33,5 +34,10 @@ export const observationLevel1: Level = {
     levelTasks: level1Tasks,
     hudSettings: level1HudConfig,
     uiControls: level1uiControls,
-    levelText: { modes: level1TextModes, textKey: 'levels.4', layouts: level1Layout },
+    levelText: {
+        modes: level1TextModes,
+        textKey: 'levels.4',
+        layouts: level1Layout,
+        focusPoints: level4Focus,
+    },
 };

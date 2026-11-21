@@ -1,0 +1,80 @@
+.icon {
+    display: block;
+    user-select: none;
+    overflow: visible;
+}
+
+.icon.disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* Lepotila: tyylikäs musta kuutio */
+.faceTop {
+    fill: #181a20;
+    transition: fill 450ms cubic-bezier(0.22, 1, 0.36, 1), fill-opacity 450ms ease;
+}
+
+.faceLeft {
+    fill: #0d0f13;
+    transition: fill 450ms cubic-bezier(0.22, 1, 0.36, 1), fill-opacity 450ms ease;
+}
+
+.faceRight {
+    fill: #07080a;
+    transition: fill 450ms cubic-bezier(0.22, 1, 0.36, 1), fill-opacity 450ms ease;
+}
+
+.glassOverlay,
+.backEdges {
+    opacity: 0;
+    transition: opacity 450ms ease;
+}
+
+/* Sisäinen Memory-mikrosiru */
+.memoryCore {
+    opacity: 0;
+    transform-box: view-box;
+    transform-origin: 120px 119px;
+    transform: scale(0.82) translateY(5px);
+    transition:
+        opacity 380ms cubic-bezier(0.22, 1, 0.36, 1) 80ms,
+        transform 480ms cubic-bezier(0.34, 1.45, 0.64, 1) 60ms;
+}
+
+.frontEdges {
+    transition: filter 350ms ease;
+}
+
+/* Aktiivinen tila: lasinen läpinäkyvyys + Memory-ikoni esiin */
+.icon.active .faceTop {
+    fill: #bae6fd;
+    fill-opacity: 0.76;
+}
+
+.icon.active .faceLeft {
+    fill: #7dd3fc;
+    fill-opacity: 0.71;
+}
+
+.icon.active .faceRight {
+    fill: #38bdf8;
+    fill-opacity: 0.67;
+}
+
+.icon.active .glassOverlay {
+    opacity: 1;
+}
+
+.icon.active .backEdges {
+    opacity: 0.36;
+}
+
+.icon.active .memoryCore {
+    opacity: 1;
+    transform: scale(1.8) translateY(0px);
+}
+
+.icon.active .frontEdges {
+    filter: drop-shadow(0 0 4.5px rgba(255, 255, 255, 0.45));
+}

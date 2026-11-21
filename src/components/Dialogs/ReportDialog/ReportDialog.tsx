@@ -10,28 +10,41 @@ import {
     InputLabel,
     Alert,
 } from '@mui/material';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Button } from '@genai-fi/base';
 import { useTranslation } from 'react-i18next';
+import { ActiveViewAtom } from '../../../atoms/uiState';
+import { useAtom } from 'jotai';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-interface Props {
-    open: boolean;
-    onClose: () => void;
-    message?: string;
-    alertText?: string;
+interface ReportDialogProps {
+    onClose?: () => void;
 }
 
-export default function ReportDialog({ open, onClose }: Props) {
+export default function ReportDialog({ onClose = () => {} }: ReportDialogProps) {
     const { t } = useTranslation();
+    const [activeView, setActiveView] = useAtom(ActiveViewAtom);
     const textRef = useRef<HTMLInputElement>(null);
     const selectRef = useRef<HTMLSelectElement>(null);
     const [hadError, setHadError] = useState(false);
     const [hasSent, setHasSent] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const doClose = useCallback(() => {
+        onClose();
+        const params = new URLSearchParams(location.search);
+        params.delete('overlay');
+        const search = params.toString();
+
+        navigate(search ? `${location.pathname}?${search}` : location.pathname, { replace: false });
+        setActiveView((old) => ({ ...old, overlay: undefined }));
+    }, [location, navigate, setActiveView, onClose]);
 
     return (
         <Dialog
-            open={open}
-            onClose={onClose}
+            open={activeView.overlay === 'report'}
+            onClose={doClose}
             maxWidth="sm"
         >
             <DialogTitle>{t('app.report.title')}</DialogTitle>
@@ -69,7 +82,7 @@ export default function ReportDialog({ open, onClose }: Props) {
             <DialogActions>
                 <Button
                     variant="outlined"
-                    onClick={onClose}
+                    onClick={doClose}
                 >
                     {t('app.cancel')}
                 </Button>
@@ -98,7 +111,7 @@ export default function ReportDialog({ open, onClose }: Props) {
                                 .then((response) => {
                                     if (response && response.ok) {
                                         setHadError(false);
-                                        onClose();
+                                        doClose();
                                     } else {
                                         setHadError(true);
                                     }

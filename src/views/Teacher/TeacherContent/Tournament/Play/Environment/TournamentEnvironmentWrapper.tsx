@@ -17,7 +17,7 @@ export default function TournamentEnvironmentWrapper() {
     const setTileVisibility = useSetAtom(TileVisibilityAtom);
 
     useEffect(() => {
-        setControls({ test: true, play: true, ff: false, step: true, inspect: false });
+        setControls({ trash: true, test: true, play: true, ff: false, step: true, inspect: false });
         setHudVis((old) => {
             return {
                 ...old,

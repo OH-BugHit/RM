@@ -418,6 +418,7 @@ export const falseStoryProgress: StoryProgress = {
 };
 
 export const defaultControlOptions: ControlOptions = {
+    trash: true,
     test: true,
     play: true,
     ff: true,
@@ -734,6 +735,7 @@ export const playUIHelp: UiHelp = {
 };
 
 export const playControls: ControlOptions = {
+    trash: true,
     test: true,
     ff: true,
     play: true,

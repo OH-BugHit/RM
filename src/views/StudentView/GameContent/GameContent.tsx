@@ -62,7 +62,7 @@ export default function GameContent({
         if (level !== undefined) {
             applyLoadedGame(store, level.level, false);
             setTilevis(visibleTilesTrue);
-            setControls({ test: true, ff: true, play: true, step: true, inspect: true });
+            setControls({ trash: true, test: true, ff: true, play: true, step: true, inspect: true });
             setTasks(level.levelTasks ?? []);
             setMode('loaded');
             setTest('no');

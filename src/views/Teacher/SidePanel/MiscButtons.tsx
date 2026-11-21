@@ -10,7 +10,7 @@ import { ActiveViewAtom } from '../../../atoms/uiState';
 import { IconMenuItem } from '@genai-fi/base';
 import { MenuButton } from '../../../components/Buttons/MenuButton';
 import { featureFlagsAtom } from '../../../atoms/featureState';
-import ReportDialog from '../../../components/ReportDialog/ReportDialog';
+import ReportDialog from '../../../components/Dialogs/ReportDialog/ReportDialog';
 
 function MiscButtons() {
     const { t } = useTranslation();
@@ -36,7 +36,13 @@ function MiscButtons() {
                         variant="text"
                         color="inherit"
                         size={'large'}
-                        onClick={() => setShowReportDialog(true)}
+                        onClick={() => {
+                            setShowReportDialog(true);
+                            setSearchParams((prev) => {
+                                prev.set('overlay', 'report');
+                                return prev;
+                            });
+                        }}
                     >
                         <ReportIcon fontSize="large" />
                         <p className={style.guidanceTitle}>{t('app.reportProblem')}</p>
@@ -85,12 +91,7 @@ function MiscButtons() {
                 </MenuButton>
             </IconMenuItem>
             <div style={{ marginBottom: '1rem' }}></div>
-            {allowReportProblem && showReportDialog && (
-                <ReportDialog
-                    open={showReportDialog}
-                    onClose={() => setShowReportDialog(false)}
-                />
-            )}
+            {allowReportProblem && <ReportDialog onClose={() => setShowReportDialog(false)} />}
         </div>
     );
 }

@@ -5,7 +5,7 @@ import { LoadedGame } from '../../../types';
 import { level2Env, level2Grid, blevel2HudConfig, tileDef } from './rlevel1';
 
 const rewardBonus1Data: LoadedGame = {
-    manifest: { gameName: 'Reward bonus 1', highScore: 0, saveVersion: 2, createdAt: '123' },
+    manifest: { gameName: 'Bonus 2', highScore: 0, saveVersion: 2, createdAt: '123' },
     tools: { tileDefinitions: tileDef, background: defaultBackground },
     game: {
         world: level2Grid,

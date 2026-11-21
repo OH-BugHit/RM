@@ -18,7 +18,7 @@ export default function InfoRow({ title, nodes, backgroundColour, invert = false
                 className={style.rowContent}
                 style={{ background: backgroundColour }}
             >
-                {!invert ? <h3>{title}</h3> : ''} : ''
+                {!invert ? <h3>{title}</h3> : ''}
                 <div
                     className={style.images}
                     style={{ justifyContent: invert ? '' : 'right' }}

@@ -180,9 +180,17 @@ function Controls() {
                             onClick={() => setResetEnv((old) => !old)}
                             variant="text"
                             color="error"
+                            disabled={
+                                !hudVis.agent.trash || !enable?.trash || test === 'isRunning' || test === 'passed'
+                            }
                             title={t('common.controls.labels.reset')}
                         >
-                            <TrashIcon size={s(80)} />
+                            <TrashIcon
+                                size={s(80)}
+                                disabled={
+                                    !hudVis.agent.trash || !enable?.trash || test === 'isRunning' || test === 'passed'
+                                }
+                            />
                         </GameButton>
                     )}
                     <GameButton

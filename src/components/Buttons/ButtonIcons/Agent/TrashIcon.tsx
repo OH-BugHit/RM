@@ -2,12 +2,13 @@ import style from './trashIcon.module.css';
 
 interface IconProps {
     size?: number;
+    disabled?: boolean;
 }
 
-export default function TrashIcon({ size = 256 }: IconProps) {
+export default function TrashIcon({ size = 256, disabled }: IconProps) {
     return (
         <svg
-            className={style.icon}
+            className={`${style.icon}  ${disabled ? style.disabled : ''}`}
             width={size}
             height={size}
             viewBox="0 0 220 220"

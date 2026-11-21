@@ -1,3 +1,4 @@
+import style from './style.module.css';
 import { useEffect } from 'react';
 import { useTypewriter } from './useTypewriter';
 
@@ -22,18 +23,30 @@ export default function TypewriterText({ text, speed = 30, startDelay = 0, onCom
     }, [visibleCount, text, onComplete]);
 
     return (
-        <span style={{ whiteSpace: 'pre-line' }}>
-            {text.split('').map((char, index) => (
-                <span
-                    key={index}
-                    style={{
-                        visibility: index < visibleCount ? 'visible' : 'hidden',
-                    }}
-                >
-                    {char}
-                </span>
-            ))}
-        </span>
+        <>
+            <span
+                aria-hidden="true"
+                style={{ whiteSpace: 'pre-line' }}
+            >
+                {text.split('').map((char, index) => (
+                    <span
+                        key={index}
+                        style={{
+                            visibility: index < visibleCount ? 'visible' : 'hidden',
+                        }}
+                    >
+                        {char}
+                    </span>
+                ))}
+            </span>
+
+            <span
+                className={style.srOnly}
+                aria-live="polite"
+            >
+                {visibleCount >= text.length ? text : ''}
+            </span>
+        </>
     );
 }
 
@@ -64,12 +77,20 @@ export function SampleWriter({ sample, speed = 30, startDelay = 0, onComplete }:
                     const charIndex = collapsedCount + index;
 
                     return (
-                        <span
-                            key={charIndex}
-                            style={{ visibility: charIndex < visibleCount ? 'visible' : 'hidden' }}
-                        >
-                            {char}
-                        </span>
+                        <>
+                            <span
+                                key={charIndex}
+                                style={{ visibility: charIndex < visibleCount ? 'visible' : 'hidden' }}
+                            >
+                                {char}
+                            </span>
+                            <span
+                                className={style.srOnly}
+                                aria-live="polite"
+                            >
+                                {visibleCount >= sample.length ? sample : ''}
+                            </span>
+                        </>
                     );
                 })}
         </span>

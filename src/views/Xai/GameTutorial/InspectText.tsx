@@ -26,7 +26,7 @@ export default function InspectText({ mapRef, world, focusFrameRef, layerRef, ag
     const setControls = useSetAtom(ControlEnablerAtom);
     const setGame = useSetAtom(GameControlAtom);
     useEffect(() => {
-        setControls({ test: false, play: false, ff: false, step: false, inspect: false });
+        setControls({ trash: false, test: false, play: false, ff: false, step: false, inspect: false });
         setGame((old) => {
             return {
                 ...old,
@@ -53,7 +53,7 @@ export default function InspectText({ mapRef, world, focusFrameRef, layerRef, ag
 
         return () => {
             clearTimeout(timeout);
-            setControls({ test: true, play: true, ff: true, step: true, inspect: true });
+            setControls({ trash: true, test: true, play: true, ff: true, step: true, inspect: true });
         };
     }, [setControls, setGame, agentRef, focusFrameRef, layerRef, mapRef, world.statePos]);
 
@@ -82,6 +82,8 @@ export default function InspectText({ mapRef, world, focusFrameRef, layerRef, ag
             style={{ width: '550px', maxWidth: '40vw' }}
         >
             <p className={style.storyText}>
+                {' '}
+                {/**TODO: Change to use samplewriter? */}
                 <TypewriterText
                     startDelay={200}
                     speed={25}

@@ -1,4 +1,4 @@
-import { EnvSettings, HUDvisibilityField, TextMode, TutorialLayout, UiControlsField } from '../../../types';
+import { EnvSettings, FocusPoint, HUDvisibilityField, TextMode, TutorialLayout, UiControlsField } from '../../../types';
 import { TaskGroup } from '../../progress';
 import { CellSave } from '../../types';
 
@@ -19,6 +19,17 @@ export const level1TextModes: TextMode[] = [
     'textNext', // 8
     'hidden', // 9
 ];
+
+export const level4Focus: Record<number, FocusPoint> = {
+    3: {
+        location: { x: 13, y: 64 },
+        radius: 190,
+    },
+    10: {
+        location: { x: 20, y: 43 },
+        radius: 270,
+    },
+};
 
 export const level1uiControls: UiControlsField[][] = [
     [],
@@ -51,6 +62,7 @@ export const level1HudConfig: HUDvisibilityField[][] = [
     [
         'epsilon',
         'controlBar',
+        'controls.test',
         'controls.play',
         'controls.ff',
         'controls.step',

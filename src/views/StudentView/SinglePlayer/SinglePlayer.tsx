@@ -18,15 +18,22 @@ import { GameScaleProvider } from '../../../context/GameScale/GameScaleProvied';
 import Settings from '../../Settings/Settings';
 import { MENU_AT_TOP } from '../../../types';
 import ModifyView from '../../BuildView/ModifyView';
+import { featureFlagsAtom } from '../../../atoms/featureState';
+import ReportDialog from '../../../components/Dialogs/ReportDialog/ReportDialog';
 
 export default function SinglePlayer() {
     const view = useAtomValue(ActiveViewAtom);
     const setOpenGroups = useSetAtom(OpenLevelGroupsAtom);
     const agentRef = useRef<QLearningAgent>(undefined);
+    const { allowLearningWorld } = useAtomValue(featureFlagsAtom);
 
     useEffect(() => {
-        setOpenGroups(allGroups);
-    }, [setOpenGroups]);
+        const groups = allGroups;
+        if (!allowLearningWorld) {
+            groups.delete('learning');
+        }
+        setOpenGroups(groups);
+    }, [setOpenGroups, allowLearningWorld]);
 
     return (
         <GameScaleProvider>
@@ -44,6 +51,7 @@ export default function SinglePlayer() {
                 <Settings mode="student" />
                 <ViewHandler />
                 <MainMenu />
+                <ReportDialog />
                 {view.main === 'recap' && <Tutorial />}
                 {view.main === 'ownLevels' && <PlayEnv />}
                 {view.main === 'build' && <BuildView />}

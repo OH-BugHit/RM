@@ -36,7 +36,7 @@ export const level1HudConfig: HUDvisibilityField[][] = [
     [],
     [],
     [],
-    ['controlBar', 'controls.inspect', 'controls.step', 'controls.ff'],
+    ['controlBar', 'controls.inspect', 'controls.step', 'controls.ff', 'controls.test'],
     [],
 ];
 

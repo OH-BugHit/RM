@@ -22,7 +22,7 @@ export default function StudentTournamentWrapper() {
     useEffect(() => {
         setHudVis({ ...playHudVis, controls: { ...playHudVis.controls, inspect: false } });
         setTileVis(visibleTilesTrue);
-        setControls({ test: true, play: true, step: true, ff: true, inspect: true });
+        setControls({ trash: true, test: true, play: true, step: true, ff: true, inspect: true });
     }, [setHudVis, setTileVis, setControls]);
 
     useEffect(() => {

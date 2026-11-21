@@ -16,6 +16,7 @@ import Settings from '../../Settings/Settings';
 import MenuIcon from '../../../components/Buttons/MenuButton/MenuIcon';
 import { MENU_AT_TOP } from '../../../types';
 import Wait from '../../../components/Overlays/Pause/Wait';
+import ReportDialog from '../../../components/Dialogs/ReportDialog/ReportDialog';
 
 interface StudentProps {
     serverCode?: string;
@@ -73,6 +74,7 @@ export default function Student({ serverCode }: StudentProps) {
             <MenuIcon position={getMenuButtonPosition()} />
             <MessageDisplay open={showError} />
             <MainMenu mode="classroom" />
+            <ReportDialog />
             <Settings mode="student" />
             {config.phase === 'levels' && view.main === 'levels' && <Levels view={view.sub} />}
             {config.phase === 'tournamentBuild' && view.main === 'tournamentBuild' && (

@@ -17,7 +17,7 @@ import { LoadedGame } from '../../types';
 
 const level1Data: LoadedGame = {
     manifest: {
-        gameName: 'Basics 1',
+        gameName: 'Basics',
         highScore: -1,
         saveVersion: 2,
         createdAt: '123',

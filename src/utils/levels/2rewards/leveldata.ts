@@ -15,7 +15,7 @@ import {
 } from './rlevel1';
 
 const level2Data: LoadedGame = {
-    manifest: { gameName: 'Rewards 1', highScore: 4, saveVersion: 2, createdAt: '123', levelIndex: 2 },
+    manifest: { gameName: 'Rewards', highScore: 4, saveVersion: 2, createdAt: '123', levelIndex: 2 },
     tools: { tileDefinitions: rewardTileDef, background: defaultBackground },
     game: {
         world: level2Grid,

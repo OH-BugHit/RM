@@ -9,6 +9,7 @@
 
 .disabled {
     filter: grayscale();
+    cursor: not-allowed
 }
 
 .icon:hover {

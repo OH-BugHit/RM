@@ -1,0 +1,105 @@
+.helpButton {
+    position: absolute;
+    z-index: 10;
+    color: #0a4bd6;
+    background: rgba(255, 255, 255, 0.4);
+    transition: opacity 0.3s ease-out;
+    opacity: 0.7;
+}
+
+.helpButton.dark {
+    color: #a7c0f5;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.helpButton.left {
+    left: -3rem;
+    top: 0.5rem;
+}
+
+.helpButton.right {
+    right: -3rem;
+    top: 0.5rem;
+}
+
+.helpButton.top {
+    top: -3rem;
+    right: 0.5rem;
+}
+
+.helpButton.bottom {
+    bottom: -3rem;
+    right: 0.5rem;
+}
+
+.helpButtonInplace {
+    color: #0a4bd6;
+    margin-left: 8px;
+    transition: opacity 0.3s ease-out;
+    opacity: 0.7;
+}
+
+.helpButtonInplace.dark {
+    opacity: 0.4;
+    color: #a7c0f5;
+}
+
+.helpButton:hover {
+    background: white;
+}
+
+.helpButton.dark:hover {
+    background: black;
+}
+
+.container {
+    position: relative;
+    border-radius: 6px;
+    width: min-content;
+}
+
+.container:hover .helpButton {
+    opacity: 1;
+}
+
+.helpButton:focus {
+    opacity: 1;
+    background: white;
+}
+
+.helpButton.dark:focus {
+    background: black;
+}
+
+.inplaceContainer {
+    display: flex;
+    align-items: center;
+}
+
+.inplaceContainer:hover .helpButtonInplace {
+    opacity: 1;
+}
+
+.helpButtonInplace:focus {
+    opacity: 1;
+    background: white;
+}
+
+.helpButtonInplace.dark:focus {
+    background: black;
+}
+
+.active {
+    box-shadow: 0 0 10px #0a4bd6;
+}
+
+.helpButtonInside {
+    left: 1rem;
+}
+
+.closeButton {
+    margin-top: 0.5rem;
+    align-self: flex-end;
+    font-size: 0.75rem;
+    padding: 3px 8px;
+}

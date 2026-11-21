@@ -2,6 +2,9 @@ import { atom } from 'jotai';
 
 interface FeatureFlags {
     allowReportProblem?: boolean;
+    allowBlackBox?: boolean;
+    allowLearningWorld?: boolean;
+    allowSingleplayerReportProblem: boolean;
 }
 
 export const featureFlagsAtom = atom(async () => {
@@ -17,6 +20,9 @@ export const featureFlagsAtom = atom(async () => {
         console.warn('Error fetching flags', e);
         return {
             allowReportProblem: false,
+            allowBlackBox: false,
+            allowLearningWorld: false,
+            allowSingleplayerReportProblem: false,
         };
     }
 });

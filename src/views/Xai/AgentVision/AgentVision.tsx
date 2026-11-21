@@ -5,6 +5,7 @@ import { ActiveAgentAtom } from '../../../atoms/state';
 import ObservationCanvas from '../../Observation/ObservationCanvas';
 import { useGameScale } from '../../../context/GameScale/useGameScale';
 import { useTranslation } from 'react-i18next';
+import ObservationBox from '../../../utils/BlackBoxContent/ObservationBox';
 
 interface AgentVisionProps {
     agentRef: React.RefObject<QLearningAgent | undefined>;
@@ -17,6 +18,9 @@ export default function AgentVision({ agentRef }: AgentVisionProps) {
     return (
         <div className={style.agentVisionWrapper}>
             <h3 style={{ margin: '0.5rem', justifySelf: 'center' }}>{t('hud.agentVision.observation.title')}</h3>
+            <div className={style.obsBox}>
+                <ObservationBox size={s(50)} />
+            </div>
             {agentRef.current && (
                 <ObservationCanvas
                     agentRef={agentRef}

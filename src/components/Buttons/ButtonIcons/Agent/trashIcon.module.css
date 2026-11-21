@@ -40,3 +40,8 @@
 .icon:hover .trashHighlight {
     stroke: #FFFFFF;
 }
+
+.disabled {
+    filter: grayscale(100%) brightness(1);
+    cursor: not-allowed
+}

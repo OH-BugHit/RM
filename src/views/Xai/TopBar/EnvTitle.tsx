@@ -1,7 +1,10 @@
 import { useAtomValue } from 'jotai';
 import { ActiveEnvironmentAtom } from '../../../atoms/state';
-import TypewriterText from '../../../components/Typewriter/TypeWriterText';
+import { SampleWriter } from '../../../components/Typewriter/TypeWriterText';
 import style from './style.module.css';
+
+// Not used, maybe later again to type environment on start?
+// Changed to use SampleWriter, without testing, test.
 export default function EnvTitle() {
     const environment = useAtomValue(ActiveEnvironmentAtom);
 
@@ -17,10 +20,10 @@ export default function EnvTitle() {
             }}
         >
             {
-                <TypewriterText
+                <SampleWriter
                     startDelay={1000}
                     speed={60}
-                    text={environment.name}
+                    sample={environment.name}
                 />
             }
         </h1>

@@ -13,7 +13,7 @@ import {
 } from './olevel1';
 
 const level1Data: LoadedGame = {
-    manifest: { gameName: 'Learning 1', highScore: 0, saveVersion: 2, createdAt: '123', levelIndex: 4 },
+    manifest: { gameName: 'Learning', highScore: 0, saveVersion: 2, createdAt: '123', levelIndex: 4 },
     tools: { tileDefinitions: testTileDef, background: defaultBackground },
     game: {
         world: level1Grid,
