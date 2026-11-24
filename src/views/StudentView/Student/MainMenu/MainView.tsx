@@ -7,6 +7,7 @@ import { useGameScale } from '../../../../context/GameScale/useGameScale';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ReportIcon from '@mui/icons-material/Report';
 import HomeIcon from '@mui/icons-material/Home';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { Dialog, IconButton } from '@mui/material';
 import { useAtomValue } from 'jotai';
 import { ActiveViewAtom } from '../../../../atoms/uiState';
@@ -14,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { featureFlagsAtom } from '../../../../atoms/featureState';
 
 interface MainMenuProps {
-    mode?: 'single' | 'classroom';
+    mode?: 'single' | 'classroom' | 'singleTournament';
 }
 
 export default function MainMenu({ mode = 'single' }: MainMenuProps) {
@@ -75,6 +76,16 @@ export default function MainMenu({ mode = 'single' }: MainMenuProps) {
                     )}
 
                     <div className={style.secondaryActions}>
+                        {mode === 'singleTournament' && (
+                            <IconButton
+                                sx={{ height: `${s(60)}` }}
+                                title={t('settings.titles.leave')}
+                                color="primary"
+                                onClick={() => navigate('/student/single/main?view=main&overlay=menu')}
+                            >
+                                <LogoutIcon fontSize={scale < 0.5 ? 'medium' : 'large'} />
+                            </IconButton>
+                        )}
                         <IconButton
                             sx={{ height: `${s(60)}` }}
                             title={t('settings.titles.settings')}
@@ -87,16 +98,17 @@ export default function MainMenu({ mode = 'single' }: MainMenuProps) {
                         >
                             <SettingsIcon fontSize={scale < 0.5 ? 'medium' : 'large'} />
                         </IconButton>
-                        {mode === 'single' && (
-                            <IconButton
-                                sx={{ height: `${s(60)}` }}
-                                title={t('tutorial.actions.goStory')}
-                                color="primary"
-                                onClick={() => onSelect('frontpage')}
-                            >
-                                <HomeIcon fontSize={scale < 0.5 ? 'medium' : 'large'} />
-                            </IconButton>
-                        )}
+                        {mode === 'single' ||
+                            (mode === 'singleTournament' && (
+                                <IconButton
+                                    sx={{ height: `${s(60)}` }}
+                                    title={t('tutorial.actions.goStory')}
+                                    color="primary"
+                                    onClick={() => onSelect('frontpage')}
+                                >
+                                    <HomeIcon fontSize={scale < 0.5 ? 'medium' : 'large'} />
+                                </IconButton>
+                            ))}
                         {allowSingleplayerReportProblem && allowReportProblem && (
                             <IconButton
                                 sx={{ height: `${s(60)}` }}

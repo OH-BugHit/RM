@@ -3,19 +3,27 @@ import style from './menuIcon.module.css';
 import { BuildCAtom, MenuOpenAtom } from '../../../atoms/uiState';
 import { useAtom, useAtomValue } from 'jotai';
 import { useGameScale } from '../../../context/GameScale/useGameScale';
+import { PropsWithChildren } from 'react';
 
-interface MenuIconProps {
+interface MenuIconProps extends PropsWithChildren {
     size?: number;
     position?: 'right' | 'top-right';
+    single?: boolean;
 }
 
-export default function MenuIcon({ size = 84, position = 'right' }: MenuIconProps) {
+export default function MenuIcon({ children, size = 84, position = 'right', single = false }: MenuIconProps) {
     const { s } = useGameScale();
     const { goToView } = useViewNavigation();
     const [isOpen] = useAtom(MenuOpenAtom);
     const buildTools = useAtomValue(BuildCAtom);
 
     const onClick = () => {
+        if (single) {
+            goToView({
+                overlay: !isOpen ? 'tournamentMenu' : null,
+            });
+            return;
+        }
         goToView({
             overlay: !isOpen ? 'menu' : null,
         });
@@ -23,7 +31,7 @@ export default function MenuIcon({ size = 84, position = 'right' }: MenuIconProp
     return (
         <div
             className={`${style.menuButtonContainer} ${buildTools.tools ? style.hidden : ''}`}
-            style={{ top: position === 'right' ? '50%' : '0px' }}
+            style={{ top: position === 'right' ? '50%' : '0px', transform: children ? 'translateY(-33%)' : '' }}
         >
             <button
                 className={`${style.menuButton} ${isOpen ? style.isOpen : ''} `}
@@ -63,6 +71,7 @@ export default function MenuIcon({ size = 84, position = 'right' }: MenuIconProp
                     />
                 </svg>
             </button>
+            {children}
         </div>
     );
 }

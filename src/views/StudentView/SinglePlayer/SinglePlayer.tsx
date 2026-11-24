@@ -9,7 +9,6 @@ import ViewHandler from '../../../components/ViewHandler';
 import { allGroups } from '../../../utils/levels/levelGroups';
 import MenuIcon from '../../../components/Buttons/MenuButton/MenuIcon';
 import Tutorial from '../../Tutorial/Tutorial';
-import PlayEnv from '../../PlayEnv/PlayEnv';
 import BuildView from '../../BuildView/BuildView';
 import GameView from '../../GameView/GameView';
 import { QLearningAgent } from '../../../components/agents/rlAgentQ';
@@ -20,6 +19,7 @@ import { MENU_AT_TOP } from '../../../types';
 import ModifyView from '../../BuildView/ModifyView';
 import { featureFlagsAtom } from '../../../atoms/featureState';
 import ReportDialog from '../../../components/Dialogs/ReportDialog/ReportDialog';
+import Creative from '../../Creative/Creative';
 
 export default function SinglePlayer() {
     const view = useAtomValue(ActiveViewAtom);
@@ -53,7 +53,7 @@ export default function SinglePlayer() {
                 <MainMenu />
                 <ReportDialog />
                 {view.main === 'recap' && <Tutorial />}
-                {view.main === 'ownLevels' && <PlayEnv />}
+                {view.main === 'ownLevels' && <Creative />}
                 {view.main === 'build' && <BuildView />}
                 {view.main === 'modify' && <ModifyView />}
                 {view.main === 'play' && <GameView agentRef={agentRef} />}

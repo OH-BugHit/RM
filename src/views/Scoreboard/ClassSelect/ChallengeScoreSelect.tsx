@@ -30,7 +30,6 @@ export default function ChallengeScoreSelect({ openResult, setOpenResult }: Prop
             className={style.classSelect}
             role="group"
             aria-label="Challenge selection"
-            style={{ width: '300px' }}
         >
             <FormControl
                 fullWidth

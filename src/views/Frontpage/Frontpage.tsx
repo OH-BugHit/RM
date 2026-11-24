@@ -1,26 +1,29 @@
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import Footer from '../Footer/Footer';
-import { Button } from '@genai-fi/base';
 import GitHubIcon from '@mui/icons-material/GitHub';
 /*import SchoolIcon from '@mui/icons-material/School';*/
-import { TextField } from '@mui/material';
 import LinkButton from '../../components/Buttons/LinkButton/LinkButton';
 import Phase from './Phase';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useGameScale } from '../../context/GameScale/useGameScale';
-import NextArrowIcon from '../../components/Buttons/ButtonIcons/OtherIcons/NextArrowIcon';
+import StartBox from '../../components/StartBox/StartBox';
 
 export default function Frontpage() {
-    const { s } = useGameScale();
     const { t } = useTranslation();
     const [inputCode, setInputCode] = useState<string>('');
     const [mode, setMode] = useState<'multi' | 'unset'>('unset');
     const navigate = useNavigate();
     const [disabled, setDisabled] = useState<boolean>(false);
 
+    const onReady = (action: 'create' | 'join') => {
+        if (action === 'create') {
+            toTeacher();
+            return;
+        }
+        toStudent();
+    };
     const toStudent = () => {
         setDisabled(true);
         navigate(`/student/${inputCode}/main?view=join`);
@@ -80,61 +83,14 @@ export default function Frontpage() {
                     className={style.selectGroup}
                 >
                     {mode === 'multi' && (
-                        <motion.div
-                            className={style.startBox}
-                            style={{ gap: `${s(2)}rem` }}
-                            initial="hidden"
-                            key="classroomLogin"
-                            animate="visible"
-                            exit="exit"
-                            variants={itemVariants}
-                            transition={{ duration: 0.25 }}
-                        >
-                            <TextField
-                                title={t('frontpage.labels.enterCode')}
-                                label={t('frontpage.labels.enterCode')}
-                                type="number"
-                                key="studentInput"
-                                className={style.codeInput}
-                                value={inputCode}
-                                fullWidth
-                                onChange={(e) => setInputCode(e.target.value)}
-                                onClick={(e) => e.stopPropagation()}
-                            />
-                            <Button
-                                key="loginSession"
-                                sx={{ minWidth: '140px' }}
-                                onClick={toStudent}
-                                variant="contained"
-                                disabled={inputCode.length < 5 || disabled}
-                            >
-                                {t('frontpage.actions.start')}
-                            </Button>
-
-                            <Button
-                                key="createNewSession"
-                                sx={{ minWidth: '140px' }}
-                                onClick={toTeacher}
-                                variant="outlined"
-                                title={t('frontpage.actions.createNew')}
-                                disabled={disabled}
-                            >
-                                {t('frontpage.actions.createNew')}
-                            </Button>
-                            <Button
-                                style={{
-                                    scale: '-1',
-                                    transform: `translateY(-25%)`,
-                                }}
-                                onClick={() => setMode('unset')}
-                                key="goBackToMode"
-                            >
-                                <NextArrowIcon
-                                    size={40}
-                                    ready={true}
-                                />
-                            </Button>
-                        </motion.div>
+                        <StartBox
+                            onReady={onReady}
+                            type={'classroom'}
+                            inputCode={inputCode}
+                            setInputCode={setInputCode}
+                            disabled={disabled}
+                            setMode={setMode}
+                        />
                     )}
 
                     {mode === 'unset' && (

@@ -444,7 +444,15 @@ export type GroupType = 'basic' | 'rewards' | 'exploreExploit' | 'observation' |
 
 export type MainView = 'frontpage' | TeacherViews | StudentViews | 'null';
 export type SubView = 'playLevel' | 'agent' | 'environment' | 'rewards' | 'interaction' | 'selectChallenge' | null;
-export type Overlay = 'report' | 'import' | 'share' | 'menu' | 'backgroundDialog' | TeacherDialogs | null;
+export type Overlay =
+    | 'tournamentMenu'
+    | 'report'
+    | 'import'
+    | 'share'
+    | 'menu'
+    | 'backgroundDialog'
+    | TeacherDialogs
+    | null;
 
 export const MENU_AT_TOP: MainView[] = ['levels', 'recap', 'ownLevels', 'tournamentPlay'];
 
@@ -540,6 +548,13 @@ export type Settings = {
  * Maps a student ID to their scores (K = student ID, V = StudentScores)
  */
 export type StudentData = { students: Map<string, StudentScores> };
+
+export type SerializableStudentData = {
+    students: Array<{
+        studentId: string;
+        scores: Record<string, StudentScore>;
+    }>;
+};
 
 /**
  * Maps a student ID to their created level (K = student ID, V = level)

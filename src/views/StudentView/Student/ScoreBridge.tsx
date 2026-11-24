@@ -1,11 +1,11 @@
 import { useAtomValue, useStore } from 'jotai';
-import { useRewardProtocol } from '../../../services/StudentProtocol';
+import { usePlayerProtocol } from '../../../services/PlayerProtocol';
 import { studentResultsAtom, usernameAtom } from '../../../atoms/state';
 import { useEffect, useRef } from 'react';
 import { StudentScores } from '../../../types';
 
 export default function ScoreBridge() {
-    const { doSendScore } = useRewardProtocol();
+    const { doSendScore } = usePlayerProtocol();
     const store = useStore();
     const scores = useAtomValue(studentResultsAtom);
 

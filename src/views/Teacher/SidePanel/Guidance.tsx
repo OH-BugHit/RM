@@ -10,7 +10,11 @@ import { configAtom, gamePhaseAtom } from '../../../atoms/state';
 import { GamePhase, TeacherDialogs, TeacherViews } from '../../../types';
 import { useViewNavigation } from '../../../hooks/useViewNavigation';
 
-export default function Guidance() {
+interface GuidanceProps {
+    single?: boolean; // For singleplayer tournaments
+}
+
+export default function Guidance({ single = false }: GuidanceProps) {
     const { t } = useTranslation('translation', { keyPrefix: 'sidePanel' });
     const { goToView } = useViewNavigation();
     const [currentSelected, setCurrentSelected] = useAtom(gamePhaseAtom);
@@ -32,13 +36,18 @@ export default function Guidance() {
         });
     }, [currentSelected]);
 
-    const data: { index: number; title: string; view: TeacherViews }[] = [
-        { index: 1, title: t('teacher.1.title'), view: 'users' },
-        { index: 2, title: t('teacher.2.title'), view: 'levels' },
-        { index: 3, title: t('teacher.3.title'), view: 'tournamentBuild' },
-        { index: 4, title: t('teacher.4.title'), view: 'tournamentPlay' },
-        { index: 5, title: t('teacher.5.title'), view: 'recap' },
-    ];
+    const data: { index: number; title: string; view: TeacherViews }[] = single
+        ? [
+              { index: 1, title: t('teacher.1.title'), view: 'users' },
+              { index: 2, title: t('teacher.4.title'), view: 'tournamentPlay' },
+          ]
+        : [
+              { index: 1, title: t('teacher.1.title'), view: 'users' },
+              { index: 2, title: t('teacher.2.title'), view: 'levels' },
+              { index: 3, title: t('teacher.3.title'), view: 'tournamentBuild' },
+              { index: 4, title: t('teacher.4.title'), view: 'tournamentPlay' },
+              { index: 5, title: t('teacher.5.title'), view: 'recap' },
+          ];
 
     // Sync URL view parameter to currentSelected step
     useEffect(() => {
@@ -73,6 +82,15 @@ export default function Guidance() {
             }
 
             case 2: {
+                if (single) {
+                    goToView({
+                        main: 'tournamentPlay',
+                        sub: null,
+                        overlay: null,
+                    });
+                    phase = 'tournamentPlay';
+                    break;
+                }
                 goToView({
                     main: 'levels',
                     sub: null,
@@ -166,7 +184,7 @@ export default function Guidance() {
                 </MenuList>
             </div>
 
-            <ActionButtons />
+            <ActionButtons single={single} />
             <div style={{ flexGrow: 1 }}></div>
             <MiscButtons />
         </nav>

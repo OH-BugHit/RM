@@ -10,12 +10,14 @@ import { ActiveViewAtom } from '../../../atoms/uiState';
 import { renderWorldPreview } from '../../EnvironmentRender/renderWorldPreview';
 import { loadSavePreview } from '../../../utils/import';
 import LevelPreview from '../LevelPreview/LevelPreview';
+import { Overlay } from '../../../types';
 
 interface ImportDialogProps {
     onImport: (file: File) => Promise<void>;
+    returnOverlay?: Overlay;
 }
 
-function GameDialog({ onImport }: ImportDialogProps) {
+function GameDialog({ onImport, returnOverlay }: ImportDialogProps) {
     const { t } = useTranslation();
     const [loading, setLoading] = useState(false);
 
@@ -36,14 +38,18 @@ function GameDialog({ onImport }: ImportDialogProps) {
 
     const doClose = useCallback(() => {
         const params = new URLSearchParams(location.search);
-        params.delete('overlay');
+        if (returnOverlay) {
+            params.set('overlay', returnOverlay);
+        } else {
+            params.delete('overlay');
+        }
         const search = params.toString();
 
         navigate(search ? `${location.pathname}?${search}` : location.pathname, { replace: false });
-        setActiveView((old) => ({ ...old, overlay: undefined }));
+        setActiveView((old) => ({ ...old, overlay: returnOverlay }));
 
         resetSelection();
-    }, [location, navigate, resetSelection, setActiveView]);
+    }, [location, navigate, resetSelection, returnOverlay, setActiveView]);
 
     const openFile = useCallback(() => {
         fileInputRef.current?.click();

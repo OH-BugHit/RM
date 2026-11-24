@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { configAtom } from '../../../atoms/state';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export default function ActionButtons() {
+export default function ActionButtons({ single = false }: { single?: boolean }) {
     const [config, setConfig] = useAtom(configAtom);
     const { t } = useTranslation();
     const location = useLocation();
@@ -36,16 +36,18 @@ export default function ActionButtons() {
     };
     return (
         <div className={style.actionContainer}>
-            <Tooltip title={config.pause ? t('sidePanel.actions.enableApp') : t('sidePanel.actions.disableApp')}>
-                <IconButton
-                    onClick={() => doClick('pause')}
-                    data-testid="action-button"
-                    color={'secondary'}
-                    aria-label={config.pause ? t('sidePanel.actions.enableApp') : t('sidePanel.actions.disableApp')}
-                >
-                    {config.pause ? <PlayArrowIcon /> : <PauseIcon />}
-                </IconButton>
-            </Tooltip>
+            {!single && (
+                <Tooltip title={config.pause ? t('sidePanel.actions.enableApp') : t('sidePanel.actions.disableApp')}>
+                    <IconButton
+                        onClick={() => doClick('pause')}
+                        data-testid="action-button"
+                        color={'secondary'}
+                        aria-label={config.pause ? t('sidePanel.actions.enableApp') : t('sidePanel.actions.disableApp')}
+                    >
+                        {config.pause ? <PlayArrowIcon /> : <PauseIcon />}
+                    </IconButton>
+                </Tooltip>
+            )}
 
             <Tooltip title={t('sidePanel.actions.connectUsers')}>
                 <IconButton

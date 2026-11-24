@@ -1,0 +1,41 @@
+.teacher {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    background: #5585b7
+}
+
+.teacher h1 {
+    color: rgb(0, 0, 0)
+}
+
+.teacher h3 {
+    color: rgb(0, 0, 0)
+}
+
+.content {
+    flex-grow: 1;
+}
+
+.controlLayer {
+    position: absolute;
+    width: -webkit-fill-available;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 11;
+}
+
+.controlLayer>* {
+    pointer-events: auto;
+    /* klikit takaisin */
+    margin-bottom: 1rem;
+}
+
+.serverProtocolContainer {
+    position: absolute;
+    right: 1.5rem;
+    top: 1rem;
+}

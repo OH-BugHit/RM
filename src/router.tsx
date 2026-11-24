@@ -21,7 +21,7 @@ const routes = createRoutesFromElements(
         />
         <Route
             path="/import"
-            lazy={() => import('./views/PlayEnv/PlayEnv').then((mod) => ({ element: <mod.default /> }))}
+            lazy={() => import('./views/Creative/PlayEnv/PlayEnv').then((mod) => ({ element: <mod.default /> }))}
         />
         <Route
             path="/student"
@@ -39,6 +39,22 @@ const routes = createRoutesFromElements(
             path="/student/:serverCode/main"
             lazy={() =>
                 import('./views/StudentView/Student/StudentWrapper').then((mod) => ({ element: <mod.default /> }))
+            }
+        />
+        <Route
+            path="/host/"
+            lazy={() =>
+                import('./views/Creative/SinglePlayerTournament/Host/HostWrapper').then((mod) => ({
+                    element: <mod.default />,
+                }))
+            }
+        />
+        <Route
+            path="/join/:serverCode/main"
+            lazy={() =>
+                import('./views/Creative/SinglePlayerTournament/Play/PlayerWrapper').then((mod) => ({
+                    element: <mod.default />,
+                }))
             }
         />
         <Route

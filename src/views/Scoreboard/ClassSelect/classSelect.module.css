@@ -3,14 +3,18 @@
 .classSelect {
     display: flex;
     flex-direction: column;
-    justify-content: left;
     gap: 1.5rem;
-    height: 100%;
     width: max-content;
-    justify-content: flex-start;
     overflow-x: auto;
-    padding-top: 1rem;
-    overflow: hidden;
+    overflow: visible;
+    position: sticky;
+    width: 80%;
+    max-width: 300px;
+    top: 0;
+    z-index: 1;
+    flex-shrink: 0;
+    border-radius: 0.75rem;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.12);
 }
 
 .termItem {

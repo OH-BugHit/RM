@@ -8,11 +8,8 @@ import AgentBridge from './AgentBridge';
 import Controls from '../../../../../Controls/Controls';
 import { ControlEnablerAtom, HUDvisAtom, TileVisibilityAtom } from '../../../../../../atoms/uiState';
 import { visibleTilesTrue } from '../../../../../../utils/defaults';
-import { Button } from '@mui/material';
-import { useViewNavigation } from '../../../../../../hooks/useViewNavigation';
 
 export default function TournamentEnvironmentWrapper() {
-    const { goToView } = useViewNavigation();
     const agentsRef = useRef<QPolicyAgent[]>([]);
     const game = useAtomValue(TournamentGameAtom);
     const setControls = useSetAtom(ControlEnablerAtom);
@@ -37,21 +34,12 @@ export default function TournamentEnvironmentWrapper() {
     }, [setControls, setTileVisibility, setHudVis]);
 
     if (!game?.game.world) {
-        return <p>select game</p>;
+        return;
     }
 
     return (
         <div className={style.environmentWrap}>
             <h1>{game.manifest.gameName}</h1>
-            <div className={style.buttons}>
-                <Button
-                    onClick={() => goToView({ sub: 'selectChallenge' })}
-                    style={{ borderRadius: '2rem' }}
-                    variant="contained"
-                >
-                    Select Challenge
-                </Button>
-            </div>
             <AgentBridge agentsRef={agentsRef} />
             <div className={style.env}>
                 <TournamentEnvironment

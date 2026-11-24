@@ -1,5 +1,5 @@
 import { BuiltinEvent, PeerEvent } from '@genai-fi/base';
-import { GroupType, Level, RegisterData, RewardConfig, ScoreData, Username } from '../types';
+import { GroupType, Level, RegisterData, RewardConfig, ScoreData, SerializableStudentData, Username } from '../types';
 import { AgentData, LevelData } from '../utils/types';
 
 export interface ConfigurationEvent extends PeerEvent {
@@ -70,7 +70,13 @@ export interface AgentTransferEvent extends PeerEvent {
     data: AgentData;
 }
 
+export interface LeaderboardTransferEvent extends PeerEvent {
+    event: 'leaderboardTrasfer';
+    data: SerializableStudentData;
+}
+
 export type EventProtocol =
+    | LeaderboardTransferEvent
     | AgentTransferEvent
     | EnvironmentTransferEvent
     | LevelGroupEvent

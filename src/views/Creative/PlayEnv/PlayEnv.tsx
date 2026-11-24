@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
-import style from './style.module.css';
-import GameDialog from '../../components/Dialogs/GameImport/GameDialog';
+import style from './playEnv.module.css';
+import GameDialog from '../../../components/Dialogs/GameImport/GameDialog';
 import AddIcon from '@mui/icons-material/Add';
-import SelectorItem from '../Story/Selectors/SelectorItem';
+import SelectorItem from '../../Story/Selectors/SelectorItem';
 import { useSetAtom, useStore } from 'jotai';
 import {
     ControlEnablerAtom,
@@ -12,16 +12,16 @@ import {
     TilePropsAtom,
     TileVisibilityAtom,
     UiHelpAtom,
-} from '../../atoms/uiState';
-import { applyLoadedGame, readSavedFile } from '../../utils/import';
+} from '../../../atoms/uiState';
+import { applyLoadedGame, readSavedFile } from '../../../utils/import';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
-import { playControls, playHudVis, playStoryProgress, playUIHelp, playVisibleTiles } from '../../utils/defaults';
-import { ActiveEnvironmentAtom } from '../../atoms/state';
-import { useViewNavigation } from '../../hooks/useViewNavigation';
+import { playControls, playHudVis, playStoryProgress, playUIHelp, playVisibleTiles } from '../../../utils/defaults';
+import { ActiveEnvironmentAtom } from '../../../atoms/state';
+import { useViewNavigation } from '../../../hooks/useViewNavigation';
 import { useState } from 'react';
-import { renderWorldPreview } from '../../components/EnvironmentRender/renderWorldPreview';
-import LevelPreview from '../../components/Dialogs/LevelPreview/LevelPreview';
-import { useGameScale } from '../../context/GameScale/useGameScale';
+import { renderWorldPreview } from '../../../components/EnvironmentRender/renderWorldPreview';
+import LevelPreview from '../../../components/Dialogs/LevelPreview/LevelPreview';
+import { useGameScale } from '../../../context/GameScale/useGameScale';
 import { Button } from '@genai-fi/base';
 
 export default function PlayEnv() {
@@ -59,7 +59,6 @@ export default function PlayEnv() {
     return (
         <main className={style.siteContainer}>
             <GameDialog onImport={handleImport} />
-            <h1>{t('playEnv.load.title')}</h1>
             <div className={style.selectGroup}>
                 <div className={style.import}>
                     <SelectorItem

@@ -15,20 +15,13 @@ import {
     StudentGameBlobs,
     StudentGames,
     StudentScores,
-    TeacherControl,
     TopThreeResults,
     TournamentAgents,
     UserInfo,
     UserItemData,
     Username,
 } from '../types';
-import {
-    defaultAgentSettings,
-    defaultControls,
-    defaultAudioSettings,
-    testTeacherControls,
-    defaultAgents,
-} from '../utils/defaults';
+import { defaultAgentSettings, defaultControls, defaultAudioSettings, defaultAgents } from '../utils/defaults';
 import { LoadedGame } from '../utils/types';
 
 export const sessionCodeAtom = atom<string>('');
@@ -148,13 +141,13 @@ export const OpenLevelGroupsAtom = atom<Set<GroupType>>(new Set<GroupType>());
 
 export const TournamentFileAtom = atom<Blob | null>(null);
 
+export const sentTournamentWorldAtom = atom(false);
+
 export const TournamentGameAtom = atom<LoadedGame | null>(null);
 //
 // ^^^^
 // New stuff
 //
-
-export const GameModeAtom = atom<'single' | 'student'>('single');
 
 export const AudioSettingsAtom = atom<SoundSettings>(defaultAudioSettings);
 
@@ -172,5 +165,3 @@ export const ImportedAgentImgAtom = atom<string | undefined>(undefined);
 
 export const UpdateSpritesPulseAtom = atom<boolean>(true);
 export const UpdateWorldPulseAtom = atom<boolean>(true);
-
-export const TeacherControlAtom = atom<TeacherControl>(testTeacherControls);

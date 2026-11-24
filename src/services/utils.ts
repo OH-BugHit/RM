@@ -1,5 +1,5 @@
 import { SetStateAction } from 'jotai';
-import { StudentData, TopThreeResults } from '../types';
+import { SerializableStudentData, StudentData, TopThreeResults } from '../types';
 
 interface TopScoreProps {
     levelName: string;
@@ -9,6 +9,29 @@ interface TopScoreProps {
     setTopScores: (args_0: SetStateAction<TopThreeResults>) => void;
     studentData?: StudentData;
 }
+
+export function serializeStudentData(data: StudentData): SerializableStudentData {
+    return {
+        students: [...data.students].map(([studentId, studentScores]) => ({
+            studentId,
+            scores: Object.fromEntries(
+                [...studentScores.data].map(([levelName, score]) => [levelName, score])
+            ),
+        })),
+    };
+}
+
+export function deserializeStudentData(data: SerializableStudentData): StudentData {
+    return {
+        students: new Map(
+            data.students.map(({ studentId, scores }) => [
+                studentId,
+                { data: new Map(Object.entries(scores)) },
+            ])
+        ),
+    };
+}
+
 // Utility to clone a canvas and its contents
 export function updateTopScores({ levelName, studentId, score, topScores, setTopScores, studentData }: TopScoreProps) {
     const currentTop = topScores.scores.get(levelName);

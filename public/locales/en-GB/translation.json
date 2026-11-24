@@ -261,6 +261,7 @@
             "openFileExplorer": "Select game file from your files",
             "openImageFileExplorer": "Select image from your files",
             "playLoaded": "Loaded game",
+            "sendWorld": "Send your world to the host",
             "setImage": "Create"
         },
         "messages": {
@@ -268,7 +269,8 @@
             "selectBackground": "Select background used for transparent tiles such as grass or dust.",
             "selectGame": "Upload game file",
             "selectTile": "Select a image to represent these tiles.",
-            "selectType": "Select the type of the tile."
+            "selectType": "Select the type of the tile.",
+            "worldSent": "Your world has been sent to the host."
         },
         "titles": {
             "agent": "Choose image for agent",
@@ -499,7 +501,7 @@
     },
     "playEnv": {
         "load": {
-            "title": "Play or modify ready game"
+            "title": "Creative"
         }
     },
     "progress": {
@@ -556,6 +558,7 @@
         },
         "titles": {
             "general": "General",
+            "leave": "Leave",
             "settings": "Settings",
             "userGridSettings": "Grid view settings"
         }
@@ -584,6 +587,16 @@
             "exit": "Quit session (All data is removed)",
             "exitShort": "Quit session",
             "settings": "Settings"
+        }
+    },
+    "singleplayer": {
+        "actions": {
+            "createNew": "Create tournament",
+            "leaderboard": "Open leaderboard",
+            "start": "Start"
+        },
+        "labels": {
+            "enterCode": "Enter tournament code"
         }
     },
     "stats": {
@@ -748,8 +761,10 @@
                 }
             },
             "play": {
+                "selectChallenge": "Select Challenge",
                 "selectLabel": "Show scores for...",
-                "total": "Total"
+                "title": "Tournament",
+                "total": "Total scores"
             }
         }
     },

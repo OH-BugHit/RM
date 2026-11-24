@@ -3,7 +3,7 @@ import { TournamentFileAtom } from '../../../../atoms/state';
 import { useEffect, useRef, useState } from 'react';
 import { applyLoadedGame, readSavedFile } from '../../../../utils/import';
 import GameView from '../../../GameView/GameView';
-import { ControlEnablerAtom, HUDvisAtom, TileVisibilityAtom } from '../../../../atoms/uiState';
+import { ControlEnablerAtom, HUDvisAtom, TileVisibilityAtom, TopbarAtom } from '../../../../atoms/uiState';
 import { playHudVis, visibleTilesTrue } from '../../../../utils/defaults';
 import { QLearningAgent } from '../../../../components/agents/rlAgentQ';
 import AgentSendBridge from '../AgentSendBridge';
@@ -15,6 +15,7 @@ export default function StudentTournamentWrapper() {
     const setHudVis = useSetAtom(HUDvisAtom);
     const setTileVis = useSetAtom(TileVisibilityAtom);
     const setControls = useSetAtom(ControlEnablerAtom);
+    const setTopBar = useSetAtom(TopbarAtom);
     const store = useStore();
     const [loaded, setLoaded] = useState(false);
     const nameRef = useRef<string>('');
@@ -30,7 +31,7 @@ export default function StudentTournamentWrapper() {
             setLoaded(false);
             return;
         }
-
+        setTopBar({ score: 0, topScore: 0, traps: 0, treasures: 0, toBeat: 0, bigTreasures: 0 });
         let cancelled = false;
 
         setLoaded(false);
@@ -50,11 +51,12 @@ export default function StudentTournamentWrapper() {
                 console.error('Failed to load tournament:', error);
             }
         };
+
         handleImport();
         return () => {
             cancelled = true;
         };
-    }, [tournamentFile, store]);
+    }, [tournamentFile, store, setTopBar]);
 
     if (!tournamentFile) {
         return (
