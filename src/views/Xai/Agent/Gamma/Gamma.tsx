@@ -37,7 +37,10 @@ export default function Gamma() {
     const [agentSettings, setAgentSettings] = useAtom(AgentSettingsAtom);
     const agent = useAtomValue(ActiveAgentAtom);
     return (
-        <div className={style.container}>
+        <div
+            className={style.container}
+            id="parameters-gamma"
+        >
             <h3 style={{ left: `${s(10)}` }}>
                 <span>
                     <Help

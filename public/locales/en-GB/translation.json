@@ -256,7 +256,7 @@
         "actions": {
             "createNew": "Create new",
             "load": "Load",
-            "loadGame": "Load game",
+            "loadGame": "Upload game",
             "loadingImage": "loading",
             "openFileExplorer": "Select game file from your files",
             "openImageFileExplorer": "Select image from your files",
@@ -324,7 +324,7 @@
                 "3": "Your mission is to train the agent to complete the given tasks.",
                 "4": "You can see the tasks on the left. Complete them all to unlock the \"Test\" button.\nThen, test your agent to see if it can complete the level on its own.",
                 "5": "Clock up there shows how many moves the agent has left.\nThe agent itself does not know how much time is left.",
-                "6": "The agent learns by itself in the training. You can train one step at a time.\nAt the bottom you can see training controls.\nAt each step the agent selects an action.",
+                "6": "The agent learns by itself in the training.\nAt the bottom you can see training controls.\nYou can train one step at a time.\nAt each step the agent selects an action.",
                 "7": "Or let the agent train continuously.",
                 "8": "You can also let the agent train at unlimited speed. This allows it learn quickly!",
                 "9": "Use \"Fast Forward\"-button to speed up the learning.",
@@ -333,8 +333,8 @@
                 "12": "All tasks are complete! Click \"Test\"-button near the progress panel.\nTo pass the level, the agent must reach the goal 2 times."
             },
             "nextLevelInfo": "The next level will introduce you to the concept of rewards.\nThe agent learns from the rewards it receives while playing and remembers which actions were rewarded the most in different situations.",
-            "postMessage": "In this level, you learned how the game works. You taught your agent to reach the goal successfully! In reinforcement learning, an agent learns by playing and interacting with the game.",
-            "preMessage": "In reinforcement learning, an agent learns by playing and interacting with the game.\n\nYour goal in this game is to teach your agent how to play.\n\nFirst, you train your agent to pass the given tasks. Then, test your agent to see if it has learned to complete the level."
+            "postMessage": "In this level, you learned how the game works. You taught your agent to reach the goal successfully! In reinforcement learning, an agent learns by playing and interacting with the environment.",
+            "preMessage": "In reinforcement learning, an agent learns by playing and interacting with the game.\nAn agent is an AI that makes decisions and acts.\n\nYour goal in this game is to teach your agent how to play.\n\nFirst, you train your agent to pass the given tasks.\nThen, you test your agent to see if it has learned to complete the level."
         },
         "2": {
             "describe": ["Environment", "Rewards", "Agent-environment interaction"],
@@ -356,7 +356,7 @@
                 }
             },
             "text": {
-                "1": "First, let's recap. Reach the goal. Again, the treasure chest is the goal.",
+                "1": "First, let's recap. Train agent to reach the goal. Again, the treasure chest is the goal.",
                 "2": "That was easy! But from now on, you need also train your agent to collect score on the way.",
                 "3": "You can see your score next to the clock. Your objective is to beat the high score!",
                 "4": "For that, you need to teach the agent to collect points on the way to the chest!",
@@ -382,14 +382,14 @@
                 }
             },
             "text": {
-                "1": "Again, your agent needs to reach to the goal. This time there are three possible goals.\nAgent should also receive at least one point to beat the level.",
-                "2": "In this level, the agent quickly learns how to reach the goal and stops exploring new options.",
+                "1": "Again, your agent needs to reach the goal. This time there are three possible goals.\nAgent should also receive at least one point to beat the level.",
+                "2": "In this level, the agent quickly learns how to reach the goal next to it and stops exploring new options.",
                 "3": "This is the exploration-exploitation dilemma: When should the agent explore new options, and when should it use what it has already learned?",
                 "4": "Luckily for us, there is a parameter that we can tune to overcome this issue!",
                 "5": "In this game it is called \"Curiosity\".",
                 "6": "This parameter tunes how often agent selects random action on instead of best action it knows.",
                 "7": "In this level, you may need to keep Curiosity high for a while to encourage exploration, then slowly reduce it so the agent can also use what it has learned.",
-                "8": "Good luck!\nBy the way, during the test phase in this game, Curiosity is set to 0, so the agent follows its best learned policy without taking any random actions!"
+                "8": "Good luck!\nBy the way, during the test phase in this game, Curiosity is set to 0, so the agent follows its best learned policy without taking any random actions."
             },
             "nextLevelInfo": "At the next level we take a glimpse how agent actually observes the environment.\nNext we also force the agent to consider about the future!",
             "postMessage": "This level taught you about exploration vs exploitation dilemma: The agent can not know what is the ultimate reward, but it has to stop looking at some point.",
@@ -407,8 +407,8 @@
             },
 
             "text": {
-                "1": "There are two things in this level:\n1. the observation \n2. how agent values future rewards, also known as \"discounted rewards\".",
-                "2": "Let's start with the observation. The agent can observe the environment. In this game, the agent can only observe part of the whole environment. Let's have a look...",
+                "1": "There are two things in this level:\n1. Observations\n2. How much the agent values future rewards compared to immediate rewards.",
+                "2": "Let's start with the observation. The agent can observe the environment.\nIn this game, the agent can only observe part of the whole environment. Let's have a look...",
                 "3": "This inspection tool allows you to see what the agent actually observes.",
                 "4": "And yeah, the agent actually doesn't see or observe the game. It just receives numbers representing these tiles.",
                 "5": "That's that. Now for your task in this level!",
@@ -419,7 +419,7 @@
                 "10": "Luckily for us, there is a parameter for that too!\nIn this game, it is called \"Foresight\".",
                 "11": "This parameter controls how much the agent values where an action may lead, even if the immediate reward is low.",
                 "12": "The agent needs to receive at least one point to beat the level.",
-                "13": "Good luck! You might gain some help by tuning the \"Curiosity\" higher at first and then gradually decaying it to a smaller value."
+                "13": "Good luck! You can also use \"Curiosity\" introduced in the previous level to help: start high and gradually reduce it as the agent learns."
             },
 
             "nextLevelInfo": "Next, we dig deeper and see how the learning actually happens!",
@@ -746,6 +746,10 @@
                     "5": "Use the tools to create the world where your agent can learn.",
                     "6": "Let the agent learn and see if it can solve the problem."
                 }
+            },
+            "play": {
+                "selectLabel": "Show scores for...",
+                "total": "Total"
             }
         }
     },

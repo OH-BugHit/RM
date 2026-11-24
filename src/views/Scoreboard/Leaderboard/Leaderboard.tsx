@@ -5,17 +5,16 @@ import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import ScoreRow from '../ScoreRow/Scorerow';
 import { generateScores } from './generateScores';
+import ChallengeScoreSelect from '../ClassSelect/ChallengeScoreSelect';
+import { useState } from 'react';
 
-interface Props {
-    className: string | null;
-}
-
-export default function Leaderboard({ className }: Props) {
+export default function Leaderboard() {
     const { t } = useTranslation();
     const [studentData] = useAtom(studentDataAtom);
     const [profilePics] = useAtom(profilePicturesAtom);
+    const [selected, setSelected] = useState<string>('');
 
-    const scores = generateScores(studentData, profilePics, className);
+    const scores = generateScores(studentData, profilePics, selected);
 
     return (
         <>
@@ -24,7 +23,10 @@ export default function Leaderboard({ className }: Props) {
                 role="list"
             >
                 <h1>{t('scoreboard.labels.standings')}</h1>
-
+                <ChallengeScoreSelect
+                    openResult={selected}
+                    setOpenResult={setSelected}
+                />
                 <AnimatePresence>
                     {scores.map((student, index) => (
                         <motion.div

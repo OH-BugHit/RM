@@ -19,6 +19,7 @@ export default function TopBar({ hideStuff }: EnvironmentProps) {
                 <div
                     className={style.topBar}
                     style={{ marginTop: `${s(40)}px` }}
+                    id="top-bar"
                 >
                     <div
                         className={style.infoBar}

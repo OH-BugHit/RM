@@ -16,7 +16,7 @@ interface StudentScore {
 export function generateScores(
     studentData: typeof studentDataAtom extends import('jotai').Atom<infer T> ? T : never,
     profilePics: typeof profilePicturesAtom extends import('jotai').Atom<infer T> ? T : never,
-    className: string | null
+    className: string
 ): StudentScore[] {
     const scores: StudentScore[] = [];
 
@@ -24,7 +24,7 @@ export function generateScores(
     for (const [studentId, studentScores] of studentData.students.entries()) {
         let studentScore = 0;
         // If result for overall scores, we take overall score
-        if (className === null) {
+        if (className === 'total-RM-olli') {
             for (const [, score] of studentScores.data.entries()) {
                 studentScore += score.score ? score.score : 0;
             }

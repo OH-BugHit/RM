@@ -16,7 +16,10 @@ export default function AgentVision({ agentRef }: AgentVisionProps) {
     const { s } = useGameScale();
 
     return (
-        <div className={style.agentVisionWrapper}>
+        <div
+            className={style.agentVisionWrapper}
+            id="inspect-observation"
+        >
             <h3 style={{ margin: '0.5rem', justifySelf: 'center' }}>{t('hud.agentVision.observation.title')}</h3>
             <div className={style.obsBox}>
                 <ObservationBox size={s(50)} />

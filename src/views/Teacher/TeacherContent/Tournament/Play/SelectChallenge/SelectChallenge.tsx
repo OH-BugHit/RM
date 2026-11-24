@@ -53,16 +53,6 @@ export default function SelectChallenge() {
             fullWidth
         >
             <div className={style.main}>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                        goToView({ sub: null });
-                    }}
-                    style={{ zIndex: 999, position: 'absolute', bottom: '1.2rem', right: '50%', textAlign: 'right' }}
-                >
-                    Cancel
-                </Button>
                 <div className={style.content}>
                     <h2>Select Game</h2>
                     <div className={style.levelList}>
@@ -79,8 +69,18 @@ export default function SelectChallenge() {
                                 />
                             </Button>
                         ))}
-
+                    </div>
+                    <div className={style.actions}>
                         <LoadEnv />
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => {
+                                goToView({ sub: null });
+                            }}
+                        >
+                            Cancel
+                        </Button>
                     </div>
                 </div>
             </div>

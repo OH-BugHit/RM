@@ -15,6 +15,7 @@ interface Props extends PropsWithChildren {
               ButtonPropsColorOverrides
           >
         | undefined;
+    id?: string;
 }
 
 export default function GameButton({
@@ -25,9 +26,11 @@ export default function GameButton({
     color = 'secondary',
     children,
     fullHeight = false,
+    id = '',
 }: Props) {
     return (
         <Button
+            id={id}
             data-dismissible-exclude
             title={title}
             variant={variant}

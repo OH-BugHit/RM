@@ -1,6 +1,5 @@
 import { Level } from '../../../types';
 import { defaultAgents, defaultBackground } from '../../defaults';
-import { testTileDef } from '../../testLevel/tileDefinitions';
 import { LoadedGame } from '../../types';
 import {
     level1Env,
@@ -11,11 +10,12 @@ import {
     level1TextModes,
     level1uiControls,
     level4Focus,
+    observationTileDef,
 } from './olevel1';
 
 const level1Data: LoadedGame = {
     manifest: { gameName: 'Foresight', highScore: 0, saveVersion: 2, createdAt: '123', levelIndex: 4 },
-    tools: { tileDefinitions: testTileDef, background: defaultBackground },
+    tools: { tileDefinitions: observationTileDef, background: defaultBackground },
     game: {
         world: level1Grid,
         envSettings: level1Env,

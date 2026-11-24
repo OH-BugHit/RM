@@ -52,3 +52,9 @@
     padding: 0.2rem;
     box-sizing: border-box;
 }
+
+.buttons {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+}

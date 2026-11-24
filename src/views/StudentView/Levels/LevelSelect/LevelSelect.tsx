@@ -5,18 +5,29 @@ import { useTranslation } from 'react-i18next';
 import { Level } from '../../../../types';
 import { useViewNavigation } from '../../../../hooks/useViewNavigation';
 import { LevelConfAtom, LevelMapNodesAtom } from '../../../../atoms/gameState';
-import { OpenLevelGroupsAtom } from '../../../../atoms/state';
+import { GameControlAtom, OpenLevelGroupsAtom } from '../../../../atoms/state';
 import { levelGroups } from '../../../../utils/levels/levelGroups';
 import { useGameScale } from '../../../../context/GameScale/useGameScale';
 import LevelItem from '../../../Teacher/TeacherContent/Levels/LevelItem';
 import Wait from '../../../../components/Overlays/Pause/Wait';
 import LevelPopup from '../../../../components/Dialogs/LevelPopup/LevelPopup';
 import { createBonusPathsY, createRoutePathX } from './pathUtils';
+import { defaultControls } from '../../../../utils/defaults';
+import { TextStepAtom } from '../../../../atoms/uiState';
 
 export default function LevelSelect() {
     const { t } = useTranslation();
     const { s, trueScale } = useGameScale();
     const levelMapNodes = useAtomValue(LevelMapNodesAtom);
+    const setControls = useSetAtom(GameControlAtom);
+    const setSteps = useSetAtom(TextStepAtom);
+
+    const resetLevels = () => {
+        setControls(defaultControls);
+        setSteps(0);
+    };
+
+    resetLevels();
 
     const mapHeight = s(1080) - 200;
 

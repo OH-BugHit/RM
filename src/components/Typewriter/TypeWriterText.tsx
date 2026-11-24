@@ -69,7 +69,7 @@ export function SampleWriter({ sample, speed = 30, startDelay = 0, onComplete }:
 
     return (
         <span style={{ whiteSpace: 'pre-line' }}>
-            {collapsedCount > 0 && <span>{sample.slice(0, collapsedCount)}</span>}
+            {collapsedCount > 0 && <span aria-hidden>{sample.slice(0, collapsedCount)}</span>}
             {sample
                 .split('')
                 .slice(collapsedCount)
@@ -77,22 +77,21 @@ export function SampleWriter({ sample, speed = 30, startDelay = 0, onComplete }:
                     const charIndex = collapsedCount + index;
 
                     return (
-                        <>
-                            <span
-                                key={charIndex}
-                                style={{ visibility: charIndex < visibleCount ? 'visible' : 'hidden' }}
-                            >
-                                {char}
-                            </span>
-                            <span
-                                className={style.srOnly}
-                                aria-live="polite"
-                            >
-                                {visibleCount >= sample.length ? sample : ''}
-                            </span>
-                        </>
+                        <span
+                            key={charIndex}
+                            aria-hidden
+                            style={{ visibility: charIndex < visibleCount ? 'visible' : 'hidden' }}
+                        >
+                            {char}
+                        </span>
                     );
                 })}
+            <span
+                className={style.srOnly}
+                aria-live="polite"
+            >
+                {visibleCount >= sample.length ? sample : ''}
+            </span>
         </span>
     );
 }

@@ -13,7 +13,10 @@ export default function Parameters() {
     const hudVis = useAtomValue(HUDvisAtom);
 
     return (
-        <div className={style.selectorContainer}>
+        <div
+            className={style.selectorContainer}
+            id="parameters"
+        >
             <h2>{t('createMenu.agent.paramTitle')}</h2>
             <div className={style.parameters}>
                 {hudVis.epsilon && <Epsilon />}

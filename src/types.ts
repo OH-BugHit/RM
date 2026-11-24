@@ -52,7 +52,7 @@ export type Level = {
         layouts?: Record<number, TutorialLayout>;
         additionalMaterial?: number[]; // if additional information such as images etc. is needed, store here the step-numbers as keys
         hintNext?: number[];
-        focusPoints?: Record<number, FocusPoint>;
+        focusPoints?: Record<number, FocusTarget>;
     };
     uiControls?: UiControlsField[][];
     hudSettings?: HUDvisibilityField[][]; // Available tools / clusters
@@ -679,7 +679,20 @@ export type Target =
           y: number;
       };
 
+/**
+ * Focus overlay can navigate with ID
+ */
 export type FocusPoint = {
+    id: string;
+    padding: number;
+};
+
+/**
+ * Or it can navigate with relative coordinates (0-100%)
+ */
+export type CoordinateFocusPoint = {
     location: { x: number; y: number };
     radius: number;
 };
+
+export type FocusTarget = FocusPoint | CoordinateFocusPoint;

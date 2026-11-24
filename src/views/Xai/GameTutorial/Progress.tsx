@@ -81,6 +81,7 @@ export default function Progress({ tasks }: ProgressProps) {
 
     return (
         <motion.div
+            id="tutorial-progress"
             className={style.progressContent}
             style={{ maxWidth: `${sw(300)}px` }}
         >

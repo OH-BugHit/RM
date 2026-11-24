@@ -1,4 +1,11 @@
-import { EnvSettings, FocusPoint, HUDvisibilityField, TextMode, TutorialLayout, UiControlsField } from '../../../types';
+import {
+    EnvSettings,
+    FocusTarget,
+    HUDvisibilityField,
+    TextMode,
+    TutorialLayout,
+    UiControlsField,
+} from '../../../types';
 import { TaskGroup } from '../../progress';
 import { CellSave, TileDefinitionSave } from '../../types';
 
@@ -101,18 +108,18 @@ export const level2Layout: Record<number, TutorialLayout> = {
     },
 };
 
-export const level2Focus: Record<number, FocusPoint> = {
+export const level2Focus: Record<number, FocusTarget> = {
     7: {
-        location: { x: 90, y: 30 },
-        radius: 420,
+        id: 'episodic-rewards',
+        padding: -100,
     },
     8: {
-        location: { x: 90, y: 43 },
-        radius: 420,
+        id: 'item-rewards',
+        padding: -100,
     },
     9: {
-        location: { x: 50, y: 98 },
-        radius: 60,
+        id: 'trash-control',
+        padding: 0,
     },
 };
 

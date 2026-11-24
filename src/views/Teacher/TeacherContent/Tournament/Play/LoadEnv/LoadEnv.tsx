@@ -1,16 +1,14 @@
 import { useTranslation } from 'react-i18next';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import GameDialog from '../../../../../../components/Dialogs/GameImport/GameDialog';
-import SelectorItem from '../../../../../Story/Selectors/SelectorItem';
 import { readSavedFile } from '../../../../../../utils/import';
 import { useViewNavigation } from '../../../../../../hooks/useViewNavigation';
-import { useGameScale } from '../../../../../../context/GameScale/useGameScale';
 import { useSetAtom } from 'jotai';
 import { studentGamesAtom, studentGameZipsAtom } from '../../../../../../atoms/state';
 import { StudentGameBlobs, StudentGames } from '../../../../../../types';
+import { IconButton } from '@mui/material';
 
 export default function LoadEnv() {
-    const { s } = useGameScale();
     const { t } = useTranslation();
     const { goToView } = useViewNavigation();
     const setStudentGames = useSetAtom(studentGamesAtom);
@@ -35,20 +33,19 @@ export default function LoadEnv() {
     return (
         <div>
             <GameDialog onImport={handleImport} />
-            <SelectorItem
+            <IconButton
                 title={t('import.actions.loadGame')}
                 onClick={() => {
                     goToView({
                         overlay: 'import',
                     });
                 }}
-                selected={false}
             >
                 <FileUploadIcon
                     fontSize="large"
-                    sx={{ width: s(128), height: s(128) }}
+                    color="primary"
                 />
-            </SelectorItem>
+            </IconButton>
         </div>
     );
 }

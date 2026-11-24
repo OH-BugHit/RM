@@ -26,7 +26,10 @@ export default function TimeUpReward() {
     };
 
     return (
-        <div className={style.selectorContainer}>
+        <div
+            className={style.selectorContainer}
+            id="episodic-rewards"
+        >
             <h3>{t(`common.cell.timeUp`)}</h3>
             <div className={style.rowContent}>
                 <RemoveIcon

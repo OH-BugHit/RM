@@ -93,6 +93,7 @@ function Controls() {
         <div
             className={style.controlsWrapper}
             style={{ margin: `${s(1)}rem` }}
+            id="controls"
         >
             <div
                 className={style.controlsContainer}
@@ -184,6 +185,7 @@ function Controls() {
                                 !hudVis.agent.trash || !enable?.trash || test === 'isRunning' || test === 'passed'
                             }
                             title={t('common.controls.labels.reset')}
+                            id="trash-control"
                         >
                             <TrashIcon
                                 size={s(80)}
@@ -198,6 +200,7 @@ function Controls() {
                         color="success"
                         variant="text"
                         disabled={!hudVis.controls.step || !enable?.step || test === 'isRunning' || test === 'passed'}
+                        id="step-control"
                         onClick={() => {
                             triggerTraining(true);
                             setLod(2);

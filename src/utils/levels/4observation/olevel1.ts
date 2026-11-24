@@ -1,6 +1,70 @@
-import { EnvSettings, FocusPoint, HUDvisibilityField, TextMode, TutorialLayout, UiControlsField } from '../../../types';
+import {
+    EnvSettings,
+    FocusTarget,
+    HUDvisibilityField,
+    TextMode,
+    TutorialLayout,
+    UiControlsField,
+} from '../../../types';
 import { TaskGroup } from '../../progress';
-import { CellSave } from '../../types';
+import { CellSave, TileDefinitionSave } from '../../types';
+
+export const observationTileDef: TileDefinitionSave[] = [
+    {
+        id: 'c6733b76-6909-4d6a-951a-dc59f343dde0',
+        type: 1,
+        reloadTime: -1,
+        timer: 0,
+        emoji: '',
+        image: '/images/assets/wall.png',
+        isCoreTile: true,
+    },
+    {
+        id: '9a18c997-1493-4382-9528-c10cbac8bfe5',
+        type: -1,
+        reloadTime: -1,
+        timer: 0,
+        emoji: '',
+        image: '/images/assets/start.png',
+        isCoreTile: true,
+    },
+    {
+        id: '09ea4284-02f0-44e6-ab01-3a02b93b3574',
+        type: 2,
+        reloadTime: -1,
+        timer: 0,
+        emoji: '',
+        image: '/images/assets/bigTreasure_260.png',
+        isCoreTile: true,
+    },
+    {
+        id: '7ca037a8-c2a4-405a-a6ae-504485ff112d',
+        type: 6,
+        reloadTime: -1,
+        timer: 0,
+        emoji: '',
+        image: '/images/assets/smallTreasure_260.png',
+        isCoreTile: false,
+    },
+    {
+        id: 'd46cf016-3e3f-4386-a2da-313af846fae4',
+        type: 0,
+        reloadTime: -1,
+        timer: 0,
+        emoji: '',
+        image: '/images/assets/cleanWhiteStone.png',
+        isCoreTile: false,
+    },
+    {
+        id: 'd46cf016-3e3f-4386-a2da-asd',
+        type: 9,
+        reloadTime: -1,
+        timer: 0,
+        emoji: '🍄',
+        image: '',
+        isCoreTile: false,
+    },
+];
 
 export const level1TextModes: TextMode[] = [
     'hidden', // 0
@@ -20,14 +84,14 @@ export const level1TextModes: TextMode[] = [
     'hidden', // 9
 ];
 
-export const level4Focus: Record<number, FocusPoint> = {
+export const level4Focus: Record<number, FocusTarget> = {
     3: {
-        location: { x: 13, y: 64 },
-        radius: 190,
+        id: 'inspect-observation',
+        padding: 0,
     },
     10: {
-        location: { x: 20, y: 43 },
-        radius: 270,
+        id: 'parameters-gamma',
+        padding: 0,
     },
 };
 

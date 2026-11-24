@@ -40,7 +40,10 @@ export default function RewardsSelector() {
     );
 
     return (
-        <div className={style.selectorContainer}>
+        <div
+            className={style.selectorContainer}
+            id="item-rewards"
+        >
             <h3>{t('title')}</h3>
             <div
                 className={style.columnContent}

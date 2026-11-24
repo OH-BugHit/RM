@@ -1,4 +1,11 @@
-import { HUDvisibilityField, TextMode, TutorialLayout, UiControlsField, EnvSettings, FocusPoint } from '../../../types';
+import {
+    HUDvisibilityField,
+    TextMode,
+    TutorialLayout,
+    UiControlsField,
+    EnvSettings,
+    FocusTarget,
+} from '../../../types';
 import { TaskGroup } from '../../progress';
 import { CellSave } from '../../types';
 
@@ -47,18 +54,18 @@ export const level1Layout: Record<number, TutorialLayout> = {
     },
 };
 
-export const level1Focus: Record<number, FocusPoint> = {
+export const level1Focus: Record<number, FocusTarget> = {
     4: {
-        location: { x: 4, y: 50 },
-        radius: 120,
+        id: 'tutorial-progress',
+        padding: 0,
     },
     5: {
-        location: { x: 50, y: 2 },
-        radius: 100,
+        id: 'top-bar',
+        padding: 0,
     },
     6: {
-        location: { x: 50, y: 98 },
-        radius: 60,
+        id: 'controls',
+        padding: -100,
     },
 };
 
