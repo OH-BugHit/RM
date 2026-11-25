@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import StartBox from '../../../components/StartBox/StartBox';
 import style from './singleTournament.module.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 export default function SinglePlayerTournamentStart() {
     const [inputCode, setInputCode] = useState<string>('');

@@ -1,5 +1,5 @@
 import { useID } from '@genai-fi/base';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { Peer } from '@genai-fi/base/hooks/peer';
 
 import { useEffect, useState } from 'react';

@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { MainView, SubView, Overlay, ViewEnum } from '../types';
 
 type ViewState = {

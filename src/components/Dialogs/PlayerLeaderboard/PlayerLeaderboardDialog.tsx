@@ -5,7 +5,7 @@ import { Button } from '@genai-fi/base';
 import { useTranslation } from 'react-i18next';
 import { ActiveViewAtom } from '../../../atoms/uiState';
 import { useAtom, useAtomValue } from 'jotai';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import LeaderboardTab from './LeaderboardTab';
 import TournamentStatus from './TournamentStatus';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -69,8 +69,8 @@ export default function PlayerLeaderboardDialog({ onClose = () => {} }: ReportDi
                     orientation="vertical"
                     sx={{ borderRight: '1px solid #008297' }}
                 >
-                    <Tab label={t('settings.titles.general')} />
-                    <Tab label={t('settings.titles.userGridSettings')} />
+                    <Tab label={t('teacher.tournament.settings.titles.leaderboard')} />
+                    <Tab label={t('teacher.tournament.settings.titles.status')} />
                 </Tabs>
                 {tabNumber === 0 && <LeaderboardTab />}
                 {tabNumber === 1 && <TournamentStatus />}

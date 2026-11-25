@@ -5,7 +5,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 /*import SchoolIcon from '@mui/icons-material/School';*/
 import LinkButton from '../../components/Buttons/LinkButton/LinkButton';
 import Phase from './Phase';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import StartBox from '../../components/StartBox/StartBox';

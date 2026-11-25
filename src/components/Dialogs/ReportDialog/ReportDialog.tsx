@@ -15,7 +15,7 @@ import { Button } from '@genai-fi/base';
 import { useTranslation } from 'react-i18next';
 import { ActiveViewAtom } from '../../../atoms/uiState';
 import { useAtom } from 'jotai';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 interface ReportDialogProps {
     onClose?: () => void;

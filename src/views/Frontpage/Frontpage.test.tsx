@@ -1,7 +1,7 @@
 import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 import Frontpage from './Frontpage';
 import { createTheme, ThemeProvider } from '@mui/material';
 
@@ -30,8 +30,8 @@ vi.mock('../GameView/GameView', () => ({
 }));
 
 const mockNavigate = vi.fn();
-vi.mock('react-router-dom', async () => {
-    const actual = await vi.importActual('react-router-dom');
+vi.mock('react-router', async () => {
+    const actual = await vi.importActual('react-router');
     return {
         ...actual,
         useNavigate: () => mockNavigate,
@@ -48,6 +48,6 @@ describe('Frontpage', () => {
                 </MemoryRouter>
             </ThemeProvider>
         );
-        expect(screen.getByTestId('footer')).toBeInTheDocument();
+        expect(screen.getByTestId('footer')).toBeTruthy();
     });
 });

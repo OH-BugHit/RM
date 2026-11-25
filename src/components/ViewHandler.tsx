@@ -1,5 +1,5 @@
 import { useSetAtom } from 'jotai';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActiveViewAtom, MenuOpenAtom } from '../atoms/uiState';

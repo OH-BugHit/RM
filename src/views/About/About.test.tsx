@@ -7,23 +7,23 @@ import { renderWithProviders } from '../../test-utils/render';
 describe('About', () => {
     it('renders title', () => {
         renderWithProviders(<About />);
-        expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Generation AI');
+        expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Generation AI');
     });
 
     it('renders logo image', () => {
         renderWithProviders(<About />);
         const images = screen.getAllByAltText('logo');
-        expect(images[0]).toHaveAttribute('src', '/logo192_bw.png');
+        expect(images[0].getAttribute('src')).toBe('/logo192_bw.png');
     });
 
     it('renders privacy markdown content', () => {
         renderWithProviders(<About />);
         const markdownContent = screen.getByText(/Welcome to our Privacy Notice/);
-        expect(markdownContent).toBeInTheDocument();
+        expect(markdownContent).toBeTruthy();
     });
 
     it('renders footer', () => {
         renderWithProviders(<About />);
-        expect(screen.getByTestId('footer')).toBeInTheDocument();
+        expect(screen.getByTestId('footer')).toBeTruthy();
     });
 });

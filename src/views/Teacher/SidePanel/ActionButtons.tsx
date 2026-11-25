@@ -7,7 +7,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import QrCode2Icon from '@mui/icons-material/QrCode2';
 import { useTranslation } from 'react-i18next';
 import { configAtom } from '../../../atoms/state';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 export default function ActionButtons({ single = false }: { single?: boolean }) {
     const [config, setConfig] = useAtom(configAtom);

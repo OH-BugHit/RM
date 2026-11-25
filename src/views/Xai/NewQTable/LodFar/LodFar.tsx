@@ -113,7 +113,7 @@ export default function LodFar({ agentRef, scrollToState }: QCanvasProps) {
             clearInterval(interval);
             monitoringRef.current = false;
         };
-    }, [agentRef, agentRef.current?.visitTimes]);
+    }, [agentRef]);
 
     return (
         <div

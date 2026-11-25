@@ -765,6 +765,12 @@
                 "selectLabel": "Show scores for...",
                 "title": "Tournament",
                 "total": "Total scores"
+            },
+            "settings": {
+                "titles": {
+                    "leaderboard": "Leaderboard",
+                    "status": "Tournament"
+                }
             }
         }
     },

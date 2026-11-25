@@ -1,6 +1,6 @@
 import { Trans, useTranslation } from 'react-i18next';
 import style from './style.module.css';
-import { useRouteError } from 'react-router-dom';
+import { useRouteError } from 'react-router';
 
 export default function ErrorComponent() {
     const error = useRouteError();

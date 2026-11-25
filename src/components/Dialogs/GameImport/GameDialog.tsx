@@ -5,7 +5,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import { Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import { LargeButton } from '@genai-fi/base';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { ActiveViewAtom } from '../../../atoms/uiState';
 import { renderWorldPreview } from '../../EnvironmentRender/renderWorldPreview';
 import { loadSavePreview } from '../../../utils/import';

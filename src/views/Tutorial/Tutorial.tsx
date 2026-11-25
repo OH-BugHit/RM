@@ -4,7 +4,7 @@ import ViewHandler from '../../components/ViewHandler';
 import { useTranslation } from 'react-i18next';
 import Footer from '../Footer/Footer';
 import ButtonBubble from '../../components/Bubbles/ButtonBubble';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { AgentSettingsAtom, AudioSettingsAtom, GameControlAtom } from '../../atoms/state';
 import { TutorialPhaseAtom } from '../../atoms/tutorialState';

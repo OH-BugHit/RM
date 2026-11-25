@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useViewNavigation } from '../../../../hooks/useViewNavigation';
 import { StudentViews } from '../../../../types';
 import style from './main.module.css';
