@@ -5,6 +5,8 @@ interface FeatureFlags {
     allowBlackBox?: boolean;
     allowLearningWorld?: boolean;
     allowSingleplayerReportProblem: boolean;
+    allowQuickText?: boolean;
+    allowUnlockLevels?: boolean;
 }
 
 export const featureFlagsAtom = atom(async () => {
@@ -23,6 +25,8 @@ export const featureFlagsAtom = atom(async () => {
             allowBlackBox: false,
             allowLearningWorld: false,
             allowSingleplayerReportProblem: false,
+            allowQuickText: false,
+            allowUnlockLevels: false,
         };
     }
 });

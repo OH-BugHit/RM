@@ -449,6 +449,7 @@ export type Overlay =
     | 'report'
     | 'import'
     | 'share'
+    | 'shareSinglePlayerTournament'
     | 'menu'
     | 'backgroundDialog'
     | TeacherDialogs

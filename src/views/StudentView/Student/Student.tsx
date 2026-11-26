@@ -23,7 +23,7 @@ interface StudentProps {
 }
 
 export default function Student({ serverCode }: StudentProps) {
-    const { doRegister, doSendEnvironment } = useRewardProtocol();
+    const { doRegister, doSendEnvironment, doSendScore } = useRewardProtocol();
     const username = useAtomValue(usernameAtom);
     const profilePicture = useAtomValue(profilePictureAtom);
     const bouncer = useAtomValue(studentBouncerAtom);
@@ -70,7 +70,7 @@ export default function Student({ serverCode }: StudentProps) {
         <div className={style.studentContainer}>
             <PauseLayer />
             <Wait show={view.main === 'null'} />
-            <ScoreBridge />
+            <ScoreBridge doSendScore={doSendScore} />
             <MenuIcon position={getMenuButtonPosition()} />
             <MessageDisplay open={showError} />
             <MainMenu mode="classroom" />

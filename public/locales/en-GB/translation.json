@@ -79,6 +79,7 @@
     },
     "common": {
         "actions": {
+            "return": "Return",
             "startLevel": "Start Level"
         },
         "and": "and",
@@ -362,8 +363,8 @@
                 "2": "That was easy! But from now on, you need also train your agent to collect score on the way.",
                 "3": "You can see your score next to the clock. Your objective is to beat the high score!",
                 "4": "For that, you need to teach the agent to collect points on the way to the chest!",
-                "5": "Next, tune the rewards so the agent collects points...",
-                "6": "...while still reaching the goal in time.",
+                "5": "So how?\nReinforcement learning is based on rewards. The agent tries to maximize the rewards it receives.",
+                "6": "Tune the rewards given by the environment so that the agent collects points...\n...while still reaching the goal in time.",
                 "7": "You can set the reward for when the agent runs out of time before reaching the goal.",
                 "8": "And you can set the rewards for reaching different items.",
                 "9": "You can reset the agent's memory using the trash icon if it seems stuck following a path it has already learned.",
@@ -412,7 +413,7 @@
                 "1": "There are two things in this level:\n1. Observations\n2. How much the agent values future rewards compared to immediate rewards.",
                 "2": "Let's start with the observation. The agent can observe the environment.\nIn this game, the agent can only observe part of the whole environment. Let's have a look...",
                 "3": "This inspection tool allows you to see what the agent actually observes.",
-                "4": "And yeah, the agent actually doesn't see or observe the game. It just receives numbers representing these tiles.",
+                "4": "The agent in this game can only observe a small part of the environment at a time. It sees the state of that area: what is there and where things are.",
                 "5": "That's that. Now for your task in this level!",
                 "6": "You already know that the agent receives rewards from the environment.",
                 "7": "These rewards help the agent learn. But sometimes, it needs to think about future rewards too, not just the reward it gets right now.",

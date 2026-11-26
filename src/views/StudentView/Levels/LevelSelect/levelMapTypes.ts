@@ -9,8 +9,8 @@ export interface LevelMapNode {
 
     level: Level;
 
-    x: number;
-    y: number;
+    x: number; // pixel
+    y: number; // relational
 
     kind: LevelMapNodeKind;
     allowed: boolean;

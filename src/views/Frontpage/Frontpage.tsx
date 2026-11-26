@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import Footer from '../Footer/Footer';
 import GitHubIcon from '@mui/icons-material/GitHub';
 /*import SchoolIcon from '@mui/icons-material/School';*/
+import GroupsIcon from '@mui/icons-material/Groups';
+import PersonIcon from '@mui/icons-material/Person';
 import LinkButton from '../../components/Buttons/LinkButton/LinkButton';
 import Phase from './Phase';
 import { useNavigate } from 'react-router';
@@ -69,7 +71,7 @@ export default function Frontpage() {
                                 <p>{t('app.teachingMaterials')}</p>
                             </LinkButton>*/}
                             <LinkButton
-                                href="https://github.com/OH-BugHit/BM"
+                                href="https://github.com/OH-BugHit/RM"
                                 startIcon={<GitHubIcon />}
                                 key="githublink"
                             >
@@ -108,22 +110,24 @@ export default function Frontpage() {
                                 key="classroombutton"
                             >
                                 <Phase
-                                    image={'/images/previewImages/tournamentPlay.png'}
                                     id="classroom"
                                     key="classroom"
                                     onClick={() => setMode('multi')}
-                                />
+                                >
+                                    <GroupsIcon sx={{ width: '100%', height: '100%' }} />
+                                </Phase>
                             </div>
                             <div
                                 className={style.cards}
                                 key="singleplayerbutton"
                             >
                                 <Phase
-                                    image={'/images/previewImages/play1940.png'}
                                     id="yourWorld"
                                     key="singleplayer"
                                     onClick={() => navigate('/student/single/main?view=main&overlay=menu')}
-                                />
+                                >
+                                    <PersonIcon sx={{ width: '100%', height: '100%' }} />
+                                </Phase>
                             </div>
                         </motion.ul>
                     )}

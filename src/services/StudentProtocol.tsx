@@ -91,6 +91,7 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
      */
     const doSendScore = useCallback(
         (scoreData: ScoreData) => {
+            console.log('sending score');
             if (send) {
                 send({ event: 'eter:score', data: scoreData });
             }

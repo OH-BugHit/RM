@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useAtom } from 'jotai';
 import style from './classSelect.module.css';
 import { studentDataAtom } from '../../../atoms/state';
-import { getClassNames as getAllChallenges } from './getClassNames';
+import { getClassNames } from './getClassNames';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 interface Props {
@@ -22,7 +22,7 @@ interface Props {
 export default function ChallengeScoreSelect({ openResult, setOpenResult }: Props) {
     const { t } = useTranslation();
     const [studentData] = useAtom(studentDataAtom);
-    const allChallenges = getAllChallenges(studentData);
+    const allChallenges = getClassNames(studentData);
 
     if (!studentData?.students) return <div>Ei kuvia</div>;
     return (
@@ -50,7 +50,7 @@ export default function ChallengeScoreSelect({ openResult, setOpenResult }: Prop
                         {t('teacher.tournament.play.total')}
                     </MenuItem>
 
-                    {allChallenges.map((label) => (
+                    {[...new Set(allChallenges)].sort().map((label) => (
                         <MenuItem
                             key={label}
                             value={label}

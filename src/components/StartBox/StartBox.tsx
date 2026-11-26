@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { SetStateAction } from 'jotai';
 import { Dispatch } from 'react';
 import { useTranslation } from 'react-i18next';
-import NextArrowIcon from '../Buttons/ButtonIcons/OtherIcons/NextArrowIcon';
 import { useGameScale } from '../../context/GameScale/useGameScale';
 
 interface StartBoxProps {
@@ -73,14 +72,11 @@ export default function StartBox({ type, inputCode, setInputCode, onReady, disab
             </Button>
             {setMode && (
                 <Button
-                    className={style.arrowButton}
                     onClick={() => setMode('unset')}
                     key="goBackToMode"
+                    type="outlined"
                 >
-                    <NextArrowIcon
-                        size={40}
-                        ready={true}
-                    />
+                    {t('common.actions.return')}
                 </Button>
             )}
         </motion.div>

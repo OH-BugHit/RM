@@ -15,7 +15,7 @@ export default function Privacy({ position = 'bottomLeft' }: Props) {
                 className={style.versionBox}
             >
                 <a
-                    href={`https://github.com/OH-BugHit/BM`}
+                    href={`https://github.com/OH-BugHit/RM`}
                     target="_blank"
                     rel="noreferrer"
                     data-testid="versionlink"

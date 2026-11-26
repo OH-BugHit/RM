@@ -1,6 +1,8 @@
 import style from './style.module.css';
 import { useEffect } from 'react';
 import { useTypewriter } from './useTypewriter';
+import { useAtomValue } from 'jotai';
+import { featureFlagsAtom } from '../../atoms/featureState';
 
 interface TypewriterTextProps {
     text: string;
@@ -58,7 +60,8 @@ interface SampleWriterProps {
 }
 
 export function SampleWriter({ sample, speed = 30, startDelay = 0, onComplete }: SampleWriterProps) {
-    const visibleCount = useTypewriter(sample, speed, startDelay);
+    const { allowQuickText } = useAtomValue(featureFlagsAtom);
+    const visibleCount = useTypewriter(sample, allowQuickText ? 1 : speed, startDelay);
     const collapsedCount = visibleCount >= sample.length ? sample.length : Math.max(0, visibleCount - 19);
 
     useEffect(() => {

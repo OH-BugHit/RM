@@ -15,7 +15,7 @@ export default function Foresight({ value, size = 256 }: ForesightProps) {
     const groundY = 124;
 
     // Triangle width on ground
-    const baseWidth = value * 62 + 18;
+    const baseWidth = clamped * 62 + 18;
 
     // Distance controlled by value
     const minDistance = 8;

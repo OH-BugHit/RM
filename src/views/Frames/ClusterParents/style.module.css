@@ -6,3 +6,8 @@
     overflow: hidden;
     background-color: rgba(254, 255, 255, 0.448);
 }
+
+.clusterParent:hover {
+    filter: brightness(1.1);
+    scale: 1.02;
+}

@@ -1,14 +1,14 @@
 .homeContainer {
-    min-height: 100vh;
+    position: relative;
+    width: 100dvw;
+    height: 100dvh;
+    min-height: 100dvh;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    position: relative;
     background-image: url('/images/frames/cable2.svg');
     background-size: cover;
     background-position: center;
-    width: 100dvw;
-    height: 100dvh;
-    gap: 6dvh;
     overflow: auto;
 }
 
@@ -21,23 +21,22 @@
 @media only screen and (max-width: 600px) {
     .homeContainer {
         padding: 2rem 0.5rem;
-        display: block;
     }
 }
 
 .homeContainer ul {
     list-style: none;
+    display: flex;
     margin: 0;
     padding: 0;
-    display: flex;
     flex-wrap: wrap;
     gap: 2rem;
 }
 
+
 .homeContainer li {
-    flex: 0 1 300px;
     min-width: 200px;
-    min-height: 200px;
+    min-height: 120px;
     width: 100%;
     background: #f4faff;
     border-radius: 16px;
@@ -74,6 +73,7 @@
 
 .header {
     display: flex;
+    flex-shrink: 0;
     justify-content: center;
     align-items: center;
     padding-top: 10dvh;
@@ -121,10 +121,24 @@
 
 
 .selectGroup {
+    flex: 1;
     display: flex;
-    justify-content: center;
-    align-items: start;
+    flex-direction: column;
+    align-items: center;
     padding: 0 0.5rem;
+}
+
+.selectGroup::before,
+.selectGroup::after {
+    content: '';
+}
+
+.selectGroup::before {
+    flex: 1;
+}
+
+.selectGroup::after {
+    flex: 4;
 }
 
 .codeInput {
@@ -157,6 +171,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: 100%;
     gap: 0;
 }
 
@@ -167,6 +182,12 @@
 
 .step:hover {
     filter: brightness(1.1);
+}
+
+@media (max-height: 700px) {
+    .header {
+        padding-top: 2dvh;
+    }
 }
 
 @media (max-height: 600px) {

@@ -1,11 +1,13 @@
 import { useAtomValue, useStore } from 'jotai';
-import { usePlayerProtocol } from '../../../services/PlayerProtocol';
 import { studentResultsAtom, usernameAtom } from '../../../atoms/state';
 import { useEffect, useRef } from 'react';
-import { StudentScores } from '../../../types';
+import { ScoreData, StudentScores } from '../../../types';
 
-export default function ScoreBridge() {
-    const { doSendScore } = usePlayerProtocol();
+interface ScoreBridgeProps {
+    doSendScore: ((data: ScoreData) => void) | undefined;
+}
+
+export default function ScoreBridge({ doSendScore }: ScoreBridgeProps) {
     const store = useStore();
     const scores = useAtomValue(studentResultsAtom);
 
@@ -28,7 +30,6 @@ export default function ScoreBridge() {
                             levelName,
                             score: score.score,
                         });
-
                     break;
                 }
             }

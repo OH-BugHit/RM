@@ -533,9 +533,10 @@ function RewardMachine({
                 agentRef={agentRef}
             />
             {envRef.current && (
-                <div 
-                ref={setViewport}
-                className={style.worldContainer}>
+                <div
+                    ref={setViewport}
+                    className={style.worldContainer}
+                >
                     <div
                         style={{
                             position: 'relative',

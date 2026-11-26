@@ -16,6 +16,8 @@ export default function ActionButtons({ single = false }: { single?: boolean }) 
     const navigate = useNavigate();
     const params = useMemo(() => new URLSearchParams(location.search), [location.search]);
 
+    const shareType = single ? 'shareSinglePlayerTournament' : 'share';
+
     const doClick = (action: 'pause' | 'share') => {
         switch (action) {
             case 'pause': {
@@ -28,7 +30,7 @@ export default function ActionButtons({ single = false }: { single?: boolean }) 
                 break;
             }
             case 'share': {
-                params.set('overlay', 'share');
+                params.set('overlay', shareType);
                 navigate(`${location.pathname}?${params.toString()}`, { replace: false });
                 break;
             }

@@ -2,14 +2,15 @@ import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@genai-fi/base';
 import { useGameScale } from '../../context/GameScale/useGameScale';
+import { PropsWithChildren } from 'react';
 
-interface Props {
+interface Props extends PropsWithChildren {
     id: string;
-    image: string;
+    image?: string;
     onClick?: () => void;
 }
 
-export default function Phase({ id, image, onClick }: Props) {
+export default function Phase({ id, image, onClick, children }: Props) {
     const { t } = useTranslation();
     const { s } = useGameScale();
 
@@ -19,13 +20,13 @@ export default function Phase({ id, image, onClick }: Props) {
                 onClick={onClick}
                 className={style.step}
             >
-                {image && (
-                    <div
-                        className={style.imageContainer}
-                        style={{
-                            height: Math.min(200, s(200)),
-                        }}
-                    >
+                <div
+                    className={style.imageContainer}
+                    style={{
+                        height: Math.min(200, s(200)),
+                    }}
+                >
+                    {image && (
                         <img
                             src={image}
                             alt={t(`app.phases.titles.${id}`)}
@@ -35,8 +36,9 @@ export default function Phase({ id, image, onClick }: Props) {
                                 objectFit: 'fill',
                             }}
                         />
-                    </div>
-                )}
+                    )}
+                    {children}
+                </div>
                 <h2>{t(`app.phases.titles.${id}`)}</h2>
                 <div className={style.description}>{t(`app.phases.desc.${id}`)}</div>
             </Button>

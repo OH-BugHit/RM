@@ -80,6 +80,7 @@ export default function EnterUserInfo({ onReady }: Props) {
                     >
                         <div className={style.textField}>
                             <TextField
+                                autoFocus
                                 label={t('enterUsername.labels.enterUsername')}
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}

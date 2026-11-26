@@ -103,14 +103,12 @@ export default function ClusterContainer({ position, type, vis, children, inspec
                                 return (
                                     <React.Fragment key={button.id}>
                                         <div
+                                            className={style.buttonContainer}
                                             style={{
-                                                position: 'absolute',
                                                 left: `calc(50% + ${origin.x}px)`,
                                                 top: `calc(50% + ${origin.y}px)`,
                                                 width: s(140),
                                                 height: s(140),
-                                                transform: 'translate(-50%, -50%)',
-                                                zIndex: 21,
                                             }}
                                         >
                                             <IconButton

@@ -31,11 +31,12 @@ linear-gradient(
 )
 `;
 
-export default function Gamma() {
+export default function Gamma({ simple = true }: { simple?: boolean }) {
     const { t } = useTranslation();
     const { s, scaleWidth } = useGameScale();
     const [agentSettings, setAgentSettings] = useAtom(AgentSettingsAtom);
     const agent = useAtomValue(ActiveAgentAtom);
+    const gamma = agentSettings.gamma <= 0.425 ? 0 : 0.85;
     return (
         <div
             className={style.container}
@@ -53,9 +54,10 @@ export default function Gamma() {
                     </Help>
                 </span>
             </h3>
+
             <div className={style.sightWrapper}>
                 <Foresight
-                    value={agentSettings.gamma}
+                    value={gamma}
                     size={s(256)}
                 />
                 {agent.img && (
@@ -142,13 +144,14 @@ export default function Gamma() {
                             },
                         },
                     }}
-                    step={0.05}
-                    valueLabelDisplay="auto"
-                    value={agentSettings.gamma}
+                    marks={[{ value: 0 }, { value: 0.85 }]}
+                    step={null}
+                    valueLabelDisplay={simple ? 'off' : 'auto'}
+                    value={gamma}
                     onChange={(_, value) => {
                         setAgentSettings((old) => ({
                             ...old,
-                            gamma: value as number,
+                            gamma: value === 0 ? 0 : 0.85,
                         }));
                     }}
                 />

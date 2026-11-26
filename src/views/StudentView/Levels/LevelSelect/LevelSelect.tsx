@@ -14,8 +14,10 @@ import LevelPopup from '../../../../components/Dialogs/LevelPopup/LevelPopup';
 import { createBonusPathsY, createRoutePathX } from './pathUtils';
 import { defaultControls } from '../../../../utils/defaults';
 import { TextStepAtom } from '../../../../atoms/uiState';
+import { featureFlagsAtom } from '../../../../atoms/featureState';
 
 export default function LevelSelect() {
+    const { allowUnlockLevels } = useAtomValue(featureFlagsAtom);
     const { t } = useTranslation();
     const { s, trueScale } = useGameScale();
     const levelMapNodes = useAtomValue(LevelMapNodesAtom);
@@ -324,7 +326,7 @@ export default function LevelSelect() {
                                             style.levelNode,
                                             node.kind === 'bonus' ? style.bonusNode : '',
                                             isSelected ? style.selectedNode : '',
-                                            !node.allowed ? style.locked : '',
+                                            !node.allowed ? (!allowUnlockLevels ? style.locked : '') : '',
                                         ]
                                             .filter(Boolean)
                                             .join(' ')}

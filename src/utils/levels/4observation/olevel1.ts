@@ -150,7 +150,7 @@ export const level1Tasks: TaskGroup[] = [
         id: 'Curiosity',
         title: 'levels.4.tasks.p1.title',
         visibleFrom: 0,
-        visibleTo: 12,
+        visibleTo: 14,
         tasks: [
             {
                 id: 'highscore',

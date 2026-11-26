@@ -19,7 +19,7 @@ interface StudentProps {
 }
 
 export default function Player({ serverCode }: StudentProps) {
-    const { doRegister } = usePlayerProtocol();
+    const { doRegister, doSendScore } = usePlayerProtocol();
     const username = useAtomValue(usernameAtom);
     const profilePicture = useAtomValue(profilePictureAtom);
     const bouncer = useAtomValue(studentBouncerAtom);
@@ -62,7 +62,7 @@ export default function Player({ serverCode }: StudentProps) {
 
     return (
         <div className={style.studentContainer}>
-            <ScoreBridge />
+            <ScoreBridge doSendScore={doSendScore} />
             <MenuIcon
                 position={getMenuButtonPosition()}
                 single

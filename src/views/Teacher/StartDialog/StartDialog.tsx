@@ -25,6 +25,13 @@ function StartDialog({ code }: Props) {
         params.set('overlay', 'none');
         navigate(`${location.pathname}?${params.toString()}`, { replace: false });
     }, [location, navigate]);
+
+    const dialogType =
+        showDialog.overlay === 'share'
+            ? 'class'
+            : showDialog.overlay === 'shareSinglePlayerTournament'
+              ? 'single'
+              : false;
     const size =
         window.innerHeight < 760 || window.innerWidth < 800
             ? 'small'
@@ -33,7 +40,7 @@ function StartDialog({ code }: Props) {
               : 'large';
     return (
         <Dialog
-            open={showDialog.overlay === 'share'}
+            open={dialogType !== false}
             onClose={doClose}
             maxWidth={size === 'large' || size === 'normal' ? 'md' : 'sm'}
             fullWidth={false}
@@ -44,7 +51,11 @@ function StartDialog({ code }: Props) {
                     <div className={style.column}>
                         {t('teacher.messages.scanQR')}
                         <QRCode
-                            url={`${window.location.origin}/student/${code}/main?view=join`}
+                            url={
+                                dialogType === 'class'
+                                    ? `${window.location.origin}/student/${code}/main?view=join`
+                                    : `${window.location.origin}/join/${code}/main?view=join`
+                            }
                             size={size}
                             label={t('teacher.aria.linkForFeed')}
                         />
@@ -55,11 +66,19 @@ function StartDialog({ code }: Props) {
                         <h2>{code}</h2>
                         <a
                             style={{ wordBreak: 'break-all' }}
-                            href={window.location.origin}
+                            href={
+                                dialogType === 'class'
+                                    ? window.location.host
+                                    : `${window.location.origin}/student/single/main?view=ownLevels`
+                            }
                             target="_blank"
                             rel="noreferrer"
                         >
-                            <h2>{window.location.host}</h2>
+                            <h2>
+                                {dialogType === 'class'
+                                    ? window.location.host
+                                    : `${window.location.origin}/student/single/main?view=ownLevels`}
+                            </h2>
                         </a>
                     </div>
                 </div>
