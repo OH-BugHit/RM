@@ -1,15 +1,17 @@
-import { useAtom, useAtomValue, useStore } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom, useStore } from 'jotai';
 import style from './win.module.css';
 import { LevelConfAtom, LevelMapNodesAtom, TestAgentAtom } from '../../../atoms/gameState';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@genai-fi/base';
 import Separator from '../../../components/Separator/Separator';
 import { useViewNavigation } from '../../../hooks/useViewNavigation';
+import { TextStepAtom } from '../../../atoms/uiState';
 
 export default function WinScreen() {
     const { t } = useTranslation();
     const [level] = useAtom(LevelConfAtom);
     const vis = useAtomValue(TestAgentAtom);
+    const setSteps = useSetAtom(TextStepAtom);
     const { goToView } = useViewNavigation();
     const store = useStore();
 
@@ -37,6 +39,7 @@ export default function WinScreen() {
                 store.set(LevelMapNodesAtom, updatedNodes);
             }
         }
+        setSteps(0);
 
         goToView({
             main: 'levels',

@@ -330,7 +330,7 @@
                 "6": "The agent learns by itself in the training.\nAt the bottom you can see training controls.\nYou can train one step at a time.\nAt each step the agent selects an action.",
                 "7": "Or let the agent train continuously.",
                 "8": "You can also let the agent train at unlimited speed. This allows it learn quickly!",
-                "9": "Use \"Fast Forward\"-button to speed up the learning.",
+                "9": "When training, consider normally using this fast mode. Use \"Fast Forward\"-button to speed up the learning.",
                 "10": "Great! Fast Forward helps the agent learn quickly.\nIn later levels, you will tune the learning and see how the agent learns.",
                 "11": "That's how you train the agent in this game.\nYou can also let the agent play without training by clicking the green play button in the \"Play\" section of the controls.",
                 "12": "All tasks are complete! Click \"Test\"-button near the progress panel.\nTo pass the level, the agent must reach the goal 2 times."
