@@ -6,14 +6,15 @@ import { EnvSettingsAtom, TileBackgroundAtom, WorldGridRenderAtom } from '../ato
 import { ActiveAgentAtom, ActiveEnvironmentAtom, AgentSettingsAtom } from '../atoms/state';
 import { CellSave, Manifest, TileDefinitionSave } from './types';
 import { QLearningAgent } from '../components/agents/rlAgentQ';
-export const SAVE_VERSION = 2;
+export const SAVE_VERSION: number = 2.1; // Only major updates are blocked! (e.g 2.1 allows manifest 2.0 but not manifest 1.9)
 
-function createManifest(store: Store): Manifest {
+function createManifest(store: Store, id: string): Manifest {
     return {
-        gameName: store.get(ActiveEnvironmentAtom).name,
+        gameName: store.get(ActiveEnvironmentAtom).name ?? 'My Game',
         saveVersion: SAVE_VERSION,
         createdAt: new Date().toISOString(),
         highScore: store.get(TopbarAtom).topScore,
+        levelID: id,
     };
 }
 
@@ -93,11 +94,11 @@ export async function createSaveAgent(agent: QLearningAgent, store: Store): Prom
     });
 }
 
-export async function createSave(store: Store): Promise<{ name: string; blob: Promise<Blob> }> {
+export async function createSave(store: Store, id: string): Promise<{ name: string; blob: Promise<Blob> }> {
     const zip = new JSZip();
     const name = store.get(ActiveEnvironmentAtom).name;
 
-    zip.file('manifest.json', JSON.stringify(createManifest(store), null, 2));
+    zip.file('manifest.json', JSON.stringify(createManifest(store, id), null, 2));
 
     saveTools(zip, store);
     saveWorldGrid(zip, store);

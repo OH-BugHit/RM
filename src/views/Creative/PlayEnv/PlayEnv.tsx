@@ -109,6 +109,7 @@ export default function PlayEnv() {
                             <Button
                                 variant="outlined"
                                 onClick={() => {
+                                    setStep(99);
                                     setEnv((old) => {
                                         return { ...old, type: 'modify' };
                                     });
@@ -123,6 +124,7 @@ export default function PlayEnv() {
                             <Button
                                 variant="contained"
                                 onClick={() => {
+                                    setStep(99);
                                     setEnv((old) => {
                                         return { ...old, type: 'loaded' };
                                     });

@@ -1,17 +1,15 @@
-import { useAtom, useAtomValue, useSetAtom, useStore } from 'jotai';
+import { useAtom, useStore } from 'jotai';
 import style from './win.module.css';
 import { LevelConfAtom, LevelMapNodesAtom, TestAgentAtom } from '../../../atoms/gameState';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@genai-fi/base';
 import Separator from '../../../components/Separator/Separator';
 import { useViewNavigation } from '../../../hooks/useViewNavigation';
-import { TextStepAtom } from '../../../atoms/uiState';
 
 export default function WinScreen() {
     const { t } = useTranslation();
     const [level] = useAtom(LevelConfAtom);
-    const vis = useAtomValue(TestAgentAtom);
-    const setSteps = useSetAtom(TextStepAtom);
+    const [vis, setVis] = useAtom(TestAgentAtom);
     const { goToView } = useViewNavigation();
     const store = useStore();
 
@@ -39,10 +37,10 @@ export default function WinScreen() {
                 store.set(LevelMapNodesAtom, updatedNodes);
             }
         }
-        setSteps(0);
-
+        setVis('no');
         goToView({
             main: 'levels',
+            level: null,
             sub: null,
         });
     };
@@ -58,7 +56,7 @@ export default function WinScreen() {
                 <b>
                     {t('winScreen.titleDesc')} {level?.level.manifest.gameName}.
                 </b>
-                {level?.level.manifest.levelIndex && (
+                {level?.levelText?.textKey && (
                     <>
                         <Separator />
                         <p>{t(`${level?.levelText?.textKey}.postMessage`)}</p>

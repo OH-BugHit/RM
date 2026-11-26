@@ -14,7 +14,7 @@ import {
 } from './olevel1';
 
 const level1Data: LoadedGame = {
-    manifest: { gameName: 'Foresight', highScore: 0, saveVersion: 2, createdAt: '123', levelIndex: 4 },
+    manifest: { gameName: 'Foresight', highScore: 0, saveVersion: 2, createdAt: '123', levelID: 'obs-1' },
     tools: { tileDefinitions: observationTileDef, background: defaultBackground },
     game: {
         world: level1Grid,

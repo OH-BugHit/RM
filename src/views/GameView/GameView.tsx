@@ -13,11 +13,11 @@ import { defaultWorldGrid } from '../../utils/defaults';
 import { WorldGridRenderAtom } from '../../atoms/gameState';
 
 interface GameViewProps {
-    nameRef?: RefObject<string>;
+    levelIDref?: RefObject<string>;
     agentRef: React.RefObject<QLearningAgent | undefined>;
 }
 
-function GameView({ agentRef, nameRef = undefined }: GameViewProps) {
+function GameView({ agentRef, levelIDref = undefined }: GameViewProps) {
     const lWorld = useMemo(() => new WorldStore(agentRef), [agentRef]);
     const obsRef = useRef<GenericObservation>(undefined);
     const actionRef = useRef<Actions>(undefined);
@@ -58,7 +58,7 @@ function GameView({ agentRef, nameRef = undefined }: GameViewProps) {
                             infoRef={infoRef}
                             lWorld={lWorld}
                             currentStateRef={currentStateRef}
-                            nameRef={nameRef}
+                            levelIDref={levelIDref}
                         />
                     </div>
                 </div>

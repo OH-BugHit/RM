@@ -6,6 +6,7 @@ import style from './style.module.css';
 import { IconButton } from '@mui/material';
 import { createSave } from '../../../utils/export';
 import DownloadIcon from './DownloadIcon';
+import { useID } from '@genai-fi/base';
 
 interface Props {
     showText?: boolean;
@@ -15,9 +16,10 @@ interface Props {
 function SaveButton({ showText, disabled = false }: Props) {
     const { t } = useTranslation();
     const store = useStore();
+    const newLevelId = useID(12);
 
     async function downloadResults() {
-        const { name, blob } = await createSave(store);
+        const { name, blob } = await createSave(store, newLevelId);
         saveAs(await blob, `${name}.genai`);
     }
 

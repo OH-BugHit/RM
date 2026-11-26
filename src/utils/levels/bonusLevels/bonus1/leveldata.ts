@@ -10,6 +10,7 @@ const level1Data: LoadedGame = {
         highScore: -1,
         saveVersion: 2,
         createdAt: '123',
+        levelID: 'basic-b-1',
     },
     tools: { tileDefinitions: testTileDef, background: defaultBackground },
     game: {

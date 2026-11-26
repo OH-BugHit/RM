@@ -30,7 +30,7 @@ export default function GroupSelection({
             <div className={style.levels}>
                 {levels[0] && (
                     <LevelItem
-                        key={levels[0].level.manifest.gameName}
+                        key={levels[0].level.manifest.levelID}
                         level={levels[0]}
                     />
                 )}

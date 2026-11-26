@@ -1,6 +1,5 @@
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useEffect } from 'react';
-import { LevelConfAtom } from '../../../atoms/gameState';
 import { buildHudVisibility, buildUiConf } from '../../Xai/GameTutorial/progressUtil';
 import {
     AgentCAtom,
@@ -13,9 +12,9 @@ import {
 } from '../../../atoms/uiState';
 import { playHudVis } from '../../../utils/defaults';
 import { GameControlAtom } from '../../../atoms/state';
+import { Level } from '../../../types';
 
-export default function UIcontrolBridge() {
-    const level = useAtomValue(LevelConfAtom);
+export default function UIcontrolBridge({ level }: { level: Level }) {
     const setHudVis = useSetAtom(HUDvisAtom);
     const step = useAtomValue(TextStepAtom);
     const setAgentC = useSetAtom(AgentCAtom);

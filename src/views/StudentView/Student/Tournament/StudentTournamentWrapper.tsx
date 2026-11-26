@@ -18,7 +18,7 @@ export default function StudentTournamentWrapper() {
     const setTopBar = useSetAtom(TopbarAtom);
     const store = useStore();
     const [loaded, setLoaded] = useState(false);
-    const nameRef = useRef<string>('');
+    const levelIDref = useRef<string>('');
 
     useEffect(() => {
         setHudVis({ ...playHudVis, controls: { ...playHudVis.controls, inspect: false } });
@@ -42,7 +42,7 @@ export default function StudentTournamentWrapper() {
 
                 const loadedGame = await readSavedFile(file);
                 if (cancelled) return;
-                nameRef.current = loadedGame.manifest.gameName;
+                levelIDref.current = loadedGame.manifest.levelID;
                 applyLoadedGame(store, loadedGame);
                 setLoaded(true);
             } catch (error) {
@@ -76,7 +76,7 @@ export default function StudentTournamentWrapper() {
         <>
             <AgentSendBridge agentRef={agentRef} />
             <GameView
-                nameRef={nameRef}
+                levelIDref={levelIDref}
                 agentRef={agentRef}
             />
         </>

@@ -2,9 +2,8 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import style from './levelSelect.module.css';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
-import { Level } from '../../../../types';
 import { useViewNavigation } from '../../../../hooks/useViewNavigation';
-import { LevelConfAtom, LevelMapNodesAtom } from '../../../../atoms/gameState';
+import { LevelMapNodesAtom } from '../../../../atoms/gameState';
 import { GameControlAtom, OpenLevelGroupsAtom } from '../../../../atoms/state';
 import { levelGroups } from '../../../../utils/levels/levelGroups';
 import { useGameScale } from '../../../../context/GameScale/useGameScale';
@@ -20,16 +19,14 @@ export default function LevelSelect() {
     const { allowUnlockLevels } = useAtomValue(featureFlagsAtom);
     const { t } = useTranslation();
     const { s, trueScale } = useGameScale();
+    const { goToView } = useViewNavigation();
     const levelMapNodes = useAtomValue(LevelMapNodesAtom);
     const setControls = useSetAtom(GameControlAtom);
     const setSteps = useSetAtom(TextStepAtom);
+    const openGroupTypes = useAtomValue(OpenLevelGroupsAtom);
 
-    const resetLevels = () => {
-        setControls(defaultControls);
-        setSteps(0);
-    };
-
-    resetLevels();
+    const mapViewportRef = useRef<HTMLDivElement>(null);
+    const cancelPendingScrollRef = useRef<(() => void) | null>(null);
 
     const mapHeight = s(1080) - 200;
 
@@ -39,12 +36,12 @@ export default function LevelSelect() {
         placement: 'left' | 'right';
     } | null>(null);
 
-    const { goToView } = useViewNavigation();
-    const setLevel = useSetAtom(LevelConfAtom);
-    const openGroupTypes = useAtomValue(OpenLevelGroupsAtom);
+    const resetLevels = () => {
+        setControls(defaultControls);
+        setSteps(0);
+    };
 
-    const mapViewportRef = useRef<HTMLDivElement>(null);
-    const cancelPendingScrollRef = useRef<(() => void) | null>(null);
+    resetLevels();
 
     useEffect(
         () => () => {
@@ -141,11 +138,10 @@ export default function LevelSelect() {
         });
     };
 
-    const handleStart = (level: Level) => {
-        setLevel(level);
-
+    const handleStart = (level: string) => {
         goToView({
             sub: 'playLevel',
+            level: level,
             overlay: null,
         });
     };

@@ -20,9 +20,9 @@ export type SavePreview = {
 export type Manifest = {
     gameName: string;
     highScore?: number;
-    saveVersion: number;
+    saveVersion: number; // checked on load. Lower major versions are blocked.
     createdAt: string;
-    levelIndex?: number; // Level index-number for traslations
+    levelID: string; // Level id. Used for url. Student->Classroom autosend levels have studentID as levelID.
     stepsRequired?: number; // How many text steps are required to test button to be available
 };
 export type TileDefinitionSave = {

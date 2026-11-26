@@ -3,7 +3,7 @@ import { ClickAwayListener, Popper } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CellType, Level } from '../../../types';
+import { CellType } from '../../../types';
 import { LevelMapNode } from '../../../views/StudentView/Levels/LevelSelect/levelMapTypes';
 import style from './levelPopup.module.css';
 import { CellSave } from '../../../utils/types';
@@ -17,7 +17,7 @@ interface LevelPopupProps {
     placement: 'left' | 'right';
     open: boolean;
     onClose: () => void;
-    onStart: (level: Level) => void;
+    onStart: (level: string) => void;
 }
 
 export default function LevelPopup({ node, anchorEl, placement, open, onClose, onStart }: LevelPopupProps) {
@@ -92,7 +92,7 @@ export default function LevelPopup({ node, anchorEl, placement, open, onClose, o
         });
     });
 
-    const result = t(`levels.${node.level.level.manifest.levelIndex}.describe`, {
+    const result = t(`${node.level.levelText?.textKey}.describe`, {
         returnObjects: true,
     });
 
@@ -199,7 +199,7 @@ export default function LevelPopup({ node, anchorEl, placement, open, onClose, o
                     <Button
                         aria-describedby={descriptionId}
                         variant="contained"
-                        onClick={() => onStart(node.level)}
+                        onClick={() => onStart(node.level.level.manifest.levelID)}
                     >
                         {t(`levels.levelSelect.start`)}
                     </Button>

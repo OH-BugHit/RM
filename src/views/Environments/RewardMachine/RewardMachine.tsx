@@ -55,7 +55,7 @@ interface GenericWorldProps {
     lWorld: WorldStore;
     currentStateRef: React.RefObject<StateData>;
     grid: Cell[][];
-    nameRef?: React.RefObject<string> | undefined;
+    levelIDref?: React.RefObject<string> | undefined;
 }
 
 function RewardMachine({
@@ -67,7 +67,7 @@ function RewardMachine({
     infoRef,
     currentStateRef,
     grid,
-    nameRef = undefined,
+    levelIDref = undefined,
 }: GenericWorldProps) {
     const store = useStore();
     const worldGrid = useRef(grid);
@@ -339,7 +339,7 @@ function RewardMachine({
                 }
                 const currentScore = store.get(TopbarAtom).score;
                 if (win) {
-                    const levelName = nameRef?.current;
+                    const levelName = levelIDref?.current;
                     if (levelName && levelName !== '') {
                         const oldSavedScore = store.get(studentResultsAtom).data.get(levelName)?.score;
 
@@ -413,7 +413,7 @@ function RewardMachine({
         setStepsLeft,
         setTopBar,
         setStudentScore,
-        nameRef,
+        levelIDref,
         currentStateRef,
         actionRef,
         obsRef,

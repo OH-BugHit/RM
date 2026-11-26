@@ -67,14 +67,15 @@ export default function BuildView({ doSendEnvironment = undefined, envStateRef =
                         continue;
                     }
                     envStateRef.current = currentState;
+                    const username = store.get(usernameAtom);
 
                     // Create ZIP file to send
-                    const { blob } = await createSave(store);
+                    const { blob } = await createSave(store, username);
                     if (cancelled) return;
                     const zipBlob = await blob;
                     if (cancelled) return;
 
-                    doSendEnvironment?.({ file: zipBlob, studentId: store.get(usernameAtom) });
+                    doSendEnvironment?.({ file: zipBlob, studentId: username });
                 }
             };
             checkEnvironment();

@@ -34,6 +34,7 @@ export default function MainMenu({ mode = 'single' }: MainMenuProps) {
                 main: item,
                 sub: null,
                 overlay: null,
+                level: null,
             });
         }
     };

@@ -111,7 +111,7 @@ export async function readSavedFile(file: File): Promise<LoadedGame> {
 
     const manifest = await readJson<Manifest>(zip, 'manifest.json');
 
-    if (manifest.saveVersion !== SAVE_VERSION) {
+    if (manifest.saveVersion < Number(SAVE_VERSION.toFixed(0))) {
         throw new Error(`Unsupported save version ${manifest.saveVersion}. Expected ${SAVE_VERSION}.`);
     }
 

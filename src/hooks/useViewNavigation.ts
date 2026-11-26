@@ -5,6 +5,7 @@ import { MainView, SubView, Overlay, ViewEnum } from '../types';
 type ViewState = {
     main?: MainView;
     sub?: SubView | null;
+    level?: string | null;
     overlay?: Overlay | null;
 };
 
@@ -13,11 +14,11 @@ export function useViewNavigation() {
     const location = useLocation();
 
     const goToView = useCallback(
-        ({ main, sub, overlay }: ViewState) => {
+        ({ main, sub, level, overlay }: ViewState) => {
             const params = new URLSearchParams(location.search);
-
             const currentMain = params.get(ViewEnum.MainView);
             const currentSub = params.get(ViewEnum.Subview);
+            const currentLevel = params.get(ViewEnum.Level);
             const currentOverlay = params.get(ViewEnum.Overlay);
 
             let onlyOverlayChanged = true;
@@ -51,6 +52,19 @@ export function useViewNavigation() {
                     params.delete(ViewEnum.Overlay);
                 } else {
                     params.set(ViewEnum.Overlay, overlay);
+                }
+            }
+
+            if (level !== undefined) {
+                const newLevel = level;
+
+                if (currentLevel !== newLevel) {
+                    onlyOverlayChanged = false;
+                }
+                if (level === null) {
+                    params.delete(ViewEnum.Level);
+                } else {
+                    params.set(ViewEnum.Level, level);
                 }
             }
 

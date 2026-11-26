@@ -15,6 +15,7 @@ function ViewHandler() {
     const view = searchParams.get(ViewEnum.MainView) as MainView | null;
     const subView = searchParams.get(ViewEnum.Subview) as SubView | null;
     const overlay = (searchParams.get(ViewEnum.Overlay) ?? 'none') as Overlay;
+    const level = searchParams.get(ViewEnum.Level) as string | null;
 
     useEffect(() => {
         if (!view) {
@@ -27,9 +28,10 @@ function ViewHandler() {
         setView({
             main: view,
             sub: subView,
+            level: level,
             overlay,
         });
-    }, [view, subView, overlay, setView, navigate]);
+    }, [view, subView, overlay, level, setView, navigate]);
 
     useEffect(() => {
         switch (view) {

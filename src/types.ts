@@ -12,6 +12,7 @@ export enum ViewEnum {
     MainView = 'view',
     Subview = 'sub',
     Overlay = 'overlay',
+    Level = 'levels',
 }
 
 export interface TextErrors {
@@ -432,6 +433,7 @@ export type View = {
     main?: MainView;
     sub?: SubView;
     overlay?: Overlay;
+    level?: string | null;
 };
 export type SinglePlayViews = 'ownLevels' | 'play' | 'build' | 'modify';
 export type StudentViews = 'join' | 'main' | GamePhase | SinglePlayViews;

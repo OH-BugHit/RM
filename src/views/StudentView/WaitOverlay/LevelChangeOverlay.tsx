@@ -1,18 +1,17 @@
 import style from './wait.module.css';
-import { useAtomValue } from 'jotai';
 import { Button } from '@genai-fi/base';
-import { LevelConfAtom } from '../../../atoms/gameState';
 import { useTranslation } from 'react-i18next';
 import { NewFrame } from '../../Frames/NewFrame';
+import { Level } from '../../../types';
 
 interface WaitOverlayProps {
     onReady: () => void;
+    level: Level;
 }
-export default function LevelChangeOverlay({ onReady }: WaitOverlayProps) {
+export default function LevelChangeOverlay({ onReady, level }: WaitOverlayProps) {
     const { t } = useTranslation();
-    const level = useAtomValue(LevelConfAtom);
 
-    if (!level?.level.manifest.levelIndex) {
+    if (!level?.level.manifest) {
         onReady();
     }
 
@@ -25,7 +24,7 @@ export default function LevelChangeOverlay({ onReady }: WaitOverlayProps) {
         >
             <div className={style.waitContent}>
                 <h1>{level?.level.manifest.gameName}</h1>
-                <p>{t(`${level?.levelText?.textKey}.preMessage`)}</p>
+                {level?.levelText?.textKey && <p>{t(`${level.levelText.textKey}.preMessage`)}</p>}
                 <Button
                     onClick={onReady}
                     variant="contained"
